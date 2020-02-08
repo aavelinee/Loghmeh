@@ -1,11 +1,14 @@
-import java.util.ArrayList;
+package Domain;
+
+import Deserializer.*;
+import Serializer.*;
 
 public class Restaurant {
     private String name;
     private String description;
     private Location location;
     private Menu menu;
-//    private ArrayList<Food> menu = new ArrayList<Food>();
+//    private ArrayList<Domain.Food> menu = new ArrayList<Domain.Food>();
 
     public Restaurant(String name, String description, Location location, Menu menu) {
         this.name = name;
@@ -13,6 +16,22 @@ public class Restaurant {
         this.location = location;
         this.menu = menu;
     }
+
+    public void addFoodToMenu(String jsonInput) {
+        Food food = foodDeserializer.deserialize(jsonInput);
+        menu.addFood(food);
+    }
+
+    public void getFood(String jsonInput) {
+        String foodName = foodDeserializer.getFoodNameFromJson(jsonInput);
+        Food food = menu.getFood(foodName);
+        if(food == null)
+            return;
+
+        System.out.println(foodSerializer.serialize(food));
+
+    }
+
     public boolean equals(Restaurant restaurant) {
         if(this.name.equals(restaurant.name) && this.location == restaurant.location)
             return true;
@@ -25,4 +44,7 @@ public class Restaurant {
         menu.print();
     }
 
+    public String getName() {
+        return name;
+    }
 }

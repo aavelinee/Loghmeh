@@ -1,3 +1,5 @@
+package Domain;
+
 import java.util.ArrayList;
 
 public class Menu {
@@ -16,5 +18,16 @@ public class Menu {
             }
         }
         foods.add(food);
+    }
+
+    public Food getFood(String foodName) {
+        for(Food food: foods){
+            if(food.getName().equals(foodName)){
+                return food;
+            }
+        }
+        System.out.println("Food Does Not Exist");
+        return null;
+
     }
 }

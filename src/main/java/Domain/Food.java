@@ -1,8 +1,14 @@
+package Domain;
+
 public class Food {
     private String name;
     private String description;
     private float popularity;
     private float price;
+
+    public String getName() {
+        return name;
+    }
 
     public void print() {
         System.out.println(name);
@@ -10,4 +16,5 @@ public class Food {
         System.out.println(popularity);
         System.out.println(price);
     }
+
 }

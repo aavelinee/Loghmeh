@@ -1,7 +1,10 @@
-Location.class
-Loghmeh.class
-Test.class
-Restaurant.class
-Menu.class
-Order.class
-Food.class
+Domain/Order.class
+Main/Main.class
+Domain/Loghmeh.class
+Domain/Restaurant.class
+Deserializer/addRestaurantDeserializer$1.class
+Domain/Food.class
+Deserializer/addFoodDeserializer.class
+Domain/Location.class
+Domain/Menu.class
+Deserializer/addRestaurantDeserializer.class

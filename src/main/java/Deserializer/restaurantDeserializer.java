@@ -1,10 +1,12 @@
+package Deserializer;
+
+import Domain.*;
 import com.google.gson.*;
 
-import java.io.IOException;
 import java.lang.reflect.Type;
 
-public class Test {
-    public static Restaurant parseJson(String input) throws IOException
+public class restaurantDeserializer {
+    public static Restaurant deserialize(String jsonInput)
     {
         GsonBuilder gsonBuilder = new GsonBuilder();
 
@@ -14,8 +16,7 @@ public class Test {
                 JsonObject jsonObject = json.getAsJsonObject();
                 JsonObject locationJsonObject = jsonObject.get("location").getAsJsonObject();
                 JsonArray menuJsonArray = jsonObject.get("menu").getAsJsonArray();
-
-
+                
 
                 Location location = new Location(
                         locationJsonObject.get("x").getAsFloat(),
@@ -40,22 +41,14 @@ public class Test {
         gsonBuilder.registerTypeAdapter(Restaurant.class, deserializer);
 
         Gson customGson = gsonBuilder.create();
-        Restaurant customObject = customGson.fromJson(input, Restaurant.class);
-        return customObject;
+        return customGson.fromJson(jsonInput, Restaurant.class);
     }
-    public static void main(String[] args){
-        String input = "{\"name\": \"Hesturan\", \"description\": \"luxury\", \"location\": {\"x\": 1, \"y\": 3}," +
-                "\"menu\": [{\"name\": \"Gheime\", \"description\": \"it’s yummy!\", \"popularity\": 0.8, \"price\":" +
-            "20000}, {\"name\": \"Kabab\", \"description\": \"it’s delicious!\", \"popularity\": 0.6, \"price\":" +
-                "30000}]}";
-        try {
-            Restaurant r = parseJson(input);
-            r.print();
-        }
-        catch(IOException e) {
-            System.out.println("error");
-        }
 
+    public static String getRestaurantNameFromJson(String jsonInput) {
+        JsonParser parser = new JsonParser();
+        JsonObject jsonObject = parser.parse(jsonInput).getAsJsonObject();
+        return jsonObject.get("restaurantName").getAsString();
     }
+
+
 }
-

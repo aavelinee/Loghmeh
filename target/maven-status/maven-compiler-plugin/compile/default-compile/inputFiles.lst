@@ -1,7 +1,9 @@
-/home/baharan/Desktop/InternetEngineering/Loghmeh/src/main/java/Loghmeh.java
-/home/baharan/Desktop/InternetEngineering/Loghmeh/src/main/java/Food.java
-/home/baharan/Desktop/InternetEngineering/Loghmeh/src/main/java/Order.java
-/home/baharan/Desktop/InternetEngineering/Loghmeh/src/main/java/Test.java
-/home/baharan/Desktop/InternetEngineering/Loghmeh/src/main/java/Restaurant.java
-/home/baharan/Desktop/InternetEngineering/Loghmeh/src/main/java/Menu.java
-/home/baharan/Desktop/InternetEngineering/Loghmeh/src/main/java/Location.java
+/home/baharan/Desktop/InternetEngineering/Loghmeh/src/main/java/Domain/Menu.java
+/home/baharan/Desktop/InternetEngineering/Loghmeh/src/main/java/Domain/Food.java
+/home/baharan/Desktop/InternetEngineering/Loghmeh/src/main/java/Domain/Restaurant.java
+/home/baharan/Desktop/InternetEngineering/Loghmeh/src/main/java/Domain/Location.java
+/home/baharan/Desktop/InternetEngineering/Loghmeh/src/main/java/Deserializer/addFoodDeserializer.java
+/home/baharan/Desktop/InternetEngineering/Loghmeh/src/main/java/Domain/Order.java
+/home/baharan/Desktop/InternetEngineering/Loghmeh/src/main/java/Deserializer/addRestaurantDeserializer.java
+/home/baharan/Desktop/InternetEngineering/Loghmeh/src/main/java/Main/Main.java
+/home/baharan/Desktop/InternetEngineering/Loghmeh/src/main/java/Domain/Loghmeh.java
