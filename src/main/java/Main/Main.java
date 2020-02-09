@@ -37,6 +37,19 @@ public class Main {
                 String jsonInput = inputCommand.substring(inputCommand.indexOf(' ') + 1);
                 loghmeh.getFoodFromRestaurant(jsonInput);
             }
+            else if(command.equals("addToCart")){
+                String jsonInput = inputCommand.substring(inputCommand.indexOf(' ') + 1);
+                loghmeh.addToCart(jsonInput);
+            }
+            else if(command.equals("getCart")){
+                loghmeh.getCart();
+            }
+            else if(command.equals("finalizeOrder")){
+                loghmeh.finalizeOrder();
+            }
+            else if(command.equals("getRecommendedRestaurants")){
+                loghmeh.getRecommendedRestaurants();
+            }
             else if(command.equals("quit")){
                 System.out.println("Goodbye");
                 break;
@@ -58,3 +71,5 @@ public class Main {
 //getRestaurants
 
 //getFood {"foodName": "Kabab", "restaurantName": "Hesturan"}
+
+//addToCart {"foodName": "Kabab", "restaurantName": "Hesturan"}

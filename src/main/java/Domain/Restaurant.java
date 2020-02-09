@@ -32,11 +32,39 @@ public class Restaurant {
 
     }
 
-    public boolean equals(Restaurant restaurant) {
-        if(this.name.equals(restaurant.name) && this.location == restaurant.location)
+    public Food getFoodByName(String foodName) {
+        return menu.getFood(foodName);
+    }
+
+    public double getMenuPopulationAverage(){
+        return menu.getFoodsPopulationAverage();
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if(this == object)
+            return true;
+
+        Restaurant restaurant;
+        if(object instanceof Restaurant)
+            restaurant  = (Restaurant)object;
+        else
+            return false;
+
+        if(this.name.equals(restaurant.name) && this.location.equals(restaurant.location))
             return true;
         return false;
     }
+
+    @Override
+    public int hashCode() {
+        return 1234;
+    }
+
     public  void print(){
         System.out.println(name);
         System.out.println(description);

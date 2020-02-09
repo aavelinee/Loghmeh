@@ -30,12 +30,14 @@ public class restaurantDeserializer {
                     menu.addFood(food);
                 }
 
-                return new Restaurant(
+                Restaurant restaurant =  new Restaurant(
                         jsonObject.get("name").getAsString(),
                         jsonObject.get("description").getAsString(),
                         location,
                         menu
                 );
+                menu.setRestaurant(restaurant);
+                return restaurant;
             }
         };
         gsonBuilder.registerTypeAdapter(Restaurant.class, deserializer);
