@@ -36,9 +36,4 @@ public class Location {
         return 1234;
     }
 
-    public void print() {
-        System.out.println(x);
-        System.out.println(y);
-    }
-
 }

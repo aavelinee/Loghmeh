@@ -46,11 +46,4 @@ public class Menu {
         this.restaurant = restaurant;
     }
 
-    public void print() {
-        for(Food food: foods){
-            food.print();
-        }
-    }
-
-
 }

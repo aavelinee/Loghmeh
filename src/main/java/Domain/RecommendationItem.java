@@ -9,9 +9,11 @@ public class RecommendationItem {
         this.ratingForUser = ratingForUser;
     }
 
-    @Override
-    public double compare(RecommendationItem recommendationItem)
-    {
-        return(ratingForUser - recommendationItem.ratingForUser);
+    public double getRatingForUser() {
+        return ratingForUser;
+    }
+
+    public Restaurant getRestaurant() {
+        return restaurant;
     }
 }

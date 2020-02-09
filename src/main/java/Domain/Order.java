@@ -6,7 +6,7 @@ import Deserializer.restaurantDeserializer;
 import java.util.ArrayList;
 
 public class Order {
-    enum orderStatus {
+    public enum orderStatus {
         Delivered, Payed, Submitted, Ordering;
     }
     private transient orderStatus status;
@@ -20,20 +20,19 @@ public class Order {
         this.restaurant = restaurant;
     }
 
-    public void addToCart(Restaurant restaurant, Food food) {
+    public boolean addToCart(Restaurant restaurant, Food food) {
         if(!this.restaurant.equals(restaurant)){
-            System.out.println("You can't order from different restaurants");
-            return;
+            return false;
         }
         for(OrderItem orderItem: orders){
             if(orderItem.getFood().equals(food)) {
                 orderItem.orderMore();
-                return;
+                return true;
             }
-
         }
         OrderItem orderItem = new OrderItem(food);
         orders.add(orderItem);
+        return true;
     }
 
     public orderStatus getStatus() {

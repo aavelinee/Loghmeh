@@ -42,13 +42,4 @@ public class Food {
         return 1234;
     }
 
-
-    public void print() {
-        System.out.println(name);
-        System.out.println(description);
-        System.out.println(popularity);
-        System.out.println(price);
-        System.out.println(menu.getRestaurant().getName());
-    }
-
 }

@@ -22,13 +22,12 @@ public class Restaurant {
         menu.addFood(food);
     }
 
-    public void getFood(String jsonInput) {
+    public String getFood(String jsonInput) {
         String foodName = foodDeserializer.getFoodNameFromJson(jsonInput);
         Food food = menu.getFood(foodName);
         if(food == null)
-            return;
-
-        System.out.println(foodSerializer.serialize(food));
+            return "Food Does Not Exist";
+        return foodSerializer.serialize(food);
 
     }
 
@@ -65,12 +64,6 @@ public class Restaurant {
         return 1234;
     }
 
-    public  void print(){
-        System.out.println(name);
-        System.out.println(description);
-        location.print();
-        menu.print();
-    }
 
     public String getName() {
         return name;

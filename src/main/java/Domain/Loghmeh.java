@@ -2,101 +2,120 @@ package Domain;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+
 import Deserializer.*;
 import Serializer.*;
 
 
 public class Loghmeh {
     private ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
-    private ArrayList<Order> orders = new ArrayList<Order>();
+    private ArrayList<Customer> customers = new ArrayList<Customer>();
 
-    public void addRestaurant(String jsonInput) {
+    public Loghmeh() {
+        customers.add(new Customer());
+    }
+
+    public String addRestaurant(String jsonInput) {
         Restaurant restaurant = restaurantDeserializer.deserialize(jsonInput);
         for (Restaurant rest : restaurants)
             if (restaurant.equals(rest)) {
-                System.out.println("Restaurant Already Exists");
-                return;
+                return "Restaurant Already Exists";
             }
         //TODO:check wether menu already exists
         restaurants.add(restaurant);
+        return "Restaurant Added Successfully";
     }
 
-    public void addFoodToRestaurant(String jsonInput) {
-        System.out.println(jsonInput);
+    public String addFoodToRestaurant(String jsonInput) {
         String restaurantName = restaurantDeserializer.getRestaurantNameFromJson(jsonInput);
         Restaurant restaurant = getRestaurantByName(restaurantName);
         if(restaurant == null){
-            return;
+            String result = "There Is No Restaurant Named " + restaurantName;
+            return result;
         }
         restaurant.addFoodToMenu(jsonInput);
+        return "Food Added Successfully";
 
     }
 
-    public void getRestaurants() {
+    public String getRestaurants() {
+        String result = "";
         for(Restaurant rest: restaurants){
-            System.out.println(rest.getName());
+            result += (rest.getName() + "\n");
         }
+        if(result.contains("\n")){
+            result = result.substring(0, result.length() - 1);
+        }
+        else{
+            result = "There is no restaurant in the system";
+        }
+        return result;
     }
 
-    public void getRestaurant(String jsonInput) {
+    public String getRestaurant(String jsonInput) {
         String restaurantName = restaurantDeserializer.getRestaurantNameFromJson(jsonInput);
         Restaurant restaurant = getRestaurantByName(restaurantName);
         if(restaurant == null)
-            return;
-        System.out.println(restaurantSerializer.serialize(restaurant));
+            return ("There Is No Restaurant Named " + restaurantName);
+        return restaurantSerializer.serialize(restaurant);
     }
 
-    public void addToCart(String jsonInput) {
+    public String addToCart(String jsonInput) {
         String restaurantName = restaurantDeserializer.getRestaurantNameFromJson(jsonInput);
         Restaurant restaurant = getRestaurantByName(restaurantName);
         if(restaurant == null)
-            return;
+            return ("There Is No Restaurant Named " + restaurantName );
         String foodName = foodDeserializer.getFoodNameFromJson(jsonInput);
         Food food = restaurant.getFoodByName(foodName);
         if(food == null){
-            return;
+            return "Food Does Not Exist";
         }
 
-        if(orders.size() == 0 || orders.get(orders.size() - 1).getStatus() != Order.orderStatus.Ordering){
-            Order order = new Order(restaurant);
-            orders.add(order);
-        }
-        orders.get(orders.size() - 1).addToCart(restaurant, food);
+        return customers.get(0).addToCart(restaurant, food);
+
     }
 
-    public Order getCart() {
-        if(orders.size() == 0 || orders.get(orders.size()-1).getStatus() != Order.orderStatus.Ordering){
-            System.out.println("There is no order in progress");
-            return null;
-        }
-        String orderJson = orderSerializer.orderSerialize(orders.get(orders.size()-1));
-        System.out.println(orderJson);
-        return orders.get(orders.size()-1);
+    public String getCart() {
+        return customers.get(0).getCart();
     }
 
-    public void finalizeOrder() {
-        Order order = getCart();
-        if(order != null){
-            order.setStatus(Order.orderStatus.Submitted);
-            System.out.println("Order was submitted successfully");
-        }
+    public String finalizeOrder() {
+        return customers.get(0).finalizeOrder();
     }
 
-    public void getRecommendedRestaurants() {
+    public String getRecommendedRestaurants() {
         ArrayList<RecommendationItem> recommendations = new ArrayList<RecommendationItem>();
         for(Restaurant restaurant: restaurants){
-            recommendations.add(new RecommendationItem(restaurant, restaurant.getMenuPopulationAverage()/restaurant.getLocation().euclideanDistance(new Location(0, 0))));
+            recommendations.add(new RecommendationItem(restaurant, restaurant.getMenuPopulationAverage() / (restaurant.getLocation().euclideanDistance(new Location(.0f, .0f))) ));
         }
-        Collections.sort(recommendations);
+        Collections.sort(recommendations, new Comparator<RecommendationItem>(){
+            public int compare(RecommendationItem recommendationItem1, RecommendationItem recommendationItem2){
+                if(recommendationItem1.getRatingForUser() == recommendationItem2.getRatingForUser())
+                    return 0;
+                return recommendationItem1.getRatingForUser() > recommendationItem2.getRatingForUser() ? -1 : 1;
+            }
+        });
+        String result = "";
+        for(int i = 0; i < 3; i++){
+            if(i < recommendations.size()){
+                result += (recommendations.get(i).getRestaurant().getName() + "\n");
+            }
+        }
+        if(result.contains("\n")){
+            result = result.substring(0, result.length() - 1);
+        }
+        return result;
 
     }
 
-    public void getFoodFromRestaurant(String jsonInput) {
+    public String getFoodFromRestaurant(String jsonInput) {
         String restaurantName = restaurantDeserializer.getRestaurantNameFromJson(jsonInput);
         Restaurant restaurant = getRestaurantByName(restaurantName);
         if(restaurant == null)
-            return;
-        restaurant.getFood(jsonInput);
+            return ("There Is No Restaurant Named " + restaurantName);
+        return restaurant.getFood(jsonInput);
+
     }
 
     public Restaurant getRestaurantByName(String restaurantName) {
@@ -104,8 +123,10 @@ public class Loghmeh {
             if(rest.getName().equals(restaurantName))
                 return rest;
         }
-        System.out.println("There Is No Restaurant Named " + restaurantName );
         return null;
     }
 
+    public Order getLastOrder() {
+        return customers.get(0).getLastOrder();
+    }
 }
