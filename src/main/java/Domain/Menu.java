@@ -41,6 +41,10 @@ public class Menu {
         return restaurant;
     }
 
+    public ArrayList<Food> getFoods() {
+        return foods;
+    }
+
     public void setRestaurant(Restaurant restaurant) {
         this.restaurant = restaurant;
     }

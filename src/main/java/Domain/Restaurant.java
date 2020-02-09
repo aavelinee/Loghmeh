@@ -51,6 +51,10 @@ public class Restaurant {
         return menu;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     public void setMenu(Menu menu) {
         this.menu = menu;
     }

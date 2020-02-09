@@ -26,7 +26,7 @@ public class Location {
         else
             return false;
 
-        if(this.x == location.x && this.y == location.y)
+        if(this.x.equals(location.x)  && this.y.equals(location.y))
             return true;
         return false;
     }
