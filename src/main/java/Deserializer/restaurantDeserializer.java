@@ -49,7 +49,7 @@ public class restaurantDeserializer {
     public static String getRestaurantNameFromJson(String jsonInput) {
         JsonParser parser = new JsonParser();
         JsonObject jsonObject = parser.parse(jsonInput).getAsJsonObject();
-        return jsonObject.get("restaurantName").getAsString();
+        return jsonObject.get("name").getAsString();
     }
 
 

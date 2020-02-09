@@ -23,7 +23,6 @@ public class Menu {
                 return food;
             }
         }
-        System.out.println("Food Does Not Exist");
         return null;
     }
 
@@ -44,6 +43,31 @@ public class Menu {
 
     public void setRestaurant(Restaurant restaurant) {
         this.restaurant = restaurant;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if(this == object)
+            return true;
+
+        Menu menu;
+        if(object instanceof Menu)
+            menu  = (Menu)object;
+        else
+            return false;
+
+        if(menu.foods.size() != foods.size())
+            return false;
+        for(int i = 0; i < foods.size(); i++){
+            if(!foods.get(i).equals(menu.foods.get(i)))
+                return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return 1234;
     }
 
 }

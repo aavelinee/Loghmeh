@@ -43,6 +43,18 @@ public class Restaurant {
         return location;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public Menu getMenu() {
+        return menu;
+    }
+
+    public void setMenu(Menu menu) {
+        this.menu = menu;
+    }
+
     @Override
     public boolean equals(Object object) {
         if(this == object)
@@ -64,8 +76,4 @@ public class Restaurant {
         return 1234;
     }
 
-
-    public String getName() {
-        return name;
-    }
 }

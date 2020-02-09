@@ -68,7 +68,7 @@ public class Main {
 
 //addRestaurant {"name": "Hesturan", "description": "luxury", "location": {"x": 1, "y": 3}, "menu": [{"name": "Gheime", "description": "it’s yummy!", "popularity": 0.8, "price": 20000}, {"name": "Kabab", "description": "it’s delicious!", "popularity": 0.6, "price": 30000}]}
 
-//getRestaurant {"restaurantName": "Hesturan"}
+//getRestaurant {"name": "Hesturan"}
 
 //getRestaurants
 

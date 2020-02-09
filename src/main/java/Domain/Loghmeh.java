@@ -18,17 +18,22 @@ public class Loghmeh {
 
     public String addRestaurant(String jsonInput) {
         Restaurant restaurant = restaurantDeserializer.deserialize(jsonInput);
-        for (Restaurant rest : restaurants)
+        for (Restaurant rest : restaurants){
             if (restaurant.equals(rest)) {
                 return "Restaurant Already Exists";
             }
-        //TODO:check wether menu already exists
+            if(rest.getName().equals(restaurant.getName()) && !rest.getLocation().equals(restaurant.getLocation()) &&
+                                                      rest.getMenu().equals(restaurant.getMenu())){//chain restaurant
+                restaurant.setMenu(rest.getMenu());
+            }
+
+        }
         restaurants.add(restaurant);
         return "Restaurant Added Successfully";
     }
 
     public String addFoodToRestaurant(String jsonInput) {
-        String restaurantName = restaurantDeserializer.getRestaurantNameFromJson(jsonInput);
+        String restaurantName = foodDeserializer.getRestaurantNameFromJson(jsonInput);
         Restaurant restaurant = getRestaurantByName(restaurantName);
         if(restaurant == null){
             String result = "There Is No Restaurant Named " + restaurantName;
@@ -55,14 +60,16 @@ public class Loghmeh {
 
     public String getRestaurant(String jsonInput) {
         String restaurantName = restaurantDeserializer.getRestaurantNameFromJson(jsonInput);
-        Restaurant restaurant = getRestaurantByName(restaurantName);
-        if(restaurant == null)
+//        Restaurant restaurant = getRestaurantByName(restaurantName);
+        ArrayList<Restaurant> chainingRestaurants = getChainingRestaurantsByName(restaurantName);
+//        if(restaurant == null)
+        if(chainingRestaurants.size() == 0)
             return ("There Is No Restaurant Named " + restaurantName);
-        return restaurantSerializer.serialize(restaurant);
+        return restaurantSerializer.serialize(chainingRestaurants);
     }
 
     public String addToCart(String jsonInput) {
-        String restaurantName = restaurantDeserializer.getRestaurantNameFromJson(jsonInput);
+        String restaurantName = foodDeserializer.getRestaurantNameFromJson(jsonInput);
         Restaurant restaurant = getRestaurantByName(restaurantName);
         if(restaurant == null)
             return ("There Is No Restaurant Named " + restaurantName );
@@ -110,7 +117,7 @@ public class Loghmeh {
     }
 
     public String getFoodFromRestaurant(String jsonInput) {
-        String restaurantName = restaurantDeserializer.getRestaurantNameFromJson(jsonInput);
+        String restaurantName = foodDeserializer.getRestaurantNameFromJson(jsonInput);
         Restaurant restaurant = getRestaurantByName(restaurantName);
         if(restaurant == null)
             return ("There Is No Restaurant Named " + restaurantName);
@@ -124,6 +131,16 @@ public class Loghmeh {
                 return rest;
         }
         return null;
+    }
+
+    public ArrayList<Restaurant> getChainingRestaurantsByName(String restaurantName) {
+        ArrayList<Restaurant> chainingRestaurants = new ArrayList<Restaurant>();
+
+        for(Restaurant rest: restaurants){
+            if(rest.getName().equals(restaurantName))
+                chainingRestaurants.add(rest);
+        }
+        return chainingRestaurants;
     }
 
     public Order getLastOrder() {
