@@ -16,19 +16,42 @@ public class Loghmeh {
         customers.add(new Customer());
     }
 
-    public String addRestaurant(String jsonInput) {
-        Restaurant restaurant = restaurantDeserializer.deserialize(jsonInput);
+    public boolean restaurantAlreadyExists(Restaurant restaurant) {
         for (Restaurant rest : restaurants){
             if (restaurant.equals(rest)) {
-                return "Restaurant Already Exists";
+                return true;
             }
-            if(rest.getName().equals(restaurant.getName()) && !rest.getLocation().equals(restaurant.getLocation()) &&
-                                                      rest.getMenu().equals(restaurant.getMenu())){//chain restaurant
-                restaurant.setMenu(rest.getMenu());
-            }
-
         }
-        restaurants.add(restaurant);
+        return false;
+    }
+
+    public Restaurant sameRestaurant(Restaurant restaurant) {
+        for (Restaurant rest : restaurants){
+            if(rest.getName().equals(restaurant.getName()) && !rest.getLocation().equals(restaurant.getLocation()) &&
+                    rest.getMenu().equals(restaurant.getMenu())){//chain restaurant
+//                restaurant.setMenu(rest.getMenu());
+                return restaurant;
+            }
+        }
+        return null;
+    }
+
+    public String addRestaurants(String jsonInput) {
+        ArrayList<Restaurant> restaurants = Deserializer.restaurantDeserializer.deserializeRestaurants(jsonInput);
+        for (Restaurant restaurant : restaurants){
+//            if(rest.getName().equals(restaurant.getName()) && !rest.getLocation().equals(restaurant.getLocation()) &&
+//                                                      rest.getMenu().equals(restaurant.getMenu())){//chain restaurant
+//                restaurant.setMenu(rest.getMenu());
+//            }
+            if(restaurantAlreadyExists(restaurant)){
+                return "Restaurant Already Exists\n";
+            }
+            Restaurant otherBranch = sameRestaurant(restaurant);
+            if(otherBranch != null){
+                restaurant.setMenu(otherBranch.getMenu());
+            }
+        }
+        this.restaurants.addAll(restaurants);
         return "Restaurant Added Successfully";
     }
 

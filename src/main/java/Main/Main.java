@@ -18,7 +18,7 @@ public class Main {
 //        Javalin app = Javalin.create().start(7677);
 //        app.get("/addCart", ctx -> ctx.result("Hello World"));
 
-//        Loghmeh loghmeh = new Loghmeh();
+        Loghmeh loghmeh = new Loghmeh();
 //        Scanner input = new Scanner(System.in);
 //        String inputCommand = input.nextLine();
 //        String command;
@@ -72,8 +72,7 @@ public class Main {
 //            inputCommand = input.nextLine();
 //        }
         String restaurantsJson = ExternalServices.GetResaurants.getRestaurants("http://138.197.181.131:8080/restaurants");
-        ArrayList<Restaurant> restaurants = Deserializer.restaurantDeserializer.deserializeRestaurants(restaurantsJson);
-        System.out.println(Serializer.restaurantSerializer.serialize(restaurants));
+        System.out.println(loghmeh.addRestaurants(restaurantsJson));
 
     }
 }
