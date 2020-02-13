@@ -1,15 +1,80 @@
 package Main;
 
 import Domain.Loghmeh;
+import Domain.Restaurant;
 import io.javalin.Javalin;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
 public class Main {
     public static void main(String[] args){
-        Javalin app = Javalin.create().start(7676);
-        app.get("/addCart", ctx -> ctx.result("Hello World"));
+//        Javalin app = Javalin.create().start(7677);
+//        app.get("/addCart", ctx -> ctx.result("Hello World"));
+
+//        Loghmeh loghmeh = new Loghmeh();
+//        Scanner input = new Scanner(System.in);
+//        String inputCommand = input.nextLine();
+//        String command;
+//        String result;
+//        while(!inputCommand.equals("quit")){
+//            if(inputCommand.contains(" "))
+//                command = inputCommand.substring(0, inputCommand.indexOf(' '));
+//            else
+//                command = inputCommand;
+//
+//            if(command.equals("addRestaurant")){
+//                String jsonInput = inputCommand.substring(inputCommand.indexOf(' ') + 1);
+//                result = loghmeh.addRestaurant(jsonInput);
+//            }
+//            else if(command.equals("addFood")){
+//                String jsonInput = inputCommand.substring(inputCommand.indexOf(' ') + 1);
+//                result = loghmeh.addFoodToRestaurant(jsonInput);
+//            }
+//            else if(command.equals("getRestaurants"))
+//                result = loghmeh.getRestaurants();
+//            else if(command.equals("getRestaurant"))
+//            {
+//                String jsonInput = inputCommand.substring(inputCommand.indexOf(' ') + 1);
+//                result = loghmeh.getRestaurant(jsonInput);
+//            }
+//            else if(command.equals("getFood")){
+//                String jsonInput = inputCommand.substring(inputCommand.indexOf(' ') + 1);
+//                result = loghmeh.getFoodFromRestaurant(jsonInput);
+//            }
+//            else if(command.equals("addToCart")){
+//                String jsonInput = inputCommand.substring(inputCommand.indexOf(' ') + 1);
+//                result = loghmeh.addToCart(jsonInput);
+//            }
+//            else if(command.equals("getCart")){
+//                result = loghmeh.getCart();
+//            }
+//            else if(command.equals("finalizeOrder")){
+//                result = loghmeh.finalizeOrder();
+//            }
+//            else if(command.equals("getRecommendedRestaurants")){
+//                result = loghmeh.getRecommendedRestaurants();
+//            }
+//            else if(command.equals("quit")){
+//                result = "Goodbye";
+//                break;
+//            }
+//            else
+//                result = "command not found";
+//
+//            System.out.println(result);
+//            inputCommand = input.nextLine();
+//        }
+        String restaurantsJson = ExternalServices.GetResaurants.getRestaurants("http://138.197.181.131:8080/restaurants");
+        ArrayList<Restaurant> restaurants = Deserializer.restaurantDeserializer.deserializeRestaurants(restaurantsJson);
+        System.out.println(Serializer.restaurantSerializer.serialize(restaurants));
+
     }
 }
 
