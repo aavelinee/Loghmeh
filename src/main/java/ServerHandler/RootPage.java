@@ -8,7 +8,7 @@ import io.javalin.http.Context;
 import java.util.ArrayList;
 
 public class RootPage implements Page {
-    public static void handleRequest(Context ctx) {
+    public static void handleGetRequest(Context ctx) {
         String response = render();
         System.out.println(ctx.body());
         ctx.html(response);

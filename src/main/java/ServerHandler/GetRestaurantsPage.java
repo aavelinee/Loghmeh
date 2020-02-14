@@ -8,7 +8,7 @@ import io.javalin.http.Context;
 import java.util.ArrayList;
 
 public class GetRestaurantsPage implements Page {
-    public static void handleRequest(Context ctx) {
+    public static void handleGetRequest(Context ctx) {
         Loghmeh loghmeh = Loghmeh.getInstance();
         String response = render(loghmeh.getRestaurants());
         ctx.status(200);

@@ -8,9 +8,25 @@ import io.javalin.http.Context;
 
 import java.util.ArrayList;
 
-public class GetProfile implements Page {
-    public static void handleRequest(Context ctx) {
+public class GetProfilePage implements Page {
+    public static void handleGetRequest(Context ctx) {
         Loghmeh loghmeh = Loghmeh.getInstance();
+        String response = render(loghmeh.getCustomer(0));
+        ctx.status(200);
+        ctx.html(response);
+    }
+
+    public  static void handlePostRequest(Context ctx) {
+        Loghmeh loghmeh = Loghmeh.getInstance();
+        int credit;
+        try {
+            credit = Integer.parseInt(ctx.formParam("credit"));
+        }
+        catch (NumberFormatException e)
+        {
+            credit = 0;
+        }
+        loghmeh.getCustomer(0).increaseCredit(credit);
         String response = render(loghmeh.getCustomer(0));
         ctx.status(200);
         ctx.html(response);

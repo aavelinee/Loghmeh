@@ -1,7 +1,7 @@
 package Main;
 
 import Domain.Loghmeh;
-import Domain.Restaurant;
+import ServerHandler.*;
 import io.javalin.Javalin;
 
 import java.io.BufferedReader;
@@ -22,16 +22,17 @@ public class Main {
             System.out.println(loghmeh.addRestaurants(restaurantsJson));
 
             Javalin loghmehServer = Javalin.create().start(7677);
-            loghmehServer.get("/", ctx -> ServerHandler.RootPage.handleRequest(ctx));
-            loghmehServer.get("/getRestaurants", ctx -> ServerHandler.GetRestaurantsPage.handleRequest(ctx));
-            loghmehServer.get("/getProfile", ctx -> ServerHandler.GetProfile.handleRequest(ctx));
+            loghmehServer.get("/", ctx -> RootPage.handleGetRequest(ctx));
+            loghmehServer.get("/getRestaurants", ctx -> GetRestaurantsPage.handleGetRequest(ctx));
+            loghmehServer.get("/getProfile", ctx -> GetProfilePage.handleGetRequest(ctx));
+            loghmehServer.post("/getProfile/increaseCredit", ctx -> GetProfilePage.handlePostRequest(ctx));
 
 //            loghmehServer.routes(() -> {
 //                get("/un-secured",   ctx -> ctx.result("Hello"),   roles(ANYONE));
 //                get("/secured",      ctx -> ctx.result("Hello"),   roles(ROLE_ONE));
 //            });
             loghmehServer.post("/getRestaurant", ctx -> ServerHandler.GetRestaurantPage.handleRequest(ctx));
-            loghmehServer.post("/getCart", ctx -> ServerHandler.GetAddToCartPage)
+//            loghmehServer.post("/getCart", ctx -> ServerHandler.GetAddToCartPage)
         }
         else{
             System.out.println("Unable to get restaurants from API");

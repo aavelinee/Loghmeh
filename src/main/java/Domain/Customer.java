@@ -81,4 +81,8 @@ public class Customer {
     public int getCredit() {
         return credit;
     }
+
+    public void increaseCredit(int credit) {
+        this.credit += credit;
+    }
 }
