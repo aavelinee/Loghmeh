@@ -6,7 +6,7 @@ import Serializer.*;
 public class Restaurant {
     private String id;
     private String name;
-    private String logoURL;
+    private String logo;
     private String description;
     private Location location;
     private Menu menu;
@@ -15,7 +15,7 @@ public class Restaurant {
     public Restaurant(String id, String name, String logoURL, Location location, Menu menu) {
         this.id = id;
         this.name = name;
-        this.logoURL = logoURL;
+        this.logo = logoURL;
 //        this.description = description;
         this.location = location;
         this.menu = menu;
@@ -43,6 +43,10 @@ public class Restaurant {
         return menu.getFoodsPopulationAverage();
     }
 
+    public String getId() {
+        return id;
+    }
+
     public Location getLocation() {
         return location;
     }
@@ -60,7 +64,7 @@ public class Restaurant {
     }
 
     public String getLogoURL() {
-        return logoURL;
+        return logo;
     }
 
     public void setMenu(Menu menu) {

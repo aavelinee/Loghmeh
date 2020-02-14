@@ -18,10 +18,19 @@ public class Main {
 
         Loghmeh loghmeh = Loghmeh.getInstance();
         String restaurantsJson = ExternalServices.GetResaurants.getRestaurants("http://138.197.181.131:8080/restaurants");
-        System.out.println(loghmeh.addRestaurants(restaurantsJson));
+        if(restaurantsJson != null) {
+            System.out.println(loghmeh.addRestaurants(restaurantsJson));
 
-        Javalin loghmehServer = Javalin.create().start(7677);
-        loghmehServer.get("/getRestaurants",ctx -> ServerHandler.GetRestaurantsPage.handleRequest(ctx));
+            Javalin loghmehServer = Javalin.create().start(7677);
+            loghmehServer.get("/getRestaurants", ctx -> ServerHandler.GetRestaurantsPage.handleRequest(ctx));
+//            loghmehServer.routes(() -> {
+//                get("/un-secured",   ctx -> ctx.result("Hello"),   roles(ANYONE));
+//                get("/secured",      ctx -> ctx.result("Hello"),   roles(ROLE_ONE));
+//            });
+        }
+        else{
+            System.out.println("Unable to get restaurants from API");
+        }
 
     }
 }

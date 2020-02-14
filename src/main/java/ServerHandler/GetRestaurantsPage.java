@@ -11,6 +11,7 @@ public class GetRestaurantsPage implements Page {
     public static void handleRequest(Context ctx) {
         Loghmeh loghmeh = Loghmeh.getInstance();
         String response = render(loghmeh.getRestaurants());
+        ctx.status(200);
         ctx.html(response);
     }
 

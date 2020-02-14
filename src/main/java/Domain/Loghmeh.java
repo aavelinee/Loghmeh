@@ -3,6 +3,7 @@ package Domain;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 
 import Deserializer.*;
 import Serializer.*;
@@ -13,11 +14,14 @@ public class Loghmeh {
 
     private ArrayList<Restaurant> restaurants;
     private ArrayList<Customer> customers;
+    private HashMap<String, String> idMapper;//from user view id to restaurant id
+
 
     private Loghmeh() {
         restaurants = new ArrayList<Restaurant>();
         customers = new ArrayList<Customer>();
         customers.add(new Customer());
+        idMapper = new HashMap<String, String>();
     }
 
     public static Loghmeh getInstance() {
@@ -50,10 +54,6 @@ public class Loghmeh {
     public String addRestaurants(String jsonInput) {
         ArrayList<Restaurant> restaurants = Deserializer.restaurantDeserializer.deserializeRestaurants(jsonInput);
         for (Restaurant restaurant : restaurants){
-//            if(rest.getName().equals(restaurant.getName()) && !rest.getLocation().equals(restaurant.getLocation()) &&
-//                                                      rest.getMenu().equals(restaurant.getMenu())){//chain restaurant
-//                restaurant.setMenu(rest.getMenu());
-//            }
             if(restaurantAlreadyExists(restaurant)){
                 return "Restaurant Already Exists\n";
             }
@@ -61,6 +61,7 @@ public class Loghmeh {
             if(otherBranch != null){
                 restaurant.setMenu(otherBranch.getMenu());
             }
+            idMapper.put(Integer.toString(this.restaurants.size()+1), restaurant.getId());
         }
         this.restaurants.addAll(restaurants);
         return "Restaurant Added Successfully";
