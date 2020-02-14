@@ -3,8 +3,8 @@ package ServerHandler;
 import Domain.Loghmeh;
 import io.javalin.Javalin;
 
-public class addToCartHandler {
-    public void addToCartHandler(Javalin loghmehServer){
+public class AddToCartHandler {
+    public void addToCartHandler(Javalin loghmehServer, Loghmeh loghmeh){
         loghmehServer.get("/addToCart", ctx -> System.out.println(ctx.body()));
 //    (ctx.html("<!DOCTYPE html>\n" +
 //                "<html lang=\"en\">\n" +

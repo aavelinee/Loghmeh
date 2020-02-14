@@ -15,11 +15,31 @@ import java.util.StringTokenizer;
 
 public class Main {
     public static void main(String[] args){
-//        Javalin app = Javalin.create().start(7677);
-//        app.get("/addCart", ctx -> ctx.result("Hello World"));
 
         Loghmeh loghmeh = Loghmeh.getInstance();
-//        Scanner input = new Scanner(System.in);
+        String restaurantsJson = ExternalServices.GetResaurants.getRestaurants("http://138.197.181.131:8080/restaurants");
+        System.out.println(loghmeh.addRestaurants(restaurantsJson));
+
+        Javalin loghmehServer = Javalin.create().start(7677);
+        loghmehServer.get("/getRestaurants",ctx -> ServerHandler.GetRestaurantsPage.handleRequest(ctx));
+
+    }
+}
+
+//addFood {"name": "gheime", "description": "it's yummy!", "popularity": 0.8, "restaurantName": "Hesturan", "price": 20000}
+
+//addRestaurant {"name": "Hesturan", "description": "luxury", "location": {"x": 1, "y": 3}, "menu": [{"name": "Gheime", "description": "it’s yummy!", "popularity": 0.8, "price": 20000}, {"name": "Kabab", "description": "it’s delicious!", "popularity": 0.6, "price": 30000}]}
+
+//getRestaurant {"name": "Hesturan"}
+
+//getRestaurants
+
+//getFood {"foodName": "Kabab", "restaurantName": "Hesturan"}
+
+//addToCart {"foodName": "Kabab", "restaurantName": "Hesturan"}
+
+
+//    Scanner input = new Scanner(System.in);
 //        String inputCommand = input.nextLine();
 //        String command;
 //        String result;
@@ -71,52 +91,5 @@ public class Main {
 //            System.out.println(result);
 //            inputCommand = input.nextLine();
 //        }
-        String restaurantsJson = ExternalServices.GetResaurants.getRestaurants("http://138.197.181.131:8080/restaurants");
-        System.out.println(loghmeh.addRestaurants(restaurantsJson));
 
-        Javalin loghmehServer = Javalin.create().start(7677);
-        loghmehServer.get("/", ctx -> {
-            ctx.html("<!DOCTYPE html>\n" +
-                    "<html lang=\"en\">\n" +
-                    "<head>\n" +
-                    "    <meta charset=\"UTF-8\">\n" +
-                    "<title>User</title>\n" +
-                    "<style>\n" +
-                    "        li, div, form {\n" +
-                    "        \tpadding: 5px\n" +
-                    "        }\n" +
-                    "    </style>\n" +
-                    "</head>\n" +
-                    "<body>\n" +
-                    "<div>restaurant name</div>\n" +
-                    "<ul>\n" +
-                    "    <li>food 1:\u200C 2</li>\n" +
-                    "    <li>food 2: 3</li>\n" +
-                    "    <li>food 3: 1</li>\n" +
-                    "</ul>\n" +
-                    "<form action=\"/addToCart\" method=\"POST\">\n" +
-                    "   <input type=\"text\" id=\"fname\" name=\"fname\"><br><br>" +
-                    "    <button type=\"submit\">finalize</button>\n" +
-                    "</form>\n" +
-                    "</body>\n" +
-                    "</html>");
-            System.out.println(ctx.req.getHeader("what"));
-        });
-        loghmehServer.post("/", ctx -> {
-            System.out.println(ctx.body());
-            ctx.result(ctx.body());
-        });
-    }
-}
 
-//addFood {"name": "gheime", "description": "it's yummy!", "popularity": 0.8, "restaurantName": "Hesturan", "price": 20000}
-
-//addRestaurant {"name": "Hesturan", "description": "luxury", "location": {"x": 1, "y": 3}, "menu": [{"name": "Gheime", "description": "it’s yummy!", "popularity": 0.8, "price": 20000}, {"name": "Kabab", "description": "it’s delicious!", "popularity": 0.6, "price": 30000}]}
-
-//getRestaurant {"name": "Hesturan"}
-
-//getRestaurants
-
-//getFood {"foodName": "Kabab", "restaurantName": "Hesturan"}
-
-//addToCart {"foodName": "Kabab", "restaurantName": "Hesturan"}

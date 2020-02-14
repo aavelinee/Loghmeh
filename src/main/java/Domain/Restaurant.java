@@ -59,6 +59,10 @@ public class Restaurant {
         return description;
     }
 
+    public String getLogoURL() {
+        return logoURL;
+    }
+
     public void setMenu(Menu menu) {
         this.menu = menu;
     }

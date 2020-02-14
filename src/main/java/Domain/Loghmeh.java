@@ -78,19 +78,19 @@ public class Loghmeh {
 
     }
 
-    public String getRestaurants() {
-        String result = "";
-        for(Restaurant rest: restaurants){
-            result += (rest.getName() + "\n");
-        }
-        if(result.contains("\n")){
-            result = result.substring(0, result.length() - 1);
-        }
-        else{
-            result = "There is no restaurant in the system";
-        }
-        return result;
-    }
+//    public String getRestaurants() {
+//        String result = "";
+//        for(Restaurant rest: restaurants){
+//            result += (rest.getName() + "\n");
+//        }
+//        if(result.contains("\n")){
+//            result = result.substring(0, result.length() - 1);
+//        }
+//        else{
+//            result = "There is no restaurant in the system";
+//        }
+//        return result;
+//    }
 
     public String getRestaurant(String jsonInput) {
         String restaurantName = restaurantDeserializer.getRestaurantNameFromJson(jsonInput);
@@ -179,5 +179,9 @@ public class Loghmeh {
 
     public Order getLastOrder() {
         return customers.get(0).getLastOrder();
+    }
+
+    public ArrayList<Restaurant> getRestaurants() {
+        return restaurants;
     }
 }
