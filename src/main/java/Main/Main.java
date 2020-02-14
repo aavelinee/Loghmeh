@@ -18,7 +18,7 @@ public class Main {
 //        Javalin app = Javalin.create().start(7677);
 //        app.get("/addCart", ctx -> ctx.result("Hello World"));
 
-        Loghmeh loghmeh = new Loghmeh();
+        Loghmeh loghmeh = Loghmeh.getInstance();
 //        Scanner input = new Scanner(System.in);
 //        String inputCommand = input.nextLine();
 //        String command;

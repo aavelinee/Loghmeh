@@ -7,13 +7,24 @@ import java.util.Comparator;
 import Deserializer.*;
 import Serializer.*;
 
-
+//Singleton class
 public class Loghmeh {
-    private ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
-    private ArrayList<Customer> customers = new ArrayList<Customer>();
+    private static Loghmeh loghmeh = null;
 
-    public Loghmeh() {
+    private ArrayList<Restaurant> restaurants;
+    private ArrayList<Customer> customers;
+
+    private Loghmeh() {
+        restaurants = new ArrayList<Restaurant>();
+        customers = new ArrayList<Customer>();
         customers.add(new Customer());
+    }
+
+    public static Loghmeh getInstance() {
+        if(loghmeh == null){
+            loghmeh = new Loghmeh();
+        }
+        return loghmeh;
     }
 
     public boolean restaurantAlreadyExists(Restaurant restaurant) {

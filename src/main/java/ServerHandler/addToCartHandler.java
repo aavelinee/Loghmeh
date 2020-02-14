@@ -4,7 +4,7 @@ import Domain.Loghmeh;
 import io.javalin.Javalin;
 
 public class addToCartHandler {
-    public void addToCartHandler(Javalin loghmehServer, Loghmeh loghmeh){
+    public void addToCartHandler(Javalin loghmehServer){
         loghmehServer.get("/addToCart", ctx -> System.out.println(ctx.body()));
 //    (ctx.html("<!DOCTYPE html>\n" +
 //                "<html lang=\"en\">\n" +
@@ -29,6 +29,6 @@ public class addToCartHandler {
 //                "</form>\n" +
 //                "</body>\n" +
 //                "</html>")));
-        loghmehServer.get("/addToCart", ctx -> ctx.result(loghmeh.addToCart("{\"foodName\": \"Kabab\", \"restaurantName\": \"Hesturan\"}")));
+//        loghmehServer.get("/addToCart", ctx -> ctx.result(loghmeh.addToCart("{\"foodName\": \"Kabab\", \"restaurantName\": \"Hesturan\"}")));
     }
 }
