@@ -74,6 +74,38 @@ public class Main {
         String restaurantsJson = ExternalServices.GetResaurants.getRestaurants("http://138.197.181.131:8080/restaurants");
         System.out.println(loghmeh.addRestaurants(restaurantsJson));
 
+        Javalin loghmehServer = Javalin.create().start(7677);
+        loghmehServer.get("/", ctx -> {
+            ctx.html("<!DOCTYPE html>\n" +
+                    "<html lang=\"en\">\n" +
+                    "<head>\n" +
+                    "    <meta charset=\"UTF-8\">\n" +
+                    "<title>User</title>\n" +
+                    "<style>\n" +
+                    "        li, div, form {\n" +
+                    "        \tpadding: 5px\n" +
+                    "        }\n" +
+                    "    </style>\n" +
+                    "</head>\n" +
+                    "<body>\n" +
+                    "<div>restaurant name</div>\n" +
+                    "<ul>\n" +
+                    "    <li>food 1:\u200C 2</li>\n" +
+                    "    <li>food 2: 3</li>\n" +
+                    "    <li>food 3: 1</li>\n" +
+                    "</ul>\n" +
+                    "<form action=\"/addToCart\" method=\"POST\">\n" +
+                    "   <input type=\"text\" id=\"fname\" name=\"fname\"><br><br>" +
+                    "    <button type=\"submit\">finalize</button>\n" +
+                    "</form>\n" +
+                    "</body>\n" +
+                    "</html>");
+            System.out.println(ctx.req.getHeader("what"));
+        });
+        loghmehServer.post("/", ctx -> {
+            System.out.println(ctx.body());
+            ctx.result(ctx.body());
+        });
     }
 }
 
