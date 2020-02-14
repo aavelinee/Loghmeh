@@ -43,10 +43,6 @@ public class Restaurant {
         return menu.getFoodsPopulationAverage();
     }
 
-    public String getId() {
-        return id;
-    }
-
     public Location getLocation() {
         return location;
     }
@@ -66,6 +62,8 @@ public class Restaurant {
     public String getLogoURL() {
         return logo;
     }
+
+    public String getId() { return id; }
 
     public void setMenu(Menu menu) {
         this.menu = menu;

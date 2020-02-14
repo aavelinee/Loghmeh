@@ -64,7 +64,6 @@ public class Loghmeh {
             idMapper.put(Integer.toString(this.restaurants.size()+1), restaurant.getId());
             this.restaurants.add(restaurant);
         }
-//        this.restaurants.addAll(restaurants);
         return "Restaurant Added Successfully";
     }
 
@@ -94,29 +93,55 @@ public class Loghmeh {
 //        return result;
 //    }
 
-    public String getRestaurant(String jsonInput) {
-        String restaurantName = restaurantDeserializer.getRestaurantNameFromJson(jsonInput);
-//        Restaurant restaurant = getRestaurantByName(restaurantName);
-        ArrayList<Restaurant> chainingRestaurants = getChainingRestaurantsByName(restaurantName);
-//        if(restaurant == null)
-        if(chainingRestaurants.size() == 0)
-            return ("There Is No Restaurant Named " + restaurantName);
-        return restaurantSerializer.serialize(chainingRestaurants);
+//    public String getRestaurant(String jsonInput) {
+//        String restaurantName = restaurantDeserializer.getRestaurantNameFromJson(jsonInput);
+////        Restaurant restaurant = getRestaurantByName(restaurantName);
+//        ArrayList<Restaurant> chainingRestaurants = getChainingRestaurantsByName(restaurantName);
+////        if(restaurant == null)
+//        if(chainingRestaurants.size() == 0)
+//            return ("There Is No Restaurant Named " + restaurantName);
+//        return restaurantSerializer.serialize(chainingRestaurants);
+//    }
+
+
+    public Restaurant getRestaurant(String restaurantId) {
+//        String restaurantName = restaurantDeserializer.getRestaurantNameFromJson(jsonInput);
+        Restaurant restaurant = getRestaurantById(restaurantId);
+//        ArrayList<Restaurant> chainingRestaurants = getChainingRestaurantsById(restaurantId);
+        if(restaurant == null)
+//        if(chainingRestaurants.size() == 0)
+            return null;
+        return restaurant;
+//        return restaurantSerializer.serialize(chainingRestaurants);
+
+
     }
 
-    public String addToCart(String jsonInput) {
-        String restaurantName = foodDeserializer.getRestaurantNameFromJson(jsonInput);
-        Restaurant restaurant = getRestaurantByName(restaurantName);
+//    public String addToCart(String jsonInput) {
+//        String restaurantName = foodDeserializer.getRestaurantNameFromJson(jsonInput);
+//        Restaurant restaurant = getRestaurantByName(restaurantName);
+//        if(restaurant == null)
+//            return ("There Is No Restaurant Named " + restaurantName );
+//        String foodName = foodDeserializer.getFoodNameFromJson(jsonInput);
+//        Food food = restaurant.getFoodByName(foodName);
+//        if(food == null){
+//            return "Food Does Not Exist";
+//        }
+//
+//        return customers.get(0).addToCart(restaurant, food);
+//
+//    }
+
+    public String addToCart(String restaurantId, String foodName) {
+        Restaurant restaurant = getRestaurantById(restaurantId);
         if(restaurant == null)
-            return ("There Is No Restaurant Named " + restaurantName );
-        String foodName = foodDeserializer.getFoodNameFromJson(jsonInput);
+            return ("There Is No Restaurant With ID " + restaurantId);
         Food food = restaurant.getFoodByName(foodName);
         if(food == null){
             return "Food Does Not Exist";
         }
 
         return customers.get(0).addToCart(restaurant, food);
-
     }
 
     public String getCart() {
@@ -169,11 +194,31 @@ public class Loghmeh {
         return null;
     }
 
+
+    // TODO!!
+    public Restaurant getRestaurantById(String restaurantId) {
+        for(Restaurant rest: restaurants){
+            if(rest.getId().equals(idMapper.get(restaurantId)))
+                return rest;
+        }
+        return null;
+    }
+
     public ArrayList<Restaurant> getChainingRestaurantsByName(String restaurantName) {
         ArrayList<Restaurant> chainingRestaurants = new ArrayList<Restaurant>();
 
         for(Restaurant rest: restaurants){
             if(rest.getName().equals(restaurantName))
+                chainingRestaurants.add(rest);
+        }
+        return chainingRestaurants;
+    }
+
+    public ArrayList<Restaurant> getChainingRestaurantsById(String restaurantId) {
+        ArrayList<Restaurant> chainingRestaurants = new ArrayList<Restaurant>();
+
+        for(Restaurant rest: restaurants){
+            if(rest.getId().equals(restaurantId))
                 chainingRestaurants.add(rest);
         }
         return chainingRestaurants;

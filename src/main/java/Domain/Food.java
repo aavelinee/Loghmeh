@@ -5,10 +5,23 @@ public class Food {
     private String description;
     private float popularity;
     private float price;
+    private String image;
     private transient Menu menu;
 
     public String getName() {
         return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public String getImage() {
+        return image;
     }
 
     public void setMenu(Menu menu) {

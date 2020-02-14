@@ -47,7 +47,7 @@ public class RootPage implements Page {
                 "    </form>" +
 
                 "    <form action=\"/getRestaurant\" method=\"POST\">\n" +
-                "        <input type=\"text\" {\"id\": id}\" name=\"id\"><br>" +
+                "        <input type=\"text\" id=\"\" name=\"restaurantId\"><br>" +
                 "        <button type=\"submit\">Get Restaurant</button>\n" +
                 "    </form>" +
 //

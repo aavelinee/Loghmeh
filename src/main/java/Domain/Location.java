@@ -15,6 +15,14 @@ public class Location {
         return Math.sqrt(Math.pow((location.x - x), 2) + Math.pow((location.y - y), 2));
     }
 
+    public Float getX() {
+        return x;
+    }
+
+    public Float getY() {
+        return y;
+    }
+
     @Override
     public boolean equals(Object object) {
         if(this == object)
