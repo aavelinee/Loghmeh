@@ -37,6 +37,10 @@ public class RootPage implements Page {
                 "    </style>\n" +
                 "</head>\n" +
                 "<body>\n" +
+                "    <form action=\"/getProfile\" method=\"GET\">\n" +
+                "        <button type=\"submit\">Show Profile</button>\n" +
+                "        <br><br>" +
+                "    </form>" +
                 "    <form action=\"/getRestaurants\" method=\"GET\">\n" +
                 "        <button type=\"submit\">Get Restaurants</button>\n" +
                 "        <br><br>" +

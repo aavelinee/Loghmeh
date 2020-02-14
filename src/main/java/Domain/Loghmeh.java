@@ -20,7 +20,7 @@ public class Loghmeh {
     private Loghmeh() {
         restaurants = new ArrayList<Restaurant>();
         customers = new ArrayList<Customer>();
-        customers.add(new Customer());
+        customers.add(new Customer(1, "Aylin", "Baharan", "+989128248768", "baharan.aylin@ut.ac.ir"));
         idMapper = new HashMap<String, String>();
     }
 
@@ -62,8 +62,9 @@ public class Loghmeh {
                 restaurant.setMenu(otherBranch.getMenu());
             }
             idMapper.put(Integer.toString(this.restaurants.size()+1), restaurant.getId());
+            this.restaurants.add(restaurant);
         }
-        this.restaurants.addAll(restaurants);
+//        this.restaurants.addAll(restaurants);
         return "Restaurant Added Successfully";
     }
 
@@ -184,5 +185,11 @@ public class Loghmeh {
 
     public ArrayList<Restaurant> getRestaurants() {
         return restaurants;
+    }
+
+    public Customer getCustomer(int i) {
+        if(i >= this.customers.size())
+            return null;
+        return customers.get(i);
     }
 }

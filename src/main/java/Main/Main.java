@@ -22,7 +22,10 @@ public class Main {
             System.out.println(loghmeh.addRestaurants(restaurantsJson));
 
             Javalin loghmehServer = Javalin.create().start(7677);
+            loghmehServer.get("/", ctx -> ServerHandler.RootPage.handleRequest(ctx));
             loghmehServer.get("/getRestaurants", ctx -> ServerHandler.GetRestaurantsPage.handleRequest(ctx));
+            loghmehServer.get("/getProfile", ctx -> ServerHandler.GetProfile.handleRequest(ctx));
+
 //            loghmehServer.routes(() -> {
 //                get("/un-secured",   ctx -> ctx.result("Hello"),   roles(ANYONE));
 //                get("/secured",      ctx -> ctx.result("Hello"),   roles(ROLE_ONE));
