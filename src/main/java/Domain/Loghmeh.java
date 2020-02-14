@@ -144,7 +144,7 @@ public class Loghmeh {
         return customers.get(0).addToCart(restaurant, food);
     }
 
-    public String getCart() {
+    public Order getCart() {
         return customers.get(0).getCart();
     }
 

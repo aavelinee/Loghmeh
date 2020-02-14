@@ -73,7 +73,7 @@ public class GetRestaurantPage implements Page {
                         "    </ul>\n" +
                         "<form action=\"/getCart\" method=\"POST\">\n" +
                         "    <input type=\"hidden\" name=\"restaurantId\" value=%s>" +
-                        "    <button type=\"submit\" name=\"foodName\" value=\"%s\" >addToCart</button>\n" +
+                        "    <button type=\"submit\" name=\"foodName\" value=\"%s\" >get Cart</button>\n" +
                         "</form>\n" +
                         "</body>\n" +
                         "</html>";

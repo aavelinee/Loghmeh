@@ -32,7 +32,8 @@ public class Main {
 //                get("/secured",      ctx -> ctx.result("Hello"),   roles(ROLE_ONE));
 //            });
             loghmehServer.post("/getRestaurant", ctx -> ServerHandler.GetRestaurantPage.handleRequest(ctx));
-//            loghmehServer.post("/getCart", ctx -> ServerHandler.GetAddToCartPage)
+
+            loghmehServer.post("/getCart", ctx -> ServerHandler.GetAddToCartPage.handleRequest(ctx));
         }
         else{
             System.out.println("Unable to get restaurants from API");

@@ -35,18 +35,18 @@ public class Customer {
             return "You can't order from different restaurants";
     }
 
-    public String getCart() {
+    public Order getCart() {
         if(orders.size() == 0 || orders.get(orders.size()-1).getStatus() != Order.orderStatus.Ordering){
-            return "There is no order in progress";
+            return null;
         }
-        return orderSerializer.orderSerialize(orders.get(orders.size()-1));
+        return orders.get(orders.size()-1);
     }
 
     public String finalizeOrder() {
         if(orders.size() == 0 || orders.get(orders.size()-1).getStatus() != Order.orderStatus.Ordering){
             return "There is no order in progress";
         }
-        String result = getCart();
+        String result = orderSerializer.orderSerialize(getCart());
         orders.get(orders.size()-1).setStatus(Order.orderStatus.Submitted);
         return (result + "\nOrder was submitted successfully");
     }
