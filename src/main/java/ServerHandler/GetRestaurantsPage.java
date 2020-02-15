@@ -55,8 +55,12 @@ public class GetRestaurantsPage implements Page {
                                         "            <td>%d</td>\n" +
                                         "            <td><img class=\"logo\" src=%s alt=\"logo\"></td>\n" +
                                         "            <td>%s</td>\n" +
-                                        "        </tr>\n"
-                                        , numOfRestaurantsInZone, restaurant.getLogoURL(), restaurant.getName());
+                                        "        </tr>\n" +
+                                        "<form action=\"/getRestaurant\" method=\"POST\">\n" +
+                                        "    <input type=\"hidden\" name=\"restaurantId\"><br>" +
+                                        "    <button type=\"submit\">Get Restaurant Menu</button>\n" +
+                                        "</form>"
+                                , numOfRestaurantsInZone, restaurant.getLogoURL(), restaurant.getName());
 
 
             }

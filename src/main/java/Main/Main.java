@@ -4,15 +4,6 @@ import Domain.Loghmeh;
 import ServerHandler.*;
 import io.javalin.Javalin;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.StringTokenizer;
-
 public class Main {
     public static void main(String[] args){
 
@@ -33,7 +24,9 @@ public class Main {
 //            });
             loghmehServer.post("/getRestaurant", ctx -> ServerHandler.GetRestaurantPage.handleRequest(ctx));
 
-            loghmehServer.post("/getCart", ctx -> ServerHandler.GetAddToCartPage.handleRequest(ctx));
+            loghmehServer.post("/getCart", ctx -> GetCartPage.handleRequest(ctx));
+
+            loghmehServer.get("/finalize", ctx -> FinalizeOrderPage.handleRequest(ctx));
         }
         else{
             System.out.println("Unable to get restaurants from API");

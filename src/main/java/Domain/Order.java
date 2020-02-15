@@ -46,4 +46,6 @@ public class Order {
     public ArrayList<OrderItem> getOrders() {
         return orders;
     }
+
+    public Restaurant getRestaurant() { return restaurant; }
 }

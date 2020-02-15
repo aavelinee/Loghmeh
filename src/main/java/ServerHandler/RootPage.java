@@ -11,6 +11,7 @@ public class RootPage implements Page {
     public static void handleGetRequest(Context ctx) {
         String response = render();
         System.out.println(ctx.body());
+        ctx.status(200);
         ctx.html(response);
     }
 

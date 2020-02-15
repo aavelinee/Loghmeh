@@ -19,6 +19,7 @@ public class GetRestaurantPage implements Page {
             loghmeh.addToCart(restaurantId, foodName);
         }
         String response = render(restaurant, restaurantId);
+        ctx.status(200);
         ctx.html(response);
     }
 
