@@ -31,7 +31,7 @@ public class IntegrationTest {
 
     @BeforeClass
     public static void setup() {
-        String restaurantsJson = readFile("/home/baharan/Desktop/InternetEngineering/Loghmeh/src/test/java/restaurants.json");
+        String restaurantsJson = readFile("/home/eileen/Documents/IE/CA/loghmeh/src/test/java/restaurants.json");
         System.out.println(restaurantsJson);
         app = new JavalineApp(restaurantsJson);
     }
