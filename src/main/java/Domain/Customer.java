@@ -45,6 +45,7 @@ public class Customer {
         }
         String result = orderSerializer.orderSerialize(getCart());
         orders.get(orders.size()-1).setStatus(Order.orderStatus.Submitted);
+
         return (result + "\nOrder was submitted successfully");
     }
 

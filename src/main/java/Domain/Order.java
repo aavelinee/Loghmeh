@@ -35,6 +35,14 @@ public class Order {
         return true;
     }
 
+    public float getPrice() {
+        float price = 0;
+        for(OrderItem orderItem: orders){
+            price += orderItem.getFood().getPrice() * orderItem.getOrderCount();
+        }
+        return price;
+    }
+
     public orderStatus getStatus() {
         return status;
     }

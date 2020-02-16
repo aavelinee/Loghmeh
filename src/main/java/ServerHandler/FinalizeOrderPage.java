@@ -12,7 +12,7 @@ public class FinalizeOrderPage implements Page{
             response = renderEmptyCart(ctx);
         }
         else{
-            if(getPrice() > loghmeh.getCustomer(0).getCredit()){
+            if(loghmeh.getCart().getPrice() > loghmeh.getCustomer(0).getCredit()){
                 response = renderNotEnoughMoney(ctx);
             }
             else{
@@ -88,11 +88,4 @@ public class FinalizeOrderPage implements Page{
         return response;
     }
 
-    private static float getPrice() {
-        float price = 0;
-        for(OrderItem orderItem: Loghmeh.getInstance().getCart().getOrders()){
-            price += orderItem.getFood().getPrice() * orderItem.getOrderCount();
-        }
-        return price;
-    }
 }
