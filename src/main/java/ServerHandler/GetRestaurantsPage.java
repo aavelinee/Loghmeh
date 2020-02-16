@@ -57,10 +57,10 @@ public class GetRestaurantsPage implements Page {
                                         "            <td>%s</td>\n" +
                                         "        </tr>\n" +
                                         "<form action=\"/getRestaurant\" method=\"POST\">\n" +
-                                        "    <input type=\"hidden\" name=\"restaurantId\"><br>" +
+                                        "    <input type=\"hidden\" name=\"restaurantId\" value=\"%s\"><br>" +
                                         "    <button type=\"submit\">Get Restaurant Menu</button>\n" +
                                         "</form>"
-                                , numOfRestaurantsInZone, restaurant.getLogoURL(), restaurant.getName());
+                                , numOfRestaurantsInZone, restaurant.getLogoURL(), restaurant.getName(), Loghmeh.getInstance().getIndexFromRestaurantId(restaurant.getId()));
 
 
             }

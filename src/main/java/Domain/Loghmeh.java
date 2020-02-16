@@ -8,20 +8,24 @@ import java.util.HashMap;
 import Deserializer.*;
 import Serializer.*;
 
+import javax.swing.*;
+
 //Singleton class
 public class Loghmeh {
     private static Loghmeh loghmeh = null;
 
     private ArrayList<Restaurant> restaurants;
     private ArrayList<Customer> customers;
-    private HashMap<String, String> idMapper;//from user view id to restaurant id
+    private HashMap<String, String> idToIndex; //from user view id to restaurant id
+    private HashMap<String, String> indexToId; //from restaurant id to user view id
 
 
     private Loghmeh() {
         restaurants = new ArrayList<Restaurant>();
         customers = new ArrayList<Customer>();
         customers.add(new Customer(1, "Aylin", "Baharan", "+989128248768", "baharan.aylin@ut.ac.ir"));
-        idMapper = new HashMap<String, String>();
+        idToIndex = new HashMap<String, String>();
+        indexToId = new HashMap<String , String>();
     }
 
     public static Loghmeh getInstance() {
@@ -61,7 +65,8 @@ public class Loghmeh {
             if(otherBranch != null){
                 restaurant.setMenu(otherBranch.getMenu());
             }
-            idMapper.put(Integer.toString(this.restaurants.size()+1), restaurant.getId());
+            indexToId.put(Integer.toString(this.restaurants.size()+1), restaurant.getId());
+            idToIndex.put(restaurant.getId(), Integer.toString(this.restaurants.size()+1));
             this.restaurants.add(restaurant);
         }
         return "Restaurant Added Successfully";
@@ -194,14 +199,16 @@ public class Loghmeh {
         return null;
     }
 
-
-    // TODO!!
     public Restaurant getRestaurantById(String restaurantId) {
         for(Restaurant rest: restaurants){
-            if(rest.getId().equals(idMapper.get(restaurantId)))
+            if(rest.getId().equals(indexToId.get(restaurantId)))
                 return rest;
         }
         return null;
+    }
+
+    public String getIndexFromRestaurantId(String restaurantId) {
+        return idToIndex.get(restaurantId);
     }
 
     public ArrayList<Restaurant> getChainingRestaurantsByName(String restaurantName) {
