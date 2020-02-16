@@ -45,14 +45,14 @@ public class GetRestaurantsPage implements Page {
                         "            <th>name</th>\n" +
                         "        </tr>\n" ;
 
-        int numOfRestaurantsInZone = 0;
+        Boolean restaurantsNear = false;
         for(Restaurant restaurant: restaurants) {
             if(restaurant.getLocation().euclideanDistance(new Location(0f, 0f)) <= 170){
-                numOfRestaurantsInZone ++;
+                restaurantsNear = true;
                 response +=
                         String.format(
                                         "        <tr>\n" +
-                                        "            <td>%d</td>\n" +
+                                        "            <td>%s</td>\n" +
                                         "            <td><img class=\"logo\" src=%s alt=\"logo\"></td>\n" +
                                         "            <td>%s</td>\n" +
                                         "        </tr>\n" +
@@ -60,10 +60,14 @@ public class GetRestaurantsPage implements Page {
                                         "    <input type=\"hidden\" name=\"restaurantId\" value=\"%s\"><br>" +
                                         "    <button type=\"submit\">Get Restaurant Menu</button>\n" +
                                         "</form>"
-                                , numOfRestaurantsInZone, restaurant.getLogoURL(), restaurant.getName(), Loghmeh.getInstance().getIndexFromRestaurantId(restaurant.getId()));
+                                , Loghmeh.getInstance().getIndexFromRestaurantId(restaurant.getId()), restaurant.getLogoURL(), restaurant.getName(), Loghmeh.getInstance().getIndexFromRestaurantId(restaurant.getId()));
 
 
             }
+        }
+        if(restaurantsNear == false){
+            response +=
+                    "<h2> There is no restaurant near you </h2>";
         }
         response +=
                     "    </table>\n" +

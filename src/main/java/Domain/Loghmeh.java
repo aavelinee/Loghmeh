@@ -137,13 +137,16 @@ public class Loghmeh {
 //
 //    }
 
-    public String addToCart(String restaurantId, String foodName) {
+    public Boolean addToCart(String restaurantId, String foodName) {
         Restaurant restaurant = getRestaurantById(restaurantId);
-        if(restaurant == null)
-            return ("There Is No Restaurant With ID " + restaurantId);
+        if(restaurant == null) {
+            System.out.println("There Is No Restaurant With ID " + restaurantId);
+            return false;
+        }
         Food food = restaurant.getFoodByName(foodName);
         if(food == null){
-            return "Food Does Not Exist";
+            System.out.println("Food Does Not Exist");
+            return false;
         }
 
         return customers.get(0).addToCart(restaurant, food);

@@ -16,17 +16,16 @@ public class Main {
             loghmehServer.get("/", ctx -> RootPage.handleGetRequest(ctx));
             loghmehServer.get("/getRestaurants", ctx -> GetRestaurantsPage.handleGetRequest(ctx));
             loghmehServer.get("/getProfile", ctx -> GetProfilePage.handleGetRequest(ctx));
+            loghmehServer.get("/finalize", ctx -> FinalizeOrderPage.handleRequest(ctx));
+
             loghmehServer.post("/getProfile/increaseCredit", ctx -> GetProfilePage.handlePostRequest(ctx));
+            loghmehServer.post("/getRestaurant", ctx -> ServerHandler.GetRestaurantPage.handleRequest(ctx));
+            loghmehServer.post("/getCart", ctx -> GetCartPage.handleRequest(ctx));
 
 //            loghmehServer.routes(() -> {
 //                get("/un-secured",   ctx -> ctx.result("Hello"),   roles(ANYONE));
 //                get("/secured",      ctx -> ctx.result("Hello"),   roles(ROLE_ONE));
 //            });
-            loghmehServer.post("/getRestaurant", ctx -> ServerHandler.GetRestaurantPage.handleRequest(ctx));
-
-            loghmehServer.post("/getCart", ctx -> GetCartPage.handleRequest(ctx));
-
-            loghmehServer.get("/finalize", ctx -> FinalizeOrderPage.handleRequest(ctx));
         }
         else{
             System.out.println("Unable to get restaurants from API");

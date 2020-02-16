@@ -23,16 +23,17 @@ public class Customer {
         this.credit = 0;
     }
 
-    public String addToCart(Restaurant restaurant, Food food) {
+    public Boolean addToCart(Restaurant restaurant, Food food) {
         if(orders.size() == 0 || orders.get(orders.size() - 1).getStatus() != Order.orderStatus.Ordering){
             Order order = new Order(restaurant);
             orders.add(order);
         }
         boolean orderedSuccessfully = orders.get(orders.size() - 1).addToCart(restaurant, food);
-        if(orderedSuccessfully)
-            return "Food Added To Your Cart Successfully";
-        else
-            return "You can't order from different restaurants";
+        return orderedSuccessfully;
+//        if(orderedSuccessfully)
+//            return "Food Added To Your Cart Successfully";
+//        else
+//            return "You can't order from different restaurants";
     }
 
     public Order getCart() {
