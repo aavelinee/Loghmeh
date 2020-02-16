@@ -48,7 +48,6 @@ public class Loghmeh {
         for (Restaurant rest : restaurants){
             if(rest.getName().equals(restaurant.getName()) && !rest.getLocation().equals(restaurant.getLocation()) &&
                     rest.getMenu().equals(restaurant.getMenu())){//chain restaurant
-//                restaurant.setMenu(rest.getMenu());
                 return restaurant;
             }
         }
@@ -84,58 +83,13 @@ public class Loghmeh {
 
     }
 
-//    public String getRestaurants() {
-//        String result = "";
-//        for(Restaurant rest: restaurants){
-//            result += (rest.getName() + "\n");
-//        }
-//        if(result.contains("\n")){
-//            result = result.substring(0, result.length() - 1);
-//        }
-//        else{
-//            result = "There is no restaurant in the system";
-//        }
-//        return result;
-//    }
-
-//    public String getRestaurant(String jsonInput) {
-//        String restaurantName = restaurantDeserializer.getRestaurantNameFromJson(jsonInput);
-////        Restaurant restaurant = getRestaurantByName(restaurantName);
-//        ArrayList<Restaurant> chainingRestaurants = getChainingRestaurantsByName(restaurantName);
-////        if(restaurant == null)
-//        if(chainingRestaurants.size() == 0)
-//            return ("There Is No Restaurant Named " + restaurantName);
-//        return restaurantSerializer.serialize(chainingRestaurants);
-//    }
-
 
     public Restaurant getRestaurant(String restaurantId) {
-//        String restaurantName = restaurantDeserializer.getRestaurantNameFromJson(jsonInput);
         Restaurant restaurant = getRestaurantById(restaurantId);
-//        ArrayList<Restaurant> chainingRestaurants = getChainingRestaurantsById(restaurantId);
         if(restaurant == null)
-//        if(chainingRestaurants.size() == 0)
             return null;
         return restaurant;
-//        return restaurantSerializer.serialize(chainingRestaurants);
-
-
     }
-
-//    public String addToCart(String jsonInput) {
-//        String restaurantName = foodDeserializer.getRestaurantNameFromJson(jsonInput);
-//        Restaurant restaurant = getRestaurantByName(restaurantName);
-//        if(restaurant == null)
-//            return ("There Is No Restaurant Named " + restaurantName );
-//        String foodName = foodDeserializer.getFoodNameFromJson(jsonInput);
-//        Food food = restaurant.getFoodByName(foodName);
-//        if(food == null){
-//            return "Food Does Not Exist";
-//        }
-//
-//        return customers.get(0).addToCart(restaurant, food);
-//
-//    }
 
     public Boolean addToCart(String restaurantId, String foodName) {
         Restaurant restaurant = getRestaurantById(restaurantId);

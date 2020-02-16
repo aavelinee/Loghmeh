@@ -27,8 +27,4 @@ public class orderSerializer implements JsonSerializer<Order> {
         return gson.toJson(order, Order.class);
     }
 
-//    public static String serialize(Order order) {
-//        Gson gson = new Gson();
-//        return gson.toJson(order);
-//    }
 }

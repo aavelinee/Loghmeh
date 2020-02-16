@@ -10,13 +10,11 @@ public class Restaurant {
     private String description;
     private Location location;
     private Menu menu;
-//    private ArrayList<Domain.Food> menu = new ArrayList<Domain.Food>();
 
     public Restaurant(String id, String name, String logoURL, Location location, Menu menu) {
         this.id = id;
         this.name = name;
         this.logo = logoURL;
-//        this.description = description;
         this.location = location;
         this.menu = menu;
     }

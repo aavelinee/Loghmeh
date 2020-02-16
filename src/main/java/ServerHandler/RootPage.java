@@ -1,11 +1,6 @@
 package ServerHandler;
 
-import Domain.Location;
-import Domain.Loghmeh;
-import Domain.Restaurant;
 import io.javalin.http.Context;
-
-import java.util.ArrayList;
 
 public class RootPage implements Page {
     public static void handleGetRequest(Context ctx) {
@@ -51,10 +46,6 @@ public class RootPage implements Page {
                 "        <input type=\"text\" id=\"\" name=\"restaurantId\"><br>" +
                 "        <button type=\"submit\">Get Restaurant</button>\n" +
                 "    </form>" +
-//
-//                "    <form action=\"/\" method=\"POST\">\n" +
-//                "    <button type=\"submit\">finalize</button>\n" +
-//                "    </form>" +
 
                 "</body>\n" +
                 "</html>";

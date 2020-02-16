@@ -30,10 +30,6 @@ public class Customer {
         }
         boolean orderedSuccessfully = orders.get(orders.size() - 1).addToCart(restaurant, food);
         return orderedSuccessfully;
-//        if(orderedSuccessfully)
-//            return "Food Added To Your Cart Successfully";
-//        else
-//            return "You can't order from different restaurants";
     }
 
     public Order getCart() {

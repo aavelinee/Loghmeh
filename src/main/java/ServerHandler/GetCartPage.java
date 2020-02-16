@@ -1,8 +1,6 @@
 package ServerHandler;
 
 import Domain.*;
-import com.sun.org.apache.xpath.internal.operations.Or;
-import io.javalin.Javalin;
 import io.javalin.http.Context;
 
 public class GetCartPage {

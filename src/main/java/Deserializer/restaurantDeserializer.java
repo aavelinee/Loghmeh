@@ -36,7 +36,6 @@ public class restaurantDeserializer {
                         jsonObject.get("id").getAsString(),
                         jsonObject.get("name").getAsString(),
                         jsonObject.get("logo").getAsString(),
-//                        jsonObject.get("description").getAsString(),
                         location,
                         menu
                 );
@@ -78,7 +77,6 @@ public class restaurantDeserializer {
                         jsonObject.get("id").getAsString(),
                         jsonObject.get("name").getAsString(),
                         jsonObject.get("logo").getAsString(),
-//                        jsonObject.get("description").getAsString(),
                         location,
                         menu
                 );

@@ -1,12 +1,8 @@
 package ServerHandler;
 
 import Domain.Customer;
-import Domain.Location;
 import Domain.Loghmeh;
-import Domain.Restaurant;
 import io.javalin.http.Context;
-
-import java.util.ArrayList;
 
 public class GetProfilePage implements Page {
     public static void handleGetRequest(Context ctx) {

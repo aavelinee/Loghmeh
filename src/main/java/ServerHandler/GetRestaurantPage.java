@@ -5,10 +5,7 @@ import Domain.Location;
 import Domain.Loghmeh;
 import Domain.Restaurant;
 import io.javalin.http.Context;
-import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class GetRestaurantPage implements Page {
     public static void handleRequest(Context ctx) {
@@ -91,15 +88,15 @@ public class GetRestaurantPage implements Page {
                                     "    <input type=\"hidden\" name=\"restaurantId\" value=%s>" +
                                     "    <button type=\"submit\" name=\"foodName\" value=\"%s\" >get Cart</button>\n" +
                                     "</form>\n";
-                ctx.status(403);
+                ctx.status(200);
                 }
                 else{
                     response += "<h2>This restaurant is farther than the limit</h2>";
+                    ctx.status(403);
                 }
-                response +=
+        response +=
                         "</body>\n" +
                         "</html>";
-                ctx.status(200);
                 return response;
     }
 
@@ -130,6 +127,7 @@ public class GetRestaurantPage implements Page {
                         "</body>" +
                         "</html>";
         ctx.status(404);
+
         return response;
     }
 

@@ -25,12 +25,9 @@ public class GetResaurants {
                     response.append(inputLine);
                 }
                 in.close();
-
-//                System.out.println(response.toString());
                 return response.toString();
 
             } else {
-//                System.out.println("GET request not worked");
                 return null;
             }
         }catch(Exception e){
