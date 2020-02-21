@@ -1,6 +1,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="domain.Restaurant" %>
 <%@ page import="domain.Loghmeh" %>
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +18,7 @@
         }
         .logo{
             width: 100px;
-            height: 100px;x
+            height: 100px;
         }
     </style>
 </head>
@@ -27,23 +28,22 @@
         <th>id</th>
         <th>logo</th>
         <th>name</th>
-        <th>description</th>
     </tr>
-<%
-    ArrayList<Restaurant> restaurants = (ArrayList<Restaurant>) request.getAttribute("restaurants");
+    <%ArrayList<Restaurant> restaurants = (ArrayList<Restaurant>) request.getAttribute("restaurants");
     for(Restaurant restaurant: restaurants) {%>
         <tr>
             <td><%=Loghmeh.getInstance().getIndexFromRestaurantId(restaurant.getId())%></td>
-            <td><img class=\"logo\" src=<%=restaurant.getLogoURL()%> alt=\"logo\"></td>
+            <td><img class=logo src=<%=restaurant.getLogoURL()%> alt=logo></td>
             <td><%=restaurant.getName()%></td>
+            <td>
+                <form action=/getRestaurant method=POST>
+                    <input type=hidden name=restaurantId value=<%=Loghmeh.getInstance().getIndexFromRestaurantId(restaurant.getId())%>><br>
+                    <button type=submit>Get Restaurant Menu</button>
+                </form>
+            </td>
         </tr>
-        <form action=\"/getRestaurant\" method=\"POST\">
-            <input type=\"hidden\" name=\"restaurantId\" value=\"<%=Loghmeh.getInstance().getIndexFromRestaurantId(restaurant.getId())%>\"><br>
-            <button type=\"submit\">Get Restaurant Menu</button>
-        </form>
-        }
-    }
-    if(restaurants.size() == 0){%>
+        <%}%>
+    <%if(restaurants.size() == 0){%>
         <h2> There is no restaurant near you </h2>
     <%}%>
 
