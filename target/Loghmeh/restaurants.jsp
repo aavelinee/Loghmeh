@@ -34,16 +34,12 @@
         <tr>
             <td><%=Loghmeh.getInstance().getIndexFromRestaurantId(restaurant.getId())%></td>
             <td><img class=logo src=<%=restaurant.getLogoURL()%> alt=logo></td>
-            <td><%=restaurant.getName()%></td>
+            <td><a href="/restaurant?restaurantId=<%=Loghmeh.getInstance().getIndexFromRestaurantId(restaurant.getId())%>"><%=restaurant.getName()%></a></td>
             <td>
-                <form action=/getRestaurant method=POST>
-                    <input type=hidden name=restaurantId value=<%=Loghmeh.getInstance().getIndexFromRestaurantId(restaurant.getId())%>><br>
-                    <button type=submit>Get Restaurant Menu</button>
-                </form>
             </td>
         </tr>
-        <%}%>
-    <%if(restaurants.size() == 0){%>
+        <%}
+    if(restaurants.size() == 0){%>
         <h2> There is no restaurant near you </h2>
     <%}%>
 
