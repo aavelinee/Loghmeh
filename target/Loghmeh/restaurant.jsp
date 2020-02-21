@@ -47,9 +47,12 @@
                 <img src=<%=food.getImage()%> alt="logo">
                 <div><%=food.getName()%></div>
                 <div><%=food.getPrice()%></div>
-                <form action="" method="POST">
-                    <input type="hidden" name="restaurantId" value=<%=Loghmeh.getInstance().getIndexFromRestaurantId(restaurant.getId())%>>
-                    <button type="submit">addToCart</button>
+                <form action=/restaurant method="POST">
+                    <input type="hidden" name="restaurantId" value=<%=restaurant.getId()%>>
+                    <input type="hidden" name="foodName" value="<%=food.getName()%>">
+                        <%--<%request.setAttribute("restaurantId", restaurant.getId());%>--%>
+                        <%--<%request.setAttribute("foodName", food.getName().json);%>--%>
+                    <button type="submit">Add To Cart</button>
                 </form>
             </li>
 
@@ -57,7 +60,7 @@
         </ul>
     </li>
     <form action=/cart method=GET>
-        <button type=submit name=foodName value= >get Cart</button>
+        <button type=submit>get Cart</button>
     </form>
 </ul>
 </body>
