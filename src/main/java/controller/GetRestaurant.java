@@ -1,5 +1,6 @@
 package controller;
 
+import com.sun.xml.internal.ws.util.StringUtils;
 import domain.Loghmeh;
 import domain.Restaurant;
 
@@ -13,13 +14,27 @@ import java.io.IOException;
 
 @WebServlet("/restaurant")
 public class GetRestaurant extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String restaurantId = request.getParameter("restaurantId");
-        Restaurant restaurant = Loghmeh.getInstance().getRestaurantById(restaurantId);
-        request.setAttribute("restaurant", restaurant);
-        String restaurantPageName = "restaurant.jsp";
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher(restaurantPageName);
-        requestDispatcher.forward(request, response);
+
+//        if (org.apache.commons.lang.StringUtils.isBlank(restaurantId)) {
+//            String indexPageName = "index.jsp";
+//            RequestDispatcher requestDispatcher = request.getRequestDispatcher(indexPageName);
+//            request.setAttribute("nullRestaurantId", "true");
+//            requestDispatcher.forward(request, response);
+//        }else if (){
+//
+//        } else {
+            Restaurant restaurant = Loghmeh.getInstance().getRestaurantById(restaurantId);
+//            if(restaurant == null) {
+//
+//            }
+            request.setAttribute("restaurant", restaurant);
+            String restaurantPageName = "restaurant.jsp";
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher(restaurantPageName);
+            requestDispatcher.forward(request, response);
+//        }
+
 
     }
 }
