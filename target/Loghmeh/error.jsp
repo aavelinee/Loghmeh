@@ -47,25 +47,24 @@
 
     <%if(request.getAttribute("badAddToCart") != null){
         if(request.getAttribute("nullRestaurantId") != null || request.getAttribute("nullFoodName") != null) {%>
-    <script type="text/javascript">
-        alert("Insert valid parameters");
-    </script>
-    <form action=/restaurant?restaurantId=<%=request.getAttribute("restaurantId")%> method=GET>
-        <button type=submit>Restaurants</button>
-        <br><br>
-    </form>
-    <%}
+            <script type="text/javascript">
+                alert("Insert valid parameters");
+            </script>
+            <form action=/restaurant?restaurantId=<%=request.getAttribute("restaurantId")%> method=GET>
+                <button type=submit>Restaurants</button>
+                <br><br>
+            </form>
+        <%}
         if(request.getAttribute("differentRestaurants") != null) {%>
-    <script type="text/javascript">
-        alert("You cannot order from different restaurants");
-    </script>
-    <form action=/restaurants method=GET>
-        <button type=submit>Restaurants</button>
-        <br><br>
-    </form>
-    <%}
+            <script type="text/javascript">
+                alert("You cannot order from different restaurants");
+            </script>
+            <form action=/restaurants method=GET>
+                <button type=submit>Restaurants</button>
+                <br><br>
+            </form>
+        <%}
     }%>
-
 
 </body>
 </html>
