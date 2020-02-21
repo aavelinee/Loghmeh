@@ -13,6 +13,7 @@ public class Loghmeh {
 
     private ArrayList<Restaurant> restaurants;
     private ArrayList<Customer> customers;
+    private ArrayList<Delivery> deliveries;
     private HashMap<String, String> idToIndex; //from user view id to restaurant id
     private HashMap<String, String> indexToId; //from restaurant id to user view id
 
