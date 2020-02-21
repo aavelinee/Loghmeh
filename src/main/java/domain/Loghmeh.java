@@ -42,6 +42,15 @@ public class Loghmeh {
         return false;
     }
 
+    public boolean deliveryAlreadyExists(Delivery delivery) {
+        for (Delivery del : deliveries){
+            if (delivery.equals(del)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public Restaurant sameRestaurant(Restaurant restaurant) {
         for (Restaurant rest : restaurants){
             if(rest.getName().equals(restaurant.getName()) && !rest.getLocation().equals(restaurant.getLocation()) &&
@@ -67,6 +76,17 @@ public class Loghmeh {
             this.restaurants.add(restaurant);
         }
         return "Restaurants Added Successfully";
+    }
+
+    public String addDeliveries(String jsonInput) {
+        ArrayList<Delivery> deliveries = deliveryDeserializer.deserialize(jsonInput);
+        for (Delivery delivery: deliveries){
+            if(deliveryAlreadyExists(delivery)){
+                return "Delivery Already Exists";
+            }
+            this.deliveries.add(delivery);
+        }
+        return "Delivery Added Successfully";
     }
 
     public String addFoodToRestaurant(String jsonInput) {
