@@ -55,11 +55,10 @@
 
             <%}%>
         </ul>
-        <form action=/getCart method=POST>
-            <input type=hidden name=restaurantId value=<%=Loghmeh.getInstance().getIndexFromRestaurantId(restaurant.getId())%>>
-            <button type=submit name=foodName value= >get Cart</button>
-        </form>
     </li>
+    <form action=/cart method=GET>
+        <button type=submit name=foodName value= >get Cart</button>
+    </form>
 </ul>
 </body>
 </html>
