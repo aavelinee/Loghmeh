@@ -17,11 +17,11 @@ public class GetCart extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Loghmeh loghmeh = Loghmeh.getInstance();
         Order cart = loghmeh.getCart();
-//        if(cart == null){
-//
-//        }
+
         request.setAttribute("restaurantName", cart.getRestaurant().getName());
         request.setAttribute("cart", cart);
+        response.setStatus(200);
+
 
         String cartPageName = "cart.jsp";
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(cartPageName);

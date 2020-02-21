@@ -65,7 +65,7 @@ public class Loghmeh {
             idToIndex.put(restaurant.getId(), Integer.toString(this.restaurants.size()+1));
             this.restaurants.add(restaurant);
         }
-        return "Restaurant Added Successfully";
+        return "Restaurants Added Successfully";
     }
 
     public String addFoodToRestaurant(String jsonInput) {
@@ -154,6 +154,8 @@ public class Loghmeh {
     }
 
     public Restaurant getRestaurantById(String restaurantId) {
+        if(restaurantId == null)
+            return null;
         for(Restaurant rest: restaurants){
             if(rest.getId().equals(indexToId.get(restaurantId)))
                 return rest;

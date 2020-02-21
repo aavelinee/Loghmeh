@@ -90,10 +90,16 @@ public class Customer {
         ArrayList<Restaurant> restaurants = Loghmeh.getInstance().getRestaurants();
         ArrayList<Restaurant> closeRestaurants = new ArrayList<Restaurant>();
         for(Restaurant restaurant: restaurants) {
-            if (restaurant.getLocation().euclideanDistance(location) <= 170) {
+            if (restaurant.getLocation().euclideanDistance(location) <= 170){
                 closeRestaurants.add(restaurant);
             }
         }
         return closeRestaurants;
+    }
+
+    public boolean isRestaurantClose(Location location){
+        if(this.location.euclideanDistance(location) <= 170)
+            return true;
+        return false;
     }
 }

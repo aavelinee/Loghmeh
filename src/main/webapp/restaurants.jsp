@@ -24,24 +24,27 @@
 </head>
 <body>
 <table>
-    <tr>
-        <th>id</th>
-        <th>logo</th>
-        <th>name</th>
-    </tr>
     <%ArrayList<Restaurant> restaurants = (ArrayList<Restaurant>) request.getAttribute("restaurants");
-    for(Restaurant restaurant: restaurants) {%>
-        <tr>
-            <td><%=Loghmeh.getInstance().getIndexFromRestaurantId(restaurant.getId())%></td>
-            <td><img class=logo src=<%=restaurant.getLogoURL()%> alt=logo></td>
-            <td><a href="/restaurant?restaurantId=<%=Loghmeh.getInstance().getIndexFromRestaurantId(restaurant.getId())%>"><%=restaurant.getName()%></a></td>
-            <td>
-            </td>
-        </tr>
-        <%}
     if(restaurants.size() == 0){%>
-        <h2> There is no restaurant near you </h2>
-    <%}%>
+    <h2> There is no restaurant near you </h2>
+
+    <%}
+    else{%>
+        <tr>
+            <th>id</th>
+            <th>logo</th>
+            <th>name</th>
+        </tr>
+        <%for(Restaurant restaurant: restaurants) {%>
+            <tr>
+                <td><%=Loghmeh.getInstance().getIndexFromRestaurantId(restaurant.getId())%></td>
+                <td><img class=logo src=<%=restaurant.getLogoURL()%> alt=logo></td>
+                <td><a href="/restaurant?restaurantId=<%=Loghmeh.getInstance().getIndexFromRestaurantId(restaurant.getId())%>"><%=restaurant.getName()%></a></td>
+                <td>
+                </td>
+            </tr>
+        <%}
+    }%>
 
 </table>
 </body>

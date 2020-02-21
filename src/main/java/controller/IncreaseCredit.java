@@ -16,6 +16,7 @@ public class IncreaseCredit extends HttpServlet {
         int credit = Integer.valueOf(request.getParameter("credit"));
         if(credit > 0){
             Loghmeh.getInstance().getCustomer(0).increaseCredit(credit);
+            response.setStatus(200);
             response.sendRedirect("/profile");
         }
         else{

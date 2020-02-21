@@ -23,22 +23,12 @@
     </style>
 </head>
 <body>
-<%
-    String classValue = "form-group col-md-6 ";
-    if(request.getParameter("badFirstName") != null) {
-        classValue += "has-error";
-    }
-%>
 <ul>
     <%Restaurant restaurant = (Restaurant) request.getAttribute("restaurant");%>
     <li>ID: <%=Loghmeh.getInstance().getIndexFromRestaurantId(restaurant.getId())%></li>
     <li>name: <%=restaurant.getName()%></li>
     <li>location: (<%=restaurant.getLocation().getX()%>, <%=restaurant.getLocation().getY()%>)</li>
     <li>logo: <img src=<%=restaurant.getLogoURL()%> alt="logo"></li>
-
-    <!-- IN CASE YOU WANT SOME BONUS : -->
-    <!-- <li>estimated delivery time: 10 min 2 sec </li> -->
-
     <li>menu:
         <ul>
         <%
@@ -58,7 +48,7 @@
         </ul>
     </li>
     <form action=/cart method=GET>
-        <button type=submit>get Cart</button>
+        <button type=submit>Get Cart</button>
     </form>
 </ul>
 </body>
