@@ -10,13 +10,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/restaurants")
-public class GetRestaurants extends HttpServlet {
+@WebServlet("/profile")
+public class GetProfile extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("restaurants", Loghmeh.getInstance().getCustomer(0).getCloseRestaurants());
+        request.setAttribute("customer", Loghmeh.getInstance().getCustomer(0));
         response.setStatus(200);
-        String restaurantsPageName = "restaurants.jsp";
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher(restaurantsPageName);
+        String profilePageName = "profile.jsp";
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher(profilePageName);
         requestDispatcher.forward(request, response);
     }
 }
