@@ -5,9 +5,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class GetResaurants {
+public class ExternalServices {
 
-    public static String getRestaurants(String url){
+    public static String getFromExtenalAPI(String url){
         try {
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
