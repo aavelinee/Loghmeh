@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import deserializer.*;
 
@@ -14,6 +16,8 @@ public class Loghmeh {
     private ArrayList<Restaurant> restaurants;
     private ArrayList<Customer> customers;
     private ArrayList<Delivery> deliveries;
+    private final Lock deliveriesLock = new ReentrantLock();
+
     private HashMap<String, String> idToIndex; //from user view id to restaurant id
     private HashMap<String, String> indexToId; //from restaurant id to user view id
 
@@ -36,15 +40,6 @@ public class Loghmeh {
     public boolean restaurantAlreadyExists(Restaurant restaurant) {
         for (Restaurant rest : restaurants){
             if (restaurant.equals(rest)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean deliveryAlreadyExists(Delivery delivery) {
-        for (Delivery del : deliveries){
-            if (delivery.equals(del)) {
                 return true;
             }
         }
@@ -79,14 +74,14 @@ public class Loghmeh {
     }
 
     public String addDeliveries(String jsonInput) {
-        ArrayList<Delivery> deliveries = deliveryDeserializer.deserialize(jsonInput);
-        for (Delivery delivery: deliveries){
-            if(deliveryAlreadyExists(delivery)){
-                return "Delivery Already Exists";
-            }
-            this.deliveries.add(delivery);
+        ArrayList<Delivery> deliveries = deserializer.deliveryDeserializer.deserialize(jsonInput);
+        deliveriesLock.lock();
+        try {
+            this.deliveries = deliveries;
+        } finally {
+            deliveriesLock.unlock();
         }
-        return "Delivery Added Successfully";
+        return "Deliveries Added Successfully";
     }
 
     public String addFoodToRestaurant(String jsonInput) {
