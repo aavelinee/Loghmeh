@@ -20,7 +20,7 @@ public class Loghmeh {
     private Loghmeh() {
         restaurants = new ArrayList<Restaurant>();
         customers = new ArrayList<Customer>();
-        customers.add(new Customer(1, "Aylin", "Baharan", "+989128248768", "baharan.aylin@ut.ac.ir"));
+        customers.add(new Customer(1, "Aylin", "Baharan", "+989128248768", "baharan.aylin@ut.ac.ir", 0f, 0f));
         idToIndex = new HashMap<String, String>();
         indexToId = new HashMap<String , String>();
     }

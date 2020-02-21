@@ -12,15 +12,17 @@ public class Customer {
     private String phoneNumber;
     private String email;
     private int credit;
+    private Location location;
 
 
-    public Customer(int id, String firstName, String lastName, String phoneNumber, String email) {
+    public Customer(int id, String firstName, String lastName, String phoneNumber, String email, Float x, Float y) {
         this.customerId = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.credit = 0;
+        this.location = new Location(x, y);
     }
 
     public Boolean addToCart(Restaurant restaurant, Food food) {
@@ -82,5 +84,16 @@ public class Customer {
 
     public void increaseCredit(int credit) {
         this.credit += credit;
+    }
+
+    public ArrayList<Restaurant> getCloseRestaurants() {
+        ArrayList<Restaurant> restaurants = Loghmeh.getInstance().getRestaurants();
+        ArrayList<Restaurant> closeRestaurants = new ArrayList<Restaurant>();
+        for(Restaurant restaurant: restaurants) {
+            if (restaurant.getLocation().euclideanDistance(location) <= 170) {
+                closeRestaurants.add(restaurant);
+            }
+        }
+        return closeRestaurants;
     }
 }
