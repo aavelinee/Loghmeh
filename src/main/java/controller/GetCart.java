@@ -15,14 +15,10 @@ import java.io.IOException;
 public class GetCart extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Loghmeh loghmeh = Loghmeh.getInstance();
-        Order cart = loghmeh.getCart();
-        String cartPageName;
-        request.setAttribute("restaurantName", cart.getRestaurant().getName());
+        Order cart = Loghmeh.getInstance().getCart();
         request.setAttribute("cart", cart);
-        cartPageName = "cart.jsp";
         response.setStatus(200);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher(cartPageName);
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("cart.jsp");
         requestDispatcher.forward(request, response);
     }
 }

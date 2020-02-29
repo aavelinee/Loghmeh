@@ -14,11 +14,11 @@
     </style>
 </head>
 <body>
-<div><%=request.getAttribute("restaurantName")%></div>
-<% Order cart = (Order) request.getAttribute("cart");
-if(cart == null){%>
+<% Order cart = (Order) request.getAttribute("cart");%>
+<%if(cart == null){%>
     <h2> Your cart is empty </h2>
 <%} else{%>
+<div><%=cart.getRestaurant().getName()%></div>
 <ul>
     <%for(OrderItem orderItem: cart.getOrders()){%>
         <li><%=orderItem.getFood().getName()%>:‌<%=orderItem.getOrderCount()%></li>

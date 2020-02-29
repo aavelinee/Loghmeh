@@ -34,8 +34,7 @@ public class deliveryDeserializer {
         };
 
         gsonBuilder.registerTypeAdapter(Delivery.class, deserializer);
-        Type deliveryList = new TypeToken<ArrayList<Delivery>>() {
-        }.getType();
+        Type deliveryList = new TypeToken<ArrayList<Delivery>>(){}.getType();
 
         Gson customGson = gsonBuilder.create();
         return customGson.fromJson(jsonInput, deliveryList);

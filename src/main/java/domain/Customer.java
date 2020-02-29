@@ -5,7 +5,7 @@ import serializer.orderSerializer;
 import java.util.ArrayList;
 
 public class Customer {
-    private ArrayList<Order> orders = new ArrayList<Order>();
+    private ArrayList<Order> orders = new ArrayList<>();
     private int customerId;
     private String firstName;
     private String lastName;
