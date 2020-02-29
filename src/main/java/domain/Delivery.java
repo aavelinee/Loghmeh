@@ -11,5 +11,11 @@ public class Delivery {
         this.location = location;
     }
 
+    public float getVelocity() {
+        return velocity;
+    }
 
+    public Location getLocation() {
+        return location;
+    }
 }

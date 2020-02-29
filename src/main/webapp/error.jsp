@@ -65,6 +65,17 @@
             </form>
         <%}
     }%>
+    <%if(request.getAttribute("badOrder") != null){
+        if(request.getAttribute("noId") != null) {%>
+            <script type="text/javascript">
+                alert("Insert valid parameters");
+            </script>
+            <form action=/ method=GET>
+                <button type=submit>Home</button>
+                <br><br>
+            </form>
+        <%}
+    }%>
 
 </body>
 </html>

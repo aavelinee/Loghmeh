@@ -119,12 +119,12 @@ public class Loghmeh {
         return customers.get(0).addToCart(restaurant, food);
     }
 
-    public Order getCart() {
-        return customers.get(0).getCart();
+    public Order getCart(int i) {
+        return customers.get(i).getCart();
     }
 
-    public String finalizeOrder() {
-        return customers.get(0).finalizeOrder();
+    public void finalizeOrder() {
+        customers.get(0).finalizeOrder();
     }
 
     public String getRecommendedRestaurants() {
@@ -150,6 +150,25 @@ public class Loghmeh {
         }
         return result;
 
+    }
+
+    public void assignDelivery(Order order, Customer customer) {
+        double deliveryTime = Double.POSITIVE_INFINITY;
+        double time, distance;
+        Delivery selectedDelivery = null;
+        for(Delivery delivery: deliveries) {
+            Location restaurantLocation = order.getRestaurant().getLocation();
+            distance = Math.sqrt(Math.pow(delivery.getLocation().getX() - restaurantLocation.getX(), 2) + Math.pow(delivery.getLocation().getY() - restaurantLocation.getY(), 2));
+            distance += Math.sqrt(Math.pow(customer.getLocation().getX() - restaurantLocation.getX(), 2) + Math.pow(customer.getLocation().getY() - restaurantLocation.getY(), 2));
+            time = distance / delivery.getVelocity();
+            if (time < deliveryTime) {
+                deliveryTime = time;
+                selectedDelivery = delivery;
+            }
+        }
+        order.setDelivery(selectedDelivery);
+        order.setStatus(Order.orderStatus.OnTheWay);
+        order.setEstimatedDeliveryTime(deliveryTime);
     }
 
     public String getFoodFromRestaurant(String jsonInput) {

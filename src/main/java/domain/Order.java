@@ -4,16 +4,20 @@ import java.util.ArrayList;
 
 public class Order {
     public enum orderStatus {
-        Delivered, Payed, Submitted, Ordering;
+        Delivered, OnTheWay, DeliverySearch, Ordering;
     }
+
+    private int id;
     private transient orderStatus status;
 
     private transient Restaurant restaurant;
     private ArrayList<OrderItem> orders = new ArrayList<OrderItem>();
+    private Delivery delivery;
+    private double estimatedDeliveryTime;
 
-
-    public Order(Restaurant restaurant) {
+    public Order(int id, Restaurant restaurant) {
         status = orderStatus.Ordering;
+        this.id = id;
         this.restaurant = restaurant;
     }
 
@@ -40,6 +44,10 @@ public class Order {
         return price;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public orderStatus getStatus() {
         return status;
     }
@@ -53,4 +61,14 @@ public class Order {
     }
 
     public Restaurant getRestaurant() { return restaurant; }
+
+    public void setDelivery(Delivery delivery) {
+        this.delivery = delivery;
+    }
+
+    public void setEstimatedDeliveryTime(double estimatedDeliveryTime) {
+        this.estimatedDeliveryTime = estimatedDeliveryTime;
+    }
+
+
 }

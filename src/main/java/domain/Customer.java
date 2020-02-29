@@ -27,7 +27,7 @@ public class Customer {
 
     public Boolean addToCart(Restaurant restaurant, Food food) {
         if(orders.size() == 0 || orders.get(orders.size() - 1).getStatus() != Order.orderStatus.Ordering){
-            Order order = new Order(restaurant);
+            Order order = new Order(orders.size(), restaurant);
             orders.add(order);
         }
         boolean orderedSuccessfully = orders.get(orders.size() - 1).addToCart(restaurant, food);
@@ -41,14 +41,16 @@ public class Customer {
         return orders.get(orders.size()-1);
     }
 
-    public String finalizeOrder() {
+    public void finalizeOrder() {
         if(orders.size() == 0 || orders.get(orders.size()-1).getStatus() != Order.orderStatus.Ordering){
-            return "There is no order in progress";
+//            return "There is no order in progress";
+            return;
         }
-        String result = orderSerializer.orderSerialize(getCart());
-        orders.get(orders.size()-1).setStatus(Order.orderStatus.Submitted);
+//        String result = orderSerializer.orderSerialize(getCart());
+        orders.get(orders.size()-1).setStatus(Order.orderStatus.DeliverySearch);
         credit -= orders.get(orders.size()-1).getPrice();
-        return (result + "\nOrder was submitted successfully");
+//        return (result + "\nOrder was submitted successfully");
+        return;
     }
 
     public Order getLastOrder() {
@@ -80,6 +82,14 @@ public class Customer {
 
     public int getCredit() {
         return credit;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public ArrayList<Order> getOrders() {
+        return orders;
     }
 
     public void increaseCredit(int credit) {

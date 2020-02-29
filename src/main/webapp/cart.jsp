@@ -24,7 +24,7 @@
         <li><%=orderItem.getFood().getName()%>:‌<%=orderItem.getOrderCount()%></li>
     <%}%>
 </ul>
-<form action="/finalize" method="POST">
+<form action="/order" method="POST">
     <button type="submit">finalize</button>
 </form>
 <%}%>

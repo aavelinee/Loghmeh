@@ -15,7 +15,7 @@ import java.io.IOException;
 public class GetCart extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Order cart = Loghmeh.getInstance().getCart();
+        Order cart = Loghmeh.getInstance().getCart(0);
         request.setAttribute("cart", cart);
         response.setStatus(200);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("cart.jsp");

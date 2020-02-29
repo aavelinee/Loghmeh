@@ -27,6 +27,16 @@
             <button type=submit>increase</button>
             <input type="number" name=credit>
         </form>
+        <li>
+            Orders :
+            <ul>
+                <%for(int i = 0;i < customer.getOrders().size(); i++){%>
+                    <li>
+                        <a href="/order?orderId=<%=i%>">order id : <%=i%></a>
+                    </li>
+                <%}%>
+            </ul>
+        </li>
     </ul>
 </body> 
 </html>
