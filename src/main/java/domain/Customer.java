@@ -27,7 +27,7 @@ public class Customer {
 
     public Boolean addToCart(Restaurant restaurant, Food food) {
         if(orders.size() == 0 || orders.get(orders.size() - 1).getStatus() != Order.orderStatus.Ordering){
-            Order order = new Order(orders.size(), restaurant);
+            Order order = new Order(orders.size() + 1, restaurant);
             orders.add(order);
         }
         boolean orderedSuccessfully = orders.get(orders.size() - 1).addToCart(restaurant, food);

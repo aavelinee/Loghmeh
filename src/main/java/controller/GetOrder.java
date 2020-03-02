@@ -1,6 +1,7 @@
 package controller;
 
 import domain.Loghmeh;
+import domain.Order;
 import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.RequestDispatcher;
@@ -16,7 +17,7 @@ public class GetOrder extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int orderId = Integer.valueOf(request.getParameter("orderId"));
         String orderPageName;
-        if(orderId >= Loghmeh.getInstance().getCustomer(0).getOrders().size()){
+        if(orderId > Loghmeh.getInstance().getCustomer(0).getOrders().size() || orderId < 1){
             request.setAttribute("badOrder", "true");
             request.setAttribute("noId", "true");
             response.setStatus(400);
@@ -28,10 +29,12 @@ public class GetOrder extends HttpServlet {
             response.setStatus(403);
             orderPageName = "/error.jsp";
         }else{
-            request.setAttribute("order", Loghmeh.getInstance().getCustomer(0).getOrders().get(orderId));
+            request.setAttribute("order", Loghmeh.getInstance().getCustomer(0).getOrders().get(orderId - 1));
             response.setStatus(200);
             orderPageName = "/order.jsp";
         }
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher(orderPageName);
+        requestDispatcher.forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -48,8 +51,10 @@ public class GetOrder extends HttpServlet {
                 response.setStatus(400);
                 finalizePageName = "/error.jsp";
             } else {
+                Order order = Loghmeh.getInstance().getCart(0);
+                request.setAttribute("order", order);
                 Loghmeh.getInstance().finalizeOrder();
-                request.setAttribute("order", Loghmeh.getInstance().getCart(0));
+                Loghmeh.getInstance().findDelivery(order);
                 response.setStatus(200);
                 finalizePageName = "/order.jsp";
             }

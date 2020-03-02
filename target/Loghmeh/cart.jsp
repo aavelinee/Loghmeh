@@ -6,7 +6,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>User</title>
+    <title>Cart</title>
     <style>
         li, div, form {
             padding: 5px
@@ -24,7 +24,7 @@
         <li><%=orderItem.getFood().getName()%>:‌<%=orderItem.getOrderCount()%></li>
     <%}%>
 </ul>
-<form action="/finalize" method="POST">
+<form action="/order" method="POST">
     <button type="submit">finalize</button>
 </form>
 <%}%>

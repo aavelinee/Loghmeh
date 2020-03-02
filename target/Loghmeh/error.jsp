@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Error</title>
 </head>
 <body>
     <%if(request.getAttribute("badFinalize") != null){
@@ -61,6 +61,17 @@
             </script>
             <form action=/restaurants method=GET>
                 <button type=submit>Restaurants</button>
+                <br><br>
+            </form>
+        <%}
+    }%>
+    <%if(request.getAttribute("badOrder") != null){
+        if(request.getAttribute("noId") != null) {%>
+            <script type="text/javascript">
+                alert("Insert valid parameters");
+            </script>
+            <form action=/profile method=GET>
+                <button type=submit>Orders List</button>
                 <br><br>
             </form>
         <%}

@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Error</title>
 </head>
 <body>
     <%if(request.getAttribute("badFinalize") != null){
@@ -70,8 +70,8 @@
             <script type="text/javascript">
                 alert("Insert valid parameters");
             </script>
-            <form action=/ method=GET>
-                <button type=submit>Home</button>
+            <form action=/profile method=GET>
+                <button type=submit>Orders List</button>
                 <br><br>
             </form>
         <%}

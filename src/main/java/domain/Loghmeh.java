@@ -1,9 +1,6 @@
 package domain;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
+import java.util.*;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -152,7 +149,7 @@ public class Loghmeh {
 
     }
 
-    public void assignDelivery(Order order, Customer customer) {
+    public void assignDelivery(Order order, Customer customer, ArrayList<Delivery> deliveries) {
         double deliveryTime = Double.POSITIVE_INFINITY;
         double time, distance;
         Delivery selectedDelivery = null;
@@ -169,6 +166,43 @@ public class Loghmeh {
         order.setDelivery(selectedDelivery);
         order.setStatus(Order.orderStatus.OnTheWay);
         order.setEstimatedDeliveryTime(deliveryTime);
+        order.setDeliveryDate(new Date());
+        setStatusToDeliveredTimer(order, deliveryTime);
+        System.out.println("estimation: " + deliveryTime);
+        System.out.println(order.getDeliveryDate());
+    }
+
+    public void findDelivery(final Order order) {
+        TimerTask getDeliveries = new TimerTask() {
+            public void run() {
+                String deliveriesJson = external_services.ExternalServices.getFromExtenalAPI("http://138.197.181.131:8080/deliveries");
+                ArrayList<Delivery> deliveries = deserializer.deliveryDeserializer.deserialize(deliveriesJson);
+                if(deliveries.size() != 0){
+                    assignDelivery(order, customers.get(0), deliveries);
+                    cancel();
+                }
+            }
+        };
+        new Timer().scheduleAtFixedRate(getDeliveries, 0, 1000*3);
+    }
+
+    public void setStatusToDeliveredTimer(final Order order, double delay) {
+        TimerTask setStatusToDelivered = new TimerTask() {
+            public void run() {
+                order.setStatus(Order.orderStatus.Delivered);
+            }
+        };
+        Timer timer = new Timer();
+        timer.schedule(setStatusToDelivered, (long)delay * 1000);
+    }
+
+    public String convertMillisToDateFormat(long durationInMillis) {
+        long millis = durationInMillis % 1000;
+        long second = (durationInMillis / 1000) % 60;
+        long minute = (durationInMillis / (1000 * 60)) % 60;
+        long hour = (durationInMillis / (1000 * 60 * 60)) % 24;
+
+        return String.format("%02d h %02d min %02d.%d sec", hour, minute, second, millis);
     }
 
     public String getFoodFromRestaurant(String jsonInput) {

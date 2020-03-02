@@ -3,7 +3,7 @@
 <html lang=en> 
 <head> 
     <meta charset=UTF-8> 
-    <title>User</title> 
+    <title>Profile</title>
     <style> 
         li { 
         tpadding: 5px 
@@ -32,7 +32,7 @@
             <ul>
                 <%for(int i = 0;i < customer.getOrders().size(); i++){%>
                     <li>
-                        <a href="/order?orderId=<%=i%>">order id : <%=i%></a>
+                        <a href="/order?orderId=<%=i+1%>">order id : <%=i+1%></a>
                     </li>
                 <%}%>
             </ul>

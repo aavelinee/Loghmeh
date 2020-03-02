@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Order {
     public enum orderStatus {
@@ -14,6 +15,7 @@ public class Order {
     private ArrayList<OrderItem> orders = new ArrayList<OrderItem>();
     private Delivery delivery;
     private double estimatedDeliveryTime;
+    private Date deliveryDate;
 
     public Order(int id, Restaurant restaurant) {
         status = orderStatus.Ordering;
@@ -70,5 +72,15 @@ public class Order {
         this.estimatedDeliveryTime = estimatedDeliveryTime;
     }
 
+    public double getEstimatedDeliveryTime() {
+        return estimatedDeliveryTime;
+    }
 
+    public void setDeliveryDate(Date deliveryDate) {
+        this.deliveryDate = deliveryDate;
+    }
+
+    public Date getDeliveryDate() {
+        return deliveryDate;
+    }
 }
