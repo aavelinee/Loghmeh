@@ -38,5 +38,8 @@
             </ul>
         </li>
     </ul>
+    <form action=/cart method=GET>
+        <button type=submit>Get Cart</button>
+    </form>
 </body> 
 </html>

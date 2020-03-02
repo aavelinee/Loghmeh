@@ -81,11 +81,13 @@ public class GetRestaurant extends HttpServlet {
                 }
             }
             else if(addToCart == "no restaurant"){
-                System.out.println("no restaurant");
+                request.setAttribute("badAddToCart", "true");
+                request.setAttribute("noRestaurant", "true");
                 restaurantPageName = "error.jsp";
             }
             else if(addToCart == "no food"){
-                System.out.println("no food");
+                request.setAttribute("badAddToCart", "true");
+                request.setAttribute("noFood", "true");
                 restaurantPageName = "error.jsp";
             }
             else{

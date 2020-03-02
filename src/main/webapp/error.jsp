@@ -73,6 +73,24 @@
                 <br><br>
             </form>
         <%}
+            if(request.getAttribute("noRestaurant") != null) {%>
+                <script type="text/javascript">
+                    alert("There is no restaurant with the Id you entered");
+                </script>
+                <form action=/restaurants method=GET>
+                    <button type=submit>Restaurants</button>
+                    <br><br>
+                </form>
+        <%}
+            if(request.getAttribute("noFood") != null) {%>
+                <script type="text/javascript">
+                    alert("There is no food with the name you entered");
+                </script>
+                <form action=/restaurants method=GET>
+                    <button type=submit>Restaurants</button>
+                    <br><br>
+                </form>
+        <%}
     }%>
     <%if(request.getAttribute("badOrder") != null){
         if(request.getAttribute("noId") != null) {%>
