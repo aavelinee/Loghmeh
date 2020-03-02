@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Menu {
     private ArrayList<Food> foods = new ArrayList<Food>();
+    private ArrayList<FoodPartyFood> foodPartyFoods = new ArrayList<FoodPartyFood>();
     private transient Restaurant restaurant;
 
     public void addFood(Food food) {
@@ -45,8 +46,16 @@ public class Menu {
         return foods;
     }
 
+    public ArrayList<FoodPartyFood> getFoodPartyFoods() {
+        return foodPartyFoods;
+    }
+
     public void setRestaurant(Restaurant restaurant) {
         this.restaurant = restaurant;
+    }
+
+    public void setFoodPartyFoods(ArrayList<FoodPartyFood> foodPartyFoods) {
+        this.foodPartyFoods = foodPartyFoods;
     }
 
     @Override

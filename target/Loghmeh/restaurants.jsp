@@ -50,4 +50,3 @@
 </body>
 </html>
 
-<%--Loghmeh.getInstance().convertMillisToDateFormat((long) (60 + ((1.5 * restaurant.getLocation().euclideanDistance(Loghmeh.getInstance().getCustomer(0).getLocation())/5))*1000))--%>

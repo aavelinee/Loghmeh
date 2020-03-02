@@ -34,13 +34,13 @@ public class Loghmeh {
         return loghmeh;
     }
 
-    public boolean restaurantAlreadyExists(Restaurant restaurant) {
+    public Restaurant restaurantAlreadyExists(Restaurant restaurant) {
         for (Restaurant rest : restaurants){
             if (restaurant.equals(rest)) {
-                return true;
+                return rest;
             }
         }
-        return false;
+        return null;
     }
 
     public Restaurant sameRestaurant(Restaurant restaurant) {
@@ -56,7 +56,7 @@ public class Loghmeh {
     public String addRestaurants(String jsonInput) {
         ArrayList<Restaurant> restaurants = deserializer.restaurantDeserializer.deserializeRestaurants(jsonInput);
         for (Restaurant restaurant : restaurants){
-            if(restaurantAlreadyExists(restaurant)){
+            if(restaurantAlreadyExists(restaurant) != null){
                 return "Restaurant Already Exists\n";
             }
             Restaurant otherBranch = sameRestaurant(restaurant);
@@ -68,6 +68,33 @@ public class Loghmeh {
             this.restaurants.add(restaurant);
         }
         return "Restaurants Added Successfully";
+    }
+
+    public String addFoodPartyRestaurants(String jsonInput) {
+        ArrayList<Restaurant> restaurants = deserializer.restaurantDeserializer.deserializeFoodPartyRestaurants(jsonInput);
+        for (Restaurant restaurant: restaurants){
+            Restaurant existedRestaurant = restaurantAlreadyExists(restaurant);
+            if(existedRestaurant != null) {
+                existedRestaurant.getMenu().setFoodPartyFoods(restaurant.getMenu().getFoodPartyFoods());
+                return "FoodParty Menu Added To Existed Restaurant Successfully";
+            }
+            Restaurant otherBranch = sameRestaurant(restaurant);
+            if(otherBranch != null){
+                restaurant.setMenu(otherBranch.getMenu());
+            }
+            indexToId.put(Integer.toString(this.restaurants.size()+1), restaurant.getId());
+            idToIndex.put(restaurant.getId(), Integer.toString(this.restaurants.size()+1));
+            this.restaurants.add(restaurant);
+        }
+        return "Restaurant With Food Party Added Successfully";
+    }
+
+    public void deleteFoodParty() {
+        for(Restaurant restaurant: this.restaurants){
+            if(restaurant.getMenu().getFoodPartyFoods() != null){
+                restaurant.getMenu().setFoodPartyFoods(null);
+            }
+        }
     }
 
     public String addDeliveries(String jsonInput) {

@@ -107,6 +107,17 @@ public class Customer {
         return closeRestaurants;
     }
 
+    public ArrayList<Restaurant> getCloseFoodPartyRestaurants() {
+        ArrayList<Restaurant> restaurants = Loghmeh.getInstance().getRestaurants();
+        ArrayList<Restaurant> closeFoodPartyRestaurants = new ArrayList<Restaurant>();
+        for(Restaurant restaurant: restaurants) {
+            if (restaurant.getLocation().euclideanDistance(location) <= 170 && restaurant.getMenu().getFoodPartyFoods() != null){
+                closeFoodPartyRestaurants.add(restaurant);
+            }
+        }
+        return closeFoodPartyRestaurants;
+    }
+
     public boolean isRestaurantClose(Location location){
         if(this.location.euclideanDistance(location) <= 170)
             return true;
