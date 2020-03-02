@@ -1,9 +1,6 @@
 package domain;
 
 import java.util.*;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-
 import deserializer.*;
 
 //Singleton class
@@ -16,7 +13,6 @@ public class Loghmeh {
     private HashMap<String, String> idToIndex; //from user view id to restaurant id
     private HashMap<String, String> indexToId; //from restaurant id to user view id
 
-    private ReentrantLock restaurantsLock;
 
 
     private Loghmeh() {
@@ -25,7 +21,6 @@ public class Loghmeh {
         customers.add(new Customer(1, "Aylin", "Baharan", "+989128248768", "baharan.aylin@ut.ac.ir", 0f, 0f));
         idToIndex = new HashMap<String, String>();
         indexToId = new HashMap<String , String>();
-        restaurantsLock = new ReentrantLock();
     }
 
     public static Loghmeh getInstance() {
@@ -353,7 +348,4 @@ public class Loghmeh {
         return customers.get(i);
     }
 
-    public ReentrantLock getRestaurantsLock() {
-        return restaurantsLock;
-    }
 }
