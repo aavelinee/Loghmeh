@@ -15,7 +15,7 @@ public class BackgroundGetFoodPartyManager implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent event) {
         scheduler = Executors.newSingleThreadScheduledExecutor();
-        scheduler.scheduleAtFixedRate(new GetFoodParty(), 0, 30, TimeUnit.SECONDS);
+        scheduler.scheduleAtFixedRate(new GetFoodParty(), 0, 30, TimeUnit.MINUTES);
     }
 
     @Override

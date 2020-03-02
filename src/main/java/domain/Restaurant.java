@@ -1,5 +1,6 @@
 package domain;
 
+import controller.FoodParty;
 import deserializer.*;
 import serializer.*;
 
@@ -35,6 +36,10 @@ public class Restaurant {
 
     public Food getFoodByName(String foodName) {
         return menu.getFood(foodName);
+    }
+
+    public FoodPartyFood getFoodPartyFoodByName(String foodName) {
+        return menu.getFoodPartyFood(foodName);
     }
 
     public double getMenuPopulationAverage(){

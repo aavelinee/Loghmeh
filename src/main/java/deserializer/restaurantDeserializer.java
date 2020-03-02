@@ -31,6 +31,8 @@ public class restaurantDeserializer {
                     Food food = gson.fromJson(foodJsonElement, Food.class);
                     menu.addFood(food);
                 }
+                ArrayList<FoodPartyFood> foodPartyFoods = new ArrayList<FoodPartyFood>();
+                menu.setFoodPartyFoods(foodPartyFoods);
 
                 Restaurant restaurant =  new Restaurant(
                         jsonObject.get("id").getAsString(),
@@ -71,8 +73,11 @@ public class restaurantDeserializer {
                 for(JsonElement foodPartyFoodJsonElement: menuJsonArray){
                     Gson gson = new Gson();
                     FoodPartyFood foodPartyFood = gson.fromJson(foodPartyFoodJsonElement, FoodPartyFood.class);
-                    menu.addFood(foodPartyFood);
+                    System.out.println(foodPartyFood.getCount());
+                    menu.addFoodPartyFood(foodPartyFood);
                 }
+                ArrayList<Food> foods = new ArrayList<Food>();
+                menu.setFoods(foods);
 
                 Restaurant restaurant =  new Restaurant(
                     jsonObject.get("id").getAsString(),

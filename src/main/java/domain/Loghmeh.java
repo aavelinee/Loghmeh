@@ -128,19 +128,35 @@ public class Loghmeh {
         return restaurant;
     }
 
-    public Boolean addToCart(String restaurantId, String foodName) {
+    public String addToCart(String restaurantId, String foodName, String isFoodParty) {
         Restaurant restaurant = getRestaurantById(restaurantId);
         if(restaurant == null) {
             System.out.println("There Is No Restaurant With ID " + restaurantId);
-            return false;
+            return "no restaurant";
         }
-        Food food = restaurant.getFoodByName(foodName);
-        if(food == null){
-            System.out.println("Food Does Not Exist");
-            return false;
+        if(isFoodParty.equals("false")){
+            System.out.println("inja?!");
+            Food food = restaurant.getFoodByName(foodName);
+            if(food == null){
+                System.out.println("Food Does Not Exist");
+                return "no food";
+            }
+            if (customers.get(0).addToCart(restaurant, food)){
+                return "added";
+            }
+            return "not added";
         }
-
-        return customers.get(0).addToCart(restaurant, food);
+        else{
+            FoodPartyFood foodPartyFood = restaurant.getFoodPartyFoodByName(foodName);
+            if(foodPartyFood == null){
+                System.out.println("Food Party Food Does Not Exist");
+                return "no food";
+            }
+            if (customers.get(0).addToCart(restaurant, foodPartyFood)){
+                return "added";
+            }
+            return "not added";
+        }
     }
 
     public Order getCart(int i) {

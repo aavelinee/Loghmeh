@@ -30,8 +30,7 @@ public class Customer {
             Order order = new Order(orders.size() + 1, restaurant);
             orders.add(order);
         }
-        boolean orderedSuccessfully = orders.get(orders.size() - 1).addToCart(restaurant, food);
-        return orderedSuccessfully;
+        return orders.get(orders.size() - 1).addToCart(restaurant, food);
     }
 
     public Order getCart() {
@@ -49,6 +48,7 @@ public class Customer {
 //        String result = orderSerializer.orderSerialize(getCart());
         orders.get(orders.size()-1).setStatus(Order.orderStatus.DeliverySearch);
         credit -= orders.get(orders.size()-1).getPrice();
+
 //        return (result + "\nOrder was submitted successfully");
         return;
     }
@@ -100,7 +100,7 @@ public class Customer {
         ArrayList<Restaurant> restaurants = Loghmeh.getInstance().getRestaurants();
         ArrayList<Restaurant> closeRestaurants = new ArrayList<Restaurant>();
         for(Restaurant restaurant: restaurants) {
-            if (restaurant.getLocation().euclideanDistance(location) <= 170){
+            if (restaurant.getLocation().euclideanDistance(location) <= 170 && restaurant.getMenu().getFoods() != null){
                 closeRestaurants.add(restaurant);
             }
         }

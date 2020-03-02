@@ -51,6 +51,7 @@ public class GetRestaurant extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String restaurantId = request.getParameter("restaurantId");
         String foodName = request.getParameter("foodName");
+        String isFoodParty = request.getParameter("isFoodParty");
 
         Restaurant restaurant = Loghmeh.getInstance().getRestaurantById(Loghmeh.getInstance().getIndexFromRestaurantId(restaurantId));
         String restaurantPageName;
@@ -67,10 +68,25 @@ public class GetRestaurant extends HttpServlet {
             request.setAttribute("restaurantId", restaurantId);
             restaurantPageName = "error.jsp";
         } else{
-            if(Loghmeh.getInstance().addToCart(Loghmeh.getInstance().getIndexFromRestaurantId(restaurantId), foodName)){
+            String addToCart = Loghmeh.getInstance().addToCart(Loghmeh.getInstance().getIndexFromRestaurantId(restaurantId), foodName, isFoodParty);
+            if(addToCart == "added"){
                 request.setAttribute("restaurant", restaurant);
                 response.setStatus(200);
-                restaurantPageName = "restaurant.jsp";
+                if(isFoodParty.equals("false")) {
+                    restaurantPageName = "restaurant.jsp";
+                }
+                else {
+                    request.setAttribute("foodPartyRestaurants", Loghmeh.getInstance().getCustomer(0).getCloseFoodPartyRestaurants());
+                    restaurantPageName = "foodParty.jsp";
+                }
+            }
+            else if(addToCart == "no restaurant"){
+                System.out.println("no restaurant");
+                restaurantPageName = "error.jsp";
+            }
+            else if(addToCart == "no food"){
+                System.out.println("no food");
+                restaurantPageName = "error.jsp";
             }
             else{
                 request.setAttribute("badAddToCart", "true");

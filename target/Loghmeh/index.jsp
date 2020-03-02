@@ -27,7 +27,13 @@
     <button type=submit>Get Restaurants</button>
     <br><br>
 </form>
-
+<form action=/foodparty method=GET>
+    <button type=submit>Food Party</button>
+    <br><br>
+</form>
+<form action=/cart method=GET>
+    <button type=submit>Get Cart</button>
+</form>
 <%--<form action=/restaurant method=POST>--%>
     <%--<input type=text id=\ name=restaurantId><br>--%>
     <%--<button type=submit>Get Restaurant</button>--%>

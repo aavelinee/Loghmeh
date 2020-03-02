@@ -40,6 +40,7 @@
                 <form action=/restaurant method="POST">
                     <input type="hidden" name="restaurantId" value=<%=restaurant.getId()%>>
                     <input type="hidden" name="foodName" value="<%=food.getName()%>">
+                    <input type="hidden" name="isFoodParty" value="false">
                     <button type="submit">Add To Cart</button>
                 </form>
             </li>

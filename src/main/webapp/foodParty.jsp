@@ -1,6 +1,7 @@
 <%@ page import="domain.Restaurant" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="domain.FoodPartyFood" %>
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,9 +27,7 @@
 </head>
 <body>
 <ul>
-    <%
-        ArrayList<Restaurant> restaurants = (ArrayList<Restaurant>) request.getAttribute("foodPartyRestaurants");
-        System.out.println(restaurants.size());
+    <%ArrayList<Restaurant> restaurants = (ArrayList<Restaurant>) request.getAttribute("foodPartyRestaurants");
         if(restaurants.size() == 0){%>
             <h2> There is no restaurant with food party near you </h2>
         <%}
@@ -41,7 +40,7 @@
                         if(foodPartyFood.getCount() > 0) {%>
                             <ul>
                                 <li>
-                                    <img src=<%=foodPartyFood.getImage()%>alt="logo">
+                                    <img src="<%=foodPartyFood.getImage()%>" alt="logo">
                                     <div><%=restaurant.getName()%></div>
                                     <div><%=foodPartyFood.getName()%></div>
                                     <div><%=foodPartyFood.getDescription()%></div>
@@ -52,6 +51,7 @@
                                     <form action=/restaurant method="POST">
                                         <input type="hidden" name="restaurantId" value=<%=restaurant.getId()%>>
                                         <input type="hidden" name="foodName" value="<%=foodPartyFood.getName()%>">
+                                        <input type="hidden" name="isFoodParty" value="true">
                                         <button type="submit">Add To Cart</button>
                                     </form>
                                 </li>
@@ -61,6 +61,9 @@
                 </li>
             <%}
         }%>
+        <form action=/cart method=GET>
+            <button type=submit>Get Cart</button>
+        </form>
 </ul>
 </body>
 </html>

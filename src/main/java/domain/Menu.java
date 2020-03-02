@@ -1,5 +1,7 @@
 package domain;
 
+import controller.FoodParty;
+
 import java.util.ArrayList;
 
 public class Menu {
@@ -18,10 +20,30 @@ public class Menu {
         foods.add(food);
     }
 
+    public void addFoodPartyFood(FoodPartyFood foodPartyFood) {
+        for(FoodPartyFood f: foodPartyFoods){
+            if(f.equals(foodPartyFood)) {
+                System.out.println("Food Already Exists");
+                return;
+            }
+        }
+        foodPartyFood.setMenu(this);
+        foodPartyFoods.add(foodPartyFood);
+    }
+
     public Food getFood(String foodName) {
         for(Food food: foods){
             if(food.getName().equals(foodName)){
                 return food;
+            }
+        }
+        return null;
+    }
+
+    public FoodPartyFood getFoodPartyFood(String foodName) {
+        for(FoodPartyFood foodPartyFood: foodPartyFoods){
+            if(foodPartyFood.getName().equals(foodName)){
+                return foodPartyFood;
             }
         }
         return null;
@@ -54,9 +76,14 @@ public class Menu {
         this.restaurant = restaurant;
     }
 
+    public void setFoods(ArrayList<Food> foods) {
+        this.foods = foods;
+    }
+
     public void setFoodPartyFoods(ArrayList<FoodPartyFood> foodPartyFoods) {
         this.foodPartyFoods = foodPartyFoods;
     }
+
 
     @Override
     public boolean equals(Object object) {
