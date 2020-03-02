@@ -148,10 +148,10 @@ public class Loghmeh {
     public String finalizeOrder() {
         Order order = customers.get(0).getCart();
         if(order != null){
-            String result;
+            String result = "done";
             if(areFoodPartyFoodsAvailable(order) && isNewFoodParty(order)){
                 customers.get(0).finalizeOrder();
-                result = "done";
+//                result = "done";
             }
             else if(!areFoodPartyFoodsAvailable(order) && isNewFoodParty(order)){
                 customers.get(0).removeCart();
@@ -197,7 +197,7 @@ public class Loghmeh {
                 return false;
             }
         }
-        return false;
+        return true;
     }
 
     public boolean areFoodPartyFoodsAvailable(Order order) {
