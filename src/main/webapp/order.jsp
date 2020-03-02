@@ -25,7 +25,9 @@
             <%}%>
         </ul>
         <div>
-            <%if(cart.getStatus() == Order.orderStatus.DeliverySearch){%>
+            <%if(cart.getStatus() == Order.orderStatus.Ordering){%>
+                status : ordering
+            <%} else if(cart.getStatus() == Order.orderStatus.DeliverySearch){%>
                 status : finding delivery
 
             <%}else if(cart.getStatus() == Order.orderStatus.OnTheWay){%>

@@ -23,6 +23,15 @@
                 <br><br>
             </form>
         <%}
+        if(request.getAttribute("notAvailable") != null) {%>
+            <script type="text/javascript">
+                alert("You order more than available count");
+            </script>
+            <form action=/foodparty method=GET>
+                <button type=submit>Foodparty List</button>
+                <br><br>
+            </form>
+        <%}
     }%>
     <%if(request.getAttribute("badRestaurant") != null){
         if(request.getAttribute("nullRestaurantId") != null || request.getAttribute("restaurantIdNotFound") != null) {%>

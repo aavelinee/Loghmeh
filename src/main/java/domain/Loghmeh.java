@@ -1,7 +1,6 @@
 package domain;
 
 import java.util.*;
-import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import deserializer.*;
@@ -12,11 +11,11 @@ public class Loghmeh {
 
     private ArrayList<Restaurant> restaurants;
     private ArrayList<Customer> customers;
-    private ArrayList<Delivery> deliveries;
-    private final Lock deliveriesLock = new ReentrantLock();
 
     private HashMap<String, String> idToIndex; //from user view id to restaurant id
     private HashMap<String, String> indexToId; //from restaurant id to user view id
+
+    private ReentrantLock restaurantsLock;
 
 
     private Loghmeh() {
@@ -25,6 +24,7 @@ public class Loghmeh {
         customers.add(new Customer(1, "Aylin", "Baharan", "+989128248768", "baharan.aylin@ut.ac.ir", 0f, 0f));
         idToIndex = new HashMap<String, String>();
         indexToId = new HashMap<String , String>();
+        restaurantsLock = new ReentrantLock();
     }
 
     public static Loghmeh getInstance() {
@@ -54,7 +54,7 @@ public class Loghmeh {
     }
 
     public String addRestaurants(String jsonInput) {
-        ArrayList<Restaurant> restaurants = deserializer.restaurantDeserializer.deserializeRestaurants(jsonInput);
+        ArrayList<Restaurant> restaurants = deserializer.restaurantDeserializer.deserializeRestaurants(jsonInput, "normal");
         for (Restaurant restaurant : restaurants){
             if(restaurantAlreadyExists(restaurant) != null){
                 return "Restaurant Already Exists\n";
@@ -63,15 +63,13 @@ public class Loghmeh {
             if(otherBranch != null){
                 restaurant.setMenu(otherBranch.getMenu());
             }
-            indexToId.put(Integer.toString(this.restaurants.size()+1), restaurant.getId());
-            idToIndex.put(restaurant.getId(), Integer.toString(this.restaurants.size()+1));
-            this.restaurants.add(restaurant);
+            addRestaurantInfo(restaurant);
         }
         return "Restaurants Added Successfully";
     }
 
     public String addFoodPartyRestaurants(String jsonInput) {
-        ArrayList<Restaurant> restaurants = deserializer.restaurantDeserializer.deserializeFoodPartyRestaurants(jsonInput);
+        ArrayList<Restaurant> restaurants = deserializer.restaurantDeserializer.deserializeRestaurants(jsonInput, "foodparty");
         for (Restaurant restaurant: restaurants){
             Restaurant existedRestaurant = restaurantAlreadyExists(restaurant);
             if(existedRestaurant != null) {
@@ -82,42 +80,24 @@ public class Loghmeh {
             if(otherBranch != null){
                 restaurant.setMenu(otherBranch.getMenu());
             }
-            indexToId.put(Integer.toString(this.restaurants.size()+1), restaurant.getId());
-            idToIndex.put(restaurant.getId(), Integer.toString(this.restaurants.size()+1));
-            this.restaurants.add(restaurant);
+            addRestaurantInfo(restaurant);
+
         }
         return "Restaurant With Food Party Added Successfully";
     }
 
+    public void addRestaurantInfo(Restaurant restaurant) {
+        indexToId.put(Integer.toString(this.restaurants.size()+1), restaurant.getId());
+        idToIndex.put(restaurant.getId(), Integer.toString(this.restaurants.size()+1));
+        this.restaurants.add(restaurant);
+    }
+
     public void deleteFoodParty() {
         for(Restaurant restaurant: this.restaurants){
-            if(restaurant.getMenu().getFoodPartyFoods() != null){
-                restaurant.getMenu().setFoodPartyFoods(null);
+            if(restaurant.getMenu().getFoodPartyFoods() != null && restaurant.getMenu().getFoods() == null){
+                restaurants.remove(restaurant);
             }
         }
-    }
-
-    public String addDeliveries(String jsonInput) {
-        ArrayList<Delivery> deliveries = deserializer.deliveryDeserializer.deserialize(jsonInput);
-        deliveriesLock.lock();
-        try {
-            this.deliveries = deliveries;
-        } finally {
-            deliveriesLock.unlock();
-        }
-        return "Deliveries Added Successfully";
-    }
-
-    public String addFoodToRestaurant(String jsonInput) {
-        String restaurantName = foodDeserializer.getRestaurantNameFromJson(jsonInput);
-        Restaurant restaurant = getRestaurantByName(restaurantName);
-        if(restaurant == null){
-            String result = "There Is No Restaurant Named " + restaurantName;
-            return result;
-        }
-        restaurant.addFoodToMenu(jsonInput);
-        return "Food Added Successfully";
-
     }
 
 
@@ -134,19 +114,8 @@ public class Loghmeh {
             System.out.println("There Is No Restaurant With ID " + restaurantId);
             return "no restaurant";
         }
-        if(isFoodParty.equals("false")){
-            System.out.println("inja?!");
-            Food food = restaurant.getFoodByName(foodName);
-            if(food == null){
-                System.out.println("Food Does Not Exist");
-                return "no food";
-            }
-            if (customers.get(0).addToCart(restaurant, food)){
-                return "added";
-            }
-            return "not added";
-        }
-        else{
+
+        if(isFoodParty.equals("true")){
             FoodPartyFood foodPartyFood = restaurant.getFoodPartyFoodByName(foodName);
             if(foodPartyFood == null){
                 System.out.println("Food Party Food Does Not Exist");
@@ -157,14 +126,46 @@ public class Loghmeh {
             }
             return "not added";
         }
+        else{
+            Food food = restaurant.getFoodByName(foodName);
+            if(food == null){
+                System.out.println("Food Does Not Exist");
+                return "no food";
+            }
+            if (customers.get(0).addToCart(restaurant, food)){
+                return "added";
+            }
+            return "not added";
+        }
+
     }
 
     public Order getCart(int i) {
         return customers.get(i).getCart();
     }
 
-    public void finalizeOrder() {
-        customers.get(0).finalizeOrder();
+    public boolean finalizeOrder() {
+        Order order = customers.get(0).getCart();
+        if(order != null){
+            if(areFoodPartyFoodsAvailable(order)){
+                customers.get(0).finalizeOrder();
+                return true;
+            }
+            customers.get(0).removeCart();
+            return false;
+        }
+        return false;
+    }
+
+    public boolean areFoodPartyFoodsAvailable(Order order) {
+        for(OrderItem orderItem: order.getOrders()){
+            if(orderItem.getFood() instanceof FoodPartyFood){
+                if(!((FoodPartyFood) orderItem.getFood()).decreaseCount(orderItem.getOrderCount())){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     public String getRecommendedRestaurants() {
@@ -254,7 +255,6 @@ public class Loghmeh {
         if(restaurant == null)
             return ("There Is No Restaurant Named " + restaurantName);
         return restaurant.getFood(jsonInput);
-
     }
 
     public Restaurant getRestaurantByName(String restaurantName) {
@@ -299,9 +299,6 @@ public class Loghmeh {
         return chainingRestaurants;
     }
 
-    public Order getLastOrder() {
-        return customers.get(0).getLastOrder();
-    }
 
     public ArrayList<Restaurant> getRestaurants() {
         return restaurants;
@@ -312,4 +309,6 @@ public class Loghmeh {
             return null;
         return customers.get(i);
     }
+
+
 }

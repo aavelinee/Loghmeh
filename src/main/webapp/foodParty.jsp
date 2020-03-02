@@ -36,8 +36,8 @@
                 <li>menu:
                     <%  System.out.println(restaurant.getMenu().getFoodPartyFoods().size());
 
-                        for (FoodPartyFood foodPartyFood: restaurant.getMenu().getFoodPartyFoods()) {
-                        if(foodPartyFood.getCount() > 0) {%>
+                        for (FoodPartyFood foodPartyFood: restaurant.getMenu().getFoodPartyFoods()) {%>
+                        <%--if(foodPartyFood.getCount() > 0) {%>--%>
                             <ul>
                                 <li>
                                     <img src="<%=foodPartyFood.getImage()%>" alt="logo">
@@ -56,8 +56,8 @@
                                     </form>
                                 </li>
                             </ul>
-                        <%}
-                    }%>
+                        <%--<%}--%>
+                    <%}%>
                 </li>
             <%}
         }%>

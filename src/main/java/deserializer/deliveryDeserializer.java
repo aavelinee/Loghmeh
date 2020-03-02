@@ -11,6 +11,9 @@ import java.util.ArrayList;
 
 public class deliveryDeserializer {
     public static ArrayList<Delivery> deserialize(String jsonInput) {
+        if(jsonInput.equals("[]")){
+            return new ArrayList<Delivery>();
+        }
 
         GsonBuilder gsonBuilder = new GsonBuilder();
         JsonDeserializer<Delivery> deserializer = new JsonDeserializer<Delivery>() {
@@ -35,7 +38,6 @@ public class deliveryDeserializer {
 
         gsonBuilder.registerTypeAdapter(Delivery.class, deserializer);
         Type deliveryList = new TypeToken<ArrayList<Delivery>>(){}.getType();
-
         Gson customGson = gsonBuilder.create();
         return customGson.fromJson(jsonInput, deliveryList);
     }
