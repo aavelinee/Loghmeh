@@ -34,14 +34,14 @@
             <th>id</th>
             <th>logo</th>
             <th>name</th>
+            <th>delivery time estimation</th>
         </tr>
         <%for(Restaurant restaurant: restaurants) {%>
             <tr>
                 <td><%=Loghmeh.getInstance().getIndexFromRestaurantId(restaurant.getId())%></td>
                 <td><img class=logo src=<%=restaurant.getLogoURL()%> alt=logo></td>
                 <td><a href="/restaurant?restaurantId=<%=Loghmeh.getInstance().getIndexFromRestaurantId(restaurant.getId())%>"><%=restaurant.getName()%></a></td>
-                <td>
-                </td>
+                <td><%=Loghmeh.getInstance().convertMillisToDateFormat(((long)(60 + ((1.5 * restaurant.getLocation().euclideanDistance(Loghmeh.getInstance().getCustomer(0).getLocation())/5))))*1000)%></td>
             </tr>
         <%}
     }%>
@@ -49,3 +49,4 @@
 </table>
 </body>
 </html>
+
