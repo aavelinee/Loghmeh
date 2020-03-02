@@ -34,8 +34,8 @@
         else{
             for(Restaurant restaurant: restaurants){%>
                 <li>menu:
-                    <%for (FoodPartyFood foodPartyFood: restaurant.getMenu().getFoodPartyFoods()) {%>
-                        <%--if(foodPartyFood.getCount() > 0) {%>--%>
+                    <%for (FoodPartyFood foodPartyFood: restaurant.getMenu().getFoodPartyFoods()) {
+                        if(foodPartyFood.getCount() > 0) {%>
                             <ul>
                                 <li>
                                     <img src="<%=foodPartyFood.getImage()%>" alt="logo">
@@ -54,8 +54,8 @@
                                     </form>
                                 </li>
                             </ul>
-                        <%--<%}--%>
-                    <%}%>
+                        <%}
+                    }%>
                 </li>
             <%}
         }%>
