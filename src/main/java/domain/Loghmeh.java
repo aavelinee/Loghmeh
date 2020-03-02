@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.*;
+import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import deserializer.*;
@@ -144,15 +145,57 @@ public class Loghmeh {
         return customers.get(i).getCart();
     }
 
-    public boolean finalizeOrder() {
+    public String finalizeOrder() {
         Order order = customers.get(0).getCart();
         if(order != null){
-            if(areFoodPartyFoodsAvailable(order)){
+            String result;
+            if(areFoodPartyFoodsAvailable(order) && isNewFoodParty(order)){
                 customers.get(0).finalizeOrder();
+                result = "done";
+            }
+            else if(!areFoodPartyFoodsAvailable(order) && isNewFoodParty(order)){
+                customers.get(0).removeCart();
+                result = "count problem";
+            }
+            else if(areFoodPartyFoodsAvailable(order) && !isNewFoodParty(order)){
+                customers.get(0).removeCart();
+                result = "time problem";
+            }
+            else{
+                customers.get(0).removeCart();
+                result = "both problem";
+            }
+            return result;
+        }
+        return "no order";
+    }
+
+    public boolean isRestaurantExists(Restaurant restaurant) {
+        for(Restaurant rest: this.restaurants) {
+            if(restaurant.equals(rest)){
                 return true;
             }
-            customers.get(0).removeCart();
-            return false;
+        }
+        return false;
+    }
+
+    public boolean isNewFoodParty(Order order) {
+        for (OrderItem orderItem : order.getOrders()) {
+            if (orderItem.getFood() instanceof FoodPartyFood) {
+                if (!isRestaurantExists(orderItem.getFood().getMenu().getRestaurant())) {
+                    return false;
+                }
+
+                if (orderItem.getFood().getMenu().getFoodPartyFoods() == null) {
+                    return false;
+                }
+                for (FoodPartyFood foodPartyFood : orderItem.getFood().getMenu().getFoodPartyFoods()) {
+                    if (((FoodPartyFood) orderItem.getFood()).equals(foodPartyFood)){
+                       return true;
+                    }
+                }
+                return false;
+            }
         }
         return false;
     }
@@ -310,5 +353,7 @@ public class Loghmeh {
         return customers.get(i);
     }
 
-
+    public ReentrantLock getRestaurantsLock() {
+        return restaurantsLock;
+    }
 }

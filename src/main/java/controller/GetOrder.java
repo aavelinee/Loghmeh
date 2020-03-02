@@ -53,14 +53,21 @@ public class GetOrder extends HttpServlet {
             } else {
                 Order order = Loghmeh.getInstance().getCart(0);
                 request.setAttribute("order", order);
-                if(Loghmeh.getInstance().finalizeOrder()){
+                String finalize = Loghmeh.getInstance().finalizeOrder();
+                if(finalize.equals("done")){
                     Loghmeh.getInstance().findDelivery(order);
                     response.setStatus(200);
                     finalizePageName = "/order.jsp";
                 }
-                else{
+                else if(finalize.equals("count problem")){
                     request.setAttribute("badFinalize", "true");
                     request.setAttribute("notAvailable", "true");
+                    response.setStatus(400);
+                    finalizePageName = "/error.jsp";
+                }
+                else {
+                    request.setAttribute("badFinalize", "true");
+                    request.setAttribute("expireFoodParty", "true");
                     response.setStatus(400);
                     finalizePageName = "/error.jsp";
                 }

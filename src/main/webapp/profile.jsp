@@ -11,7 +11,7 @@
     </style>
 </head> 
 <body>
-    <% if(request.getAttribute("badCredit") != null){System.out.println("hereee");%>
+    <% if(request.getAttribute("badCredit") != null){%>
     <script type="text/javascript">
         alert("You entered bad credit");
     </script>

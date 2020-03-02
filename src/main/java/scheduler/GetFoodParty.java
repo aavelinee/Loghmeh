@@ -7,8 +7,6 @@ public class GetFoodParty implements Runnable{
     public void run() {
         String foodPartyJson = external_services.ExternalServices.getFromExtenalAPI("http://138.197.181.131:8080/foodparty");
         Loghmeh.getInstance().deleteFoodParty();
-        System.out.println(Loghmeh.getInstance().addFoodPartyRestaurants(foodPartyJson));
-
-//        System.out.println("Job trigged by scheduler");
+        Loghmeh.getInstance().addFoodPartyRestaurants(foodPartyJson);
     }
 }

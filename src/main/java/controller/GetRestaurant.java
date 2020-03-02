@@ -69,7 +69,7 @@ public class GetRestaurant extends HttpServlet {
             restaurantPageName = "error.jsp";
         } else{
             String addToCart = Loghmeh.getInstance().addToCart(Loghmeh.getInstance().getIndexFromRestaurantId(restaurantId), foodName, isFoodParty);
-            if(addToCart == "added"){
+            if(addToCart.equals("added")){
                 request.setAttribute("restaurant", restaurant);
                 response.setStatus(200);
                 if(isFoodParty.equals("false")) {
@@ -80,12 +80,12 @@ public class GetRestaurant extends HttpServlet {
                     restaurantPageName = "foodParty.jsp";
                 }
             }
-            else if(addToCart == "no restaurant"){
+            else if(addToCart.equals("no restaurant")){
                 request.setAttribute("badAddToCart", "true");
                 request.setAttribute("noRestaurant", "true");
                 restaurantPageName = "error.jsp";
             }
-            else if(addToCart == "no food"){
+            else if(addToCart.equals("no food")){
                 request.setAttribute("badAddToCart", "true");
                 request.setAttribute("noFood", "true");
                 restaurantPageName = "error.jsp";

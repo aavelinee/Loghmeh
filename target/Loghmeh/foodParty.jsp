@@ -34,9 +34,7 @@
         else{
             for(Restaurant restaurant: restaurants){%>
                 <li>menu:
-                    <%  System.out.println(restaurant.getMenu().getFoodPartyFoods().size());
-
-                        for (FoodPartyFood foodPartyFood: restaurant.getMenu().getFoodPartyFoods()) {%>
+                    <%for (FoodPartyFood foodPartyFood: restaurant.getMenu().getFoodPartyFoods()) {%>
                         <%--if(foodPartyFood.getCount() > 0) {%>--%>
                             <ul>
                                 <li>

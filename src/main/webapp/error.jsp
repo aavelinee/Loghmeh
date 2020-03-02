@@ -32,6 +32,15 @@
                 <br><br>
             </form>
         <%}
+        if(request.getAttribute("expireFoodParty") != null) {%>
+            <script type="text/javascript">
+                alert("Food Party is expired");
+            </script>
+            <form action=/foodparty method=GET>
+                <button type=submit>Foodparty List</button>
+                <br><br>
+            </form>
+        <%}
     }%>
     <%if(request.getAttribute("badRestaurant") != null){
         if(request.getAttribute("nullRestaurantId") != null || request.getAttribute("restaurantIdNotFound") != null) {%>
