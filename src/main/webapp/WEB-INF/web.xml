@@ -6,6 +6,6 @@
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
   <listener>
-  <listener-class>controller.Setup</listener-class>
+  <listener-class>loghmeh_server.controller.Setup</listener-class>
   </listener>
 </web-app>
