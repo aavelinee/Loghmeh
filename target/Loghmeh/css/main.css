@@ -1,0 +1,182 @@
+@font-face {
+  font-family: Vazir;
+  src: url('../fonts/vazir-fonts/Vazir.eot');
+  src: url('../fonts/vazir-fonts/Vazir.eot?#iefix') format('embedded-opentype'),
+  url('../fonts/vazir-fonts/Vazir.woff2') format('woff2'),
+  url('../fonts/vazir-fonts/Vazir.woff') format('woff'),
+  url('../fonts/vazir-fonts/Vazir.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: Vazir;
+  src: url('../fonts/vazir-fonts/Vazir-Bold.eot');
+  src: url('../fonts/vazir-fonts/Vazir-Bold.eot?#iefix') format('embedded-opentype'),
+  url('../fonts/vazir-fonts/Vazir-Bold.woff2') format('woff2'),
+  url('../fonts/vazir-fonts/Vazir-Bold.woff') format('woff'),
+  url('../fonts/vazir-fonts/Vazir-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: Vazir;
+  src: url('../fonts/vazir-fonts/Vazir-Black.eot');
+  src: url('../fonts/vazir-fonts/Vazir-Black.eot?#iefix') format('embedded-opentype'),
+  url('../fonts/vazir-fonts/Vazir-Black.woff2') format('woff2'),
+  url('../fonts/vazir-fonts/Vazir-Black.woff') format('woff'),
+  url('../fonts/vazir-fonts/Vazir-Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+}
+@font-face {
+  font-family: Vazir;
+  src: url('../fonts/vazir-fonts/Vazir-Medium.eot');
+  src: url('../fonts/vazir-fonts/Vazir-Medium.eot?#iefix') format('embedded-opentype'),
+  url('../fonts/vazir-fonts/Vazir-Medium.woff2') format('woff2'),
+  url('../fonts/vazir-fonts/Vazir-Medium.woff') format('woff'),
+  url('../fonts/vazir-fonts/Vazir-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: Vazir;
+  src: url('../fonts/vazir-fonts/Vazir-Light.eot');
+  src: url('../fonts/vazir-fonts/Vazir-Light.eot?#iefix') format('embedded-opentype'),
+  url('../fonts/vazir-fonts/Vazir-Light.woff2') format('woff2'),
+  url('../fonts/vazir-fonts/Vazir-Light.woff') format('woff'),
+  url('../fonts/vazir-fonts/Vazir-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: Vazir;
+  src: url('../fonts/vazir-fonts/Vazir-Thin.eot');
+  src: url('../fonts/vazir-fonts/Vazir-Thin.eot?#iefix') format('embedded-opentype'),
+  url('../fonts/vazir-fonts/Vazir-Thin.woff2') format('woff2'),
+  url('../fonts/vazir-fonts/Vazir-Thin.woff') format('woff'),
+  url('../fonts/vazir-fonts/Vazir-Thin.ttf') format('truetype');
+  font-weight: 100;
+  font-style: normal;
+}
+
+* {
+	margin: 0px; 
+	padding: 0px; 
+	box-sizing: border-box;
+}
+
+body, html {
+	height: 100%;
+}
+
+body {
+    direction: rtl;
+    background-color: #F7FFF7;
+    font-family: 'Vazir', sans-serif;
+}
+
+#menu {
+    height: 50px;
+}
+
+#app-jumbotron {
+    height: 180px;
+}
+
+
+.navbar {
+  background-color: white;
+  height: 50px;
+  display: flex;
+  position: fixed;
+  margin-top: 0;
+  top:0;
+  right: 0;
+  left: 0;
+  z-index: 1;
+  align-items: stretch;
+  border: solid green;
+}
+
+.right-navbar {
+  width: 50%;
+  display: flex;
+  align-items: center;
+}
+
+.loghmeh-logo {
+  /*margin-top: -2px;*/
+  margin-right: 30px;
+  margin-bottom: 5px;
+}
+
+img {
+  border-radius: 3px;
+  width: 40px;
+  margin-right: 25px;
+  margin-bottom: 7px;
+  padding-top: 15px;
+}
+
+.left-navbar{
+  width: 50%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.profile {
+  color: rgb(100, 100, 100);
+  margin-left: 25px;
+  margin-top: 5px;
+}
+
+.quit-link {
+  color: #FF6B6B;
+  margin-left: 40px;
+  margin-top: 15px;
+}
+
+
+.jumbotron-user-info{
+  background-color: #FF6B6B;
+  display: flex;
+  height: 180px;
+}
+
+.right-user-info{
+  width: 50%;
+  display: flex;
+  color: white;
+  margin-top: -10px;
+}
+
+.container-lg-user-info {
+  margin-right: 40px;
+  display: flex;
+}
+
+.name-user-info{
+  margin-top: 1vmax;
+  font-size: 3vh;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.left-user-info{
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  margin-top: -5vh;
+}
+
+.all-data-user-info {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.data-user-info{
+  color: white;
+  display: flex;
+}

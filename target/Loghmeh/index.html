@@ -1,0 +1,31 @@
+<html>
+<head>
+<title>Loghmeh Homepage</title>
+<link rel="stylesheet" type="text/css" href="css/main.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="images/icons/flaticon.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="css/styles.css" media="all" />
+<link rel="stylesheet" type="text/css" href="css/demo.css" media="all" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<script src="js/react.min.js"></script>
+<script src="js/react-dom.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-router-dom/5.1.2/react-router-dom.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.10.3/babel.min.js"></script>
+<script type="text/babel" src="js/content.js"></script>
+
+</head>
+<body>
+	
+	<div id="menu"></div>
+    <div id="app-jumbotron"></div>
+    <script type="text/babel">
+        ReactDOM.render(<Navbar account={false} />, document.getElementById('menu'));
+        ReactDOM.render(<UserInfo />, document.getElementById('app-jumbotron'));
+	</script>
+</body>
+</html>    
