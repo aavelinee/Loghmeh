@@ -277,13 +277,72 @@ class UserInfo extends React.Component {
 	componentDidMount() {
 		fetch("http://localhost:8080/08_React_war_exploded/getCustomerInfo/" + 1)
 			.then(resp => resp.json())
-			.then(data => this.setState({
+			.then( 	data => this.setState({
 													first_name : data.firstName,
 													last_name : data.lastName,
-													phone_number : data.phoneNumber,
+				 									phone_number : data.phoneNumber,
 													email : data.email,
 													credit : data.credit
 													}));
 	}
+}
 
+class RegisterPhoto extends React.Component {
+	render() {
+		return (
+			<div className="jumbotron">
+				<div className="background-image"></div>
+			</div>
+		);
+	}
+}
+
+class Register extends React.Component {
+	render() {
+		return(
+			<div className = "main-content">
+				<div className = "sign-up-box">
+					<div className = "sign-up-header"><h2> ثبت نام </h2></div>
+					<div className = "sign-up-form">
+						<diV className = "container-sm border">
+							<div className = "form-inline">
+								<input
+									type = "text" name = "firstname"
+									className = "sign-up-form form-control mb-2 mr-sm-2"
+									placeholder = "نام">
+								</input>
+								<input
+									type = "text"
+									name = "lastname"
+									className = "sign-up-form form-control mb-2 mr-sm-2"
+									placeholder = "نام خانوادگی">
+								</input>
+								<input
+									type = "email"
+									name = "email"
+									className = "sign-up-form form-control mb-2 mr-sm-2"
+									placeholder = "ایمیل">
+								</input>
+								<input
+									type = "text"
+									name = "username"
+									className = "sign-up-form form-control mb-2 mr-sm-2"
+									placeholder = "نام کاربری">
+								</input>
+								<input
+									type = "password"
+									name = "password"
+									className = "sign-up-form form-control mb-2 mr-sm-2"
+									placeholder = "رمز عبور">
+								</input>
+							</div>
+							<div className = "sub" >
+								<input type = "submit" value = "ثبت نام" className = "btn btn-primary pull-center"></input>
+							</div>
+						</diV>
+					</div>
+				</div>
+			</div>
+		);
+	}
 }

@@ -1,7 +1,10 @@
+<!DOCTYPE>
+
 <html>
 <head>
 <title>Loghmeh Homepage</title>
 <link rel="stylesheet" type="text/css" href="css/main.css">
+<link rel="stylesheet" type="text/css" href="css/Register.css">
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css" href="images/icons/flaticon.css">
 <!--===============================================================================================-->
@@ -19,9 +22,13 @@
 	
 	<div id="menu"></div>
     <div id="app-jumbotron"></div>
+    <div id="main"></div>
+    <div id="footer"></div>
     <script type="text/babel">
         ReactDOM.render(<Navbar account={false} />, document.getElementById('menu'));
-        ReactDOM.render(<UserInfo />, document.getElementById('app-jumbotron'));
+        ReactDOM.render(<RegisterPhoto />, document.getElementById('app-jumbotron'));
+        ReactDOM.render(<Register />, document.getElementById('main'));
+        ReactDOM.render()
 	</script>
 </body>
 </html>    

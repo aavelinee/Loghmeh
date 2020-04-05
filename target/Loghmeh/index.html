@@ -1,16 +1,15 @@
+<!DOCTYPE>
+
 <html>
 <head>
 <title>Loghmeh Homepage</title>
 <link rel="stylesheet" type="text/css" href="css/main.css">
+<link rel="stylesheet" type="text/css" href="css/Register.css">
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css" href="images/icons/flaticon.css">
 <!--===============================================================================================-->
-<link rel="stylesheet" type="text/css" href="css/styles.css" media="all" />
-<link rel="stylesheet" type="text/css" href="css/demo.css" media="all" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 <script src="js/react.min.js"></script>
 <script src="js/react-dom.min.js"></script>
@@ -23,9 +22,13 @@
 	
 	<div id="menu"></div>
     <div id="app-jumbotron"></div>
+    <div id="main"></div>
+    <div id="footer"></div>
     <script type="text/babel">
         ReactDOM.render(<Navbar account={false} />, document.getElementById('menu'));
-        ReactDOM.render(<UserInfo />, document.getElementById('app-jumbotron'));
+        ReactDOM.render(<RegisterPhoto />, document.getElementById('app-jumbotron'));
+        ReactDOM.render(<Register />, document.getElementById('main'));
+        ReactDOM.render()
 	</script>
 </body>
 </html>    

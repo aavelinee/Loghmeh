@@ -79,9 +79,9 @@ body {
     height: 50px;
 }
 
-#app-jumbotron {
-    height: 180px;
-}
+/*#app-jumbotron {*/
+    /*height: 180px;*/
+/*}*/
 
 
 .navbar {
@@ -148,6 +148,7 @@ img {
   display: flex;
   color: white;
   margin-top: -10px;
+    border: solid blue;
 }
 
 .container-lg-user-info {
