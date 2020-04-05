@@ -3,11 +3,11 @@ import './Footer.css';
 
 function Footer() {
 	return (
-        <div class="footer">
-        <div class="footer-copyright text-center py-3">
-            <p class="copy">© تمامی حقوق متعلق به لقمه است.</p>
+        // <div className="footer">
+        <div className="footer-copyright text-center py-3">
+            <p className="copy">© تمامی حقوق متعلق به لقمه است.</p>
         </div>
-        </div>
+        // </div>
 	);
 }
 

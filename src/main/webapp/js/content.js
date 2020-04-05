@@ -245,7 +245,7 @@ class UserInfo extends React.Component {
 		return (
 			<div className="jumbotron-user-info">
 				<div className="container-fluid">
-					<div className="row-user-info">
+					<div className="row user-info">
 						<div className="right-user-info col-sm-4">
 							<i className="flaticon-account"></i>
 							<p className="name-user-info">{this.state.first_name + " " +  this.state.last_name}</p>

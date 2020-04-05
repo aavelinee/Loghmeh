@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import LOGO from '../images/LOGO.png';
 import './Navbar.css';
 import '../images/icons/flaticon.css'
-import LOGO from '../images/LOGO.png';
 
 class Navbar extends Component {
 	constructor(props) {
@@ -12,23 +12,27 @@ class Navbar extends Component {
 	render() {
 		return (
 			<nav className="navbar">
-				<div className="right-navbar">
-                    {this.state.logo &&
-                        <div className="loghmeh-logo">
-                            <img src={LOGO} className="rounded-circle" alt="Loghmeh-Logo"></img>
-                        </div>
-                    }
-				</div>
-				<div className="left-navbar">
-                    {this.state.cart &&
-					    <a className="flaticon-smart-cart"></a>
-                    }
-					{this.state.account &&
-						<a className="profile">حساب کاربری</a>
-					}
-                    {this.state.quit &&
-					    <a className="quit-link">خروج</a>
-                    }
+				<div className="container-fluid">
+					<div className="row">
+						<div className="right-navbar col-md-8">
+							{this.state.logo &&
+								<div className="loghmeh-logo">
+									<img src={LOGO} alt="Loghmeh-Logo"></img>
+								</div>
+							}
+						</div>
+						<div className="left-navbar col-md-4">
+							{this.state.cart &&
+								<a className="flaticon-smart-cart"></a>
+							}
+							{this.state.account &&
+								<a className="profile">حساب کاربری</a>
+							}
+							{this.state.quit &&
+								<a className="quit-link">خروج</a>
+							}
+						</div>
+					</div>
 				</div>
 			</nav>
 		);
