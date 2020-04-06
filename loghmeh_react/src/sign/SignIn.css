@@ -1,0 +1,277 @@
+@font-face {
+    font-family: Vazir;
+    src: url('./fonts/vazir-fonts/Vazir.eot');
+    src: url('./fonts/vazir-fonts/Vazir.eot?#iefix') format('embedded-opentype'),
+    url('./fonts/vazir-fonts/Vazir.woff2') format('woff2'),
+    url('./fonts/vazir-fonts/Vazir.woff') format('woff'),
+    url('./fonts/vazir-fonts/Vazir.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: Vazir;
+    src: url('./fonts/vazir-fonts/Vazir-Bold.eot');
+    src: url('./fonts/vazir-fonts/Vazir-Bold.eot?#iefix') format('embedded-opentype'),
+    url('./fonts/vazir-fonts/Vazir-Bold.woff2') format('woff2'),
+    url('./fonts/vazir-fonts/Vazir-Bold.woff') format('woff'),
+    url('./fonts/vazir-fonts/Vazir-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+@font-face {
+    font-family: Vazir;
+    src: url('./fonts/vazir-fonts/Vazir-Black.eot');
+    src: url('./fonts/vazir-fonts/Vazir-Black.eot?#iefix') format('embedded-opentype'),
+    url('./fonts/vazir-fonts/Vazir-Black.woff2') format('woff2'),
+    url('./fonts/vazir-fonts/Vazir-Black.woff') format('woff'),
+    url('./fonts/vazir-fonts/Vazir-Black.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+@font-face {
+    font-family: Vazir;
+    src: url('./fonts/vazir-fonts/Vazir-Medium.eot');
+    src: url('./fonts/vazir-fonts/Vazir-Medium.eot?#iefix') format('embedded-opentype'),
+    url('./fonts/vazir-fonts/Vazir-Medium.woff2') format('woff2'),
+    url('./fonts/vazir-fonts/Vazir-Medium.woff') format('woff'),
+    url('./fonts/vazir-fonts/Vazir-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+@font-face {
+    font-family: Vazir;
+    src: url('./fonts/vazir-fonts/Vazir-Light.eot');
+    src: url('./fonts/vazir-fonts/Vazir-Light.eot?#iefix') format('embedded-opentype'),
+    url('./fonts/vazir-fonts/Vazir-Light.woff2') format('woff2'),
+    url('./fonts/vazir-fonts/Vazir-Light.woff') format('woff'),
+    url('./fonts/vazir-fonts/Vazir-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+@font-face {
+    font-family: Vazir;
+    src: url('./fonts/vazir-fonts/Vazir-Thin.eot');
+    src: url('./fonts/vazir-fonts/Vazir-Thin.eot?#iefix') format('embedded-opentype'),
+    url('./fonts/vazir-fonts/Vazir-Thin.woff2') format('woff2'),
+    url('./fonts/vazir-fonts/Vazir-Thin.woff') format('woff'),
+    url('./fonts/vazir-fonts/Vazir-Thin.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
+
+body {
+    direction: rtl;
+    background-color: #F7FFF7;
+    font-family: 'Vazir', sans-serif;
+}
+
+.navbar {
+    background-color: white;
+	height: 50px;
+    display: flex;
+    position: fixed;
+    margin-top: 0;
+    top:0;
+    right: 0;
+	left: 0;
+    z-index: 1;
+}
+
+.right-navbar {
+    width: 50%;
+    display: flex;
+    align-items: center;
+}
+
+.loghmeh-logo {
+    margin-top: -2px;
+    margin-right: 30px;
+    margin-bottom: 10px;
+}
+
+img {
+  border-radius: 3px;
+  width: 40px;
+  margin-right: 25px;
+  margin-bottom: 7px;
+}
+
+.left-navbar{
+	width: 50%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.quit-link {
+	color: #FF6B6B;
+	margin-left: 25px;
+	margin-top: 5px;
+}
+
+.jumbotron {
+    display: flex;
+    height: 100%;
+    background-image: url('Cover.jpg');
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+    height: 300px;
+    overflow: hidden;
+}
+
+.background-image {
+    display: flex;
+    position: relative;
+    background-image: url('Cover.jpg');
+}
+
+.loghmeh-cover img{
+    object-fit: cover;
+    opacity: 0.7;
+}
+
+
+.right{
+	width: 50%;
+	display: flex;
+    flex-direction: row-reverse;
+    color: white;
+}
+.name{
+	margin-top: 18px;
+	font-size: 27px;
+	font-weight: bold; 
+}
+
+.left{
+	width: 50%;
+    display: flex;
+}
+
+.all-data {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.data{
+	color: white;
+	display: flex;
+    flex-direction: row-reverse;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    background-color: #FF6B6B;
+}
+.nav-pills .nav-link:not(.active), .nav-pills .show>.nav-link {
+    color: black;
+}
+.tabs {
+    display: flex;
+    justify-content: center;
+}
+
+.main-content {
+    display: flex;
+    justify-content: center;
+}
+
+.sign-up-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.sign-up-header {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+.sign-up-form {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    margin-left: 8px;
+}
+
+.sign-up-form .input{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin-left: 8px;
+}
+
+.container-sm {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    padding-right: 0%;
+    padding-left: 0%;
+    border: solid lightgrey;
+    border-width: 1px;
+    border-radius: 25px;
+    background-color: white;
+    margin-bottom: 10%;
+}
+
+.form-inline {
+    justify-content: center;
+    flex-direction: column;
+    width: 40vw;
+    height: 15vh;
+}
+
+.form-inline .btn{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    margin-top: 10%;
+    height: 10%;
+}
+
+@media screen and (min-width: 800px) {
+    
+    .form-inline {
+        width: 48vh;
+        height: 25vh;
+    }
+}
+
+.footer{
+    position: relative;
+    bottom: 0;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media screen and (max-width: 800px) {
+    
+    .footer-copyright {
+        position: absolute;
+    }
+
+}
+
+.footer-copyright {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #1A535C;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.copy{
+    margin-top: 15px;
+    color: white;
+}
+
