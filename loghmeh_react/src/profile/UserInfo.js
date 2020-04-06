@@ -7,6 +7,7 @@ class UserInfo extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {first_name : "", last_name : "", phone_number : "", email : "", credit : 0};
+		this.updateUserInfo = this.updateUserInfo.bind(this);
 	}
 
 	render() {
@@ -43,6 +44,10 @@ class UserInfo extends Component {
 	}
 
 	componentDidMount() {
+		this.updateUserInfo();
+	}
+
+	updateUserInfo() {
 		fetch("http://localhost:8080/08_React_war_exploded/getCustomerInfo/" + 1)
 			.then(resp => resp.json())
 			.then(data => this.setState({

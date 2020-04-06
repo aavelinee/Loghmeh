@@ -348,4 +348,12 @@ public class Loghmeh {
         return customers.get(i);
     }
 
+    public Customer getCustomerByid(int id) {
+        for(Customer customer: this.customers){
+            if(customer.getCustomerId() == id)
+                return customer;
+        }
+        return null;
+    }
+
 }

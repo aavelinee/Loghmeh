@@ -1,16 +1,22 @@
-
 .footer{
     position: relative;
-
+    bottom: 0;
     height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
-    border: solid #1A535C;
+}
+
+@media screen and (max-width: 800px) {
+    
+    .footer-copyright {
+        position: absolute;
+    }
+
 }
 
 .footer-copyright {
-    /* position: absolute; */
+    bottom: 0;
     left: 0;
     width: 100%;
     background-color: #1A535C;
@@ -18,12 +24,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    align-self: stretch;
-    /* border: solid red; */
-
 }
 
- .copy{
+.copy{
     margin-top: 15px;
     color: white;
 }

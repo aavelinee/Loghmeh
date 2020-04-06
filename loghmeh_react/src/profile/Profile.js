@@ -11,13 +11,15 @@ class Profile extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {tab : props.tab};
+		this.userInfoElement = React.createRef();
+		this.handleCreditIncrease = this.handleCreditIncrease.bind(this);
 	}
 
 	render() {
 		return(
 			<Fragment>
 				<Navbar logo={true} cart={true} account={false} quit={true}/>
-				<UserInfo />
+				<UserInfo ref={this.userInfoElement} />
 				<div className="main-content">
 					<div className="tab-box">
 						<div className="btn-group btn-group-lg">
@@ -28,7 +30,7 @@ class Profile extends Component {
 								<a id="orders-link" href="#">سفارش‌ها</a>
 							</button>
 						</div>
-						{this.state.tab == "credit" ? <Credit /> : <Orders />}
+						{this.state.tab == "credit" ? <Credit onClick={this.handleCreditIncrease}/> : <Orders />}
 					</div>
 				</div>
             	<Footer />
@@ -53,6 +55,37 @@ class Profile extends Component {
 			prevTab = "credit";
 		this.changeStyle(newTab, prevTab);
 	}
+
+	handleCreditIncrease(credit) {
+		var params = {
+		    "userId": 1,
+		    "creditIncrease" : credit,
+        };
+		var queryString = Object.keys(params).map(function(key) {
+    		return key + '=' + params[key]
+		}).join('&');
+		const requestOptions = {
+	        method: 'POST',
+	        headers: {
+	        	'content-length' : queryString.length,
+	        	'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+	        },
+	        body: queryString
+	    };
+	    fetch("http://localhost:8080/08_React_war_exploded/increaseCredit", requestOptions)
+			.then(async response => {
+				const data = await response.json();
+	
+				// check for error response
+				if (!data.successful) {
+					// get error message from body or default to response status
+					const error = (data && data.message) || response.status;
+					return Promise.reject(error);
+				}
+	
+				this.userInfoElement.current.updateUserInfo();
+			})
+	} 
 
 }
 
