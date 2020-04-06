@@ -1,25 +1,29 @@
-import SignInForm from './SignIn/SignIn';
-import SignUpForm from './SignUp/SignUp';
-import { Component } from 'react';
+import React, { Component } from 'react';
+import SignIn from './SignIn/SignIn';
+import SignUp from './SignUp/SignUp';
 
 class Register extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {isSignUp : props.isSignUp};
+	}
+
 	RegisterPhoto() {
 		return (
-			<div className="jumbotron">
+			<div className="jumbotron register">
 				<div className="background-image"></div>
 			</div>
 		);
 	}
 	
-	Register (props) {
-		const isSignUp = props.isSignUp;
-		if (isSignUp) {
+	render () {
+		if (this.state.isSignUp) {
 		  return(
 			<div className = "main-content">
 			  <div className = "sign-up-box">
 				<div className = "sign-up-header"><h2> ثبت نام </h2></div>
 				<div className = "sign-up-form">
-				<SignUpForm />
+				<SignUp />
 				</div>
 			  </div>
 			</div>
@@ -31,7 +35,7 @@ class Register extends Component {
 			  <div className = "sign-in-box">
 				<div className = "sign-in-header"><h2> ورود </h2></div>
 				<div className = "sign-in-form">
-				<SignInForm />
+				<SignIn />
 				</div>
 			  </div>
 			</div>

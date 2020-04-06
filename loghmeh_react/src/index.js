@@ -10,9 +10,8 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import './index.css';
 
-import Profile from './profile/Profile'
 
 ReactDOM.render(
-  <Profile tab={"credit"} />,
+  <App />,
   document.getElementById('root')
 );

@@ -1,8 +1,8 @@
-import { Component } from "react";
-import 'SignUp.css'
+import React, { Component } from 'react';
+import './SignUp.css'
 
 class SignUp extends Component {
-	SignUpForm() {
+	render() {
 		return (
 		<div className = "container-sm border">
 			<div className = "form-inline">

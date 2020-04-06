@@ -35,7 +35,7 @@
 
 #credit {
     background-color: #FF6B6B;
-    color: white;
+    /* color: white; */
 }
 
 .tab-box {
@@ -58,16 +58,16 @@
 
 /* .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
     background-color: #FF6B6B;
-} */
-/* .nav-pills .nav-link:not(.active), .nav-pills .show>.nav-link {
+}
+ .nav-pills .nav-link:not(.active), .nav-pills .show>.nav-link {
     color: black;
     background-color: white;
 } */
 
-#credit-link {
+a #credit-link {
     color: white;
 }
 
-#order-link {
+a #order-link {
     color: black;
 }

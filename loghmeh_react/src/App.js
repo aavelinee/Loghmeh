@@ -3,7 +3,7 @@ import './App.css';
 import Navbar from './common/Navbar';
 import Footer from './common/Footer';
 import Sign from './sign/Sign';
-import UserInfo from './profile/UserInfo';
+// import UserInfo from './profile/UserInfo';
 
 class App extends Component {
   render() {
