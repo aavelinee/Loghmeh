@@ -10,6 +10,10 @@
     background-color: white;
 }
 
+.form-inline {
+    display: flex;
+    justify-content: center;
+}
 
 .credit-input {
     background-color: rgb(240, 243, 243);

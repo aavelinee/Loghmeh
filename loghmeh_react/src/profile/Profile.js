@@ -21,11 +21,11 @@ class Profile extends Component {
 				<div className="main-content">
 					<div className="tab-box">
 						<div className="btn-group btn-group-lg">
-							<button type="button" className="credit tab btn btn-primary z-depth-1">
-								<a className="credit-link" href="#"> افزایش اعتبار </a>
+							<button type="button" id = "credit" className="tab btn btn-primary z-depth-1" onClick={this.changeTab.bind(this, "credit")}>
+								<a id="credit-link" href="#"> افزایش اعتبار </a>
 							</button>
-							<button type="button" className="order tab btn btn-primary z-depth-1">
-								<a className="order-link" href="#">سفارش‌ها</a>
+							<button type="button" id = "orders" className="tab btn btn-primary z-depth-1" onClick={this.changeTab.bind(this, "orders")}>
+								<a id="orders-link" href="#">سفارش‌ها</a>
 							</button>
 						</div>
 						{this.state.tab == "credit" ? <Credit /> : <Orders />}
@@ -35,6 +35,25 @@ class Profile extends Component {
 			</Fragment>
 		);
 	}
+
+	changeStyle(newTab, prevTab) {
+		console.log(newTab, prevTab, "hello");
+		document.getElementById(newTab).style.background="#FF6B6B";
+		document.getElementById(newTab+"-link").style.color="white";
+		document.getElementById(prevTab).style.background="white";
+		document.getElementById(prevTab+"-link").style.color="black";
+	}
+
+	changeTab(newTab) {
+		this.setState((prevState, props) => ({tab : newTab}));
+		let prevTab;
+		if(newTab == "credit")
+			prevTab = "orders";
+		else if(newTab == "orders")
+			prevTab = "credit";
+		this.changeStyle(newTab, prevTab);
+	}
+
 }
 
 export default Profile;

@@ -16,7 +16,7 @@ class UserInfo extends Component {
 				<div className="row">
 					<div className="right col-sm-4">
 						<i className="flaticon-account"></i>
-						<p className="name">احسان خامس‌پناه</p>
+						<p className="name">{this.state.first_name + " " + this.state.last_name}</p>
 					</div>
 					<div className="middle col-4">
 					</div>
@@ -24,15 +24,15 @@ class UserInfo extends Component {
 						<div className="all-data">
 						<div className="data">
 							<i className="flaticon-phone"></i>
-							<p className="phone-data" data-href="#">۰۹۱۲۳۴۵۶۷۸۹</p>
+							<p className="phone-data" data-href="#">{this.state.phone_number}</p>
 						</div>
 						<div className="data">
 							<i className="flaticon-mail"></i>
-							<p className="mail-data" data-href="#">ekhamespanah@yahoo.com</p>
+							<p className="mail-data" data-href="#">{this.state.email}</p>
 						</div>
 						<div className="data">
 							<i className="flaticon-card"></i>
-							<p className="card-data" data-href="#">۱۰۰۰۰۰ تومان</p>
+							<p className="card-data" data-href="#"><PersianNumber number={this.state.credit} /> تومان</p>
 						</div>
 						</div>
 					</div>

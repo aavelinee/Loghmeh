@@ -13,6 +13,6 @@ import './index.css';
 import Profile from './profile/Profile'
 
 ReactDOM.render(
-  <Profile tab={"orders"} />,
+  <Profile tab={"credit"} />,
   document.getElementById('root')
 );

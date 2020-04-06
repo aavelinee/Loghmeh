@@ -243,28 +243,28 @@ class UserInfo extends React.Component {
 
 	render() {
 		return (
-			<div className="jumbotron-userinfo">
-				<div className="container-fluid user-info">
-					<div className="row userinfo">
-						<div className="right-userinfo col-sm-4">
+			<div className="jumbotron-user-info">
+				<div className="container-fluid">
+					<div className="row user-info">
+						<div className="right-user-info col-sm-4">
 							<i className="flaticon-account"></i>
-							<p className="name-userinfo">{this.state.first_name + " " + this.state.last_name }</p>
+							<p className="name-user-info">{this.state.first_name + " " +  this.state.last_name}</p>
 						</div>
-						<div className="middle-userinfo col-sm-4">
+						<div className="middle col-4">
 						</div>
-						<div className="left-userinfo col-sm-4">
-							<div className="all-data-userinfo">
-								<div className="data-userinfo">
+						<div className="left-user-info col-sm-4">
+							<div className="all-data-user-info">
+								<div className="data-user-info">
 									<i className="flaticon-phone"></i>
 									<p className="phone-data" data-href="#">{this.state.phone_number}</p>
 								</div>
-								<div className="data-userinfo">
+								<div className="data-user-info">
 									<i className="flaticon-mail"></i>
 									<p className="mail-data" data-href="#">{this.state.email}</p>
 								</div>
-								<div className="data-userinfo">
+								<div className="data-user-info">
 									<i className="flaticon-card"></i>
-									<p className="card-data" data-href="#"><PersianNumber number={this.state.credit} /> تومان</p>
+									<p className="card-data" data-href="#">{this.state.credit} تومان</p>
 								</div>
 							</div>
 						</div>
@@ -277,77 +277,26 @@ class UserInfo extends React.Component {
 	componentDidMount() {
 		fetch("http://localhost:8080/08_React_war_exploded/getCustomerInfo/" + 1)
 			.then(resp => resp.json())
-			.then( 	data => this.setState({
+			.then(data => this.setState({
 													first_name : data.firstName,
 													last_name : data.lastName,
-				 									phone_number : data.phoneNumber,
+													phone_number : data.phoneNumber,
 													email : data.email,
 													credit : data.credit
 													}));
 	}
 }
 
-<<<<<<< Updated upstream
 class RegisterPhoto extends React.Component {
 	render() {
 		return (
 			<div className="jumbotron">
 				<div className="background-image"></div>
 			</div>
-=======
-}
-//
-//
-// class Profile extends React.Component {
-// 	constructor(props) {
-// 		super(props);
-// 		this.state = {tab : "credit"};
-// 	}
-//
-// 	render() {
-// 		return(
-// 			<div className="main-content">
-// 				<div className="tab-box">
-// 					<div className="btn-group btn-group-lg">
-// 						<button type="button" className="credit tab btn btn-primary z-depth-1">
-// 							<a className="credit-link" href="#"> افزایش اعتبار </a>
-// 						</button>
-// 						<button type="button" className="order tab btn btn-primary z-depth-1">
-// 							<a className="order-link" href="#">سفارش‌ها</a>
-// 						</button>
-// 					</div>
-// 					{this.state.tab == "credit" ? <Credit /> : <Orders />}
-// 				</div>
-// 			</div>
-// 		);
-// 	}
-// }
-//
-// class Credit extends React.Component {
-// 	render() {
-// 		return(
-// 			<div className="container-sm border">
-// 				<form className="form-inline">
-// 					<label className="sr-only" htmlFor="inlineFormInputName2">Credit</label>
-// 					<input type="text" className="credit-input form-control mb-2 mr-sm-2" id="inlineFormInputName2"
-// 						   placeholder="میزان افزایش اعتبار"></input>
-// 					<button type="submit" className="credit-btn btn btn-primary mb-2">افزایش</button>
-// 				</form>
-// 			</div>
-// 		);
-// 	}
-// }
-
-class Orders extends React.Component {
-	render() {
-		return (
-			<div></div>
->>>>>>> Stashed changes
 		);
 	}
 }
 
-<<<<<<< Updated upstream
 class Register extends React.Component {
 	render() {
 		return(
@@ -397,7 +346,56 @@ class Register extends React.Component {
 		);
 	}
 }
-=======
+//
+//
+// class Profile extends React.Component {
+// 	constructor(props) {
+// 		super(props);
+// 		this.state = {tab : "credit"};
+// 	}
+//
+// 	render() {
+// 		return(
+// 			<div className="main-content">
+// 				<div className="tab-box">
+// 					<div className="btn-group btn-group-lg">
+// 						<button type="button" className="credit tab btn btn-primary z-depth-1">
+// 							<a className="credit-link" href="#"> افزایش اعتبار </a>
+// 						</button>
+// 						<button type="button" className="order tab btn btn-primary z-depth-1">
+// 							<a className="order-link" href="#">سفارش‌ها</a>
+// 						</button>
+// 					</div>
+// 					{this.state.tab == "credit" ? <Credit /> : <Orders />}
+// 				</div>
+// 			</div>
+// 		);
+// 	}
+// }
+//
+// class Credit extends React.Component {
+// 	render() {
+// 		return(
+// 			<div className="container-sm border">
+// 				<form className="form-inline">
+// 					<label className="sr-only" htmlFor="inlineFormInputName2">Credit</label>
+// 					<input type="text" className="credit-input form-control mb-2 mr-sm-2" id="inlineFormInputName2"
+// 						   placeholder="میزان افزایش اعتبار"></input>
+// 					<button type="submit" className="credit-btn btn btn-primary mb-2">افزایش</button>
+// 				</form>
+// 			</div>
+// 		);
+// 	}
+// }
+
+class Orders extends React.Component {
+	render() {
+		return (
+			<div></div>
+		);
+	}
+}
+
 function Footer() {
 	return (
 		<div className="footer-copyright text-center py-3">
@@ -422,4 +420,3 @@ class PersianNumber extends React.Component {
     }
 
 }
->>>>>>> Stashed changes

@@ -29,11 +29,11 @@
     box-shadow:0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.order.tab.btn {
+#order {
     border-left: dashed gray;
 }
 
-.credit.tab.btn {
+#credit {
     background-color: #FF6B6B;
     color: white;
 }
@@ -56,18 +56,18 @@
     text-align: center;
 }
 
-.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+/* .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
     background-color: #FF6B6B;
-}
-.nav-pills .nav-link:not(.active), .nav-pills .show>.nav-link {
+} */
+/* .nav-pills .nav-link:not(.active), .nav-pills .show>.nav-link {
     color: black;
     background-color: white;
-}
+} */
 
-.credit-link {
+#credit-link {
     color: white;
 }
 
-.order-link {
+#order-link {
     color: black;
 }
