@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 import Navbar from './common/Navbar';
 import Footer from './common/Footer';
-// import Sign from './sign/Sign';
-import Profile from './profile/Profile';
+import Sign from './sign/Sign';
+// import Profile from './profile/Profile';
 
 class App extends Component {
   render() {
@@ -17,7 +17,10 @@ class App extends Component {
       //   <Footer />
       // </div>
       <div className="App">
-        <Profile tab={"credit"} />,
+        <Navbar logo={false} account={false} cart={false} quit={false} />
+        {/* <Profile tab={"credit"} />, */}
+        <Sign isSignUp={false}/>
+        <Footer />
       </div>
     );
   }
