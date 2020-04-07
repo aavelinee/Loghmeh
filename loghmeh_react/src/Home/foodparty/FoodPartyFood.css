@@ -1,0 +1,101 @@
+.foodparty-food {
+    border-radius: 7px;
+    border: solid lightgrey;
+    border-width: 1px;
+    padding: 20px; 
+    width: 25vmin;
+    height: 25vmin;
+    background-color: white;
+    box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-left: 20px;
+    margin-right: 20px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-self: center;
+}
+
+
+.foodparty-food-row {
+    height: 3vmin;
+    display: flex;
+}
+
+.foodparty-foodinfo {
+    height: 13vmin;
+}
+
+.right-foodparty-foodinfo {
+    display: flex;
+    justify-content: center;
+}
+
+#foodparty-foodimg {
+    height: 10vmin;
+    width: 10vmin;
+}
+
+#foodparty-foodname {
+    font-size: 20px;
+}
+
+.checked {
+    color: orange;
+}
+
+.foodparty-price {
+    margin-top: 5px;
+}
+
+.right-foodparty-price {
+    font-weight: lighter;
+    text-decoration: line-through #FF6B6B;
+}
+
+.left-foodparty-price {
+    text-align: start;
+}
+
+.foodparty-buy {
+    height: 6vmin;
+}
+
+#countLeft {
+    white-space: nowrap;
+    font-size: 11px;
+    font-weight: lighter;
+    border: solid 1px rgba(182, 182, 182, 0.746);
+    border-radius: 6px;    
+    background-color: #F7FFF7;
+    min-width: 8vmin;
+    height: 2.5vmin;
+    text-align: center;
+    color: rgba(34, 34, 34, 0.746);
+    margin-top: 2vmin;
+}
+
+.foodparty-buy-btn {
+    font-size: 12px;
+    border: solid 1px #4ECDC4;
+    border-radius: 6px;    
+    background-color: #4ECDC4;
+    min-width: 8vmin;
+    height: 2.5vmin;
+    text-align: center;
+    color: white;
+    margin-top: 2vmin;
+}
+
+.foodparty-restname {
+    /* margin-bottom: -1vmin; */
+    display: flex;
+    justify-content: center;
+    border-top: 1px dashed black;
+    /* padding: 5px; */
+
+}
+
+#foodparty-restaurantname {
+    font-weight: lighter;
+    /* align-self: center; */
+}

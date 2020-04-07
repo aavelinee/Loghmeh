@@ -1,0 +1,45 @@
+.food-party {
+    display: flex;
+    flex-direction: column;
+    /* border: solid red; */
+    width: 100%;
+    height: 40vh;
+    margin-top: 10vh;
+}
+
+.foodparty-row {
+    align-self: center;
+}
+
+#foodparty-heading {
+    font-size: 25px;
+    color: #1A535C;
+    border-bottom: 2px solid #1A535C;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.foodparty-time {
+    border: solid 1px rgb(38, 114, 126);
+    border-radius: 4px;
+    margin-top: 10px;
+    padding-left: 15px;
+    padding-right: 5px;
+    text-align: start;
+}
+
+.remaining-time {
+    font-size: 10px;
+}
+
+.foodParyFoods {
+    display: flex;
+    align-items: center;
+    margin-top: 1vmin;
+    /* padding-top: 1vmin; */ 
+    height: 28vmin;
+    /* border: solid red; */
+    box-shadow:0 4px 20px 0 rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
