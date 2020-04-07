@@ -1,23 +1,12 @@
 import React, { Component } from 'react';
 import SignIn from './SignIn/SignIn';
 import SignUp from './SignUp/SignUp';
+import './Register.css';
 
 class Register extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {isSignUp : props.isSignUp};
-	}
-
-	RegisterPhoto() {
-		return (
-			<div className="jumbotron register">
-				<div className="background-image"></div>
-			</div>
-		);
-	}
-	
 	render () {
-		if (this.state.isSignUp) {
+		const isSignUp = this.props.isSignUp;
+		if (isSignUp) {
 		  return(
 			<div className = "main-content">
 			  <div className = "sign-up-box">

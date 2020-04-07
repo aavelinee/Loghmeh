@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 import Navbar from './common/Navbar';
 import Footer from './common/Footer';
+import Sign from './sign/Sign';
+// import Profile from './profile/Profile';
 // import Sign from './sign/Sign';
 import Profile from './profile/Profile';
 import Home from './Home/Home'
@@ -22,6 +24,10 @@ class App extends Component {
         {/* <Profile tab={"credit"} />, */}
         <Home />
         {/* <Restaurants /> */}
+        <Navbar logo={false} account={false} cart={false} quit={false} />
+        {/* <Profile tab={"credit"} />, */}
+        <Sign isSignUp={false}/>
+        <Footer />
       </div>
     );
   }
