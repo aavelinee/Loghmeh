@@ -1,18 +1,28 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import LOGO from '../images/LOGO.png';
+import Profile from '../profile/Profile';
 import './Navbar.css';
-import '../images/icons/flaticon.css'
+import '../images/icons/flaticon.css';
 
 class Navbar extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {logo : props.logo, account : props.account, cart : props.cart, quit : props.quit};
+		this.renderProfile = this.renderProfile.bind(this);
+	}
+
+	renderProfile() {
+		ReactDOM.render(
+			<Profile tab={"credit"} />,
+			document.getElementById('root')
+		);
 	}
 
 	render() {
 		return (
 			<nav className="navbar">
-				<div className="container-fluid">
+				<div className="container-fluid nav-container">
 					<div className="row">
 						<div className="right-navbar col-md-8">
 							{this.state.logo &&
@@ -26,7 +36,7 @@ class Navbar extends Component {
 								<a className="flaticon-smart-cart"></a>
 							}
 							{this.state.account &&
-								<a className="profile">حساب کاربری</a>
+								<a className="profile" onClick={this.renderProfile}>حساب کاربری</a>
 							}
 							{this.state.quit &&
 								<a className="quit-link">خروج</a>

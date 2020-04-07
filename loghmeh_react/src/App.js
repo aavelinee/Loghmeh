@@ -4,6 +4,8 @@ import Navbar from './common/Navbar';
 import Footer from './common/Footer';
 // import Sign from './sign/Sign';
 import Profile from './profile/Profile';
+import Home from './Home/Home'
+import Restaurants from './Home/restaurant/Restaurants';
 
 class App extends Component {
   render() {
@@ -17,7 +19,9 @@ class App extends Component {
       //   <Footer />
       // </div>
       <div className="App">
-        <Profile tab={"credit"} />,
+        {/* <Profile tab={"credit"} />, */}
+        <Home />
+        {/* <Restaurants /> */}
       </div>
     );
   }
