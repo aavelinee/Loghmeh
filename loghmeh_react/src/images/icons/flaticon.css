@@ -58,10 +58,13 @@ i{
 	color: white;
 }
 a.flaticon-smart-cart{
+  display: flex;
+  justify-content: center;
   width: 45px;
   height: 45px;
-  margin-top: 15px;
+  margin-top: 1.3vw;
   color: rgb(100, 100, 100);
+  margin-right: 2.5vw;
 }
 
 a.flaticon-minus {

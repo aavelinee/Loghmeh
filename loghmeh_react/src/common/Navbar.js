@@ -24,14 +24,14 @@ class Navbar extends Component {
 			<nav className="navbar">
 				<div className="container-fluid nav-container">
 					<div className="row">
-						<div className="right-navbar col-md-8">
+						<div className="right-navbar col-md-9">
 							{this.state.logo &&
 								<div className="loghmeh-logo">
 									<img src={LOGO} alt="Loghmeh-Logo"></img>
 								</div>
 							}
 						</div>
-						<div className="left-navbar col-md-4">
+						<div className="left-navbar col-md-3">
 							{this.state.cart &&
 								<a className="flaticon-smart-cart"></a>
 							}
