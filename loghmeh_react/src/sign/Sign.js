@@ -1,32 +1,21 @@
 import React, { Component } from 'react';
+import Navbar from '../common/Navbar';
+import HomeJumbotron from '../common/HomeJumbotron';
 import Register from './Register';
-import './Register.css'
-import LOGO from '../images/LOGO.png';
+import Footer from '../common/Footer';
+import './Register.css';  
 
 class Sign extends React.Component {
-  RegisterPhoto() {
-		return (
-			<div className="jumbotron register">
-				<div className="background-image"></div>
-			</div>
-		);
-  }
   
   render() {
     const isSignUp = this.props.isSignUp
     console.log(isSignUp);
     return (
       <div className="sign">
-        <div className="jumbotron">
-        {this.RegisterPhoto}
-          <div className="loghmeh-logo">
-            <img src={LOGO} alt="Loghmeh-Logo"></img>
-          </div>
-          <div className="motto">
-            <p>اولین و بزرگترین وب‌سایت سفارش آنلاین غذا در دانشگاه تهران</p>
-          </div>
-        </div>
+        <Navbar logo={false} account={false} cart={false} quit={false} />
+        <HomeJumbotron searchBox={false} />
         <Register isSignUp={isSignUp} />
+        <Footer />
       </div>
     );
   }

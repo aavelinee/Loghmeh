@@ -7,7 +7,7 @@
     /* text-align: center; */
 }
 
-.container-sm {
+.signup-container {
     display: flex;
     flex-direction: column;
     padding: 20px;
@@ -20,14 +20,14 @@
     margin-bottom: 10%;
 }
 
-.form-inline {
+.signup-form {
     justify-content: center;
     flex-direction: column;
     width: 50vw;
     height: 30vh;
 }
 
-.form-inline .btn{
+.signup-form .btn{
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -37,21 +37,21 @@
     height: 10%;
 }
 
-.btn-primary {
+.signup-btn {
     background-color: #4ECDC4;
     border-color: #4ECDC4;;
 }
 
 @media screen and (min-width: 800px) {
     
-    .form-inline {
+    .signup-form {
         justify-content: center;
         flex-direction: column;
         width: 60vh;
         height: 50vh;
     }
     
-    .form-inline .btn {
+    .signup-form .btn {
         display: flex;
         justify-content: center;
         flex-direction: column;
@@ -60,45 +60,6 @@
         margin-top: 10%;
         height: 10%;
     }
-}
-
-.right{
-	width: 50%;
-	display: flex;
-    flex-direction: row-reverse;
-    color: white;
-}
-.name{
-	margin-top: 18px;
-	font-size: 27px;
-	font-weight: bold; 
-}
-
-.left{
-	width: 50%;
-    display: flex;
-}
-
-.all-data {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-}
-
-.data{
-	color: white;
-	display: flex;
-    flex-direction: row-reverse;
-}
-
-.tabs {
-    display: flex;
-    justify-content: center;
-}
-
-.main-content {
-    display: flex;
-    justify-content: center;
 }
 
 .sign-up-box {
@@ -111,7 +72,6 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
-    /* flex-wrap: wrap; */
     text-align: center;
 }
 

@@ -17,10 +17,10 @@ class Profile extends Component {
 
 	render() {
 		return(
-			<Fragment>
+			<div className="profile">
 				<Navbar logo={true} cart={true} account={false} quit={true}/>
 				<UserInfo ref={this.userInfoElement} />
-				<div className="main-content">
+				<div className="profile-main-content">
 					<div className="tab-box">
 						<div className="btn-group btn-group-lg">
 							<button type="button" id = "credit" className="tab btn btn-primary z-depth-1" onClick={this.changeTab.bind(this, "credit")}>
@@ -34,7 +34,7 @@ class Profile extends Component {
 					</div>
 				</div>
             	<Footer />
-			</Fragment>
+			</div>
 		);
 	}
 

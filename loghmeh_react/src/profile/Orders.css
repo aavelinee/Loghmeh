@@ -1,13 +1,14 @@
-.container-sm {
+.orders-container {
     display: flex;
-    justify-content: space-evenly;
     flex-direction: column;
+    justify-content: space-evenly;
     border-radius: 25px;
     border: solid black;
     border-width: 1px;
     padding: 80px; 
+    width: 75vw;
     background-color: white;
-    margin-bottom: 20%;
+    margin-bottom: 10%;
     height: max-content;
 }
 

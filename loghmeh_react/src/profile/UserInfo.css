@@ -1,8 +1,9 @@
-.jumbotron {
+.profile-jumbotron {
 	background-color: #FF6B6B;
     display: flex;
     height: 180px;
     margin-top: 50px;
+    width: 100%;
 }
 
 .right{

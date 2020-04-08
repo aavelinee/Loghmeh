@@ -1,11 +1,17 @@
+.profile {
+    width: 100%;
+}
 
-.main-content {
+
+.profile-main-content {
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
+    justify-content: center;
     align-items: center;
-    justify-content: start;
-    min-height: calc(100vh - 290px);
+    /* justify-content: start; */
+    min-height: calc(100vh - 16vmin - 180px);
+    height: max-content;
+    margin-bottom: 10%;
 }
 
 .btn-group {

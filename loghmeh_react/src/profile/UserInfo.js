@@ -12,7 +12,7 @@ class UserInfo extends Component {
 
 	render() {
 		return (
-			<div className="jumbotron">
+			<div className="profile-jumbotron jumbotron">
 				<div className="container-fluid">
 				<div className="row">
 					<div className="right col-sm-4">

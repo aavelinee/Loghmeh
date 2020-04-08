@@ -21,7 +21,7 @@ class HomeJumbotron extends Component {
                     </div>
                     {this.props.searchBox &&
                         <div className="row  home-jumbotron-row searchBox">
-                            <form className="form-inline">
+                            <form className="search-form form-inline">
                                 <label className="sr-only" htmlFor="inlineFormInputName2">Credit</label>
                                 <input type="text" readonly className="foodname-input form-control mb-2 mr-sm-2" id="inlineFormInputName2"
                                     placeholder="نام غذا"></input>

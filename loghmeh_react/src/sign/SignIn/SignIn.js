@@ -4,8 +4,8 @@ import './SignIn.css'
 class SignIn extends Component {
   render() {
       return (
-        <div className="container-sm-sign-in border">
-          <div className="form-inline">
+        <div className="signin-container container-sm border">
+          <div className="signin-form form-inline">
               <input 
               type="email" 
               name="email" 
@@ -20,7 +20,7 @@ class SignIn extends Component {
               </input>
           </div>
           <div className="sub">
-            <input type="submit" value="ورود" className="btn btn-primary pull-center"></input>
+            <input type="submit" value="ورود" className="signin-btn btn btn-primary pull-center"></input>
           </div>
         </div>
       );

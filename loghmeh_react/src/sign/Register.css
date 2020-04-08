@@ -1,84 +1,9 @@
-.jumbotron {
-    display: flex;
-    flex-direction: column;
-    background-image: url('../images/Cover.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    overflow: hidden;
-    height: 300px;
-}
-
-.background-image {
-    display: flex;
-    position: relative;
-    background-image: url('../images/Cover.jpg');
-}
-
-.loghmeh-logo {
-    display: flex;
-    position: relative;
-    justify-content: center;
-    /* height: 120px; */
-    /* width: 120px; */
-}
-
-.loghmeh-logo.img.resize {
-    width: 10px;
-
-}
-
-.motto {
-    display: flex;
-    font-size: large;
-    font-weight: bolder;
-    color: antiquewhite;
-    justify-content: center;
-}
-
-.loghmeh-cover img{
-    object-fit: cover;
-    opacity: 0.7;
-}
-
-
-.right{
-	width: 50%;
-	display: flex;
-    flex-direction: row-reverse;
-    color: white;
-}
-.name{
-	margin-top: 18px;
-	font-size: 27px;
-	font-weight: bold; 
-}
-
-.left{
-	width: 50%;
-    display: flex;
-}
-
-.all-data {
+.register-main-content {
     display: flex;
     justify-content: center;
-    flex-direction: column;
-}
-
-.data{
-	color: white;
-	display: flex;
-    flex-direction: row-reverse;
-}
-
-.tabs {
-    display: flex;
-    justify-content: center;
-}
-
-.main-content {
-    display: flex;
-    justify-content: center;
+    margin-top: 3%;
+    min-height: calc(100vh - 16vmin - 7vh);
+    height: max-content;
 }
 
 .sign-up-box {
@@ -91,7 +16,6 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
-    /* flex-wrap: wrap; */
     text-align: center;
 }
 
@@ -122,4 +46,3 @@
     text-align: center;
     margin-left: 8px;
 }
-
