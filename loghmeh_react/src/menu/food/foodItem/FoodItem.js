@@ -6,37 +6,36 @@ import PersianNumber from '../../../common/PersianNumber';
 class FoodItem extends Component {
     constructor(props) {
         super(props);
-        this.state = {pic: props.pic, name: props.name, star: props.star, 
-            price: props.price, isAvailable: props.isAvailable};
+        this.state = {food : props.food, isAvailable : props.isAvailable};
     }
 
     render() {
             return(
                 <form className="food">
                     <div className="food-image">
-                        <img src={FoodPic} className="rounded" alt="Food Pic"></img>
+                        <img src={this.state.food.image} className="rounded" alt="Food"></img>
                     </div>
-                    <div className="info">
-                        <div className="food-name">
-                            <b>{this.state.name}</b>
+                    <div className="fooditem-info container">
+                        <div className="row fooditem-namestar">
+                            <div className="fooditem-name col-md-9">
+                                <b>{this.state.food.name}</b>
+                            </div>
+                            <div className="fooditem-star col-md-3">
+                                <p id="fooditem-rating" data-href="#"><PersianNumber number={this.state.food.popularity} /></p>
+                                <span className="fa fa-star checked"></span>
+                            </div>
                         </div>
-                        <div className="food-star">
-                            <p className="food-star-p" data-href="#"><PersianNumber number={this.state.star} /></p>
+                        <div className="row fooditem-price">
+                            <p id="fooditem-price" data-href="#"><PersianNumber number={this.state.food.price} /> تومان</p>
                         </div>
-                        <div className="food-star-icon">
-                            <span className="fa fa-star checked"></span>
-                        </div>
-                    </div>
-                    <div className="food-price">
-                        <p className="food-price-p" data-href="#"><PersianNumber number={this.state.price} /> تومان</p>
-                    </div>
-                    <div className="buy-btn">
-                        {this.props.isAvailable ? 
-                            <input type="submit" value="افزودن به سبد خرید" className="available-btn btn"></input>   
-                            :
-                            <input type="submit" value="ناموجود" className="notavailable-btn btn"></input>
+                        <div className="row fooditem-buy-btn">
+                            {this.props.isAvailable ? 
+                                <input type="submit" value="افزودن به سبد خرید" className="available-btn btn"></input>   
+                                :
+                                <input type="submit" value="ناموجود" className="notavailable-btn btn"></input>
 
-                        }
+                            }
+                        </div>
                     </div>
                 </form>
             );

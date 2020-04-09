@@ -15,8 +15,7 @@ class App extends Component {
           {/* <Menu /> */}
           {/* <Sign isSignUp={false}/> */}
         {/* <Example test={<FoodPartyFood logo={true}/>}/> */}
-        {/* <Home /> */}
-        <Menu name={"منوی غذا"} />
+        <Home />
       </div>
     );
   }
