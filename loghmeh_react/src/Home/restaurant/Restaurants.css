@@ -44,7 +44,7 @@
     border: solid lightgrey;
     border-width: 1px;
     padding: 20px; 
-    width: 25vmin;
+    width: 26vmin;
     height: 28vmin;
     background-color: white;
     box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -100,7 +100,7 @@
 
 #home-restname {
     /* border: solid yellow; */
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 500; 
     white-space: nowrap;
     text-align: center;

@@ -1,8 +1,9 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
+import axios from 'axios';
 import Navbar from '../common/Navbar';
 import UserInfo from './UserInfo';
-import Credit from './Credit';
-import Orders from './Orders';
+import Credit from './credit/Credit';
+import Orders from './orders/Orders';
 import Footer from '../common/Footer';
 import './Profile.css'
 
@@ -23,10 +24,10 @@ class Profile extends Component {
 				<div className="profile-main-content">
 					<div className="tab-box">
 						<div className="btn-group btn-group-lg">
-							<button type="button" id = "credit" className="tab btn btn-primary z-depth-1" onClick={this.changeTab.bind(this, "credit")}>
+							<button type="button" id="credit" className="tab btn btn-primary z-depth-1" onClick={this.changeTab.bind(this, "credit")}>
 								<a id="credit-link" href="#"> افزایش اعتبار </a>
 							</button>
-							<button type="button" id = "orders" className="tab btn btn-primary z-depth-1" onClick={this.changeTab.bind(this, "orders")}>
+							<button type="button" id="orders" className="tab btn btn-primary z-depth-1" onClick={this.changeTab.bind(this, "orders")}>
 								<a id="orders-link" href="#">سفارش‌ها</a>
 							</button>
 						</div>
@@ -57,34 +58,11 @@ class Profile extends Component {
 	}
 
 	handleCreditIncrease(credit) {
-		var params = {
-		    "userId": 1,
-		    "creditIncrease" : credit,
-        };
-		var queryString = Object.keys(params).map(function(key) {
-    		return key + '=' + params[key]
-		}).join('&');
-		const requestOptions = {
-	        method: 'POST',
-	        headers: {
-	        	'content-length' : queryString.length,
-	        	'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-	        },
-	        body: queryString
-	    };
-	    fetch("http://localhost:8080/08_React_war_exploded/increaseCredit", requestOptions)
-			.then(async response => {
-				const data = await response.json();
-	
-				// check for error response
-				if (!data.successful) {
-					// get error message from body or default to response status
-					const error = (data && data.message) || response.status;
-					return Promise.reject(error);
-				}
-	
-				this.userInfoElement.current.updateUserInfo();
-			})
+		event.preventDefault();
+		axios.put('http://localhost:8081/08_React_war_exploded/credit', null, 
+			{params: {'userId': 1, 'creditIncrease': credit}}
+		).then( (response) => {this.userInfoElement.current.updateUserInfo();})
+		.catch((error) => {console.log(error);});
 	} 
 
 }

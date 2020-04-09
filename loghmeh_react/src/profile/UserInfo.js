@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import './UserInfo.css'
 import PersianNumber from '../common/PersianNumber';
+
 
 
 class UserInfo extends Component {
@@ -48,15 +50,19 @@ class UserInfo extends Component {
 	}
 
 	updateUserInfo() {
-		fetch("http://localhost:8080/08_React_war_exploded/getCustomerInfo/" + 1)
-			.then(resp => resp.json())
-			.then(data => this.setState({
-													first_name : data.firstName,
-													last_name : data.lastName,
-													phone_number : data.phoneNumber,
-													email : data.email,
-													credit : data.credit
-													}));
+		console.log("updating user info")
+		axios.get("http://localhost:8081/08_React_war_exploded/customer/" + 1)
+		.then(res => {
+			const data = res.data;
+			console.log(this.state.credit, data.credit);
+			this.setState({ 
+					first_name : data.firstName,
+					last_name : data.lastName,
+					phone_number : data.phoneNumber,
+					email : data.email,
+					credit : data.credit
+			 });
+		})
 	}
 }
 

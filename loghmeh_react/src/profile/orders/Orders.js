@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
-import './Orders.css'
+import './Orders.css';
+import OrderBill from './OrderBill';
 
 class Orders extends Component {
+    constructor(props) {
+        super(props);
+    }
+
 	render() {
 		return (
-			<div class="orders-container container-sm border">
+			<div id="orders" class="orders-container container-sm border">
                 <div class="container">
                     <div class="row order-item">
                         <div class="col col-1 right-col">۱</div>

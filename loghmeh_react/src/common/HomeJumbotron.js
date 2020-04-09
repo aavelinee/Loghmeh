@@ -1,6 +1,5 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import LOGO from '../images/LOGO.png';
-import COVER from '../images/Cover.jpg';
 
 import './HomeJumbotron.css'
 
@@ -23,9 +22,9 @@ class HomeJumbotron extends Component {
                         <div className="row  home-jumbotron-row searchBox">
                             <form className="search-form form-inline">
                                 <label className="sr-only" htmlFor="inlineFormInputName2">Credit</label>
-                                <input type="text" readonly className="foodname-input form-control mb-2 mr-sm-2" id="inlineFormInputName2"
+                                <input type="text" readOnly className="foodname-input form-control mb-2 mr-sm-2" id="inlineFormInputName2"
                                     placeholder="نام غذا"></input>
-                                <input type="text" readonly className="restname-input form-control mb-2 mr-sm-2" id="inlineFormInputName2"
+                                <input type="text" readOnly className="restname-input form-control mb-2 mr-sm-2" id="inlineFormInputName2"
                                     placeholder="نام رستوران"></input>
                                 <button type="submit" className="search-btn btn btn-primary mb-2">جست‌و‌جو</button>
                             </form>
