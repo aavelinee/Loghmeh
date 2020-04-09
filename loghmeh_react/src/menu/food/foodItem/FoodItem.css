@@ -1,0 +1,145 @@
+.food {
+    border-radius: 7px;
+    border: solid lightgrey;
+    border-width: 1px;
+    padding: 20px; 
+    width: 120px;
+    height:140px;
+    background-color: white;
+    box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 50px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+@media screen and (min-width: 800px) {
+    .food {
+        width: 200px;
+        height:220px;
+    }
+}
+
+.food-image {
+    justify-content: center;
+    margin: 0;
+}
+
+
+.food-image img{
+    justify-content: center;
+    border-radius: 3px;
+    width: 40px;
+    margin-right: 0%;
+    margin-bottom: 5px;
+    object-position: center;
+    padding: center;
+}
+
+@media screen and (min-width: 800px) {
+    .food-image img{
+        width: 80px;
+    }
+}
+
+.food-name {
+    flex-direction: row;
+    text-align: right;
+    padding-top: -15px;
+}
+
+.food-price{
+    display: flex;
+    justify-content: center;
+    font-size: 13px;
+    color: #222222;
+    padding-bottom: 3%;
+    height: 60px;
+    margin-top: -15px;
+}
+
+
+.info {
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 0%;
+    text-align: center;
+    justify-content: center;
+    height: 40px;
+}
+
+.food-name {
+    white-space: nowrap;    
+}
+@media screen and (max-width: 800px) {
+    .food-name {
+        white-space: nowrap;    
+        font-size: 12px;
+    }
+}
+
+.food-star {
+    display: flex;
+    padding-left: 3%;
+    padding-right: 10%;
+}
+
+@media screen and (max-width: 800px) {
+    .food-star {
+        display: flex;
+        padding-left: 3%;
+        padding-right: 10%;
+    }
+}
+
+.checked {
+    color: orange;
+}
+
+.buy-btn {
+    display: flex;
+    justify-content: center;
+    margin-top: -5px;
+}
+
+
+.buy-btn .btn {
+    display: flex;
+    text-align: center;
+    color: #57544b;
+    background-color: #ffe66d;
+    border-radius: 7px;
+
+}
+
+@media screen and (max-width: 800px) {
+    .buy-btn .btn {
+        width: 85px;
+        font-size: 8px;
+        text-align: start;
+    }
+}
+
+.no-btn {
+    display: flex;
+    justify-content: center;
+    margin-top: -5px;
+}
+
+.no-btn .btn {
+    display: flex;
+    text-align: center;
+    color: #343a40;
+    background-color: #e6e6e6;
+    border-radius: 7px;
+}
+
+@media screen and (max-width: 800px) {
+    .no-btn .btn {
+        width: 85px;
+        font-size: 8px;
+        text-align: center;
+    }
+}

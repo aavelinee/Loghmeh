@@ -1,0 +1,11 @@
+.food-in-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.food-in-row {
+    display: flex;
+    flex-direction: row;
+}
