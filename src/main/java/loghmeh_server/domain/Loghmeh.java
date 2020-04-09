@@ -96,6 +96,14 @@ public class Loghmeh {
         }
     }
 
+    public ArrayList<Restaurant> getOrdinaryRestaurants() {
+        ArrayList<Restaurant>ordinaryRestaurants = new ArrayList<>();
+        for(Restaurant restaurant: this.restaurants) {
+            if(restaurant.getMenu().getFoods() != null)
+                ordinaryRestaurants.add(restaurant);
+        }
+        return ordinaryRestaurants;
+    }
 
     public Restaurant getRestaurant(String restaurantId) {
         Restaurant restaurant = getRestaurantById(restaurantId);
@@ -165,7 +173,7 @@ public class Loghmeh {
         return "no order";
     }
 
-    public boolean isRestaurantExists(Restaurant restaurant) {
+    public boolean doesRestaurantExist(Restaurant restaurant) {
         for(Restaurant rest: this.restaurants) {
             if(restaurant.equals(rest)){
                 return true;
@@ -177,7 +185,7 @@ public class Loghmeh {
     public boolean isNewFoodParty(Order order) {
         for (OrderItem orderItem : order.getOrders()) {
             if (orderItem.getFood() instanceof FoodPartyFood) {
-                if (!isRestaurantExists(orderItem.getFood().getMenu().getRestaurant())) {
+                if (!doesRestaurantExist(orderItem.getFood().getMenu().getRestaurant())) {
                     return false;
                 }
 
@@ -348,7 +356,7 @@ public class Loghmeh {
         return customers.get(i);
     }
 
-    public Customer getCustomerByid(int id) {
+    public Customer getCustomerById(int id) {
         for(Customer customer: this.customers){
             if(customer.getCustomerId() == id)
                 return customer;

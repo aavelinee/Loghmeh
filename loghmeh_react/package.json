@@ -3,12 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
+    "jquery": "^1.9.1",
     "material-ui-rating": "^4.2.0",
+    "popper.js": "^1.16.1",
     "react": "^16.13.1",
+    "react-awesome-modal": "^2.0.5",
     "react-bootstrap": "^1.0.0",
     "react-dom": "^16.13.1",
-    "react-scripts": "0.9.5"
+    "react-scripts": "0.9.5",
+    "simple-react-modal": "^0.5.1"
   },
   "devDependencies": {},
   "scripts": {
@@ -17,4 +22,5 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }
+  
 }

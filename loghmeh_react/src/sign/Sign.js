@@ -5,7 +5,7 @@ import Register from './Register';
 import Footer from '../common/Footer';
 import './Register.css';  
 
-class Sign extends React.Component {
+class Sign extends Component {
   
   render() {
     const isSignUp = this.props.isSignUp
