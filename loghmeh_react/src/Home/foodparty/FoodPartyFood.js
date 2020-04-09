@@ -8,13 +8,13 @@ class FoodPartyFood extends Component {
             <div className="container foodparty-food">
                 <div className="row foodparty-food-row foodparty-foodinfo">
                     <div className="right-foodparty-foodinfo col-md-6">
-                        <img  id="foodparty-foodimg" src={FOODIMG} class="rounded" alt="Food Picture"></img>
+                        <img  id="foodparty-foodimg" src={FOODIMG} className="rounded" alt="Food Picture"></img>
                     </div>
                     <div className="left-foodparty-foodinfo col-md-6">
                         <div className="row foodparty-foodname">
                             <p id="foodparty-foodname">پیتزا</p>
                         </div>
-                        <div class="food-star-icon foodRate">
+                        <div className="food-star-icon foodRate">
 
                         </div>
                     </div>
