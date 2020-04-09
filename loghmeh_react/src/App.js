@@ -9,7 +9,7 @@ class App extends Component {
     return (
       <div>
           {/* <Menu /> */}
-          {/* <Sign isSignUp={true}/> */}
+          {/* <Sign isSignUp={false}/> */}
         {/* <Example test={<FoodPartyFood logo={true}/>}/> */}
         <Home />
       </div>

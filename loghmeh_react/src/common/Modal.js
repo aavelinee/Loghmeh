@@ -1,35 +1,26 @@
 import React, {Component, useState} from 'react';
 import {Modal, Button} from 'react-bootstrap';
-import Navbar from './Navbar';
+import './Modal.css';
 
-function Example(props) {
-    const [show, setShow] = useState(false);
-  
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+class ModalClass extends Component {
+    constructor(props) {
+      super(props);
+      this.state = { show: props.show, comp: props.comp}
+      this.handleClose = this.handleClose.bind(this);
+    }
 
+    handleClose() {
+      this.setState({show: false});
+    }
+
+    render() {
     return (
       <div>
-        <Button variant="primary" onClick={handleShow}>
-          Launch demo modal
-        </Button>
-        <Modal show={show} onHide={handleClose} dialogClassName="modal-90w-100h">
-          {/* <Modal.Header closeButton>
-            <Modal.Title>Modal heading</Modal.Title>
-          </Modal.Header> */}
-          {/* <Modal.Body> */}
-          {props.test}
-          {/* </Modal.Body> */}
-          {/* <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-              Close
-            </Button>
-            <Button variant="primary" onClick={handleClose}>
-              Save Changes
-            </Button>
-          </Modal.Footer> */}
+        <Modal className="modal-content" show={this.state.show} onHide={this.handleClose}>
+          {this.state.comp}
         </Modal>
         </div>
     );
   }
-export default Example;
+}
+export default ModalClass;
