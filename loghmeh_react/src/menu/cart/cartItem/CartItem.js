@@ -9,23 +9,27 @@ class CartItem extends Component {
     }
     render() {
         return(
-            <div className="cart-item row">
-                <div className="food-name-in-cart container right-col">{this.state.name}</div>
-                <div className="ord-detail container">
-                    <div className="first-line">
-                        <div className="plus col-sm-1">
-                            <a className="flaticon-plus" href="#"></a>
-                        </div>
-                        <div className="ord-num col-sm-1">
-                        <p className="food-number" data-href="#"><PersianNumber number={this.state.number} /></p>
-                        </div>
-                        <div className="minus col-sm-1">
-                            <a className="flaticon-minus" href="#"></a> 
+            <div className="cart-item-container">
+                <div className="cart-item-info row">
+                    <div className="cart-food-name col-md-9">
+                        <p id="cart-food-name">{this.state.name}</p>
+                    </div>
+                    <div className="cart-ord-add-cart col-md-3">
+                        <div className="addcart-box">
+                            <div className="cart-plus">
+                                <a className="flaticon-plus" href="#"></a>
+                            </div>
+                            <div className="cart-ord-num">
+                            <p className="food-number" data-href="#"><PersianNumber number={this.state.number} /></p>
+                            </div>
+                            <div className="cart-minus">
+                                <a className="flaticon-minus" href="#"></a> 
+                            </div>
                         </div>
                     </div>
-                    <div className="second-line">
-                        <p className="food-price" data-href="#"><PersianNumber number={this.state.price} /> تومان</p>
-                    </div>
+                </div>
+                <div className="cart-item-price row">
+                    <p id="cart-item-price" data-href="#"><PersianNumber number={this.state.price} /> تومان</p>
                 </div>
             </div>
         );

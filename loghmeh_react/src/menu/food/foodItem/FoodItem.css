@@ -108,10 +108,7 @@
 .buy-btn .btn {
     display: flex;
     text-align: center;
-    color: #57544b;
-    background-color: #ffe66d;
     border-radius: 7px;
-
 }
 
 @media screen and (max-width: 800px) {
@@ -122,22 +119,18 @@
     }
 }
 
-.no-btn {
-    display: flex;
-    justify-content: center;
-    margin-top: -5px;
+.available-btn {
+    color: #57544b;
+    background-color: #ffe66d;
 }
 
-.no-btn .btn {
-    display: flex;
-    text-align: center;
+.notavailable-btn {
     color: #343a40;
     background-color: #e6e6e6;
-    border-radius: 7px;
 }
 
 @media screen and (max-width: 800px) {
-    .no-btn .btn {
+    .notavailable-btn .btn {
         width: 85px;
         font-size: 8px;
         text-align: center;

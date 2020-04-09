@@ -1,13 +1,12 @@
 
-.cart-item {
-    position: relative;
-    width: 90%;
+.cart-item-container {
+    width: 95%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     border-bottom: solid thin rgb(204, 204, 204);
-    text-align: center;
-    flex-wrap: nowrap;
     align-self: center;
+    /* border: solid yellow; */
 }
 
 @media screen and (max-width: 800px) {
@@ -16,50 +15,43 @@
     }
 }
 
-.food-name-in-cart {
-    padding-top: 15px;
-    white-space: nowrap;    
+.cart-item-info {
+    /* border: solid; */
+    height: 6vmin;
 }
 
-@media screen and (max-width: 800px) {
-    .food-name-in-cart {
-        width: 50px;
-    }
 
-}
 
-.ord-detail {
-    position: relative;
+.cart-food-name {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    height: 60px;
-    padding-right: 40px;
-    margin-left: 20px;
-    width: 130px;
-
 }
 
-.first-line {
-    position: relative;
+.cart-food-name {
+    font-weight: 300;
+}
+
+.cart-ord-add-cart {
+    /* border: solid orange; */
     display: flex;
-    justify-content: baseline;
-    padding-top: 10px;
-    align-self: center;
-    padding-right: 100px;
-    margin-bottom: -20px;
-    margin-right: 50px;
+    justify-content: flex-end;
 }
 
-.plus {
+.addcart-box {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 2.5vmin;
+}
+
+.cart-plus {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-left: -15px;
 }
 
-.ord-num {
+.cart-ord-num {
     display: flex;
     justify-content: center;
     text-align: center;
@@ -68,7 +60,7 @@
 
 }
 
-.minus {
+.cart-minus {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -76,21 +68,15 @@
 
 }
 
-.second-line {
-    width: 100px;
-    margin-right: 50px;
-    padding-top: 10px;
+.cart-item-price {
+    /* border: solid; */
+    display: flex;
+    justify-content: flex-end;
+}
+
+#cart-item-price {
     font-size: small;
-}
-
-.total-price {
-    padding-top: 10px;
-    color: black;
-    text-align: center;
-}
-
-.submit-btn {
-    background-color: #4ECDC4;
-    color: white;
-    border: none;
+    font-weight: 200;
+    height: 2vmin;
+    padding-left: 3vmin;
 }
