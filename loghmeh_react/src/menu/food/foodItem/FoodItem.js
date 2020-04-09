@@ -1,12 +1,24 @@
 import React, { Component } from 'react';
+import {Modal} from 'react-bootstrap';
 import './FoodItem.css';
 import FoodPic from '../../../images/foodpic.jpeg';
 import PersianNumber from '../../../common/PersianNumber';
+import FoodDetail from '../../../Home/food/FoodDetail';
 
 class FoodItem extends Component {
     constructor(props) {
         super(props);
-        this.state = {food : props.food, isAvailable : props.isAvailable};
+        this.state = {food : props.food, isAvailable : props.isAvailable, showModal: false};
+        this.handleShow = this.handleShow.bind(this);
+        this.handleClose = this.handleClose.bind(this);
+    }
+
+    handleShow() {
+        this.setState({showModal: true});
+    }
+
+    handleClose() {
+        this.setState({showModal: false});
     }
 
     render() {
@@ -30,7 +42,12 @@ class FoodItem extends Component {
                         </div>
                         <div className="row fooditem-buy-btn">
                             {this.props.isAvailable ? 
-                                <input type="submit" value="افزودن به سبد خرید" className="available-btn btn"></input>   
+                                <div>
+                                <input type="submit" value="افزودن به سبد خرید" className="available-btn btn" onClick={this.handleShow}></input>
+                                <Modal show={this.state.showModal} onHide={this.handleClose}>
+                                    <FoodDetail isPartyFood={false} />
+                                </Modal>
+                                </div>
                                 :
                                 <input type="submit" value="ناموجود" className="notavailable-btn btn"></input>
 

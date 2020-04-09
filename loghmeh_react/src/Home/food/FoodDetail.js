@@ -15,7 +15,7 @@ class FoodDetail extends Component {
                 </div>
                 <div className="row fooddetail-foodinfo">
                     <div className="fooddetail-foodpic col-md-4">
-                        <img  id="fooddetail-foodimg" src={FOODIMG} class="rounded" alt="Food Picture"></img>
+                        <img  id="fooddetail-foodimg" src={FOODIMG} className="rounded" alt="Food Picture"></img>
                     </div>
                     <div className="fooddetail-foodprop col-md-8">
                         <div className="row fooddetail-foodname">
@@ -42,14 +42,14 @@ class FoodDetail extends Component {
                         }
                     </div>
                     <div className="fooddetail-cart-addcart col-md-8">
-                        {/* <div class="plus"> */}
-                            <a class="fooddetail-icon flaticon-plus" href="#"></a>
+                        {/* <div className="plus"> */}
+                            <a className="fooddetail-icon flaticon-plus" href="#"></a>
                         {/* </div> */}
-                        {/* <div class="fooddetail-ord-num"> */}
+                        {/* <div className="fooddetail-ord-num"> */}
                             <p id="fooddetail-ord-num">۲</p>
                         {/* </div> */}
-                        {/* <div class="fooddetail-minus"> */}
-                            <a class="fooddetail-icon flaticon-minus" href="#"></a> 
+                        {/* <div className="fooddetail-minus"> */}
+                            <a className="fooddetail-icon flaticon-minus" href="#"></a> 
                         {/* </div> */}
                         <button type="button" className="fooddetail-cart-buybtn">افزودن به سبد خرید</button>
                     </div>

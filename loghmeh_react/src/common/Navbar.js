@@ -4,6 +4,7 @@ import LOGO from '../images/LOGO.png';
 import Profile from '../profile/Profile';
 import './Navbar.css';
 import '../images/icons/flaticon.css';
+import Orders from '../profile/orders/Orders';
 
 class Navbar extends Component {
 	constructor(props) {

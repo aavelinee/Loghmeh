@@ -2,6 +2,7 @@ package loghmeh_server.service;
 
 import loghmeh_server.domain.Customer;
 import loghmeh_server.domain.Loghmeh;
+import loghmeh_server.domain.Order;
 import loghmeh_server.domain.Restaurant;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import sun.rmi.runtime.Log;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
@@ -43,6 +45,14 @@ public class LoghmehService {
         servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
         System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa get rest" + Loghmeh.getInstance().getOrdinaryRestaurants().size());
         return Loghmeh.getInstance().getOrdinaryRestaurants();
+    }
+
+    @RequestMapping(value = "/orders", method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ArrayList<Order> getOrders(HttpServletResponse servletResponse) {
+        servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
+        System.out.println("orrrrdeeeerrrrsss" + Loghmeh.getInstance().getCustomer(0).getOrders().size());
+        return Loghmeh.getInstance().getCustomer(0).getOrders();
     }
 
     @RequestMapping(value = "/credit", method = RequestMethod.PUT,

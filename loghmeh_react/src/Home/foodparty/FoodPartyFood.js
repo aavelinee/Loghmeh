@@ -1,8 +1,27 @@
 import React, { Component } from 'react';
+import {Modal} from 'react-bootstrap';
 import FOODIMG from '../../images/foodpic.jpeg';
 import './FoodPartyFood.css';
+import ModalClass from '../../common/Modal';
+import FoodDetail from '../food/FoodDetail';
 
 class FoodPartyFood extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {showModal: false};
+        this.handleClose = this.handleClose.bind(this);
+        this.handleShow = this.handleShow.bind(this);
+
+    }
+
+    handleShow() {
+        this.setState({showModal: true});
+    }
+
+    handleClose() {
+        this.setState({showModal: false});
+    }
+
     render() {
         return (
             <div className="container foodparty-food">
@@ -32,7 +51,10 @@ class FoodPartyFood extends Component {
                         <p id="countLeft">موجودی: <b className="foodparty-count">۳</b></p>
                     </div>
                     <div className="left-foodparty-buy col-md-6">
-                        <button type="button" className="foodparty-buy-btn">خرید</button>
+                        <button type="button" className="foodparty-buy-btn" onClick={this.handleShow}>خرید</button>
+                        <Modal show={this.state.showModal} onHide={this.handleClose}>
+                            <FoodDetail isFoodParty={true} />
+                        </Modal>
                     </div>
                 </div>
                 <div className="row foodparty-food-row foodparty-restname">
@@ -40,10 +62,10 @@ class FoodPartyFood extends Component {
                         <p id="foodparty-restaurantname">رستوران خامس</p>
                     </div>
                 </div>
+
             </div>
         );
     }
-
 }
 
 export default FoodPartyFood;

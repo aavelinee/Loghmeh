@@ -70,6 +70,7 @@ public class Customer {
         return orders.get(orders.size() - 1);
     }
 
+
     public ArrayList<Restaurant> getCloseRestaurants() {
         ArrayList<Restaurant> restaurants = Loghmeh.getInstance().getRestaurants();
         ArrayList<Restaurant> closeRestaurants = new ArrayList<Restaurant>();
