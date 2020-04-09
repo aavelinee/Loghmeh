@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import './FoodItem.css';
-import FoodPic from '../../../images/foodpic.jpeg';
 import PersianNumber from '../../../common/PersianNumber';
 
 class FoodItem extends Component {
     constructor(props) {
         super(props);
-        this.state = {food : props.food, isAvailable : props.isAvailable};
+        this.state = {food : props.food, isAvailable : props.isAvailable, onClickBuy : props.onClickBuy};
     }
 
     render() {
@@ -30,10 +29,9 @@ class FoodItem extends Component {
                         </div>
                         <div className="row fooditem-buy-btn">
                             {this.props.isAvailable ? 
-                                <input type="submit" value="افزودن به سبد خرید" className="available-btn btn"></input>   
+                                <button type="button" className="available-btn" onClick={() => this.state.onClickBuy(this.state.food.name)}>افزودن به سبد خرید</button>
                                 :
-                                <input type="submit" value="ناموجود" className="notavailable-btn btn"></input>
-
+                                <button type="button" className="notavailable-btn">ناموجود</button>
                             }
                         </div>
                     </div>

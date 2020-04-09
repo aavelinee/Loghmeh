@@ -30,6 +30,7 @@ public class Order {
         for(OrderItem orderItem: orders){
             if(orderItem.getFood().equals(food)) {
                 orderItem.orderMore();
+                System.out.println("order morrreeee");
                 return true;
             }
         }

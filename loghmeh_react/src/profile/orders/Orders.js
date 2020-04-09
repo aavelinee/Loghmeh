@@ -15,7 +15,7 @@ class Orders extends Component {
                         <div class="col col-1 right-col">۱</div>
                         <div class="col col-6"> رستوران خامس</div>
                         <div class="col col-5 left-col">
-                            <button type="button" class="factor on-the-way btn btn-primary">پیک در مسیر</button>
+                            <button type="button" class="factor on-the-way">پیک در مسیر</button>
                         </div>
                     </div>
                     <div class="row order-item">

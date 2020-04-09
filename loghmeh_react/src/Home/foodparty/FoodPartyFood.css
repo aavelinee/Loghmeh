@@ -87,6 +87,10 @@
     padding-bottom: 0.5vmin;
 }
 
+.foodparty-buy-btn:focus {
+    outline: none;
+}
+
 .foodparty-restname {
     /* margin-bottom: -1vmin; */
     display: flex;

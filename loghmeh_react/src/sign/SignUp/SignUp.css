@@ -27,7 +27,7 @@
     height: 30vh;
 }
 
-.signup-form .btn{
+.signup-form {
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -39,7 +39,10 @@
 
 .signup-btn {
     background-color: #4ECDC4;
-    border-color: #4ECDC4;;
+    border-color: #4ECDC4;
+    color: white;
+    border-radius: 5px;
+    width: 10vmin;
 }
 
 @media screen and (min-width: 800px) {

@@ -39,8 +39,13 @@
     border-width: 1px;
     background-color: #4ECDC4;
     border-radius: 8px;
+    color: white;
     border: solid rgba(182, 182, 182, 0.746);
     text-align: center;
+}
+
+.credit-btn:focus {
+    outline: none;
 }
 
 

@@ -37,7 +37,7 @@ class SignUp extends Component {
 				</input>
 			</div>
 			<div className="sub" >
-				<input type="submit" value="ثبت نام" className="signup-btn btn btn-primary pull-center"></input>
+				<input type="submit" value="ثبت نام" className="signup-btn pull-center"></input>
 			</div>
 		</div>
 		);

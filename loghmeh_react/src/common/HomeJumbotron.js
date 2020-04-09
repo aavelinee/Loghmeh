@@ -26,7 +26,7 @@ class HomeJumbotron extends Component {
                                     placeholder="نام غذا"></input>
                                 <input type="text" readOnly className="restname-input form-control mb-2 mr-sm-2" id="inlineFormInputName2"
                                     placeholder="نام رستوران"></input>
-                                <button type="submit" className="search-btn btn btn-primary mb-2">جست‌و‌جو</button>
+                                <button type="button" className="search-btn">جست‌و‌جو</button>
                             </form>
                         </div>
                     }

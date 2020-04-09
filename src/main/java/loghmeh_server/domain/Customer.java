@@ -45,12 +45,17 @@ public class Customer {
         orders.remove(orders.size()-1);
     }
 
-    public void finalizeOrder() {
+    public boolean finalizeOrder() {
         if(orders.size() == 0 || orders.get(orders.size()-1).getStatus() != Order.orderStatus.Ordering){
-            return;
+            return false;
         }
         orders.get(orders.size()-1).setStatus(Order.orderStatus.DeliverySearch);
-        credit -= orders.get(orders.size()-1).getPrice();
+        float orderPrice = orders.get(orders.size()-1).getPrice();
+        if(credit >= orderPrice) {
+            credit -= orderPrice;
+            return true;
+        }
+        return false;
     }
 
     public void increaseCredit(int credit) {

@@ -8,6 +8,7 @@ class CartItem extends Component {
         this.state = {name: props.name, number: props.number, price: props.price};
     }
     render() {
+        console.log("rendering cart item", this.state.number);
         return(
             <div className="cart-item-container">
                 <div className="cart-item-info row">

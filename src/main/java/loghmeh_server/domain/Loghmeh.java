@@ -60,6 +60,7 @@ public class Loghmeh {
                 restaurant.setMenu(otherBranch.getMenu());
             }
             addRestaurantInfo(restaurant);
+            System.out.println("idsss: " + restaurant.getId());
         }
         return "Restaurants Added Successfully";
     }
@@ -105,41 +106,40 @@ public class Loghmeh {
         return ordinaryRestaurants;
     }
 
-    public Restaurant getRestaurant(String restaurantId) {
-        Restaurant restaurant = getRestaurantById(restaurantId);
-        if(restaurant == null)
-            return null;
-        return restaurant;
-    }
-
-    public String addToCart(String restaurantId, String foodName, String isFoodParty) {
+    public String addToCart(int customerId, String restaurantId, String foodName, boolean isFoodParty) {
         Restaurant restaurant = getRestaurantById(restaurantId);
         if(restaurant == null) {
             System.out.println("There Is No Restaurant With ID " + restaurantId);
-            return "no restaurant";
+            return "not found";
         }
 
-        if(isFoodParty.equals("true")){
+        Customer customer = getCustomerById(customerId);
+        if(customer == null){
+            System.out.println("There Is No Customer With ID " + customerId);
+            return "not found";
+        }
+
+        if(isFoodParty){
             FoodPartyFood foodPartyFood = restaurant.getFoodPartyFoodByName(foodName);
             if(foodPartyFood == null){
                 System.out.println("Food Party Food Does Not Exist");
-                return "no food";
+                return "not found";
             }
-            if (customers.get(0).addToCart(restaurant, foodPartyFood)){
+            if (customer.addToCart(restaurant, foodPartyFood)){
                 return "added";
             }
-            return "not added";
+            return "different restaurant order";
         }
         else{
             Food food = restaurant.getFoodByName(foodName);
             if(food == null){
                 System.out.println("Food Does Not Exist");
-                return "no food";
+                return "not found";
             }
-            if (customers.get(0).addToCart(restaurant, food)){
+            if (customer.addToCart(restaurant, food)){
                 return "added";
             }
-            return "not added";
+            return "different restaurant order";
         }
 
     }
@@ -148,29 +148,35 @@ public class Loghmeh {
         return customers.get(i).getCart();
     }
 
-    public String finalizeOrder() {
-        Order order = customers.get(0).getCart();
+    public String finalizeOrder(int customerId) {
+        Customer customer = getCustomerById(customerId);
+        if(customer == null)
+            return "not found";
+
+        Order order = customer.getCart();
         if(order != null){
             String result = "done";
             if(areFoodPartyFoodsAvailable(order) && isNewFoodParty(order)){
-                customers.get(0).finalizeOrder();
-//                result = "done";
+                if(customer.finalizeOrder())
+                    result = "done";
+                else
+                    result = "no credit";
             }
             else if(!areFoodPartyFoodsAvailable(order) && isNewFoodParty(order)){
-                customers.get(0).removeCart();
+               customer.removeCart();
                 result = "count problem";
             }
             else if(areFoodPartyFoodsAvailable(order) && !isNewFoodParty(order)){
-                customers.get(0).removeCart();
+                customer.removeCart();
                 result = "time problem";
             }
             else{
-                customers.get(0).removeCart();
+                customer.removeCart();
                 result = "both problem";
             }
             return result;
         }
-        return "no order";
+        return "not found";
     }
 
     public boolean doesRestaurantExist(Restaurant restaurant) {
@@ -312,10 +318,13 @@ public class Loghmeh {
     }
 
     public Restaurant getRestaurantById(String restaurantId) {
-        if(restaurantId == null)
+        if(restaurantId == null) {
+            System.out.println("id nulle?!");
             return null;
-        for(Restaurant rest: restaurants){
-            if(rest.getId().equals(indexToId.get(restaurantId)))
+        }
+        for(Restaurant rest: this.restaurants){
+            System.out.println("id in check: " + rest.getId());
+            if(rest.getId().equals(restaurantId))
                 return rest;
         }
         return null;

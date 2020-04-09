@@ -20,7 +20,7 @@ class SignIn extends Component {
               </input>
           </div>
           <div className="sub">
-            <input type="submit" value="ورود" className="signin-btn btn btn-primary pull-center"></input>
+            <input type="submit" value="ورود" className="signin-btn pull-center"></input>
           </div>
         </div>
       );
