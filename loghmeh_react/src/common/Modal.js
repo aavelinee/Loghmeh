@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, {Component, useState} from 'react';
 import {Modal, Button} from 'react-bootstrap';
 import Navbar from './Navbar';
@@ -34,17 +33,3 @@ function Example(props) {
     );
   }
 export default Example;
-=======
-const Modal = ({ handleClose, show, children }) => {
-    const showHideClassName = show ? "modal display-block" : "modal display-none";
-  
-    return (
-      <div className={showHideClassName}>
-        <section className="modal-main">
-          {children}
-          <button onClick={handleClose}>close</button>
-        </section>
-      </div>
-    );
-  };
->>>>>>> 644a113ae5c735f2883ba70734cacc7afeeec51b
