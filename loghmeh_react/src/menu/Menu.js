@@ -1,4 +1,4 @@
-import React, { Component, Fragment} from 'react';
+import React, { Component, Fragment } from 'react';
 import './Menu.css';  
 import Navbar from '../common/Navbar';
 import Footer from '../common/Footer';
@@ -10,7 +10,14 @@ class Menu extends Component {
     constructor(props) {
         super(props)
         this.state = {restaurant: props.restaurant}
+        this.cartElement = React.createRef();
+        this.handleAddToCart = this.handleAddToCart.bind(this);
     }
+
+    handleAddToCart(foodName) {
+        this.cartElement.current.addToCart(this.state.restaurant.id, foodName, false);
+    }
+
     render() {
         console.log("in menu", this.state.restaurant);
         return(
@@ -23,11 +30,11 @@ class Menu extends Component {
                     </div>
                     <div className="menu-container row">
                         <div className="menu-right col-md-4">
-                            <Cart />
+                            <Cart ref={this.cartElement}/>
                         </div>
                         <div className="menu-left col-md-8">
                             <div className="menu-food-form container">
-                                <Food menu={this.state.restaurant.menu} />
+                                <Food onClickBuy={this.handleAddToCart} menu={this.state.restaurant.menu} />
                             </div>
                         </div>
                     </div>  

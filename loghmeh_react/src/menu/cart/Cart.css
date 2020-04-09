@@ -6,6 +6,7 @@
     border-radius: 8px;
     background-color: white;
     width: 80%;
+    min-width: max-content;
 }
 
 @media screen and (max-width: 800px) {
@@ -63,4 +64,14 @@
     min-width: 50%;
     text-align: center;
     color: white;
+    margin-bottom: 3vmin;
+}
+
+.cart-buy-btn:focus {
+    outline: none;
+}
+
+#empty-cart {
+    text-align: center;
+    font-size: 12px;
 }

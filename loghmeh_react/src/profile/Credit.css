@@ -33,7 +33,7 @@
 }
 
 .credit-btn {
-    margin-right: 2vw; 
+    margin-right: 2vw;
     width: 15vw;
     height: 50px;
     border-width: 1px;
@@ -56,11 +56,11 @@
         padding: 0;
         padding-right: 10px;
     }
-    
+
     .credit-btn {
         height: 50px;
         margin-right: 40px;
         width: 15vw;
     }
 }
-    
+

@@ -134,14 +134,13 @@
     font-weight: bold;
 }
 
-#home-restmenu-btn:active, #home-restmenu-btn:focus, #home-restmenu-btn:visited {
-    background-color: #FFE66D;
-    border:solid thin yellow;
-}
-
 @media screen and (max-width: 800px) {
     .home-restmenu-btn {
         width: 18vmin;
         margin-top: 1vmin;
     }
+}
+
+#home-restmenu-btn:focus {
+    outline: none;
 }

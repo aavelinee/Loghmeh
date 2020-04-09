@@ -28,7 +28,7 @@
     height: 15vh;
 }
 
-.signin-form .btn{
+.signin-form {
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -39,7 +39,10 @@
 
 .signin-btn {
     background-color: #4ECDC4;
-    border-color: #4ECDC4;;
+    border-color: #4ECDC4;
+    color: white;
+    border-radius: 5px;
+    width: 10vmin;
 }
 
 @media screen and (min-width: 800px) {
@@ -48,4 +51,8 @@
         width: 48vh;
         height: 25vh;
     }
+}
+
+.signin-btn:focus{
+    outline: none;
 }

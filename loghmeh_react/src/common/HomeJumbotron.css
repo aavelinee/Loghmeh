@@ -99,7 +99,6 @@ img.home-loghmeh-img {
     color: #1A535C;
     margin-right: 2vh;
     text-align: center;
-    margin-top: 1vh;
     border:solid thin yellow;
 }
 
@@ -112,20 +111,15 @@ img.home-loghmeh-img {
     .foodname-input, .restname-input , .form-inline .form-control{
         width: 12vw;
         height: 4vh;
-        margin-top: 1vh;
     }
     
     .search-btn {
         width: 10vw;
         height: 4vh;
         margin-right: 2vh;
-        margin-top: 1vh;
     }
 }
 
-.search-btn:hover , .search-btn :active ::after{
-    background-color: #FFE66D;
-    border: solid rgba(182, 182, 182, 0.746);
-    color: #1A535C;
-    border:solid thin yellow;
+.search-btn:focus {
+    outline: none;
 }

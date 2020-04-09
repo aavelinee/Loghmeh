@@ -1,17 +1,8 @@
 import React, { Component} from 'react';
-import {Modal, Button} from 'react-bootstrap';
-
-import './App.css';
-
 import Sign from './sign/Sign';
 import Home from './Home/Home'
-import Menu from './menu/Menu';
-import { render } from 'react-dom';
-import ModalClass from './common/Modal';
-import Navbar from './common/Navbar';
-import FoodPartyFood from './Home/foodparty/FoodPartyFood';
-import OrderBill from './profile/orders/OrderBill';
-import FoodDetail from './Home/food/FoodDetail';
+import './App.css';
+
 
 class App extends Component {
   constructor(props) {
@@ -29,6 +20,9 @@ class App extends Component {
     console.log(this.state.show); 
     return (
       <div>
+          {/* <Menu /> */}
+          {/* <Sign isSignUp={false}/> */}
+        {/* <Example test={<FoodPartyFood logo={true}/>}/> */}
         <Home />
       </div>
     );

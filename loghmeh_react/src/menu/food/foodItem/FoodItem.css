@@ -52,6 +52,13 @@
     width: 100%;
     height: 8vmin;
     margin-top: 7vmin;
+    flex-wrap: nowrap;
+}
+
+.fooditem-namestar {
+    display: flex;
+    width: 25vmin;
+    align-self: center;
 }
 
 .fooditem-name {
@@ -104,26 +111,35 @@
 .fooditem-buy-btn {
     display: flex;
     justify-content: center;
-    margin-top: -1vmin;
 }
 
 .available-btn {
     color: #57544b;
     background-color: #ffe66d;
+    border: solid rgb(255, 255, 100);
     height: 4vmin;
+    width: 95%;
     font-size: 12px;
-    margin-top: -1vmin;
-    padding-top: -1vmin;
+    white-space: nowrap;
+    border-radius: 8px;
+}
 
+.available-btn:focus {
+    outline: none;
 }
 
 .notavailable-btn {
     color: #343a40;
     background-color: #e6e6e6;
     height: 4vmin;
+    width: 95%;
     font-size: 12px;
-    margin-top: -1vmin;
+    white-space: nowrap;
+    border-radius: 8px;
+}
 
+.notavailable-btn:focus {
+    outline: none;
 }
 
 @media screen and (max-width: 800px) {
@@ -133,3 +149,4 @@
         text-align: center;
     }
 }
+

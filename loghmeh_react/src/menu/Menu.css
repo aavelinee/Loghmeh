@@ -24,7 +24,7 @@
     font-size: 28px;
     padding-left: 7vmin;
     padding-right: 7vmin;
-    margin-left: -70vmin;
+    margin-left: -68vmin;
 }
 
 @media screen and (max-width: 800px) {
@@ -32,9 +32,6 @@
         font-size: 20px;
         margin-right: 360px;
     }
-}
-
-.menu-container {
 }
 
 .menu-row {
@@ -54,5 +51,4 @@
 .menu-food-form {
     display: flex;
     flex-direction: column;
-    margin-right: 3vmin;
 }

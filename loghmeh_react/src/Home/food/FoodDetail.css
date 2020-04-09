@@ -118,3 +118,7 @@
     text-align: center;
     color: white;
 }
+
+.fooddetail-cart-buybtn:focus {
+    outline: none;
+}

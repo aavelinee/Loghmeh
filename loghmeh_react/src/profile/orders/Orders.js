@@ -31,13 +31,13 @@ class Orders extends Component {
         console.log(this.state.orders);
 
 		return (
-			<div id="orders" className="orders-container container-sm border">
-                <div className="container">
-                    <div className="row order-item">
-                        <div className="col col-1 right-col">۱</div>
-                        <div className="col col-6"> رستوران خامس</div>
-                        <div className="col col-5 left-col">
-                            <button type="button" className="factor on-the-way btn btn-primary">پیک در مسیر</button>
+			<div id="orders" class="orders-container container-sm border">
+                <div class="container">
+                    <div class="row order-item">
+                        <div class="col col-1 right-col">۱</div>
+                        <div class="col col-6"> رستوران خامس</div>
+                        <div class="col col-5 left-col">
+                            <button type="button" class="factor on-the-way">پیک در مسیر</button>
                         </div>
                     </div>
                     <div className="row order-item">
