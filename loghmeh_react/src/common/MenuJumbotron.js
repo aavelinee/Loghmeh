@@ -10,7 +10,7 @@ class MenuJumbotron extends Component {
                     <img src={RestLogo} className="restaurant-logo" alt="Restaurant-Logo"></img>
                 </div>
                 <div className="restaurant-name">
-                    <b className="restaurant-name">رستوران خامس</b>
+                    <b className="restaurant-name">{this.props.name}</b>
                 </div>
             </div>
         );

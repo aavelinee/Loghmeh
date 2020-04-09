@@ -1,52 +1,30 @@
-.main-content {
+.menu-main-content {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding-top: 165px;
-}
-
-.col {
-    display: flex;
-    flex-direction: column;
-    min-height: calc(100vh - 100);
-}
-
-.right.col {
-    border-left: 3px dashed rgb(77, 165, 124);
-    margin-bottom: 50px;
-    margin-top: 30px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-}
-
-@media screen and (max-width: 800px) {
-    .right.col {
-        max-width: 250px;
-        margin-right: 50px;
-    }
+    min-height: calc(100vh - 30vmin - 16vmin);
+    height: max-content;
+    margin-top: 50vmin;
+    width: 90%;
+    margin-right: -2vmin;
+    margin-bottom: 5vmin;
 }
 
 .menu-name {
     display: flex;
-    text-align: center;
-    align-self: center;
+    justify-content: center;
     color: #1A535C;
-    padding-bottom: 1px;
-    margin-top: -55px;
-    margin-right: -290px;
+    margin-bottom: 5vmin;
+    /* margin-left: -66vmin; */
 }
 
 #menu-name {
     color: #1A535C;
     border-bottom: 2px solid #1A535C;
-    padding-bottom: 1px;
-    justify-content: center;
-    text-align: center;
     font-size: 28px;
-    padding-left: 15px;
-    padding-right: 15px;
-    margin-right: 13vw;
+    padding-left: 7vmin;
+    padding-right: 7vmin;
+    margin-left: -70vmin;
 }
 
 @media screen and (max-width: 800px) {
@@ -56,17 +34,25 @@
     }
 }
 
-.food-form {
-    display: flex;
-    align-self: center;
-    padding-top: 40px;
-    margin-left: 17%;
+.menu-container {
 }
 
-@media screen and (max-width: 800px) {
-    .food-form {
-        margin-right: 2%;
-        margin-left: -70px;
-        margin-top: 10px;
-    }
+.menu-row {
+    margin-bottom: 5vmin;
+}
+
+.menu-right {
+    display: flex;
+    justify-content: center;
+    border-left: 1px dashed rgb(77, 165, 124);
+}
+
+.menu-left {
+    padding-right: -3vmin;
+}
+
+.menu-food-form {
+    display: flex;
+    flex-direction: column;
+    margin-right: 3vmin;
 }

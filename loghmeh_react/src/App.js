@@ -15,7 +15,11 @@ class App extends Component {
   render() {
     return (
       <div>
-        <ModalClass show={true} comp={<OrderBill />} />
+        {/* <ModalClass show={true} comp={<OrderBill />} /> */}
+          {/* <Menu /> */}
+          {/* <Sign isSignUp={false}/> */}
+        {/* <Example test={<FoodPartyFood logo={true}/>}/> */}
+        <Home />
       </div>
     );
   }

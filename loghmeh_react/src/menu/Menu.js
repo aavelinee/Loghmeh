@@ -9,33 +9,30 @@ import Food from './food/Food';
 class Menu extends Component {
     constructor(props) {
         super(props)
-        this.state = {name: props.name}
+        this.state = {restaurant: props.restaurant}
     }
     render() {
+        console.log("in menu", this.state.restaurant);
         return(
             <Fragment>
                 <Navbar logo={true} account={true} cart={true} quit={true} />
-                <MenuJumbotron />
-                <div className="main-content">
-                    <div className="container-fluid">
-                        <div className="menu">
-                            <div className="row">
-                                <div className="right col col-sm-3 col-md-6 col-lg-4">
-                                    <Cart />
-                                </div>
-                                <div className="menu-items col col-sm-9 col-md-6 col-lg-8">
-                                    <div className="menu-name">
-                                        <b id="menu-name">{this.state.name}</b>
-                                    </div>
-                                    <div className="food-form">
-                                        <Food />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>  
+                <MenuJumbotron name={this.state.restaurant.name}/>
+                <div className="menu-main-content container">
+                    <div className="menu-name row">
+                        <b id="menu-name">منوی غذا</b>
                     </div>
+                    <div className="menu-container row">
+                        <div className="menu-right col-md-4">
+                            <Cart />
+                        </div>
+                        <div className="menu-left col-md-8">
+                            <div className="menu-food-form container">
+                                <Food menu={this.state.restaurant.menu} />
+                            </div>
+                        </div>
+                    </div>  
                 </div>
-            <Footer />
+                <Footer />
         </Fragment>
         );
     }
