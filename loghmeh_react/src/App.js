@@ -5,17 +5,17 @@ import Sign from './sign/Sign';
 import Home from './Home/Home'
 import Menu from './menu/Menu';
 import { render } from 'react-dom';
-import Example from './common/Modal';
+import ModalClass from './common/Modal';
 import Navbar from './common/Navbar';
 import FoodPartyFood from './Home/foodparty/FoodPartyFood';
+import OrderBill from './profile/orders/OrderBill';
+import FoodDetail from './Home/food/FoodDetail';
 
 class App extends Component {
   render() {
     return (
       <div>
-          {/* <Menu /> */}
-          {/* <Sign isSignUp={false}/> */}
-        <Example test={<FoodPartyFood logo={true}/>}/>
+        <ModalClass show={true} comp={<OrderBill />} />
       </div>
     );
   }
