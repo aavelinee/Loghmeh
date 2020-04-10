@@ -8,7 +8,7 @@ import PersianNumber from '../../common/PersianNumber';
 class Cart extends Component {
     constructor(props) {
         super(props);
-        this.state = {cart : null, rerender : false};
+        this.state = {cart : null};
         this.getCart = this.getCart.bind(this);
         this.addToCart = this.addToCart.bind(this);
         this.removeFromCart = this.removeFromCart.bind(this);

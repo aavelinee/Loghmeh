@@ -78,8 +78,9 @@ body {
   to { transform: rotate(360deg); }
 }
 
-/* .App {
-  display: flex;
-  justify-content: center;
-  margin-top: 10vmin;
-} */
+.modal-content {
+  width: fit-content;
+  height: fit-content;
+  border-radius: 20px;
+  width: 80%;
+}
