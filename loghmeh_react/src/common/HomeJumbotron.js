@@ -16,7 +16,7 @@ class HomeJumbotron extends Component {
                         <img className="home-loghmeh-img"  src={LOGO} alt="Loghmeh-Logo"></img>
                     </div>
                     <div className="row home-jumbotron-row homeTitle">
-                        <h className="homeHeading">اولین و بزرگ‌ترین وب‌سایت سفارش آنلاین غذا در دانشگاه تهران</h>
+                        <h1 className="homeHeading">اولین و بزرگ‌ترین وب‌سایت سفارش آنلاین غذا در دانشگاه تهران</h1>
                     </div>
                     {this.props.searchBox &&
                         <div className="row  home-jumbotron-row searchBox">

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import {Modal} from 'react-bootstrap';
 import './FoodItem.css';
 import PersianNumber from '../../../common/PersianNumber';
+import FoodDetail from '../../../Home/food/FoodDetail';
 
 class FoodItem extends Component {
     constructor(props) {

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import sun.rmi.runtime.Log;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
@@ -45,6 +46,15 @@ public class LoghmehService {
         System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa get rest" + Loghmeh.getInstance().getOrdinaryRestaurants().size());
         return Loghmeh.getInstance().getOrdinaryRestaurants();
     }
+
+    @RequestMapping(value = "/orders", method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ArrayList<Order> getOrders(HttpServletResponse servletResponse) {
+        servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
+        System.out.println("orrrrdeeeerrrrsss" + Loghmeh.getInstance().getCustomer(0).getOrders().size());
+        return Loghmeh.getInstance().getCustomer(0).getOrders();
+    }
+
 
     @RequestMapping(value = "/cart/{userId}", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)

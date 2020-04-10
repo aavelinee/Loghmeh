@@ -8,12 +8,12 @@ class FoodParty extends Component {
         return (
             <div className="container-fluid food-party">
                 <div className="row foodparty-row foodparty-title">
-                    <h className="foodparty-heading">
+                    <h1 className="foodparty-heading">
                         <b id="foodparty-heading">جشن غذا!</b>
-                    </h>
+                    </h1>
                 </div>
                 <div className="row foodparty-row foodparty-time">
-                    <h className="remaining-time">زمان باقی‌مانده: </h>
+                    <h1 className="remaining-time">زمان باقی‌مانده: </h1>
                 </div>
                 <div className="row foodParyFoods">
                     <FoodPartyFood />
