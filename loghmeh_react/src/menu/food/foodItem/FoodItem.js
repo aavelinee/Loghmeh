@@ -7,7 +7,8 @@ import FoodDetail from '../../../Home/food/FoodDetail';
 class FoodItem extends Component {
     constructor(props) {
         super(props);
-        this.state = {food : props.food, isAvailable : props.isAvailable, showModal: false};
+        this.state = {food : props.food, isAvailable : props.isAvailable, 
+        showModal: false};
         this.handleShow = this.handleShow.bind(this);
         this.handleClose = this.handleClose.bind(this);
 
@@ -43,7 +44,7 @@ class FoodItem extends Component {
                             </div>
                             <div className="row fooditem-buy-btn">
                                 {this.props.isAvailable ? 
-                                    <button type="button" className="available-btn" onClick={() => this.state.onClickBuy(this.state.food.name)}>افزودن به سبد خرید</button>
+                                    <button type="button" className="available-btn" onClick={() => this.props.onClickBuy(this.state.food.name)}>افزودن به سبد خرید</button>
                                     :
                                     <button type="button" className="notavailable-btn">ناموجود</button>
                                 }

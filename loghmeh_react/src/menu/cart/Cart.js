@@ -32,7 +32,7 @@ class Cart extends Component {
     addToCart(restaurantId, foodName, isFoodParty) {
         console.log("order moreeeeeeeeee");
         event.preventDefault();
-		axios.put('http://localhost:8081/Loghmeh_exploded/put_cart', null,
+		axios.put('http://localhost:8081/Loghmeh_war_exploded/put_cart', null,
 			{params: {'userId': 1, 'restaurantId': restaurantId, 'foodName' : foodName, 'isFoodParty' : isFoodParty}}
 		).then( (response) => {this.getCart();})
         .catch((error) => {
@@ -52,7 +52,7 @@ class Cart extends Component {
     handleFinalize() {
         console.log("finaliiiiiize");
         event.preventDefault();
-		axios.put('http://localhost:8081/Loghmeh_exploded/finalize', null,
+		axios.put('http://localhost:8081/Loghmeh_war_exploded/finalize', null,
 			{params: {'userId': 1}}
 		).then( (response) => {this.getCart()})
         .catch((error) => {
@@ -72,7 +72,8 @@ class Cart extends Component {
         if(this.state.cart){
             console.log("null nis");
             cartItems = this.state.cart.orders.map((order) => 
-            <CartItem name={order.food.name} number={order.orderCount} price={order.food.price} onClickPlus={this.handlePlusAddToCart} key={order.food.name}/>);
+            <CartItem name={order.food.name} number={order.orderCount} price={order.food.price} onClickPlus={this.handlePlusAddToCart} key={order.food.name}/>
+            );
         }
         console.log("cart item var: ", cartItems);
 
