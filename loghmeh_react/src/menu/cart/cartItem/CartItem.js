@@ -7,8 +7,13 @@ class CartItem extends Component {
         super(props);
         this.state = {name: props.name, number: props.number, price: props.price};
     }
+
+    // componentWillReceiveProps(){
+
+    // }
+
     render() {
-        console.log("rendering cart item", this.state.number);
+        console.log("rendering cart item", this.props.number);
         return(
             <div className="cart-item-container">
                 <div className="cart-item-info row">
@@ -18,7 +23,7 @@ class CartItem extends Component {
                     <div className="cart-ord-add-cart col-md-3">
                         <div className="addcart-box">
                             <div className="cart-plus">
-                                <a className="flaticon-plus" href="#"></a>
+                                <a className="flaticon-plus" onClick={() => this.props.onClickPlus(this.state.name, false)}></a>
                             </div>
                             <div className="cart-ord-num">
                             <p className="food-number" data-href="#"><PersianNumber number={this.state.number} /></p>

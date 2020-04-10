@@ -49,9 +49,9 @@ public class Customer {
         if(orders.size() == 0 || orders.get(orders.size()-1).getStatus() != Order.orderStatus.Ordering){
             return false;
         }
-        orders.get(orders.size()-1).setStatus(Order.orderStatus.DeliverySearch);
         float orderPrice = orders.get(orders.size()-1).getPrice();
         if(credit >= orderPrice) {
+            orders.get(orders.size()-1).setStatus(Order.orderStatus.DeliverySearch);
             credit -= orderPrice;
             return true;
         }
