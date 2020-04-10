@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import FOODIMG from '../../images/foodpic.jpeg';
 import './FoodDetail.css';
+import PersianNumber from '../../common/PersianNumber';
 
 class FoodDetail extends Component {
     constructor(props) {
@@ -11,27 +12,27 @@ class FoodDetail extends Component {
         return(
             <div className="container fooddetail-container">
                 <div className="row fooddetail-restname">
-                    <p id="fooddetail-restname">رستوران خامس</p>
+                    <p id="fooddetail-restname">{this.props.foodDetail.res}</p>
                 </div>
                 <div className="row fooddetail-foodinfo">
                     <div className="fooddetail-foodpic col-md-4">
-                        <img  id="fooddetail-foodimg" src={FOODIMG} className="rounded" alt="Food Picture"></img>
+                        <img  id="fooddetail-foodimg" src={this.props.foodDetail.image} className="rounded" alt="Food Picture"></img>
                     </div>
                     <div className="fooddetail-foodprop col-md-8">
                         <div className="row fooddetail-foodname">
-                            <p id="fooddetail-foodname">پیتزا</p>
-                            <p id="fooddetail-foodrate">۵</p>
+                            <p id="fooddetail-foodname">{this.props.foodDetail.name}</p>
+                            <p id="fooddetail-foodrate" data-href="#"><PersianNumber number={this.props.foodDetail.popularity} /></p>
                         </div>
                         <div className="row fooddetail-fooddisc">
-                            <p id="fooddetail-fooddisc">پخته شده با مرغوب‌ترین مواد اولیه</p>
+                            <p id="fooddetail-fooddisc">{this.props.foodDetail.description}</p>
                         </div>
                         <div className="row fooddetail-foodprice">
                             { this.props.isFoodParty &&
                     
                                 // document.getElementById(fooddetail-foodcurprice).style.margin = "4vmin";
-                                <p id="fooddetail-foodprevprice">۳۹۰۰۰</p>
+                                <p id="fooddetail-foodprevprice" data-href="#"><PersianNumber number={this.props.foodDetail.price} /> تومان</p>
                             }
-                            <p id="fooddetail-foodcurprice">۲۹۰۰۰ تومان</p>
+                                <p id="fooddetail-foodcurprice" data-href="#"><PersianNumber number={this.props.foodDetail.price} /> تومان</p>
                         </div>
                     </div>
                 </div>
