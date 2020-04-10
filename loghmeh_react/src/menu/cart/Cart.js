@@ -95,7 +95,7 @@ class Cart extends Component {
         var cartItems;
         if(this.state.cart){
             console.log("null nis");
-            cartItems = this.state.cart.orders.map((order) => 
+            cartItems = this.state.cart.orders.map((order) =>
             <CartItem name={order.food.name} number={order.orderCount} price={order.food.price} onClickPlus={this.handlePlusAddToCart} onClickMinus={this.handleMinusRemoveFromCart} key={order.food.name}/>);
         }
         console.log("cart item var: ", cartItems);

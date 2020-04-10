@@ -149,3 +149,9 @@
         text-align: center;
     }
 }
+
+.modal-content {
+    width: fit-content;
+    height: fit-content;
+    border-radius: 20px;
+}

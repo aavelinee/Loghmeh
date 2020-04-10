@@ -9,7 +9,7 @@ public class Order {
     }
 
     private int id;
-    private transient orderStatus status;
+    private orderStatus status;
 
     private Restaurant restaurant;
     private ArrayList<OrderItem> orders = new ArrayList<OrderItem>();
