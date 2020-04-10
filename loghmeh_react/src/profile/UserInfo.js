@@ -51,7 +51,7 @@ class UserInfo extends Component {
 
 	updateUserInfo() {
 		console.log("updating user info")
-		axios.get("http://localhost:8081/Loghmeh_exploded/customer/" + 1)
+		axios.get("http://localhost:8081/Loghmeh_war_exploded/customer/" + 1)
 		.then(res => {
 			const data = res.data;
 			console.log(this.state.credit, data.credit);

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './OrderBill.css';
+import PersianNumber from '../../common/PersianNumber';
 
 class OrderBill extends Component {
     constructor(props) {
@@ -7,10 +8,18 @@ class OrderBill extends Component {
     }
 
     render() {
+        const order = this.props.order.map((item) =>
+            <tr>
+                <td id="table-row" data-href="#"><PersianNumber number={this.props.order.indexOf(item)+1} /></td>
+                <td id="table-food">{item.food.name}</td>
+                <td id="table-count" data-href="#"><PersianNumber number={item.orderCount} /></td>
+                <td id="table-price" data-href="#"><PersianNumber number={item.food.price} /></td>
+            </tr>
+        );
         return(
             <div className="container order-bill">
                 <div className="row orderbill-restname">
-                    <p id="orderbill-restname">رستوران خامس</p>
+                    <p id="orderbill-restname">{this.props.restaurantName}</p>
                 </div>
                 <div className="row order-table">
                 <table id="order-table">
@@ -20,42 +29,7 @@ class OrderBill extends Component {
                         <th id="table-count">تعداد</th>
                         <th id="table-price">قیمت</th>
                     </tr>
-                    <tr>
-                        <td id="table-row">۱</td>
-                        <td id="table-food">برگر گوشت</td>
-                        <td id="table-count">۱</td>
-                        <td id="table-price">۳۰۰۰۰</td>
-                    </tr>
-                    <tr>
-                        <td id="table-row">۲</td>
-                        <td id="table-food">برگر مرغ</td>
-                        <td id="table-count">۱</td>
-                        <td id="table-price">۳۰۰۰۰</td>
-                    </tr>
-                    <tr>
-                        <td id="table-row">۳</td>
-                        <td id="table-food">پیتزا مخصوص</td>
-                        <td id="table-count">۱</td>
-                        <td id="table-price">۳۰۰۰۰</td>
-                    </tr>
-                    <tr>
-                        <td id="table-row">۴</td>
-                        <td id="table-food">پیتزا گوشت</td>
-                        <td id="table-count">۱</td>
-                        <td id="table-price">۳۰۰۰۰</td>
-                    </tr>
-                    <tr>
-                        <td id="table-row">۵</td>
-                        <td id="table-food">پیتزا مرغ</td>
-                        <td id="table-count">۱</td>
-                        <td id="table-price">۳۰۰۰۰</td>
-                    </tr>
-                    <tr>
-                        <td id="table-row">۶</td>
-                        <td id="table-food">پیتزا پپرونی</td>
-                        <td id="table-count">۱</td>
-                        <td id="table-price">۳۰۰۰۰</td>
-                    </tr>
+                    {order}
                 </table>
                 </div>
                 <div className="row total-cost">
