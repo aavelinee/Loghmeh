@@ -1,6 +1,6 @@
 package loghmeh_server.service;
 
-public class PutResult {
+public class ReqResult {
     private boolean successful;
 
     public boolean isSuccessful() {

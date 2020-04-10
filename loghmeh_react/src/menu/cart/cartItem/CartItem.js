@@ -5,7 +5,7 @@ import PersianNumber from '../../../common/PersianNumber';
 class CartItem extends Component {
     constructor(props) {
         super(props);
-        this.state = {name: props.name, number: props.number, price: props.price};
+        this.state = {name: props.name, number: props.number, price: props.price, isFoodParty : props.isFoodParty};
     }
 
     // componentWillReceiveProps(){
@@ -26,10 +26,10 @@ class CartItem extends Component {
                                 <a className="flaticon-plus" onClick={() => this.props.onClickPlus(this.state.name, false)}></a>
                             </div>
                             <div className="cart-ord-num">
-                            <p className="food-number" data-href="#"><PersianNumber number={this.state.number} /></p>
+                            <p className="food-number"><PersianNumber number={this.props.number} /></p>
                             </div>
                             <div className="cart-minus">
-                                <a className="flaticon-minus" href="#"></a> 
+                                <a className="flaticon-minus" onClick={() => this.props.onClickMinus(this.state.name, false)}></a> 
                             </div>
                         </div>
                     </div>

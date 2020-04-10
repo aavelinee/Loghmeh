@@ -6,6 +6,8 @@ public class Food {
     private float popularity;
     private float price;
     private String image;
+    private String restaurantId;
+    private String restaurantName;
     private transient Menu menu;
 
     public String getName() {
@@ -30,6 +32,8 @@ public class Food {
 
     public void setMenu(Menu menu) {
         this.menu = menu;
+        this.restaurantId = menu.getRestaurant().getId();
+        this.restaurantName = menu.getRestaurant().getName();
     }
 
     public float getPopularity() {

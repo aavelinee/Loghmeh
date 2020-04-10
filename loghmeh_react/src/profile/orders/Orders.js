@@ -27,7 +27,7 @@ class Orders extends Component {
     }
 
     getOrders() {
-		axios.get("http://localhost:8081/Loghmeh_war_exploded/orders")
+		axios.get("http://localhost:8081/08_React_war_exploded/orders")
         .then(res => {
             const data = res.data;
             this.setState({ 

@@ -106,7 +106,7 @@ public class Loghmeh {
         return ordinaryRestaurants;
     }
 
-    public String addToCart(int customerId, String restaurantId, String foodName, boolean isFoodParty) {
+    public String updateCart(int customerId, String restaurantId, String foodName, boolean isFoodParty, String operation) {
         Restaurant restaurant = getRestaurantById(restaurantId);
         if(restaurant == null) {
             System.out.println("There Is No Restaurant With ID " + restaurantId);
@@ -125,10 +125,15 @@ public class Loghmeh {
                 System.out.println("Food Party Food Does Not Exist");
                 return "not found";
             }
-            if (customer.addToCart(restaurant, foodPartyFood)){
-                return "added";
+            if(operation.equals("add")){
+                if (customer.addToCart(restaurant, foodPartyFood)){
+                    return "added";
+                }
+                return "different restaurant order";
             }
-            return "different restaurant order";
+            else if(operation.equals("remove")) {
+                return customer.removeFromCart(restaurantId, foodName);
+            }
         }
         else{
             Food food = restaurant.getFoodByName(foodName);
@@ -136,13 +141,19 @@ public class Loghmeh {
                 System.out.println("Food Does Not Exist");
                 return "not found";
             }
-            if (customer.addToCart(restaurant, food)){
-                return "added";
+            if(operation.equals("add")){
+                if (customer.addToCart(restaurant, food)){
+                    return "added";
+                }
+                return "different restaurant order";
             }
-            return "different restaurant order";
+            else if(operation.equals("remove")) {
+                return customer.removeFromCart(restaurantId, foodName);
+            }
         }
-
+        return "not found";
     }
+
 
     public Order getCart(int i) {
         return customers.get(i).getCart();
