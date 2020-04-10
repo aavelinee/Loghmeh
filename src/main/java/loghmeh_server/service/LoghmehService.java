@@ -60,7 +60,7 @@ public class LoghmehService {
         if(cart != null)
             servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
         else
-            servletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
         return cart;
     }
 

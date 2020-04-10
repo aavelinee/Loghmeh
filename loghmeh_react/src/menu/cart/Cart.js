@@ -10,6 +10,7 @@ class Cart extends Component {
         this.state = {cart : null, rerender : false};
         this.getCart = this.getCart.bind(this);
         this.addToCart = this.addToCart.bind(this);
+        this.handlePlusAddToCart = this.handlePlusAddToCart.bind(this);
         this.handleFinalize = this.handleFinalize.bind(this);
     }
 
@@ -21,7 +22,7 @@ class Cart extends Component {
         console.log("getCart is called");
     	axios.get("http://localhost:8081/08_React_war_exploded/cart/" + 1)
 		.then(res => {
-			const data = res.data;
+            const data = res.data;
 			this.setState({ 
 				cart : data
 			});
@@ -43,6 +44,11 @@ class Cart extends Component {
             }
           })    
     }
+
+    handlePlusAddToCart(foodName, isFoodParty) {
+        this.addToCart(this.props.restaurantId, foodName, isFoodParty);
+    }
+
     handleFinalize() {
         console.log("finaliiiiiize");
         event.preventDefault();
@@ -63,10 +69,10 @@ class Cart extends Component {
     render() {
         console.log("cart", this.state.cart);
         var cartItems;
-        if(this.state.cart != null){
+        if(this.state.cart){
             console.log("null nis");
             cartItems = this.state.cart.orders.map((order) => 
-            <CartItem name={order.food.name} number={order.orderCount} price={order.food.price} key={order.food.name}/>);
+            <CartItem name={order.food.name} number={order.orderCount} price={order.food.price} onClickPlus={this.handlePlusAddToCart} key={order.food.name}/>);
         }
         console.log("cart item var: ", cartItems);
 
