@@ -24,8 +24,8 @@ class FoodItem extends Component {
     render() {
             return(
                 <form className="food">
-                    <div className="food-item-modal" onClick={this.handleShow}>
-                        <div className="food-image">
+                    <div className="food-item-modal">
+                        <div className="food-image" onClick={this.handleShow}>
                             <img src={this.state.food.image} className="rounded" alt="Food" ></img>
                         </div>
                         <div className="fooditem-info container">
@@ -43,7 +43,7 @@ class FoodItem extends Component {
                             </div>
                             <div className="row fooditem-buy-btn">
                                 {this.props.isAvailable ? 
-                                    <button type="button" className="available-btn" onClick={() => this.state.onClickBuy(this.state.food.name)}>افزودن به سبد خرید</button>
+                                    <button type="button" className="available-btn" onClick={() => this.props.onClickBuy(this.props.food.name)}>افزودن به سبد خرید</button>
                                     :
                                     <button type="button" className="notavailable-btn">ناموجود</button>
                                 }
