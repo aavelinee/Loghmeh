@@ -1,5 +1,4 @@
 .home-restaurants {
-    /* border: solid red; */
     width: 80%;
     height: 50vmin;
     display: flex;
@@ -30,13 +29,11 @@
 }
 
 .home-restaurants-row {
-    /* border: solid blue; */
     height: 30vmin;
     margin-top: 6vmin;
 }
 
 .home-restaurant {
-    /* border: solid brown; */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -63,7 +60,6 @@
 }
 
 .home-restpic {
-    /* border: solid salmon; */
     height: 18vmin;
     width: 24vmin;
     display: flex;
@@ -90,7 +86,6 @@
 }
 
 .home-restname {
-    /* border: solid salmon; */
     height: 3vmin;
     width: 24vmin;   
     display: flex;
@@ -99,10 +94,9 @@
 }
 
 #home-restname {
-    /* border: solid yellow; */
     font-size: 11px;
     font-weight: 500; 
-    white-space: nowrap;
+    /* white-space: nowrap; */
     text-align: center;
 }
 

@@ -35,12 +35,20 @@ public class LoghmehService {
         }
     }
 
-    @RequestMapping(value = "/hell", method = RequestMethod.GET,
+    @RequestMapping(value = "/ordinary_restaurants", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ArrayList<Restaurant> getOrdinaryRestaurantsController(HttpServletResponse servletResponse) {
         servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
-        System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa get rest" + Loghmeh.getInstance().getOrdinaryRestaurants().size());
-        return Loghmeh.getInstance().getOrdinaryRestaurants();
+        System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa get rest" + Loghmeh.getInstance().getSpecifiedRestaurants("ordinary").size());
+        return Loghmeh.getInstance().getSpecifiedRestaurants("ordinary");
+    }
+
+    @RequestMapping(value = "/foodparty_restaurants", method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ArrayList<Restaurant> getFoodPartyRestaurantsController(HttpServletResponse servletResponse) {
+        servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
+        System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa get food partyrest" + Loghmeh.getInstance().getSpecifiedRestaurants("foodparty").size());
+        return Loghmeh.getInstance().getSpecifiedRestaurants("foodparty");
     }
 
     @RequestMapping(value = "/orders", method = RequestMethod.GET,

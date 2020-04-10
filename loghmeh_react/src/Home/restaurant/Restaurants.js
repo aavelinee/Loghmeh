@@ -16,13 +16,13 @@ class Restaurants extends Component {
     }
 
     getRestaurants() {
-        axios.get("http://localhost:8081/08_React_war_exploded/hell")
+        axios.get("http://localhost:8081/08_React_war_exploded/ordinary_restaurants")
         .then(res => {
             const data = res.data;
             this.setState({ 
                 restaurants: data
                 });
-        })
+        }).catch(error => {console.log(error);});
     }
 
     renderRestaurantMenu(restaurant) {
@@ -34,7 +34,7 @@ class Restaurants extends Component {
     }
 
     render() {
-        console.log(this.state.restaurants);
+        console.log("rests", this.state.restaurants);
         // array of N elements, where N is the number of rows needed
         const rows = [...Array( Math.ceil(this.state.restaurants.length / 4) )];
         // chunk the restaurants into the array of rows

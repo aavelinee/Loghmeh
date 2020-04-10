@@ -50,7 +50,7 @@ public class Loghmeh {
     }
 
     public String addRestaurants(String jsonInput) {
-        ArrayList<Restaurant> restaurants = loghmeh_server.deserializer.restaurantDeserializer.deserializeRestaurants(jsonInput, "normal");
+        ArrayList<Restaurant> restaurants = loghmeh_server.deserializer.restaurantDeserializer.deserializeRestaurants(jsonInput);
         for (Restaurant restaurant : restaurants){
             if(restaurantAlreadyExists(restaurant) != null){
                 return "Restaurant Already Exists\n";
@@ -66,18 +66,22 @@ public class Loghmeh {
     }
 
     public String addFoodPartyRestaurants(String jsonInput) {
-        ArrayList<Restaurant> restaurants = loghmeh_server.deserializer.restaurantDeserializer.deserializeRestaurants(jsonInput, "foodparty");
+        ArrayList<Restaurant> restaurants = loghmeh_server.deserializer.restaurantDeserializer.deserializeFoodPartyRestaurants(jsonInput);
+        System.out.println("foodparty rest size: " + restaurants.size());
         for (Restaurant restaurant: restaurants){
             Restaurant existedRestaurant = restaurantAlreadyExists(restaurant);
             if(existedRestaurant != null) {
                 existedRestaurant.getMenu().setFoodPartyFoods(restaurant.getMenu().getFoodPartyFoods());
-                return "FoodParty Menu Added To Existed Restaurant Successfully";
+                System.out.println("repeated restttt");
+//                return "FoodParty Menu Added To Existed Restaurant Successfully";
+                continue;
             }
             Restaurant otherBranch = sameRestaurant(restaurant);
             if(otherBranch != null){
                 restaurant.setMenu(otherBranch.getMenu());
             }
             addRestaurantInfo(restaurant);
+            System.out.println("food party idsss: " + restaurant.getName());
 
         }
         return "Restaurant With Food Party Added Successfully";
@@ -90,20 +94,40 @@ public class Loghmeh {
     }
 
     public void deleteFoodParty() {
-        for(Restaurant restaurant: this.restaurants){
-            if(restaurant.getMenu().getFoodPartyFoods() != null && restaurant.getMenu().getFoods() == null){
-                restaurants.remove(restaurant);
+        System.out.println("foodparty delete" + this.restaurants.size());
+        for(int j = this.restaurants.size() - 1; j >= 0; j--){
+            System.out.println("foodparty rest removed " + j + " " + this.restaurants.get(j).getName());
+            if(this.restaurants.get(j).getMenu().getFoodPartyFoods() != null && this.restaurants.get(j).getMenu().getFoods() == null){
+                System.out.println("removing" + j);
+                this.restaurants.remove(j);
+                System.out.println("removed" + j);
+            }
+            else if(this.restaurants.get(j).getMenu().getFoodPartyFoods() != null && this.restaurants.get(j).getMenu().getFoods() != null) {
+                restaurants.get(j).getMenu().setFoodPartyFoods(null);
+                System.out.println("repeated deleteeee menu");
             }
         }
+        System.out.println("foodparty rests removed " + this.restaurants.size());
     }
 
-    public ArrayList<Restaurant> getOrdinaryRestaurants() {
-        ArrayList<Restaurant>ordinaryRestaurants = new ArrayList<>();
-        for(Restaurant restaurant: this.restaurants) {
-            if(restaurant.getMenu().getFoods() != null)
-                ordinaryRestaurants.add(restaurant);
+    public ArrayList<Restaurant> getSpecifiedRestaurants(String type) {
+        ArrayList<Restaurant>selectedRestaurants = new ArrayList<>();
+        if(type.equals("ordinary")){
+            for(Restaurant restaurant: this.restaurants) {
+                if(restaurant.getMenu().getFoods() != null)
+                    selectedRestaurants.add(restaurant);
+            }
         }
-        return ordinaryRestaurants;
+
+        else if(type.equals("foodparty")) {
+            for(Restaurant restaurant: this.restaurants) {
+                if(restaurant.getMenu().getFoodPartyFoods() != null){
+                    selectedRestaurants.add(restaurant);
+                    System.out.println("selecte: " + restaurant.getName());
+                }
+            }
+        }
+        return selectedRestaurants;
     }
 
     public String updateCart(int customerId, String restaurantId, String foodName, boolean isFoodParty, String operation) {
@@ -166,7 +190,7 @@ public class Loghmeh {
 
         Order order = customer.getCart();
         if(order != null){
-            String result = "done";
+            String result;
             if(areFoodPartyFoodsAvailable(order) && isNewFoodParty(order)){
                 if(customer.finalizeOrder())
                     result = "done";

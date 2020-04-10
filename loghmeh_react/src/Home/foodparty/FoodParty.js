@@ -1,10 +1,31 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import './FoodParty.css';
 import FoodPartyFood from './FoodPartyFood';
 
 class FoodParty extends Component {
+    constructor(props) {
+        super(props);
+        this.getFoodPartyRestaurants = this.getFoodPartyRestaurants.bind(this);
+        this.state = {foodPartyRestaurants : []};
+    }
+
+    componentDidMount() {
+        this.getFoodPartyRestaurants();
+    }
+
+    getFoodPartyRestaurants() {
+        axios.get("http://localhost:8081/08_React_war_exploded/foodparty_restaurants")
+        .then(res => {
+            const data = res.data;
+            this.setState({ 
+                restaurants: data
+                });
+        }).catch(error => {console.log(error);});
+    }
 
     render() {
+        console.log("foodparty rests:", this.state.foodPartyRestaurants);
         return (
             <div className="container-fluid food-party">
                 <div className="row foodparty-row foodparty-title">

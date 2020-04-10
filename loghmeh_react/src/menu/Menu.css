@@ -44,6 +44,10 @@
     border-left: 1px dashed rgb(77, 165, 124);
 }
 
+.cart-container-right-col {
+    width: 80%;
+}
+
 .menu-left {
     padding-right: -3vmin;
 }

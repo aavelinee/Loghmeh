@@ -8,7 +8,7 @@ import FoodDetail from '../food/FoodDetail';
 class FoodPartyFood extends Component {
     constructor(props) {
         super(props);
-        this.state = {showModal: false};
+        this.state = {showModal: false, food : props.food};
         this.handleClose = this.handleClose.bind(this);
         this.handleShow = this.handleShow.bind(this);
 
