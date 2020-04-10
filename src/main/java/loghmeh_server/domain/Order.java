@@ -16,17 +16,20 @@ public class Order {
     private Delivery delivery;
     private double estimatedDeliveryTime;
     private Date deliveryDate;
+    private float totalPrice;
 
     public Order(int id, Restaurant restaurant) {
         status = orderStatus.Ordering;
         this.id = id;
         this.restaurant = restaurant;
+        this.totalPrice = 0;
     }
 
     public boolean addToCart(Restaurant restaurant, Food food) {
         if(!this.restaurant.equals(restaurant)){
             return false;
         }
+        this.totalPrice +=  food.getPrice();
         for(OrderItem orderItem: orders){
             if(orderItem.getFood().equals(food)) {
                 orderItem.orderMore();
@@ -45,6 +48,26 @@ public class Order {
             price += orderItem.getFood().getPrice() * orderItem.getOrderCount();
         }
         return price;
+    }
+
+    public boolean isFoodInOrder(String foodName) {
+        for(OrderItem orderItem: orders) {
+            if(orderItem.getFood().getName().equals(foodName))
+                return true;
+        }
+        return false;
+    }
+
+    public void removeItemFromOrder(String foodName) {
+        for(OrderItem orderItem: orders) {
+            if(orderItem.getFood().getName().equals(foodName)) {
+                orderItem.orderLess();
+                this.totalPrice -= orderItem.getFood().getPrice();
+                if(orderItem.getOrderCount() == 0) {
+                    orders.remove(orderItem);
+                }
+            }
+        }
     }
 
     public int getId() {

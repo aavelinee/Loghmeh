@@ -13,6 +13,10 @@ public class OrderItem {
         this.orderCount += 1;
     }
 
+    public void orderLess() {
+        this.orderCount -= 1;
+    }
+
     public Food getFood() {
         return food;
     }

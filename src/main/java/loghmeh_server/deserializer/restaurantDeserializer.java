@@ -29,6 +29,16 @@ public class restaurantDeserializer {
                 );
 
                 Menu menu = new Menu();
+
+                Restaurant restaurant =  new Restaurant(
+                        jsonObject.get("id").getAsString(),
+                        jsonObject.get("name").getAsString(),
+                        jsonObject.get("logo").getAsString(),
+                        location,
+                        menu
+                );
+                menu.setRestaurant(restaurant);
+
                 for(JsonElement foodJsonElement: menuJsonArray){
                     Gson gson = new Gson();
                     if(restaurantType.equals("normal")){
@@ -47,14 +57,6 @@ public class restaurantDeserializer {
                     menu.setFoods(null);
                 }
 
-                Restaurant restaurant =  new Restaurant(
-                        jsonObject.get("id").getAsString(),
-                        jsonObject.get("name").getAsString(),
-                        jsonObject.get("logo").getAsString(),
-                        location,
-                        menu
-                );
-                menu.setRestaurant(restaurant);
                 return restaurant;
             }
         };

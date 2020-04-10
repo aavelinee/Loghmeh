@@ -132,9 +132,7 @@ public class Loghmeh {
                 return "different restaurant order";
             }
             else if(operation.equals("remove")) {
-                //TODO
-                if(customer.getCart() == null)
-                    return "not found";
+                return customer.removeFromCart(restaurantId, foodName);
             }
         }
         else{
@@ -150,10 +148,7 @@ public class Loghmeh {
                 return "different restaurant order";
             }
             else if(operation.equals("remove")) {
-                //TODO
-                if(customer.getCart() == null)
-                    return "not found";
-                return "";
+                return customer.removeFromCart(restaurantId, foodName);
             }
         }
         return "not found";

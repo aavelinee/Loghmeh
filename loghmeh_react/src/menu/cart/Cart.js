@@ -3,6 +3,7 @@ import axios from 'axios';
 import CartItem from './cartItem/CartItem';
 import Example from '../../common/Modal'
 import './Cart.css';
+import PersianNumber from '../../common/PersianNumber';
 
 class Cart extends Component {
     constructor(props) {
@@ -10,7 +11,9 @@ class Cart extends Component {
         this.state = {cart : null, rerender : false};
         this.getCart = this.getCart.bind(this);
         this.addToCart = this.addToCart.bind(this);
+        this.removeFromCart = this.removeFromCart.bind(this);
         this.handlePlusAddToCart = this.handlePlusAddToCart.bind(this);
+        this.handleMinusRemoveFromCart = this.handleMinusRemoveFromCart.bind(this);
         this.handleFinalize = this.handleFinalize.bind(this);
     }
 
@@ -48,16 +51,16 @@ class Cart extends Component {
     removeFromCart(restaurantId, foodName, isFoodParty) {
         console.log("order lessssssss");
         // event.preventDefault();
-		axios.put('http://localhost:8081/08_React_war_exploded/del_cart', null, 
+		axios.delete('http://localhost:8081/08_React_war_exploded/del_cart', 
 			{params: {'userId': 1, 'restaurantId': restaurantId, 'foodName' : foodName, 'isFoodParty' : isFoodParty}}
 		).then( (response) => {this.getCart();})
         .catch((error) => {
-            if (error.response.status === 403) {
-              return <Example test={<p>شما مجاز به سفارش غذا از رستوران‌های متفاوت نیستید.</p>}/>
+            // if (error.response.status === 403) {
+            //   return <Example test={<p>شما مجاز به سفارش غذا از رستوران‌های متفاوت نیستید.</p>}/>
 
-            } else {
+            // } else {
                 console.log(error);
-            }
+            // }
           })    
     }
 
@@ -66,7 +69,8 @@ class Cart extends Component {
     }
 
     handleMinusRemoveFromCart(foodName, isFoodParty) {
-        this.removeFromCart(this.props.restaurantId, foodName, isFoodParty);
+        console.log("on click minus: ", foodName, this.state);
+        this.removeFromCart(this.state.cart.restaurant.id, foodName, isFoodParty);
     }
 
     handleFinalize() {
@@ -109,7 +113,7 @@ class Cart extends Component {
                         </div>
                     </div>
                     <div className="row cart-total-row">
-                        <p className="cart-total-price">جمع کل: <b>۱۰۷۰۰۰ تومان</b></p>
+                        <p className="cart-total-price">جمع کل: <b><PersianNumber number={this.state.cart.totalPrice} /> تومان</b></p>
                     </div>
                     <div className="row cart-button-row">
                         <button type="button" className="cart-buy-btn" onClick={this.handleFinalize}>تأیید نهایی</button>

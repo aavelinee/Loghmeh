@@ -67,7 +67,7 @@ a.flaticon-smart-cart{
   margin-right: 2.5vw;
 }
 
-a.flaticon-minus {
+a.flaticon-minus, a.flaticon-minus:hover {
   /* position: relative; */
   color: #FF6B6B;
 }

@@ -5,15 +5,12 @@ import loghmeh_server.domain.Loghmeh;
 import loghmeh_server.domain.Order;
 import loghmeh_server.domain.Restaurant;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 
+@CrossOrigin("*")
 @RestController
 public class LoghmehService {
 
@@ -38,7 +35,7 @@ public class LoghmehService {
         }
     }
 
-    @RequestMapping(value = "/ordinary_restaurants", method = RequestMethod.GET,
+    @RequestMapping(value = "/hell", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ArrayList<Restaurant> getOrdinaryRestaurantsController(HttpServletResponse servletResponse) {
         servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
@@ -104,17 +101,13 @@ public class LoghmehService {
         System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa put in cart");
         String result = Loghmeh.getInstance().updateCart(userId, restaurantId, foodName, isFoodParty, "add");
         ReqResult resp = new ReqResult();
-        if(result.equals("added")){
+        if(result.equals("removed")){
             resp.setSuccessful(true);
             servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
         }
         else if(result.equals("not found")){
             resp.setSuccessful(false);
             servletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
-        }
-        else if(result.equals("different restaurant order")){
-            resp.setSuccessful(false);
-            servletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
         }
         return resp;
     }
@@ -135,6 +128,7 @@ public class LoghmehService {
             servletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
         }
         else{
+            System.out.println("result when 403: " + result);
             resp.setSuccessful(false);
             servletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN, result);
         }
