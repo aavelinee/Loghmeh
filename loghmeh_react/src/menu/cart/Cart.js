@@ -45,8 +45,28 @@ class Cart extends Component {
           })    
     }
 
+    removeFromCart(restaurantId, foodName, isFoodParty) {
+        console.log("order lessssssss");
+        // event.preventDefault();
+		axios.put('http://localhost:8081/08_React_war_exploded/del_cart', null, 
+			{params: {'userId': 1, 'restaurantId': restaurantId, 'foodName' : foodName, 'isFoodParty' : isFoodParty}}
+		).then( (response) => {this.getCart();})
+        .catch((error) => {
+            if (error.response.status === 403) {
+              return <Example test={<p>شما مجاز به سفارش غذا از رستوران‌های متفاوت نیستید.</p>}/>
+
+            } else {
+                console.log(error);
+            }
+          })    
+    }
+
     handlePlusAddToCart(foodName, isFoodParty) {
-        this.addToCart(this.props.restaurantId, foodName, isFoodParty);
+        this.addToCart(this.state.cart.restaurant.id, foodName, isFoodParty);
+    }
+
+    handleMinusRemoveFromCart(foodName, isFoodParty) {
+        this.removeFromCart(this.props.restaurantId, foodName, isFoodParty);
     }
 
     handleFinalize() {
@@ -72,7 +92,7 @@ class Cart extends Component {
         if(this.state.cart){
             console.log("null nis");
             cartItems = this.state.cart.orders.map((order) => 
-            <CartItem name={order.food.name} number={order.orderCount} price={order.food.price} onClickPlus={this.handlePlusAddToCart} key={order.food.name}/>);
+            <CartItem name={order.food.name} number={order.orderCount} price={order.food.price} onClickPlus={this.handlePlusAddToCart} onClickMinus={this.handleMinusRemoveFromCart} key={order.food.name}/>);
         }
         console.log("cart item var: ", cartItems);
 

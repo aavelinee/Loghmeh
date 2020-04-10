@@ -11,7 +11,7 @@ public class Order {
     private int id;
     private transient orderStatus status;
 
-    private transient Restaurant restaurant;
+    private Restaurant restaurant;
     private ArrayList<OrderItem> orders = new ArrayList<OrderItem>();
     private Delivery delivery;
     private double estimatedDeliveryTime;
