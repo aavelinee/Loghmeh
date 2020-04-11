@@ -37,8 +37,7 @@ class Cart extends Component {
         }).catch(error => {console.log(error);})
     }
 
-    addToCart(restaurantId, foodName, isFoodParty, foodCount) {
-        console.log("order moreeeeeeeeee");
+
     addToCart(restaurantId, foodName, isFoodParty, foodCount) {
         console.log("order moreeeeeeeeee in cart");
         console.log(foodCount)
@@ -75,8 +74,7 @@ class Cart extends Component {
     handlePlusAddToCart(foodName, isFoodParty, foodCount) {
         console.log("hhhhhhhhhhhhhh", foodCount);
         this.addToCart(this.state.cart.restaurant.id, foodName, isFoodParty, foodCount);
-    handlePlusAddToCart(foodName, isFoodParty) {
-        this.addToCart(this.state.cart.restaurant.id, foodName, isFoodParty, 1);
+
     }
 
     handleMinusRemoveFromCart(foodName, isFoodParty) {
