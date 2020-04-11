@@ -23,11 +23,8 @@ class App extends Component {
     return (
       <div>
         <Home />
-<<<<<<< HEAD
         {/* <BaseCrousel> <Cart /> <Cart /> <Cart /> <Cart /> </BaseCrousel> */}
         {/* <Sign isSignUp={true}/> */}
-=======
->>>>>>> 6951f3dc02f29977547c28ec9497459aa3e62a44
       </div>
     );
   }
