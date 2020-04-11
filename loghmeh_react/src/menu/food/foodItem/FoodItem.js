@@ -15,7 +15,7 @@ class FoodItem extends Component {
         this.handlePlus = this.handlePlus.bind(this);
         this.handleMinus = this.handleMinus.bind(this);
         this.getCart = this.getCart.bind(this);
-        this.onClickAddToCart = this.onClickAddToCart.bind(this);
+        this.addToCart = this.addToCart.bind(this);
     }
 
     componentWillMount() {
@@ -30,7 +30,7 @@ class FoodItem extends Component {
         this.setState({showModal: false});
     }
 
-    handlePlus(foodName, isFoodParty) {
+    handlePlus() {
         console.log("on click plus: ", this.state);
         this.setState({foodCount: this.state.foodCount + 1});
     }
@@ -54,16 +54,19 @@ class FoodItem extends Component {
         }).catch(error => {console.log(error);})
     }
 
-    onClickAddToCart(restaurantId, foodName, isFoodParty) {
+    addToCart(restaurantId, foodName, isFoodParty, foodNum) {
         console.log("order moreeeeeeeeee");
+        console.log("in food item, state.foodCount: ", this.state.foodCount);
+        console.log("foodNum: ", foodNum);
+
         event.preventDefault();
         axios.put('http://localhost:8081/Loghmeh_war_exploded/put_cart', null,
             {params: {
                 'userId': 1, 
                 'restaurantId': restaurantId, 
                 'foodName' : foodName, 
-                'isFoodParty' : isFoodParty,
-                'foodCount': this.state.foodCount
+                'foodCount': foodNum,
+                'isFoodParty' : isFoodParty
             }}
         ).then( (response) => {this.getCart();})
         .catch((error) => {
@@ -106,7 +109,7 @@ class FoodItem extends Component {
                         </div>
                     </div>
                     <Modal show={this.state.showModal} onHide={this.handleClose}>
-                        <FoodDetail isFoodParty={false} foodDetail={this.state.food} foodCount={this.state.foodCount} onClickPlus={this.handlePlus} onClickMinus={this.handleMinus} />
+                        <FoodDetail isFoodParty={false} foodDetail={this.state.food} foodCount={this.state.foodCount} onClickPlus={this.handlePlus} onClickMinus={this.handleMinus} onClickAddToCart={this.addToCart} />
                     </Modal>
                 </form>
             );

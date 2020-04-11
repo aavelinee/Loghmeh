@@ -15,7 +15,7 @@ class Menu extends Component {
     }
 
     handleAddToCart(foodName) {
-        this.cartElement.current.addToCart(this.state.restaurant.id, foodName, false);
+        this.cartElement.current.addToCart(this.state.restaurant.id, foodName, false, 1);
     }
 
     render() {

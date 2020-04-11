@@ -33,12 +33,17 @@ class Cart extends Component {
     }
 
     addToCart(restaurantId, foodName, isFoodParty, foodCount) {
-        console.log("order moreeeeeeeeee");
+        console.log("order moreeeeeeeeee in cart");
+        console.log(foodCount)
         event.preventDefault();
 		axios.put('http://localhost:8081/Loghmeh_war_exploded/put_cart', null,
-            {params: {'userId': 1, 'restaurantId': restaurantId, 'foodName': foodName,
-             'isFoodParty': isFoodParty,
-            'foodCount': foodCount}}
+            {params: {
+                'userId': 1, 
+                'restaurantId': restaurantId, 
+                'foodName': foodName,
+                'foodCount': foodCount,
+                'isFoodParty': isFoodParty
+            }}
 		).then( (response) => {this.getCart();})
         .catch((error) => {
             if (error.response.status === 403) {
@@ -67,6 +72,7 @@ class Cart extends Component {
     }
 
     handlePlusAddToCart(foodName, isFoodParty, foodCount) {
+        console.log("hhhhhhhhhhhhhh", foodCount);
         this.addToCart(this.state.cart.restaurant.id, foodName, isFoodParty, foodCount);
     }
 

@@ -31,7 +31,7 @@ class FoodDetail extends Component {
                             { this.props.isFoodParty &&
                     
                                 // document.getElementById(fooddetail-foodcurprice).style.margin = "4vmin";
-                                <p id="fooddetail-foodprevprice"><PersianNumber number={this.props.foodDetail.price} /> تومان</p>
+                                <p id="fooddetail-foodprevprice"><PersianNumber number={this.props.foodDetail.oldPrice} /> تومان</p>
                             }
                                 <p id="fooddetail-foodcurprice"><PersianNumber number={this.props.foodDetail.price} /> تومان</p>
                         </div>
@@ -47,7 +47,8 @@ class FoodDetail extends Component {
                         <a className="fooddetail-icon flaticon-plus" onClick={() => this.props.onClickPlus(this.props.foodDetail.name, false)}></a>
                         <p id="fooddetail-ord-num" data-href="#"><PersianNumber number={this.props.foodCount} /></p>
                         <a className="fooddetail-icon flaticon-minus" onClick={() => this.props.onClickMinus(this.props.foodDetail.name, false)}></a> 
-                        <button type="button" className="fooddetail-cart-buybtn" onClick={() => this.props.onClickAddToCart(this.props.foodDetail.name, false)}>افزودن به سبد خرید</button>
+                        {console.log("infoood detaaaaaail: ", this.props.foodCount)}
+                        <button type="button" className="fooddetail-cart-buybtn" onClick={() => this.props.onClickAddToCart(this.props.foodDetail.name, false, this.props.foodCount)}>افزودن به سبد خرید</button>
                     </div>
                 </div> 
             </div>
