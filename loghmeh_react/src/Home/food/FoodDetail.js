@@ -7,9 +7,21 @@ import PersianNumber from '../../common/PersianNumber';
 class FoodDetail extends Component {
     constructor(props) {
         super(props);
+        this.state = {showModal : false};
+        this.handleShow = this.handleShow.bind(this);
+        this.handleClose = this.handleClose.bind(this);
+    }
+
+    handleShow() {
+        this.setState({showModal: true});
+    }
+
+    handleClose() {
+        this.setState({showModal: false});
     }
 
     render() {
+        console.log("in food detail", this.props.foodDetail);
         return(
             <div className="container fooddetail-container">
                 <div className="row fooddetail-restname">
@@ -32,7 +44,6 @@ class FoodDetail extends Component {
                         <div className="row fooddetail-foodprice">
                             { this.props.isFoodParty &&
                     
-                                // document.getElementById(fooddetail-foodcurprice).style.margin = "4vmin";
                                 <p id="fooddetail-foodprevprice"><PersianNumber number={this.props.foodDetail.oldPrice} /> تومان</p>
                             }
                                 <p id="fooddetail-foodcurprice"><PersianNumber number={this.props.foodDetail.price} /> تومان</p>
@@ -42,15 +53,14 @@ class FoodDetail extends Component {
                 <div className="row fooddetail-cart">
                     <div className="fooddetail-cart-countleft col-md-4">
                         { this.props.isFoodParty &&
-                            <p id="fooddetail-cart-countleft">موجودی: <b id="fooddetail-countleft">۳</b></p>
+    <p id="fooddetail-cart-countleft">موجودی: <b id="fooddetail-countleft">{<PersianNumber number={this.props.foodDetail.count} />}</b></p>
                         }
                     </div>
                     <div className="fooddetail-cart-addcart col-md-8">
-                        <a className="fooddetail-icon flaticon-plus" onClick={() => this.props.onClickPlus(this.props.foodDetail.name, false)}></a>
-                        <p id="fooddetail-ord-num" data-href="#"><PersianNumber number={this.props.foodCount} /></p>
-                        <a className="fooddetail-icon flaticon-minus" onClick={() => this.props.onClickMinus(this.props.foodDetail.name, false)}></a> 
-                        {console.log("infoood detaaaaaail: ", this.props.foodCount)}
-                        <button type="button" className="fooddetail-cart-buybtn" onClick={() => this.props.onClickAddToCart(this.props.foodDetail.restaurantId, this.props.foodDetail.name, false, this.props.foodCount)}>افزودن به سبد خرید</button>
+                        <a className="fooddetail-icon flaticon-plus" onClick={() => this.props.onClickPlus(this.props.foodDetail.name)}></a>
+                        <p id="fooddetail-ord-num"><PersianNumber number={this.props.foodCount} /></p>
+                        <a className="fooddetail-icon flaticon-minus" onClick={() => this.props.onClickMinus(this.props.foodDetail.name)}></a> 
+                        <button type="button" className="fooddetail-cart-buybtn" onClick={() => this.props.onClickAddToCart(this.props.foodDetail.name, this.props.foodCount)}>افزودن به سبد خرید</button>
                     </div>
                 </div> 
             </div>

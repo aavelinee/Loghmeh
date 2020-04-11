@@ -9,7 +9,7 @@ import PersianNumber from '../../common/PersianNumber';
 class FoodPartyFood extends Component {
     constructor(props) {
         super(props);
-        this.state = {showModal: false, food : props.food, foodCount: 0};
+        this.state = {showModal: false, food : props.food, foodCount: 0, msg:"", errorModal : false};
         this.handleClose = this.handleClose.bind(this);
         this.handleShow = this.handleShow.bind(this);
         this.addToCart = this.addToCart.bind(this);
@@ -17,6 +17,8 @@ class FoodPartyFood extends Component {
         this.getFoodPartyFood = this.getFoodPartyFood.bind(this);
         this.handlePlus = this.handlePlus.bind(this);
         this.handleMinus = this.handleMinus.bind(this);
+        this.handleCloseErrorModal = this.handleCloseErrorModal.bind(this);
+        this.handleShowErrorModal = this.handleShowErrorModal.bind(this);
 
     }
 
@@ -42,6 +44,14 @@ class FoodPartyFood extends Component {
         this.setState({showModal: false});
     }
 
+    handleShowErrorModal() {
+        this.setState({errorModal: true});
+    }
+
+    handleCloseErrorModal() {
+        this.setState({errorModal: false});
+    }
+
     handlePlus() {
         this.setState({foodCount: this.state.foodCount + 1});
     }
@@ -53,30 +63,32 @@ class FoodPartyFood extends Component {
         this.setState({foodCount: this.state.foodCount - 1});
     }
 
-    addToCart(restaurantId, foodName, isFoodParty, foodCount) {
-        console.log("foodCount: ", foodCount);
-        console.log("state foodCount: ", this.state.foodCount)
+    addToCart(foodName, foodCount) {
+        console.log("state foodCount: ", this.state.foodCount, foodCount)
         event.preventDefault();
 		axios.put('http://localhost:8081/08_React_war_exploded/put_cart', null,
 			{params: {
                 'userId': 1,
-                'restaurantId': restaurantId,
+                'restaurantId': this.state.food.restaurantId,
                 'foodName' : foodName,
                 'foodCount': foodCount,
-                'isFoodParty' : isFoodParty}}
-		).then( (response) => {this.getFoodPartyFood(restaurantId, foodName);})
+                'isFoodParty' : true}}
+		).then( (response) => {
+            this.setState({foodCount : 0})
+            this.getFoodPartyFood(this.state.food.restaurantId, foodName);})
         .catch((error) => {
-            if (error.response.status === 403) {
-            //   return <Example test={<p>شما مجاز به سفارش غذا از رستوران‌های متفاوت نیستید.</p>}/>
-
-            // } else {
+            if (error.response.status == 403) {
+                this.setState({msg:"شما مجاز به سفارش غذا از رستوران‌های متفاوت نیستید."});
+                this.handleShowErrorModal();
+            } else {
                 console.log(error);
-            // }
-          }}); 
+            }
+          })    
     }
 
     handleAddToCart() {
-        this.addToCart(this.state.food.restaurantId, this.state.food.name, true, 1);
+        // this.handlePlus();
+        this.addToCart(this.state.food.name, 1);
     }
 
     updateCount(count) {
@@ -148,6 +160,7 @@ class FoodPartyFood extends Component {
                 <Modal show={this.state.showModal} onHide={this.handleClose}>
                     <FoodDetail foodDetail={this.state.food} isFoodParty={true} foodCount={this.state.foodCount} onClickPlus={this.handlePlus} onClickMinus={this.handleMinus} onClickAddToCart={this.addToCart} />
                 </Modal>
+                <Modal show={this.state.errorModal} onHide={this.handleCloseErrorModal} ><p id="error-msg">{this.state.msg}</p></Modal>
             </div>
         );
     }

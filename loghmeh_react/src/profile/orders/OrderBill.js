@@ -33,7 +33,7 @@ class OrderBill extends Component {
                 </table>
                 </div>
                 <div className="row total-cost">
-                    <p id="total-cost">جمع کل: ۱۸۰۰۰۰ تومان</p>
+                    <p id="total-cost">جمع کل: <PersianNumber number={this.props.order.totalPrice} /> تومان</p>
                 </div> 
             </div>
         );

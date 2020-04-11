@@ -3,10 +3,15 @@ package loghmeh_server.domain;
 public class OrderItem {
     private Food food;
     private int orderCount;
+    private boolean isFoodParty;
 
     public OrderItem(Food food, int foodCount) {
         this.orderCount = foodCount;
         this.food = food;
+        if(food instanceof FoodPartyFood)
+            this.isFoodParty = true;
+        else
+            this.isFoodParty = false;
     }
 
     public void orderMore(int orderCount) {

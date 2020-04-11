@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {Modal} from 'react-bootstrap';
-import axios from 'axios';
 import ReactStarsRating from 'react-awesome-stars-rating';
 import './FoodItem.css';
 import PersianNumber from '../../../common/PersianNumber';
@@ -10,17 +9,11 @@ class FoodItem extends Component {
     constructor(props) {
         super(props);
         this.state = {food : props.food, isAvailable : props.isAvailable, 
-                        showModal: false, cart: null, foodCount: 0};
+                        showModal: false, foodCount: 0};
         this.handleShow = this.handleShow.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.handlePlus = this.handlePlus.bind(this);
         this.handleMinus = this.handleMinus.bind(this);
-        this.getCart = this.getCart.bind(this);
-        this.addToCart = this.addToCart.bind(this);
-    }
-
-    componentWillMount() {
-        this.getCart();
     }
 
     handleShow() {
@@ -44,43 +37,8 @@ class FoodItem extends Component {
         this.setState({foodCount: this.state.foodCount - 1});
     }
 
-    getCart() {
-        console.log("getCart is called");
-    	axios.get("http://localhost:8081/08_React_war_exploded/cart/" + 1)
-		.then(res => {
-            const data = res.data;
-			this.setState({ 
-				cart : data
-			});
-        }).catch(error => {console.log(error);})
-    }
-
-    addToCart(restaurantId, foodName, isFoodParty, foodNum) {
-        console.log("order moreeeeeeeeee");
-        console.log("in food item, state.foodCount: ", this.state.foodCount);
-        console.log("foodNum: ", foodNum);
-
-        event.preventDefault();
-        axios.put('http://localhost:8081/08_React_war_exploded/put_cart', null,
-            {params: {
-                'userId': 1, 
-                'restaurantId': restaurantId, 
-                'foodName' : foodName, 
-                'foodCount': foodNum,
-                'isFoodParty' : isFoodParty
-            }}
-        ).then( (response) => {this.getCart();})
-        .catch((error) => {
-            // if (error.response.status === 403) {
-                // return <Example test={<p>شما مجاز به سفارش غذا از رستوران‌های متفاوت نیستید.</p>}/>
-
-            // } else {
-                console.log(error);
-            // }
-            })
-    }
-
     render() {
+        console.log("in food item: ", this.state.food);
             return(
                 <form className="food">
                     <div className="food-item-modal">
@@ -103,7 +61,7 @@ class FoodItem extends Component {
                             </div>
                             <div className="row fooditem-buy-btn">
                                 {this.props.isAvailable ? 
-                                    <button type="button" className="available-btn" onClick={() => this.props.onClickBuy(this.props.food.name)}>افزودن به سبد خرید</button>
+                                    <button type="button" className="available-btn" onClick={() => this.props.onClickBuy(this.props.food.name, 1)}>افزودن به سبد خرید</button>
                                     :
                                     <button type="button" className="notavailable-btn">ناموجود</button>
                                 }
@@ -111,7 +69,7 @@ class FoodItem extends Component {
                         </div>
                     </div>
                     <Modal show={this.state.showModal} onHide={this.handleClose}>
-                        <FoodDetail isFoodParty={false} foodDetail={this.state.food} foodCount={this.state.foodCount} onClickPlus={this.handlePlus} onClickMinus={this.handleMinus} onClickAddToCart={this.addToCart} />
+                        <FoodDetail isFoodParty={false} foodDetail={this.state.food} foodCount={this.state.foodCount} onClickPlus={this.handlePlus} onClickMinus={this.handleMinus} onClickAddToCart={this.props.onClickBuy} />
                     </Modal>
                 </form>
             );

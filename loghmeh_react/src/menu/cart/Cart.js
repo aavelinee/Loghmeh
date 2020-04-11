@@ -39,7 +39,7 @@ class Cart extends Component {
 
 
     addToCart(restaurantId, foodName, isFoodParty, foodCount) {
-        console.log("order moreeeeeeeeee in cart");
+        console.log("order moreeeeeeeeee in cart", isFoodParty);
         console.log(foodCount)
         event.preventDefault();
 		axios.put('http://localhost:8081/08_React_war_exploded/put_cart', null,
@@ -56,7 +56,7 @@ class Cart extends Component {
     }
 
     removeFromCart(restaurantId, foodName, isFoodParty) {
-        console.log("order lessssssss");
+        console.log("order lessssssss", isFoodParty);
         // event.preventDefault();
 		axios.delete('http://localhost:8081/08_React_war_exploded/del_cart', 
 			{params: {'userId': 1, 'restaurantId': restaurantId, 'foodName' : foodName, 'isFoodParty' : isFoodParty}}
@@ -72,12 +72,13 @@ class Cart extends Component {
     }
 
     handlePlusAddToCart(foodName, isFoodParty, foodCount) {
+        console.log("order moreeeeeeeeee in cart", isFoodParty);
         console.log("hhhhhhhhhhhhhh", foodCount);
         this.addToCart(this.state.cart.restaurant.id, foodName, isFoodParty, foodCount);
 
     }
 
-    handleMinusRemoveFromCart(foodName, isFoodParty) {
+    handleMinusRemoveFromCart(foodName, isFoodParty, foodCount) {
         console.log("on click minus: ", foodName, this.state);
         this.removeFromCart(this.state.cart.restaurant.id, foodName, isFoodParty);
     }
@@ -125,7 +126,7 @@ class Cart extends Component {
         if(this.state.cart){
             console.log("null nis");
             cartItems = this.state.cart.orders.map((order) =>
-            <CartItem name={order.food.name} number={order.orderCount} price={order.food.price} onClickPlus={this.handlePlusAddToCart} onClickMinus={this.handleMinusRemoveFromCart} key={order.food.name}/>);
+            <CartItem name={order.food.name} number={order.orderCount} price={order.food.price} isFoodParty={order.isFoodParty} onClickPlus={this.handlePlusAddToCart} onClickMinus={this.handleMinusRemoveFromCart} key={order.food.name}/>);
         }
         console.log("cart item var: ", cartItems);
 

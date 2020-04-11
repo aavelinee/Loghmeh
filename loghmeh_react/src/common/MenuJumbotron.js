@@ -7,7 +7,7 @@ class MenuJumbotron extends Component {
         return(
             <div className="menu-jumbotron">
                 <div className="restaurant-logo">
-                    <img src={RestLogo} className="restaurant-logo" alt="Restaurant-Logo"></img>
+                    <img src={this.props.image} className="restaurant-logo" alt="Restaurant-Logo"></img>
                 </div>
                 <div className="restaurant-name">
                     <b className="restaurant-name">{this.props.name}</b>

@@ -14,8 +14,13 @@ class Menu extends Component {
         this.handleAddToCart = this.handleAddToCart.bind(this);
     }
 
-    handleAddToCart(foodName) {
-        this.cartElement.current.addToCart(this.state.restaurant.id, foodName, false, 1);
+    handleAddToCart(foodName, foodCount) {
+        console.log("in menu add to cart: ", foodName);
+        this.cartElement.current.addToCart(this.state.restaurant.id, foodName, false, foodCount);
+    }
+
+    handleGetCart() {
+        this.cartElement.current.getCart();
     }
 
     render() {
@@ -23,7 +28,7 @@ class Menu extends Component {
         return(
             <Fragment>
                 <Navbar logo={true} account={true} cart={true} quit={true} />
-                <MenuJumbotron name={this.state.restaurant.name}/>
+                <MenuJumbotron name={this.state.restaurant.name} image={this.state.restaurant.logo}/>
                 <div className="menu-main-content container">
                     <div className="menu-name row">
                         <b id="menu-name">منوی غذا</b>
@@ -36,7 +41,7 @@ class Menu extends Component {
                         </div>
                         <div className="menu-left col-md-8">
                             <div className="menu-food-form container">
-                                <Food onClickBuy={this.handleAddToCart} menu={this.state.restaurant.menu} />
+                                <Food onClickBuy={this.handleAddToCart} menu={this.state.restaurant.menu}/>
                             </div>
                         </div>
                     </div>  

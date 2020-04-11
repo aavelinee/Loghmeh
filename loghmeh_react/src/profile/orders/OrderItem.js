@@ -65,7 +65,7 @@ class OrderItem extends Component {
                 <div class="col col-5 left-col">
                     <button type="button" class="factor on-the-way" onClick={this.handleShow}>{status[this.state.order.status]}</button>
                     <Modal show={this.state.showModal} onHide={this.handleClose}>
-                        <OrderBill orders={this.props.orders} />
+                        <OrderBill order={this.props.order} />
                     </Modal>
                 </div>
             </div>
