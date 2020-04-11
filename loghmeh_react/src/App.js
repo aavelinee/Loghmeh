@@ -1,10 +1,6 @@
 import React, { Component} from 'react';
 import Home from './Home/Home'
 import './App.css';
-import FoodDetail from './Home/food/FoodDetail';
-import Cart from './menu/cart/Cart';
-import BaseCrousel from './Home/foodparty/Carousel';
-import Profile from './profile/Profile';
 
 
 class App extends Component {
@@ -24,7 +20,6 @@ class App extends Component {
     return (
       <div>
         <Home />
-        {/* <BaseCrousel> <Cart /> <Cart /> <Cart /> <Cart /> </BaseCrousel> */}
       </div>
     );
   }

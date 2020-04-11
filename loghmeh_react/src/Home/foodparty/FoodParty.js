@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import moment from 'moment';
 import './FoodParty.css';
 import FoodPartyFood from './FoodPartyFood';
 import PersianNumber from '../../common/PersianNumber';
-import moment from 'moment';
+// import BaseCrousel from './Home/foodparty/Carousel';
 
 class FoodParty extends Component {
     constructor(props) {
@@ -93,7 +94,11 @@ class FoodParty extends Component {
                                                                     .format('H:mm:ss')} />}</h1>
                 </div>
                 <div className="row foodParyFoods">
-                    {foodPartyItems}
+                    {/* <BaseCrousel>  */}
+                    {foodPartyItems} 
+                    {/* </BaseCrousel> */}
+
+
                 </div>
             </div>
         );

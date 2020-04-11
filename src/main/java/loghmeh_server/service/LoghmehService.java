@@ -161,6 +161,10 @@ public class LoghmehService {
             resp.setSuccessful(false);
             servletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
         }
+        else if(result.equals("different restaurant order")){
+            resp.setSuccessful(false);
+            servletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
+        }
         return resp;
     }
 
@@ -188,6 +192,8 @@ public class LoghmehService {
             System.out.println("result when 403: " + result);
             resp.setSuccessful(false);
             servletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN, result);
+            resp.setErrorMsg(result);
+
         }
         return resp;
     }

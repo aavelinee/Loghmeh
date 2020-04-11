@@ -37,15 +37,14 @@ class Cart extends Component {
         }).catch(error => {console.log(error);})
     }
 
-    addToCart(restaurantId, foodName, isFoodParty) {
+    addToCart(restaurantId, foodName, isFoodParty, foodCount) {
         console.log("order moreeeeeeeeee");
         event.preventDefault();
 		axios.put('http://localhost:8081/08_React_war_exploded/put_cart', null,
-			{params: {'userId': 1, 'restaurantId': restaurantId, 'foodName' : foodName, 'isFoodParty' : isFoodParty}}
+			{params: {'userId': 1, 'restaurantId': restaurantId, 'foodName' : foodName, 'isFoodParty' : isFoodParty, 'foodCount' : foodCount}}
 		).then( (response) => {this.getCart();})
         .catch((error) => {
             if (error.response.status == 403) {
-                console.log("different restsssssssss");
                 this.setState({msg:"شما مجاز به سفارش غذا از رستوران‌های متفاوت نیستید."});
                 this.handleShow();
             } else {
@@ -71,7 +70,7 @@ class Cart extends Component {
     }
 
     handlePlusAddToCart(foodName, isFoodParty) {
-        this.addToCart(this.state.cart.restaurant.id, foodName, isFoodParty);
+        this.addToCart(this.state.cart.restaurant.id, foodName, isFoodParty, 1);
     }
 
     handleMinusRemoveFromCart(foodName, isFoodParty) {
@@ -85,13 +84,25 @@ class Cart extends Component {
 		axios.put('http://localhost:8081/08_React_war_exploded/finalize', null,
 			{params: {'userId': 1}}
 		).then( (response) => {this.getCart()})
-        .catch((error) => {
-            // if (error.response.status === 403) {
-            //   return <Example test={<p>شما مجاز به سفارش غذا از رستوران‌های متفاوت نیستید.</p>}/>
-
-            // } else {
-                console.log("eroooooooor", error);
-            // }
+        .catch((error) => {           
+            if (error.response.status == 403) {
+                if(error.response.data.errorMsg == "no credit") {
+                    this.setState({msg:"اعتبار شما کافی نیست."});
+                    this.handleShow();
+                }
+                else if(error.response.data.errorMsg == "count problem") {
+                    this.setState({msg:"سفارش شما بیشتر از موجودی غذاست."});
+                    this.handleShow();
+                }
+                else if(error.response.data.errorMsg == "time problem") {
+                    this.setState({msg:"مهلت جشن غذای سفارش شما به پایان رسید."});
+                    this.handleShow();
+                }
+                else if(error.response.data.errorMsg == "both problem") {
+                    this.setState({msg:"مهلت جشن غذای سفارش شما به پایان رسید."});
+                    this.handleShow();
+                }
+            }
           })  
     }
 
@@ -135,7 +146,7 @@ class Cart extends Component {
                 : <p id="empty-cart">سبد خرید شما خالی است.</p>
                        
                 }
-                <Modal show={this.state.showModal} onHide={this.handleClose} ><p>{this.state.msg}</p></Modal>
+                <Modal show={this.state.showModal} onHide={this.handleClose} ><p id="error-msg">{this.state.msg}</p></Modal>
 
             </div>
         );
