@@ -25,19 +25,18 @@ public class Order {
         this.totalPrice = 0;
     }
 
-    public boolean addToCart(Restaurant restaurant, Food food) {
+    public boolean addToCart(Restaurant restaurant, Food food, int foodCount) {
         if(!this.restaurant.equals(restaurant)){
             return false;
         }
-        this.totalPrice +=  food.getPrice();
+        this.totalPrice +=  (foodCount*food.getPrice());
         for(OrderItem orderItem: orders){
             if(orderItem.getFood().equals(food)) {
-                orderItem.orderMore();
-                System.out.println("order morrreeee");
+                orderItem.orderMore(foodCount);
                 return true;
             }
         }
-        OrderItem orderItem = new OrderItem(food);
+        OrderItem orderItem = new OrderItem(food, foodCount);
         orders.add(orderItem);
         return true;
     }
@@ -66,8 +65,26 @@ public class Order {
                 if(orderItem.getOrderCount() == 0) {
                     orders.remove(orderItem);
                 }
+                break;
             }
         }
+    }
+
+    public void removeFoodPartyFoodsFromCart() {
+        for(int i = orders.size() - 1; i >= 0; i--) {
+            if(orders.get(i).getFood() instanceof FoodPartyFood)
+                orders.remove(orders.get(i));
+        }
+    }
+
+    public boolean decreaseFoodCounts() {
+        for(OrderItem orderItem: orders) {
+            if(orderItem.getFood() instanceof FoodPartyFood) {
+                if(!((FoodPartyFood) orderItem.getFood()).decreaseCount(orderItem.getOrderCount()))
+                    return false;
+            }
+        }
+        return true;
     }
 
     public int getId() {

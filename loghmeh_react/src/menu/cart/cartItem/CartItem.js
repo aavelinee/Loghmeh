@@ -31,7 +31,7 @@ class CartItem extends Component {
                     </div>
                 </div>
                 <div className="cart-item-price row">
-                    <p id="cart-item-price" data-href="#"><PersianNumber number={this.state.price} /> تومان</p>
+                    <p id="cart-item-price"><PersianNumber number={this.state.price} /> تومان</p>
                 </div>
             </div>
         );

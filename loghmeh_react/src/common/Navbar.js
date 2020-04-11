@@ -5,8 +5,8 @@ import LOGO from '../images/LOGO.png';
 import Profile from '../profile/Profile';
 import './Navbar.css';
 import '../images/icons/flaticon.css';
-import Orders from '../profile/orders/Orders';
 import Cart from '../menu/cart/Cart';
+import Home from '../Home/Home';
 
 class Navbar extends Component {
 	constructor(props) {
@@ -15,6 +15,7 @@ class Navbar extends Component {
 			cart : props.cart, quit : props.quit, showModal: false};
 		this.cartElement = React.createRef();
 		this.renderProfile = this.renderProfile.bind(this);
+		this.renderHome = this.renderHome.bind(this);
 		this.handleShow = this.handleShow.bind(this);
 		this.handleClose = this.handleClose.bind(this);
 
@@ -35,6 +36,13 @@ class Navbar extends Component {
 		);
 	}
 
+	renderHome() {
+		ReactDOM.render(
+			<Home />,
+			document.getElementById('root')
+		);
+	}
+
 	handleShow() {
         this.setState({showModal: true});
     }
@@ -50,7 +58,7 @@ class Navbar extends Component {
 					<div className="row">
 						<div className="right-navbar col-md-9">
 							{this.state.logo &&
-								<div className="loghmeh-logo">
+								<div className="loghmeh-logo" onClick={this.renderHome}>
 									<img src={LOGO} alt="Loghmeh-Logo"></img>
 								</div>
 							}

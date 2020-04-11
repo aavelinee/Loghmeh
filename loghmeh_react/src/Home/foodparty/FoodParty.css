@@ -17,19 +17,23 @@
     border-bottom: 2px solid #1A535C;
     padding-left: 15px;
     padding-right: 15px;
+    
 }
 
 .foodparty-time {
-    border: solid 1px rgb(38, 114, 126);
+    border: solid 1px #1A535C;
     border-radius: 4px;
-    margin-top: 10px;
-    padding-left: 15px;
-    padding-right: 5px;
+    padding-right: 1vmin;
+    padding-left: 1vmin;
     text-align: start;
+    color: #1A535C;
+    height: 5vmin;
 }
 
 .remaining-time {
     font-size: 10px;
+    margin: auto;
+    
 }
 
 .foodParyFoods {

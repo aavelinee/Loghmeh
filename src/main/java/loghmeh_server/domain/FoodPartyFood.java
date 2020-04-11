@@ -4,8 +4,15 @@ public class FoodPartyFood extends Food{
     private int count;
     private float oldPrice;
 
-    public synchronized boolean decreaseCount(int count) {
+    public boolean checkCount(int count) {
         if(this.count >= count){
+            return true;
+        }
+        return false;
+    }
+
+    public synchronized boolean decreaseCount(int count) {
+        if(checkCount(count)) {
             this.count -= count;
             return true;
         }

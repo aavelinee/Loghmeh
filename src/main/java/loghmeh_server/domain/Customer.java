@@ -23,12 +23,12 @@ public class Customer {
         this.location = new Location(x, y);
     }
 
-    public Boolean addToCart(Restaurant restaurant, Food food) {
+    public Boolean addToCart(Restaurant restaurant, Food food, int foodCount) {
         if(orders.size() == 0 || orders.get(orders.size() - 1).getStatus() != Order.orderStatus.Ordering){
             Order order = new Order(orders.size() + 1, restaurant);
             orders.add(order);
         }
-        return orders.get(orders.size() - 1).addToCart(restaurant, food);
+        return orders.get(orders.size() - 1).addToCart(restaurant, food, foodCount);
     }
 
     public Order getCart() {
@@ -53,20 +53,30 @@ public class Customer {
             return "not found";
         if(!cart.isFoodInOrder(foodName))
             return "not found";
-
         cart.removeItemFromOrder(foodName);
+
         if(cart.getOrders().size() == 0)
             removeCart();
+
         return "removed";
     }
 
+    public void removeFoodPartyFoodsFromCart() {
+        Order cart = getCart();
+        cart.removeFoodPartyFoodsFromCart();
+        if(cart.getOrders().size() == 0)
+            removeCart();
+    }
+
     public boolean finalizeOrder() {
-        if(orders.size() == 0 || orders.get(orders.size()-1).getStatus() != Order.orderStatus.Ordering){
+        Order cart = this.getCart();
+        if(cart == null){
             return false;
         }
-        float orderPrice = orders.get(orders.size()-1).getPrice();
+        float orderPrice = cart.getPrice();
         if(credit >= orderPrice) {
-            orders.get(orders.size()-1).setStatus(Order.orderStatus.DeliverySearch);
+            cart.decreaseFoodCounts();
+            cart.setStatus(Order.orderStatus.DeliverySearch);
             credit -= orderPrice;
             return true;
         }

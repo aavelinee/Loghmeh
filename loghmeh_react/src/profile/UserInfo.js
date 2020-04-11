@@ -27,15 +27,15 @@ class UserInfo extends Component {
 						<div className="all-data">
 						<div className="data">
 							<i className="flaticon-phone"></i>
-							<p className="phone-data" data-href="#">{this.state.phone_number}</p>
+							<p className="phone-data">{this.state.phone_number}</p>
 						</div>
 						<div className="data">
 							<i className="flaticon-mail"></i>
-							<p className="mail-data" data-href="#">{this.state.email}</p>
+							<p className="mail-data">{this.state.email}</p>
 						</div>
 						<div className="data">
 							<i className="flaticon-card"></i>
-							<p className="card-data" data-href="#"><PersianNumber number={this.state.credit} /> تومان</p>
+							<p className="card-data"><PersianNumber number={this.state.credit} /> تومان</p>
 						</div>
 						</div>
 					</div>
@@ -51,7 +51,7 @@ class UserInfo extends Component {
 
 	updateUserInfo() {
 		console.log("updating user info")
-		axios.get("http://localhost:8081/Loghmeh_war_exploded/customer/" + 1)
+		axios.get("http://localhost:8081/08_React_war_exploded/customer/" + 1)
 		.then(res => {
 			const data = res.data;
 			console.log(this.state.credit, data.credit);
