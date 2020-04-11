@@ -5,7 +5,7 @@
   }
   
   .slick-slide {
-    float: right!important;
+    float: left!important;
   }
   .slick-slider {
     direction: ltr;

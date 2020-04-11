@@ -4,7 +4,7 @@ import axios from 'axios';
 import './FoodItem.css';
 import PersianNumber from '../../../common/PersianNumber';
 import FoodDetail from '../../../Home/food/FoodDetail';
-import {getCart, removeFromCart} from '../../../common/ApiCalls';
+import {getCart, removeFromCart} from '../../../common/APIcalls';
 
 class FoodItem extends Component {
     constructor(props) {

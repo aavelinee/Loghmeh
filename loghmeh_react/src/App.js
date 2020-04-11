@@ -1,6 +1,6 @@
 import React, { Component} from 'react';
 import Home from './Home/Home'
-import MultiCrousel from './Test';
+// import MultiCrousel from './Test';
 import './App.css';
 import FoodDetail from './Home/food/FoodDetail';
 import Cart from './menu/cart/Cart';
