@@ -14,7 +14,7 @@ const BaseCarousel = ({ children }) => {
     slidesToScroll: 1,
     // centerMode: true,
     // centerPadding: "10px",
-    rtl: true,
+    rtl: false,
   };
 
   return <Slider {...settings}>{children}</Slider>;

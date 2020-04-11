@@ -13,7 +13,6 @@ class Navbar extends Component {
 		super(props);
 		this.state = {logo : props.logo, account : props.account,
 			cart : props.cart, quit : props.quit, showModal: false};
-		
 		this.cartElement = React.createRef();
 		this.renderProfile = this.renderProfile.bind(this);
 		this.renderHome = this.renderHome.bind(this);
@@ -80,9 +79,6 @@ class Navbar extends Component {
 						</div>
 					</div>
 				</div>
-				<Modal show={this.state.showModal} onHide={this.handleClose}>
-                    <Cart />
-                </Modal>
 			</nav>
 		);
 	}

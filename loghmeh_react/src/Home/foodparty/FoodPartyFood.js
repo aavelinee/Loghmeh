@@ -9,12 +9,15 @@ import PersianNumber from '../../common/PersianNumber';
 class FoodPartyFood extends Component {
     constructor(props) {
         super(props);
-        this.state = {showModal: false, food : props.food};
+        this.state = {showModal: false, food : props.food, foodCount: 0};
         this.handleClose = this.handleClose.bind(this);
         this.handleShow = this.handleShow.bind(this);
         this.addToCart = this.addToCart.bind(this);
         this.handleAddToCart = this.handleAddToCart.bind(this);
         this.getFoodPartyFood = this.getFoodPartyFood.bind(this);
+        this.handlePlus = this.handlePlus.bind(this);
+        this.handleMinus = this.handleMinus.bind(this);
+
     }
 
 
@@ -39,11 +42,28 @@ class FoodPartyFood extends Component {
         this.setState({showModal: false});
     }
 
-    addToCart(restaurantId, foodName, isFoodParty) {
-        console.log("order moreeeeeeeeee");
+    handlePlus() {
+        this.setState({foodCount: this.state.foodCount + 1});
+    }
+
+    handleMinus() {
+        if(this.state.foodCount == 0){
+            return;
+        }
+        this.setState({foodCount: this.state.foodCount - 1});
+    }
+
+    addToCart(restaurantId, foodName, isFoodParty, foodCount) {
+        console.log("foodCount: ", foodCount);
+        console.log("state foodCount: ", this.state.foodCount)
         event.preventDefault();
-		axios.put('http://localhost:8081/08_React_war_exploded/put_cart', null,
-			{params: {'userId': 1, 'restaurantId': restaurantId, 'foodName' : foodName, 'isFoodParty' : isFoodParty}}
+		axios.put('http://localhost:8081/Loghmeh_war_exploded/put_cart', null,
+			{params: {
+                'userId': 1,
+                'restaurantId': restaurantId,
+                'foodName' : foodName,
+                'foodCount': foodCount,
+                'isFoodParty' : isFoodParty}}
 		).then( (response) => {this.getFoodPartyFood(restaurantId, foodName);})
         .catch((error) => {
             if (error.response.status === 403) {
@@ -56,7 +76,7 @@ class FoodPartyFood extends Component {
     }
 
     handleAddToCart() {
-        this.addToCart(this.state.food.restaurantId, this.state.food.name, true);
+        this.addToCart(this.state.food.restaurantId, this.state.food.name, true, 1);
     }
 
     updateCount(count) {
@@ -68,6 +88,7 @@ class FoodPartyFood extends Component {
     }
 
     getFoodPartyFood(restaurantId, foodName) {
+        console.log("getFoodPartyFood is called");
     	axios.get("http://localhost:8081/08_React_war_exploded/foodparty_food/" + restaurantId + "/" + foodName)
 		.then(res => {
             const data = res.data;
@@ -89,7 +110,7 @@ class FoodPartyFood extends Component {
                             </div>
                             <div className="row food-star-icon foodRate">
                             <span id="foodpartyfood-popularity">{<PersianNumber number={this.state.food.popularity}>}</PersianNumber>}
-                            <ReactStarsRating isEdit={false} count={1} value={1} secondaryColor={'orange'} size={12}/>                            
+                            <ReactStarsRating isEdit={false} count={1} value={1} secondaryColor={'orange'} size={12}/>
                             </span>
                             </div>
                         </div>
@@ -125,7 +146,7 @@ class FoodPartyFood extends Component {
                     </div>
                 </div>
                 <Modal show={this.state.showModal} onHide={this.handleClose}>
-                    <FoodDetail foodDetail={this.state.food} isFoodParty={true} />
+                    <FoodDetail foodDetail={this.state.food} isFoodParty={true} foodCount={this.state.foodCount} onClickPlus={this.handlePlus} onClickMinus={this.handleMinus} onClickAddToCart={this.addToCart} />
                 </Modal>
             </div>
         );

@@ -6,7 +6,6 @@ import Restaurants from './restaurant/Restaurants'
 import Footer from '../common/Footer'
 
 import './Home.css'
-import CountDownTimer from './foodparty/CountDownTimer';
 
 class Home extends Component {
 

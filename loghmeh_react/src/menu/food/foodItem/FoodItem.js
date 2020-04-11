@@ -10,14 +10,13 @@ class FoodItem extends Component {
     constructor(props) {
         super(props);
         this.state = {food : props.food, isAvailable : props.isAvailable, 
-        showModal: false, cart: null, foodCount: 0};
+                        showModal: false, cart: null, foodCount: 0};
         this.handleShow = this.handleShow.bind(this);
         this.handleClose = this.handleClose.bind(this);
+        this.handlePlus = this.handlePlus.bind(this);
+        this.handleMinus = this.handleMinus.bind(this);
         this.getCart = this.getCart.bind(this);
-        this.handlePlusAddToCart = this.handlePlusAddToCart.bind(this);
-        this.handleMinusRemoveFromCart = this.handleMinusRemoveFromCart.bind(this);
         this.addToCart = this.addToCart.bind(this);
-
     }
 
     componentWillMount() {
@@ -32,10 +31,22 @@ class FoodItem extends Component {
         this.setState({showModal: false});
     }
 
+    handlePlus() {
+        console.log("on click plus: ", this.state);
+        this.setState({foodCount: this.state.foodCount + 1});
+    }
+
+    handleMinus() {
+        console.log("on click minus: ", this.state);
+        if(this.state.foodCount == 0){
+            return;
+        }
+        this.setState({foodCount: this.state.foodCount - 1});
+    }
 
     getCart() {
         console.log("getCart is called");
-    	axios.get("http://localhost:8081/08_React_war_exploded/cart/" + 1)
+    	axios.get("http://localhost:8081/Loghmeh_war_exploded/cart/" + 1)
 		.then(res => {
             const data = res.data;
 			this.setState({ 
@@ -44,47 +55,32 @@ class FoodItem extends Component {
         }).catch(error => {console.log(error);})
     }
 
-    addToCart(restaurantId, foodName, isFoodParty) {
+    addToCart(restaurantId, foodName, isFoodParty, foodNum) {
         console.log("order moreeeeeeeeee");
+        console.log("in food item, state.foodCount: ", this.state.foodCount);
+        console.log("foodNum: ", foodNum);
+
         event.preventDefault();
-		axios.put('http://localhost:8081/08_React_war_exploded/put_cart', null,
-			{params: {'userId': 1, 'restaurantId': restaurantId, 'foodName' : foodName, 'isFoodParty' : isFoodParty}}
-		).then( (response) => {this.getCart();})
+        axios.put('http://localhost:8081/Loghmeh_war_exploded/put_cart', null,
+            {params: {
+                'userId': 1, 
+                'restaurantId': restaurantId, 
+                'foodName' : foodName, 
+                'foodCount': foodNum,
+                'isFoodParty' : isFoodParty
+            }}
+        ).then( (response) => {this.getCart();})
         .catch((error) => {
             // if (error.response.status === 403) {
-            //     console.log("different restaurant");
-            // //   return <Example test={<p>شما مجاز به سفارش غذا از رستوران‌های متفاوت نیستید.</p>}/>
+                // return <Example test={<p>شما مجاز به سفارش غذا از رستوران‌های متفاوت نیستید.</p>}/>
 
             // } else {
                 console.log(error);
             // }
-          })    
-    }
-
-
-    handlePlusAddToCart(foodName, isFoodParty) {
-        this.addToCart(this.state.food.restaurantId, foodName, isFoodParty);
-
-    }
-
-    handleMinusRemoveFromCart(foodName, isFoodParty) {
-        console.log("on click minus: ", foodName, this.state);
-        // removeFromCart(this.state.cart.restaurant.id, foodName, isFoodParty);
+            })
     }
 
     render() {
-        var foodNum = 0;
-        if (this.state.cart) {
-            console.log("cart null niiisssttt in food items");
-            for (let order = 0; order < this.state.cart.orders.length; order++) {
-                console.log(this.state.cart.orders[order].food.name);
-                console.log(this.props.food);
-                if (this.state.cart.orders[order].food.name == this.props.food.name) {
-                    foodNum = parseInt(this.state.cart.orders[order].orderCount);
-                }
-            }
-            console.log("foodNum: ", foodNum);
-        }
             return(
                 <form className="food">
                     <div className="food-item-modal">
@@ -115,12 +111,7 @@ class FoodItem extends Component {
                         </div>
                     </div>
                     <Modal show={this.state.showModal} onHide={this.handleClose}>
-
-                    {this.state.cart ? 
-                        <FoodDetail isFoodParty={false} foodDetail={this.state.food} foodCount={foodNum} onClickPlus={this.handlePlusAddToCart} onClickMinus={this.handleMinusRemoveFromCart}/>
-                    :
-                        <FoodDetail isFoodParty={false} foodDetail={this.state.food} foodCount={0} onClickPlus={this.handlePlusAddToCart} onClickMinus={this.handleMinusRemoveFromCart}/>
-                    }
+                        <FoodDetail isFoodParty={false} foodDetail={this.state.food} foodCount={this.state.foodCount} onClickPlus={this.handlePlus} onClickMinus={this.handleMinus} onClickAddToCart={this.addToCart} />
                     </Modal>
                 </form>
             );

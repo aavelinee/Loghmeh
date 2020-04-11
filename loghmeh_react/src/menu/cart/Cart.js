@@ -39,6 +39,9 @@ class Cart extends Component {
 
     addToCart(restaurantId, foodName, isFoodParty, foodCount) {
         console.log("order moreeeeeeeeee");
+    addToCart(restaurantId, foodName, isFoodParty, foodCount) {
+        console.log("order moreeeeeeeeee in cart");
+        console.log(foodCount)
         event.preventDefault();
 		axios.put('http://localhost:8081/08_React_war_exploded/put_cart', null,
 			{params: {'userId': 1, 'restaurantId': restaurantId, 'foodName' : foodName, 'isFoodParty' : isFoodParty, 'foodCount' : foodCount}}
@@ -69,6 +72,9 @@ class Cart extends Component {
           })    
     }
 
+    handlePlusAddToCart(foodName, isFoodParty, foodCount) {
+        console.log("hhhhhhhhhhhhhh", foodCount);
+        this.addToCart(this.state.cart.restaurant.id, foodName, isFoodParty, foodCount);
     handlePlusAddToCart(foodName, isFoodParty) {
         this.addToCart(this.state.cart.restaurant.id, foodName, isFoodParty, 1);
     }
@@ -84,7 +90,7 @@ class Cart extends Component {
 		axios.put('http://localhost:8081/08_React_war_exploded/finalize', null,
 			{params: {'userId': 1}}
 		).then( (response) => {this.getCart()})
-        .catch((error) => {           
+        .catch((error) => {
             if (error.response.status == 403) {
                 if(error.response.data.errorMsg == "no credit") {
                     this.setState({msg:"اعتبار شما کافی نیست."});
