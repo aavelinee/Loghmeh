@@ -12,7 +12,7 @@ class FoodDetail extends Component {
         return(
             <div className="container fooddetail-container">
                 <div className="row fooddetail-restname">
-                    <p id="fooddetail-restname">{this.props.foodDetail.res}</p>
+                    <p id="fooddetail-restname">{this.props.foodDetail.restaurantName}</p>
                 </div>
                 <div className="row fooddetail-foodinfo">
                     <div className="fooddetail-foodpic col-md-4">
@@ -21,7 +21,7 @@ class FoodDetail extends Component {
                     <div className="fooddetail-foodprop col-md-8">
                         <div className="row fooddetail-foodname">
                             <p id="fooddetail-foodname">{this.props.foodDetail.name}</p>
-                            <p id="fooddetail-foodrate" data-href="#"><PersianNumber number={this.props.foodDetail.popularity} /></p>
+                            <p id="fooddetail-foodrate"><PersianNumber number={this.props.foodDetail.popularity} /></p>
                         </div>
                         <div className="row fooddetail-fooddisc">
                             <p id="fooddetail-fooddisc">{this.props.foodDetail.description}</p>
@@ -30,9 +30,9 @@ class FoodDetail extends Component {
                             { this.props.isFoodParty &&
                     
                                 // document.getElementById(fooddetail-foodcurprice).style.margin = "4vmin";
-                                <p id="fooddetail-foodprevprice" data-href="#"><PersianNumber number={this.props.foodDetail.price} /> تومان</p>
+                                <p id="fooddetail-foodprevprice"><PersianNumber number={this.props.foodDetail.price} /> تومان</p>
                             }
-                                <p id="fooddetail-foodcurprice" data-href="#"><PersianNumber number={this.props.foodDetail.price} /> تومان</p>
+                                <p id="fooddetail-foodcurprice"><PersianNumber number={this.props.foodDetail.price} /> تومان</p>
                         </div>
                     </div>
                 </div>
@@ -44,13 +44,13 @@ class FoodDetail extends Component {
                     </div>
                     <div className="fooddetail-cart-addcart col-md-8">
                         {/* <div className="plus"> */}
-                            <a className="fooddetail-icon flaticon-plus" href="#"></a>
+                            <a className="fooddetail-icon flaticon-plus"></a>
                         {/* </div> */}
                         {/* <div className="fooddetail-ord-num"> */}
                             <p id="fooddetail-ord-num">۲</p>
                         {/* </div> */}
                         {/* <div className="fooddetail-minus"> */}
-                            <a className="fooddetail-icon flaticon-minus" href="#"></a> 
+                            <a className="fooddetail-icon flaticon-minus"></a> 
                         {/* </div> */}
                         <button type="button" className="fooddetail-cart-buybtn">افزودن به سبد خرید</button>
                     </div>

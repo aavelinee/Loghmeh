@@ -35,12 +35,12 @@ class FoodItem extends Component {
                                     <b>{this.state.food.name}</b>
                                 </div>
                                 <div className="fooditem-star col-md-3">
-                                    <p id="fooditem-rating" data-href="#"><PersianNumber number={this.state.food.popularity} /></p>
+                                    <p id="fooditem-rating"><PersianNumber number={this.state.food.popularity} /></p>
                                     <span className="fa fa-star checked"></span>
                                 </div>
                             </div>
                             <div className="row fooditem-price">
-                                <p id="fooditem-price" data-href="#"><PersianNumber number={this.state.food.price} /> تومان</p>
+                                <p id="fooditem-price"><PersianNumber number={this.state.food.price} /> تومان</p>
                             </div>
                             <div className="row fooditem-buy-btn">
                                 {this.props.isAvailable ? 

@@ -25,10 +25,10 @@ class Profile extends Component {
 					<div className="tab-box">
 						<div className="btn-group btn-group-lg">
 							<button type="button" id="credit" className="tab btn btn-primary z-depth-1" onClick={this.changeTab.bind(this, "credit")}>
-								<a id="credit-link" href="#"> افزایش اعتبار </a>
+								<a id="credit-link"> افزایش اعتبار </a>
 							</button>
 							<button type="button" id="orders" className="tab btn btn-primary z-depth-1" onClick={this.changeTab.bind(this, "orders")}>
-								<a id="orders-link" href="#" >سفارش‌ها</a>
+								<a id="orders-link">سفارش‌ها</a>
 							</button>
 						</div>
 						{this.state.tab == "credit" ? <Credit onClick={this.handleCreditIncrease}/> : <Orders />}

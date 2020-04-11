@@ -36,6 +36,10 @@ public class Food {
         this.restaurantName = menu.getRestaurant().getName();
     }
 
+    public String getRestaurantId() {
+        return restaurantId;
+    }
+
     public float getPopularity() {
         return popularity;
     }

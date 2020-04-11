@@ -5,7 +5,7 @@ import axios from 'axios';
 // const APIcalls = createReactClass({
 //   statics: {
 //     getCart: function() {
-//         axios.get("http://localhost:8081/Loghmeh_war_exploded/get_user_cart/" + 1)
+//         axios.get("http://localhost:8081/08_React_war_exploded/cart/" + 1)
 //         .then(res => {
 //             const data = res.data;
 //             console.log("getCart is called", data);
@@ -15,7 +15,7 @@ import axios from 'axios';
 //     addToCart: function(restaurantId, foodName, isFoodParty){
 //         console.log("order moreeeeeeeeee");
 //         event.preventDefault();
-//         axios.put('http://localhost:8081/Loghmeh_exploded/put_cart', null,
+//         axios.put('http://localhost:8081/08_React_war_exploded/put_cart', null,
 //             {params: {'userId': 1, 'restaurantId': restaurantId, 'foodName' : foodName, 'isFoodParty' : isFoodParty}}
 //         ).then( (response) => {return getCart();})
 //         .catch((error) => {
@@ -45,7 +45,7 @@ import axios from 'axios';
 //     finalizeCart: function() {
 //         console.log("finaliiiiiize");
 //         event.preventDefault();
-//         axios.put('http://localhost:8081/Loghmeh_exploded/finalize', null,
+//         axios.put('http://localhost:8081/08_React_war_exploded/finalize', null,
 //             {params: {'userId': 1}}
 //         ).then( (response) => {return getCart();})
 //         .catch((error) => {
@@ -70,7 +70,7 @@ import axios from 'axios';
 export const getCart = () => {
     console.log("get carttttt");
 
-    axios.get("http://localhost:8081/Loghmeh_war_exploded/get_user_cart/" + 1)
+    axios.get("http://localhost:8081/08_React_war_exploded/cart/" + 1)
     .then(res => {
         const data = res.data;
         console.log("getCart is called", data);
@@ -81,7 +81,7 @@ export const getCart = () => {
 export const addToCart = (restaurantId, foodName, isFoodParty) => {
     console.log("order moreeeeeeeeee");
     event.preventDefault();
-    axios.put('http://localhost:8081/Loghmeh_exploded/put_cart', null,
+    axios.put('http://localhost:8081/08_React_war_exploded/put_cart', null,
         {params: {'userId': 1, 'restaurantId': restaurantId, 'foodName' : foodName, 'isFoodParty' : isFoodParty}}
     ).then( (response) => {return getCart();})
     .catch((error) => {
@@ -113,7 +113,7 @@ export const removeFromCart = (restaurantId, foodName, isFoodParty) => {
 export const finalizeCart = () => {
     console.log("finaliiiiiize");
     event.preventDefault();
-    axios.put('http://localhost:8081/Loghmeh_exploded/finalize', null,
+    axios.put('http://localhost:8081/08_React_war_exploded/finalize', null,
         {params: {'userId': 1}}
     ).then( (response) => {return getCart();})
     .catch((error) => {

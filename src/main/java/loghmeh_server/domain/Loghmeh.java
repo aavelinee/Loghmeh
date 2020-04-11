@@ -13,7 +13,7 @@ public class Loghmeh {
     private HashMap<String, String> idToIndex; //from user view id to restaurant id
     private HashMap<String, String> indexToId; //from restaurant id to user view id
 
-
+    float nextFoodPartySchedulerFire;
 
     private Loghmeh() {
         restaurants = new ArrayList<Restaurant>();
@@ -60,7 +60,6 @@ public class Loghmeh {
                 restaurant.setMenu(otherBranch.getMenu());
             }
             addRestaurantInfo(restaurant);
-            System.out.println("idsss: " + restaurant.getId());
         }
         return "Restaurants Added Successfully";
     }
@@ -72,8 +71,6 @@ public class Loghmeh {
             Restaurant existedRestaurant = restaurantAlreadyExists(restaurant);
             if(existedRestaurant != null) {
                 existedRestaurant.getMenu().setFoodPartyFoods(restaurant.getMenu().getFoodPartyFoods());
-                System.out.println("repeated restttt");
-//                return "FoodParty Menu Added To Existed Restaurant Successfully";
                 continue;
             }
             Restaurant otherBranch = sameRestaurant(restaurant);
@@ -81,8 +78,6 @@ public class Loghmeh {
                 restaurant.setMenu(otherBranch.getMenu());
             }
             addRestaurantInfo(restaurant);
-            System.out.println("food party idsss: " + restaurant.getName());
-
         }
         return "Restaurant With Food Party Added Successfully";
     }
@@ -94,28 +89,24 @@ public class Loghmeh {
     }
 
     public void deleteFoodParty() {
-        System.out.println("foodparty delete" + this.restaurants.size());
         for(int j = this.restaurants.size() - 1; j >= 0; j--){
-            System.out.println("foodparty rest removed " + j + " " + this.restaurants.get(j).getName());
             if(this.restaurants.get(j).getMenu().getFoodPartyFoods() != null && this.restaurants.get(j).getMenu().getFoods() == null){
-                System.out.println("removing" + j);
                 this.restaurants.remove(j);
-                System.out.println("removed" + j);
             }
             else if(this.restaurants.get(j).getMenu().getFoodPartyFoods() != null && this.restaurants.get(j).getMenu().getFoods() != null) {
                 restaurants.get(j).getMenu().setFoodPartyFoods(null);
-                System.out.println("repeated deleteeee menu");
             }
         }
-        System.out.println("foodparty rests removed " + this.restaurants.size());
     }
 
     public ArrayList<Restaurant> getSpecifiedRestaurants(String type) {
         ArrayList<Restaurant>selectedRestaurants = new ArrayList<>();
         if(type.equals("ordinary")){
             for(Restaurant restaurant: this.restaurants) {
-                if(restaurant.getMenu().getFoods() != null)
+                if(restaurant.getMenu().getFoods() != null) {
                     selectedRestaurants.add(restaurant);
+                }
+
             }
         }
 
@@ -123,11 +114,32 @@ public class Loghmeh {
             for(Restaurant restaurant: this.restaurants) {
                 if(restaurant.getMenu().getFoodPartyFoods() != null){
                     selectedRestaurants.add(restaurant);
-                    System.out.println("selecte: " + restaurant.getName());
                 }
             }
         }
         return selectedRestaurants;
+    }
+
+    public ArrayList<FoodPartyFood> getFoodPartyFoods() {
+        ArrayList<Restaurant> foodPartyRests = getSpecifiedRestaurants("foodparty");
+        ArrayList<FoodPartyFood> foodPartyFoods = new ArrayList<>();
+        for(Restaurant restaurant: foodPartyRests){
+            for(FoodPartyFood foodPartyFood: restaurant.getMenu().getFoodPartyFoods()) {
+                foodPartyFoods.add(foodPartyFood);
+            }
+        }
+        return foodPartyFoods;
+    }
+
+    public FoodPartyFood getFoodPartyFood(String restarantId, String foodName) {
+        ArrayList<Restaurant> foodPartyRests = getSpecifiedRestaurants("foodparty");
+        for(Restaurant restaurant: foodPartyRests){
+            for(FoodPartyFood foodPartyFood: restaurant.getMenu().getFoodPartyFoods()) {
+                if(foodPartyFood.getName().equals(foodName) && foodPartyFood.getRestaurantId().equals(restarantId))
+                    return foodPartyFood;
+            }
+        }
+        return null;
     }
 
     public String updateCart(int customerId, String restaurantId, String foodName, boolean isFoodParty, String operation) {
@@ -191,22 +203,21 @@ public class Loghmeh {
         Order order = customer.getCart();
         if(order != null){
             String result;
-            if(areFoodPartyFoodsAvailable(order) && isNewFoodParty(order)){
+            if(isNewFoodParty(order) && areFoodPartyFoodsAvailable(order)){
                 if(customer.finalizeOrder())
                     result = "done";
                 else
                     result = "no credit";
             }
-            else if(!areFoodPartyFoodsAvailable(order) && isNewFoodParty(order)){
-               customer.removeCart();
+            else if(isNewFoodParty(order) && !areFoodPartyFoodsAvailable(order)){
                 result = "count problem";
             }
-            else if(areFoodPartyFoodsAvailable(order) && !isNewFoodParty(order)){
-                customer.removeCart();
+            else if(!isNewFoodParty(order) && areFoodPartyFoodsAvailable(order)){
+                customer.removeFoodPartyFoodsFromCart();
                 result = "time problem";
             }
             else{
-                customer.removeCart();
+                customer.removeFoodPartyFoodsFromCart();
                 result = "both problem";
             }
             return result;
@@ -247,7 +258,7 @@ public class Loghmeh {
     public boolean areFoodPartyFoodsAvailable(Order order) {
         for(OrderItem orderItem: order.getOrders()){
             if(orderItem.getFood() instanceof FoodPartyFood){
-                if(!((FoodPartyFood) orderItem.getFood()).decreaseCount(orderItem.getOrderCount())){
+                if(!((FoodPartyFood) orderItem.getFood()).checkCount(orderItem.getOrderCount())){
                     return false;
                 }
             }
@@ -354,11 +365,9 @@ public class Loghmeh {
 
     public Restaurant getRestaurantById(String restaurantId) {
         if(restaurantId == null) {
-            System.out.println("id nulle?!");
             return null;
         }
         for(Restaurant rest: this.restaurants){
-            System.out.println("id in check: " + rest.getId());
             if(rest.getId().equals(restaurantId))
                 return rest;
         }
@@ -408,4 +417,11 @@ public class Loghmeh {
         return null;
     }
 
+    public void setNextFoodPartySchedulerFire(float nextFoodPartySchedulerFire) {
+        this.nextFoodPartySchedulerFire = nextFoodPartySchedulerFire;
+    }
+
+    public float getNextFoodPartySchedulerFire() {
+        return nextFoodPartySchedulerFire;
+    }
 }

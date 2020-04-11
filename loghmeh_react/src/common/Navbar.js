@@ -5,14 +5,15 @@ import LOGO from '../images/LOGO.png';
 import Profile from '../profile/Profile';
 import './Navbar.css';
 import '../images/icons/flaticon.css';
-import Orders from '../profile/orders/Orders';
 import Cart from '../menu/cart/Cart';
+import Home from '../Home/Home';
 
 class Navbar extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {logo : props.logo, account : props.account, cart : props.cart, quit : props.quit, showModal: false};
 		this.renderProfile = this.renderProfile.bind(this);
+		this.renderHome = this.renderHome.bind(this);
 		this.handleShow = this.handleShow.bind(this);
         this.handleClose = this.handleClose.bind(this);
 	}
@@ -20,6 +21,13 @@ class Navbar extends Component {
 	renderProfile() {
 		ReactDOM.render(
 			<Profile tab={"credit"} />,
+			document.getElementById('root')
+		);
+	}
+
+	renderHome() {
+		ReactDOM.render(
+			<Home />,
 			document.getElementById('root')
 		);
 	}
@@ -39,7 +47,7 @@ class Navbar extends Component {
 					<div className="row">
 						<div className="right-navbar col-md-9">
 							{this.state.logo &&
-								<div className="loghmeh-logo">
+								<div className="loghmeh-logo" onClick={this.renderHome}>
 									<img src={LOGO} alt="Loghmeh-Logo"></img>
 								</div>
 							}

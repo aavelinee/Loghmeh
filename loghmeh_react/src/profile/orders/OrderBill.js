@@ -10,10 +10,10 @@ class OrderBill extends Component {
     render() {
         const order = this.props.order.map((item) =>
             <tr>
-                <td id="table-row" data-href="#"><PersianNumber number={this.props.order.indexOf(item)+1} /></td>
+                <td id="table-row"><PersianNumber number={this.props.order.indexOf(item)+1} /></td>
                 <td id="table-food">{item.food.name}</td>
-                <td id="table-count" data-href="#"><PersianNumber number={item.orderCount} /></td>
-                <td id="table-price" data-href="#"><PersianNumber number={item.food.price} /></td>
+                <td id="table-count"><PersianNumber number={item.orderCount} /></td>
+                <td id="table-price"><PersianNumber number={item.food.price} /></td>
             </tr>
         );
         return(

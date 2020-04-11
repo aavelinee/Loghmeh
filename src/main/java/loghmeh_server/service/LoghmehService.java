@@ -1,9 +1,7 @@
 package loghmeh_server.service;
 
-import loghmeh_server.domain.Customer;
-import loghmeh_server.domain.Loghmeh;
-import loghmeh_server.domain.Order;
-import loghmeh_server.domain.Restaurant;
+import loghmeh_server.controller.FoodParty;
+import loghmeh_server.domain.*;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -51,6 +49,29 @@ public class LoghmehService {
         return Loghmeh.getInstance().getSpecifiedRestaurants("foodparty");
     }
 
+    @RequestMapping(value = "/foodparty_foods", method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ArrayList<FoodPartyFood> getFoodPartyFoodsController(HttpServletResponse servletResponse) {
+        servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
+        System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa get food " + Loghmeh.getInstance().getFoodPartyFoods().size());
+        return Loghmeh.getInstance().getFoodPartyFoods();
+    }
+
+    @RequestMapping(value = "/foodparty_food/{restaurantId}/{foodName}", method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public FoodPartyFood getFoodPartyFoodController(HttpServletResponse servletResponse
+            , @PathVariable(value = "restaurantId") String restaurantId,  @PathVariable(value = "foodName") String foodName) {
+        FoodPartyFood foodPartyFood = Loghmeh.getInstance().getFoodPartyFood(restaurantId, foodName);
+        System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa get foooood " + restaurantId + foodName);
+        if(foodPartyFood != null) {
+            servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
+        }
+        else {
+            servletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        }
+        return foodPartyFood;
+    }
+
     @RequestMapping(value = "/orders", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ArrayList<Order> getOrdersController(HttpServletResponse servletResponse) {
@@ -76,6 +97,15 @@ public class LoghmehService {
         else
             servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
         return cart;
+    }
+
+    @RequestMapping(value = "/next_time", method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public float getRestaurantsController(HttpServletResponse servletResponse) {
+        System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa get timeee");
+        servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
+
+        return Loghmeh.getInstance().getNextFoodPartySchedulerFire();
     }
 
     @RequestMapping(value = "/credit", method = RequestMethod.PUT,
