@@ -57,7 +57,7 @@ class FoodPartyFood extends Component {
         console.log("foodCount: ", foodCount);
         console.log("state foodCount: ", this.state.foodCount)
         event.preventDefault();
-		axios.put('http://localhost:8081/Loghmeh_war_exploded/put_cart', null,
+		axios.put('http://localhost:8081/08_React_war_exploded/put_cart', null,
 			{params: {
                 'userId': 1,
                 'restaurantId': restaurantId,

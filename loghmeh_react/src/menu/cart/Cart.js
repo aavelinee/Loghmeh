@@ -99,6 +99,7 @@ class Cart extends Component {
                     this.handleShow();
                 }
                 else if(error.response.data.errorMsg == "time problem") {
+                    this.getCart();
                     this.setState({msg:"مهلت جشن غذای سفارش شما به پایان رسید."});
                     this.handleShow();
                 }
