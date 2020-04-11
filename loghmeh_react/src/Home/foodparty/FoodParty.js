@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import moment from 'moment';
 import './FoodParty.css';
 import FoodPartyFood from './FoodPartyFood';
 import PersianNumber from '../../common/PersianNumber';
-import moment from 'moment';
+// import BaseCrousel from './Home/foodparty/Carousel';
 
 class FoodParty extends Component {
     constructor(props) {
@@ -44,7 +45,7 @@ class FoodParty extends Component {
     }
 
     getNextFoodPartyUpdateDelay() {
-        axios.get("http://localhost:8081/Loghmeh_war_exploded/next_time")
+        axios.get("http://localhost:8081/08_React_war_exploded/next_time")
         .then(res => {
             const data = res.data;
             console.log("timeee:", data);
@@ -63,7 +64,7 @@ class FoodParty extends Component {
             {
                 remainingTime : 60
             });
-        axios.get("http://localhost:8081/Loghmeh_war_exploded/foodparty_foods")
+        axios.get("http://localhost:8081/08_React_war_exploded/foodparty_foods")
         .then(res => {
             const data = res.data;
             this.setState({ 
@@ -93,7 +94,11 @@ class FoodParty extends Component {
                                                                     .format('H:mm:ss')} />}</h1>
                 </div>
                 <div className="row foodParyFoods">
-                    {foodPartyItems}
+                    {/* <BaseCrousel>  */}
+                    {foodPartyItems} 
+                    {/* </BaseCrousel> */}
+
+
                 </div>
             </div>
         );

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import FOODIMG from '../../images/foodpic.jpeg';
+import ReactStarsRating from 'react-awesome-stars-rating';
 import './FoodDetail.css';
 import PersianNumber from '../../common/PersianNumber';
 
@@ -22,7 +22,9 @@ class FoodDetail extends Component {
                     <div className="fooddetail-foodprop col-md-8">
                         <div className="row fooddetail-foodname">
                             <p id="fooddetail-foodname">{this.props.foodDetail.name}</p>
-                            <p id="fooddetail-foodrate"><PersianNumber number={this.props.foodDetail.popularity} /></p>
+                            <span id="fooddetail-foodrate"><PersianNumber number={this.props.foodDetail.popularity} />
+                                    <ReactStarsRating isEdit={false} count={1} value={1} secondaryColor={'orange'} size={12}/>          
+                            </span> 
                         </div>
                         <div className="row fooddetail-fooddisc">
                             <p id="fooddetail-fooddisc">{this.props.foodDetail.description}</p>

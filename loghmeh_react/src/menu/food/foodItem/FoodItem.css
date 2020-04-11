@@ -69,6 +69,8 @@
 
 #fooditem-rating {
     font-size: 12px;
+    display: flex;
+    margin-right: -1vmin;
 }
 
 .fooditem-price {

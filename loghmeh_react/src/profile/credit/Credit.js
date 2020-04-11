@@ -18,7 +18,7 @@ class Credit extends Component {
 			<div className="credit-container container-sm border">
 				<form className="credit-form form-inline" onSubmit={() => this.props.onClick(this.state.credit)}>
 					<label className="sr-only" htmlFor="inlineFormInputName2">Credit</label>
-					<input type="number" readonly className="credit-input form-control mb-2 mr-sm-2" id="inlineFormInputName2"
+					<input type="text" className="form-control mb-2 mr-sm-2 credit-input" id="credit-amount"
 						   placeholder="میزان افزایش اعتبار" onChange={this.handleCreditInput}></input>
 					<button type="submit" className="credit-btn" onClick={() => document.getElementById("inlineFormInputName2").value = "میزان افزایش اعتبار"}>افزایش</button>
 				</form>

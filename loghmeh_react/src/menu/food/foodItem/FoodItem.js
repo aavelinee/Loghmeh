@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Modal} from 'react-bootstrap';
 import axios from 'axios';
+import ReactStarsRating from 'react-awesome-stars-rating';
 import './FoodItem.css';
 import PersianNumber from '../../../common/PersianNumber';
 import FoodDetail from '../../../Home/food/FoodDetail';
@@ -45,7 +46,7 @@ class FoodItem extends Component {
 
     getCart() {
         console.log("getCart is called");
-    	axios.get("http://localhost:8081/Loghmeh_war_exploded/cart/" + 1)
+    	axios.get("http://localhost:8081/08_React_war_exploded/cart/" + 1)
 		.then(res => {
             const data = res.data;
 			this.setState({ 
@@ -60,7 +61,7 @@ class FoodItem extends Component {
         console.log("foodNum: ", foodNum);
 
         event.preventDefault();
-        axios.put('http://localhost:8081/Loghmeh_war_exploded/put_cart', null,
+        axios.put('http://localhost:8081/08_React_war_exploded/put_cart', null,
             {params: {
                 'userId': 1, 
                 'restaurantId': restaurantId, 
@@ -92,8 +93,9 @@ class FoodItem extends Component {
                                     <b>{this.state.food.name}</b>
                                 </div>
                                 <div className="fooditem-star col-md-3">
-                                    <p id="fooditem-rating"><PersianNumber number={this.state.food.popularity} /></p>
-                                    <span className="fa fa-star checked"></span>
+                                    <span id="fooditem-rating"><PersianNumber number={this.state.food.popularity} />
+                                    <ReactStarsRating isEdit={false} count={1} value={1} secondaryColor={'orange'} size={12}/>          
+                                    </span>                  
                                 </div>
                             </div>
                             <div className="row fooditem-price">

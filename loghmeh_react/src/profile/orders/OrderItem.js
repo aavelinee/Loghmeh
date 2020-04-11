@@ -29,7 +29,7 @@ class OrderItem extends Component {
     }
 
     getOrderStatus() {
-        axios.get("http://localhost:8081/Loghmeh_war_exploded/order/" + this.state.order.id)
+        axios.get("http://localhost:8081/08_React_war_exploded/order/" + this.state.order.id)
         .then(res => {
             const data = res.data;
             this.setState({ 
@@ -65,7 +65,7 @@ class OrderItem extends Component {
                 <div class="col col-5 left-col">
                     <button type="button" class="factor on-the-way" onClick={this.handleShow}>{status[this.state.order.status]}</button>
                     <Modal show={this.state.showModal} onHide={this.handleClose}>
-                        <OrderBill order={this.props.order} />
+                        <OrderBill orders={this.props.orders} />
                     </Modal>
                 </div>
             </div>

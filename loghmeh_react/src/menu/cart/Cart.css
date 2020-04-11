@@ -77,3 +77,8 @@
     text-align: center;
     font-size: 12px;
 }
+
+#error-msg {
+    text-align: center;
+    padding: 5vmin;
+}

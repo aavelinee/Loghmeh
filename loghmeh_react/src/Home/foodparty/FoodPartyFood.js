@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Modal} from 'react-bootstrap';
 import axios from 'axios';
+import ReactStarsRating from 'react-awesome-stars-rating';
 import './FoodPartyFood.css';
 import FoodDetail from '../food/FoodDetail';
 import PersianNumber from '../../common/PersianNumber';
@@ -56,11 +57,11 @@ class FoodPartyFood extends Component {
         console.log("foodCount: ", foodCount);
         console.log("state foodCount: ", this.state.foodCount)
         event.preventDefault();
-		axios.put('http://localhost:8081/Loghmeh_war_exploded/put_cart', null,
+		axios.put('http://localhost:8081/08_React_war_exploded/put_cart', null,
 			{params: {
-                'userId': 1, 
-                'restaurantId': restaurantId, 
-                'foodName' : foodName, 
+                'userId': 1,
+                'restaurantId': restaurantId,
+                'foodName' : foodName,
                 'foodCount': foodCount,
                 'isFoodParty' : isFoodParty}}
 		).then( (response) => {this.getFoodPartyFood(restaurantId, foodName);})
@@ -88,7 +89,7 @@ class FoodPartyFood extends Component {
 
     getFoodPartyFood(restaurantId, foodName) {
         console.log("getFoodPartyFood is called");
-    	axios.get("http://localhost:8081/Loghmeh_war_exploded/foodparty_food/" + restaurantId + "/" + foodName)
+    	axios.get("http://localhost:8081/08_React_war_exploded/foodparty_food/" + restaurantId + "/" + foodName)
 		.then(res => {
             const data = res.data;
 			this.updateCount(data.count);
@@ -107,8 +108,10 @@ class FoodPartyFood extends Component {
                             <div className="row foodparty-foodname">
                                 <p id="foodparty-foodname">{this.state.food.name}</p>
                             </div>
-                            <div className="food-star-icon foodRate">
-
+                            <div className="row food-star-icon foodRate">
+                            <span id="foodpartyfood-popularity">{<PersianNumber number={this.state.food.popularity}>}</PersianNumber>}
+                            <ReactStarsRating isEdit={false} count={1} value={1} secondaryColor={'orange'} size={12}/>
+                            </span>
                             </div>
                         </div>
                     </div>
