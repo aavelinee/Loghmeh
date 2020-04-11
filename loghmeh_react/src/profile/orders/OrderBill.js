@@ -8,9 +8,9 @@ class OrderBill extends Component {
     }
 
     render() {
-        const order = this.props.order.map((item) =>
+        const order = this.props.order.orders.map((item) =>
             <tr>
-                <td id="table-row" data-href="#"><PersianNumber number={this.props.order.indexOf(item)+1} /></td>
+                <td id="table-row" data-href="#"><PersianNumber number={this.props.order.orders.indexOf(item)+1} /></td>
                 <td id="table-food">{item.food.name}</td>
                 <td id="table-count" data-href="#"><PersianNumber number={item.orderCount} /></td>
                 <td id="table-price" data-href="#"><PersianNumber number={item.food.price} /></td>
@@ -19,7 +19,7 @@ class OrderBill extends Component {
         return(
             <div className="container order-bill">
                 <div className="row orderbill-restname">
-                    <p id="orderbill-restname">{this.props.restaurantName}</p>
+                    <p id="orderbill-restname">{this.props.order.restaurant.name}</p>
                 </div>
                 <div className="row order-table">
                 <table id="order-table">
@@ -33,7 +33,7 @@ class OrderBill extends Component {
                 </table>
                 </div>
                 <div className="row total-cost">
-                    <p id="total-cost">جمع کل: ۱۸۰۰۰۰ تومان</p>
+                    <p id="total-cost" data-href="#">جمع کل: <PersianNumber number={this.props.order.totalPrice} /> تومان </p>
                 </div> 
             </div>
         );

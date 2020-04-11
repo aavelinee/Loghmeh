@@ -35,7 +35,7 @@ public class LoghmehService {
         }
     }
 
-    @RequestMapping(value = "/hell", method = RequestMethod.GET,
+    @RequestMapping(value = "/ordinaryRestaurants", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ArrayList<Restaurant> getOrdinaryRestaurantsController(HttpServletResponse servletResponse) {
         servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
@@ -51,6 +51,19 @@ public class LoghmehService {
         return Loghmeh.getInstance().getCustomer(0).getOrders();
     }
 
+    @RequestMapping(value = "/order/{orderId}", method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public Order getOrder(HttpServletResponse servletResponse,
+                                         @PathVariable(value = "orderId") int orderId){
+        for(Order order : Loghmeh.getInstance().getCustomer(0).getOrders()) {
+            if (order.getId() == orderId) {
+                servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
+                return order;
+            }
+        }
+        servletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        return null;
+    }
 
     @RequestMapping(value = "/cart/{userId}", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -117,9 +130,14 @@ public class LoghmehService {
     public ReqResult finalizeController(HttpServletResponse servletResponse,
                                         @RequestParam(value = "userId") int userId){
         System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa put in finalize");
+        Order order = Loghmeh.getInstance().getCart(0);
         String result = Loghmeh.getInstance().finalizeOrder(userId);
         ReqResult resp = new ReqResult();
         if(result.equals("done")){
+            if(order == null){
+                System.out.println("inja hammmmmmmmmm nuleeeeeeee");
+            }
+            Loghmeh.getInstance().findDelivery(order);
             resp.setSuccessful(true);
             servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
         }

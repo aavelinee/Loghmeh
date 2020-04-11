@@ -51,7 +51,7 @@ class Cart extends Component {
     removeFromCart(restaurantId, foodName, isFoodParty) {
         console.log("order lessssssss");
         // event.preventDefault();
-		axios.delete('http://localhost:8081/08_React_war_exploded/del_cart', 
+		axios.delete('http://localhost:8081/Loghmeh_war_exploded/del_cart', 
 			{params: {'userId': 1, 'restaurantId': restaurantId, 'foodName' : foodName, 'isFoodParty' : isFoodParty}}
 		).then( (response) => {this.getCart();})
         .catch((error) => {
@@ -86,7 +86,7 @@ class Cart extends Component {
             // } else {
                 console.log("eroooooooor", error);
             // }
-          })   
+          })  
     }
 
 
@@ -116,7 +116,7 @@ class Cart extends Component {
                         <p className="cart-total-price">جمع کل: <b><PersianNumber number={this.state.cart.totalPrice} /> تومان</b></p>
                     </div>
                     <div className="row cart-button-row">
-                        <button type="button" className="cart-buy-btn" onClick={this.handleFinalize}>تأیید نهایی</button>
+                        <button type="button" className="cart-buy-btn" onClick={this.handleFinalize} >تأیید نهایی</button>
                     </div>   
                     </Fragment>         
                 : <p id="empty-cart">سبد خرید شما خالی است.</p>

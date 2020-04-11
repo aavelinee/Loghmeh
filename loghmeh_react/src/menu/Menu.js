@@ -30,7 +30,7 @@ class Menu extends Component {
                     </div>
                     <div className="menu-container row">
                         <div className="menu-right col-md-4">
-                            <Cart ref={this.cartElement} restaurantId={this.state.restaurant.id}/>
+                            <Cart ref={this.cartElement} restaurantId={this.state.restaurant.id} />
                         </div>
                         <div className="menu-left col-md-8">
                             <div className="menu-food-form container">
