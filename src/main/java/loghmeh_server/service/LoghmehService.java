@@ -148,11 +148,12 @@ public class LoghmehService {
                                          @RequestParam(value = "userId") int userId,
                                          @RequestParam(value = "restaurantId") String restaurantId,
                                          @RequestParam(value = "foodName") String foodName,
+                                         @RequestParam(value = "foodCount") int foodCount,
                                          @RequestParam(value = "isFoodParty") boolean isFoodParty){
         System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa put in cart");
-        String result = Loghmeh.getInstance().updateCart(userId, restaurantId, foodName, isFoodParty, "add");
+        String result = Loghmeh.getInstance().updateCart(userId, restaurantId, foodName, foodCount, isFoodParty, "add");
         ReqResult resp = new ReqResult();
-        if(result.equals("removed")){
+        if(result.equals("added")){
             resp.setSuccessful(true);
             servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
         }
@@ -200,9 +201,9 @@ public class LoghmehService {
                                               @RequestParam(value = "foodName") String foodName,
                                               @RequestParam(value = "isFoodParty") boolean isFoodParty){
         System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa del from cart");
-        String result = Loghmeh.getInstance().updateCart(userId, restaurantId, foodName, isFoodParty, "remove");
+        String result = Loghmeh.getInstance().updateCart(userId, restaurantId, foodName, 1, isFoodParty, "remove");
         ReqResult resp = new ReqResult();
-        if(result.equals("added")){
+        if(result.equals("removed")){
             resp.setSuccessful(true);
             servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
         }

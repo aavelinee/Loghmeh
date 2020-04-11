@@ -28,9 +28,9 @@ class Profile extends Component {
 								<a id="credit-link"> افزایش اعتبار </a>
 							</button>
 							<button type="button" id="orders" className="tab btn btn-primary z-depth-1" onClick={this.changeTab.bind(this, "orders")}>
-							``	<a id="orders-link">سفارش‌ها</a>
+								<a id="orders-link">سفارش‌ها</a>
 							</button>
-					``	</div>
+						</div>
 						{this.state.tab == "credit" ? <Credit onClick={this.handleCreditIncrease}/> : <Orders />}
 					</div>
 				</div>

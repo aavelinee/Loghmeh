@@ -142,7 +142,7 @@ public class Loghmeh {
         return null;
     }
 
-    public String updateCart(int customerId, String restaurantId, String foodName, boolean isFoodParty, String operation) {
+    public String updateCart(int customerId, String restaurantId, String foodName, int foodCount, boolean isFoodParty, String operation) {
         Restaurant restaurant = getRestaurantById(restaurantId);
         if(restaurant == null) {
             System.out.println("There Is No Restaurant With ID " + restaurantId);
@@ -162,7 +162,7 @@ public class Loghmeh {
                 return "not found";
             }
             if(operation.equals("add")){
-                if (customer.addToCart(restaurant, foodPartyFood)){
+                if (customer.addToCart(restaurant, foodPartyFood, foodCount)){
                     return "added";
                 }
                 return "different restaurant order";
@@ -178,7 +178,7 @@ public class Loghmeh {
                 return "not found";
             }
             if(operation.equals("add")){
-                if (customer.addToCart(restaurant, food)){
+                if (customer.addToCart(restaurant, food, foodCount)){
                     return "added";
                 }
                 return "different restaurant order";

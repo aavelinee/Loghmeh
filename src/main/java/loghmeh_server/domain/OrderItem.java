@@ -4,13 +4,13 @@ public class OrderItem {
     private Food food;
     private int orderCount;
 
-    public OrderItem(Food food) {
-        orderCount = 1;
+    public OrderItem(Food food, int foodCount) {
+        this.orderCount = foodCount;
         this.food = food;
     }
 
-    public void orderMore() {
-        this.orderCount += 1;
+    public void orderMore(int orderCount) {
+        this.orderCount += orderCount;
     }
 
     public void orderLess() {
