@@ -1,7 +1,11 @@
 import React, { Component} from 'react';
-import Sign from './sign/Sign';
 import Home from './Home/Home'
+import MultiCrousel from './Test';
 import './App.css';
+import FoodDetail from './Home/food/FoodDetail';
+import Cart from './menu/cart/Cart';
+import BaseCrousel from './Home/foodparty/Carousel';
+import Profile from './profile/Profile';
 
 
 class App extends Component {
@@ -20,10 +24,8 @@ class App extends Component {
     console.log(this.state.show); 
     return (
       <div>
-          {/* <Menu /> */}
-          {/* <Sign isSignUp={false}/> */}
-        {/* <Example test={<FoodPartyFood logo={true}/>}/> */}
-        <Home />
+        {/* <Home /> */}
+        <BaseCrousel> <Cart /> <Cart /> <Cart /> <Cart /> </BaseCrousel>
       </div>
     );
   }

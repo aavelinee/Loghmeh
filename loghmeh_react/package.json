@@ -12,7 +12,10 @@
     "react-awesome-modal": "^2.0.5",
     "react-bootstrap": "^1.0.0",
     "react-dom": "^16.13.1",
+    "react-multi-carousel": "^2.5.5",
     "react-scripts": "0.9.5",
+    "react-slick": "^0.25.2",
+    "react-swipeable-carousel": "^1.0.5",
     "simple-react-modal": "^0.5.1"
   },
   "devDependencies": {},
@@ -22,5 +25,4 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }
-  
 }

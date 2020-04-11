@@ -11,11 +11,23 @@ import Home from '../Home/Home';
 class Navbar extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {logo : props.logo, account : props.account, cart : props.cart, quit : props.quit, showModal: false};
+		this.state = {logo : props.logo, account : props.account,
+			cart : props.cart, quit : props.quit, showModal: false};
+		
+		this.cartElement = React.createRef();
 		this.renderProfile = this.renderProfile.bind(this);
 		this.renderHome = this.renderHome.bind(this);
 		this.handleShow = this.handleShow.bind(this);
-        this.handleClose = this.handleClose.bind(this);
+		this.handleClose = this.handleClose.bind(this);
+
+	}
+
+	handleShow() {
+		this.setState({showModal: true});
+	}
+
+	handleClose() {
+		this.setState({showModal: false});
 	}
 
 	renderProfile() {
@@ -56,6 +68,9 @@ class Navbar extends Component {
 							{this.state.cart &&
 								<a className="flaticon-smart-cart" onClick={this.handleShow}></a>
 							}
+							<Modal show={this.state.showModal} onHide={this.handleClose}>
+								<Cart />
+							</Modal>
 							{this.state.account &&
 								<a className="profile" onClick={this.renderProfile}>حساب کاربری</a>
 							}

@@ -295,8 +295,20 @@ public class Loghmeh {
         double deliveryTime = Double.POSITIVE_INFINITY;
         double time, distance;
         Delivery selectedDelivery = null;
+
+        System.out.println(deliveries.size());
+        System.out.println("------------------");
         for(Delivery delivery: deliveries) {
+            if(order == null){
+                System.out.println("nuuuuuuuuuuuleeeeeeeeeeeee");
+            }
             Location restaurantLocation = order.getRestaurant().getLocation();
+            System.out.println("here? :ss");
+            System.out.println(restaurantLocation.getX());
+            System.out.println(restaurantLocation.getY());
+            System.out.println(delivery.getLocation().getX());
+            System.out.println(customer.getLocation().getX());
+            System.out.println(delivery.getVelocity());
             distance = Math.sqrt(Math.pow(delivery.getLocation().getX() - restaurantLocation.getX(), 2) + Math.pow(delivery.getLocation().getY() - restaurantLocation.getY(), 2));
             distance += Math.sqrt(Math.pow(customer.getLocation().getX() - restaurantLocation.getX(), 2) + Math.pow(customer.getLocation().getY() - restaurantLocation.getY(), 2));
             time = distance / delivery.getVelocity();
@@ -304,7 +316,9 @@ public class Loghmeh {
                 deliveryTime = time;
                 selectedDelivery = delivery;
             }
+            System.out.println(deliveryTime);
         }
+        System.out.println("in assign Deliverrrrrrrrrryyyyyyyyyyyyyyy");
         order.setDelivery(selectedDelivery);
         order.setStatus(Order.orderStatus.OnTheWay);
         order.setEstimatedDeliveryTime(deliveryTime);
@@ -319,7 +333,10 @@ public class Loghmeh {
             public void run() {
                 String deliveriesJson = loghmeh_server.external_services.ExternalServices.getFromExtenalAPI("http://138.197.181.131:8080/deliveries");
                 ArrayList<Delivery> deliveries = loghmeh_server.deserializer.deliveryDeserializer.deserialize(deliveriesJson);
+                System.out.println("in findddddddd Delivery");
                 if(deliveries.size() != 0){
+                    System.out.println("delivery siiizeee is not 0");
+                    System.out.println(deliveries.get(0).getLocation().getX());
                     assignDelivery(order, customers.get(0), deliveries);
                     cancel();
                 }

@@ -1,0 +1,19 @@
+/* .slick-slider  */
+
+.sliders * {
+    direction: ltr;
+  }
+  
+  .slick-slide {
+    float: right!important;
+  }
+  .slick-slider {
+    direction: ltr;
+  }
+  .slick-track {
+    direction: rtl;
+  }
+  .slick-list {
+    padding: 0px 27px 0!important;
+  }
+  

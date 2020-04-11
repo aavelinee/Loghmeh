@@ -4,17 +4,6 @@ import FoodItem from './foodItem/FoodItem';
 class Food extends Component {
     constructor(props) {
         super(props);
-        this.state = {showModal: false};
-        this.handleShow = this.handleShow.bind(this);
-        this.handleClose = this.handleClose.bind(this);
-    }
-
-    handleShow() {
-        this.setState({showModal: true});
-    }
-
-    handleClose() {
-        this.setState({showModal: false});
     }
 
     render() {

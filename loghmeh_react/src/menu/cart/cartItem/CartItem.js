@@ -8,10 +8,6 @@ class CartItem extends Component {
         this.state = {name: props.name, number: props.number, price: props.price, isFoodParty : props.isFoodParty};
     }
 
-    // componentWillReceiveProps(){
-
-    // }
-
     render() {
         console.log("rendering cart item", this.props.number);
         return(
