@@ -30,7 +30,7 @@ import axios from 'axios';
 //     removeFromCart: function(restaurantId, foodName, isFoodParty){
 //         console.log("order lessssssss");
 //         // event.preventDefault();
-//         axios.delete('http://localhost:8081/08_React_war_exploded/del_cart', 
+//         axios.delete('http://localhost:8081/Loghmeh_war_exploded/del_cart', 
 //             {params: {'userId': 1, 'restaurantId': restaurantId, 'foodName' : foodName, 'isFoodParty' : isFoodParty}}
 //         ).then( (response) => {return getCart();})
 //         .catch((error) => {

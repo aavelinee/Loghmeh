@@ -4,6 +4,8 @@ import MultiCrousel from './Test';
 import './App.css';
 import FoodDetail from './Home/food/FoodDetail';
 import Cart from './menu/cart/Cart';
+import BaseCrousel from './Home/foodparty/Carousel';
+import Profile from './profile/Profile';
 
 
 class App extends Component {
@@ -23,7 +25,7 @@ class App extends Component {
     return (
       <div>
         {/* <Home /> */}
-        <MultiCrousel car={<Cart />} />
+        <BaseCrousel> <Cart /> <Cart /> <Cart /> <Cart /> </BaseCrousel>
       </div>
     );
   }
