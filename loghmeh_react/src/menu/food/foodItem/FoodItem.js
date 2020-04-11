@@ -38,7 +38,6 @@ class FoodItem extends Component {
     }
 
     render() {
-        console.log("in food item: ", this.state.food);
             return(
                 <form className="food">
                     <div className="food-item-modal">

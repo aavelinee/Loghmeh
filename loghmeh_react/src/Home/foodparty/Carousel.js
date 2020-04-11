@@ -10,11 +10,12 @@ const BaseCarousel = ({ children }) => {
     arrows: false,
     infinite: false,
     speed: 500,
-    slidesToShow: 2,
+    slidesToShow: 10,
     slidesToScroll: 1,
     // centerMode: true,
     // centerPadding: "10px",
-    rtl: false,
+    // rtl: true,
+    // arrows:true,
   };
 
   return <Slider {...settings}>{children}</Slider>;

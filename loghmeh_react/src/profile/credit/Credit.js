@@ -20,7 +20,7 @@ class Credit extends Component {
 					<label className="sr-only" htmlFor="inlineFormInputName2">Credit</label>
 					<input type="text" className="form-control mb-2 mr-sm-2 credit-input" id="credit-amount"
 						   placeholder="میزان افزایش اعتبار" onChange={this.handleCreditInput}></input>
-					<button type="submit" className="credit-btn">افزایش</button>
+					<button type="submit" className="credit-btn" onClick={() => document.getElementById("inlineFormInputName2").value = "میزان افزایش اعتبار"}>افزایش</button>
 				</form>
 			</div>
 		);

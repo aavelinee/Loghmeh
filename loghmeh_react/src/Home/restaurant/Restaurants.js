@@ -16,7 +16,7 @@ class Restaurants extends Component {
     }
 
     getRestaurants() {
-        axios.get("http://localhost:8081/08_React_war_exploded/ordinary_restaurants")
+        axios.get("http://localhost:8081/Loghmeh_war_exploded/ordinary_restaurants")
         .then(res => {
             const data = res.data;
             this.setState({ 
