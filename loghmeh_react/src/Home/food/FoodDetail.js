@@ -48,7 +48,7 @@ class FoodDetail extends Component {
                         <p id="fooddetail-ord-num" data-href="#"><PersianNumber number={this.props.foodCount} /></p>
                         <a className="fooddetail-icon flaticon-minus" onClick={() => this.props.onClickMinus(this.props.foodDetail.name, false)}></a> 
                         {console.log("infoood detaaaaaail: ", this.props.foodCount)}
-                        <button type="button" className="fooddetail-cart-buybtn" onClick={() => this.props.onClickAddToCart(this.props.foodDetail.name, false, this.props.foodCount)}>افزودن به سبد خرید</button>
+                        <button type="button" className="fooddetail-cart-buybtn" onClick={() => this.props.onClickAddToCart(this.props.foodDetail.restaurantId, this.props.foodDetail.name, false, this.props.foodCount)}>افزودن به سبد خرید</button>
                     </div>
                 </div> 
             </div>
