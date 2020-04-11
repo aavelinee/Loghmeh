@@ -94,9 +94,9 @@ class FoodParty extends Component {
                                                                     .format('H:mm:ss')} />}</h1>
                 </div>
                 <div className="row foodParyFoods">
-                    <BaseCrousel> 
+                    {/* <BaseCrousel>  */}
                     {foodPartyItems} 
-                    </BaseCrousel>
+                    {/* </BaseCrousel> */}
 
 
                 </div>
