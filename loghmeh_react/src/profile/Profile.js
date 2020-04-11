@@ -59,7 +59,7 @@ class Profile extends Component {
 
 	handleCreditIncrease(credit) {
 		event.preventDefault();
-		axios.put('http://localhost:8081/08_React_war_exploded/credit', null, 
+		axios.put('http://localhost:8081/Loghmeh_war_exploded/credit', null, 
 			{params: {'userId': 1, 'creditIncrease': credit}}
 		).then( (response) => {this.userInfoElement.current.updateUserInfo();})
 		.catch((error) => {console.log(error);});

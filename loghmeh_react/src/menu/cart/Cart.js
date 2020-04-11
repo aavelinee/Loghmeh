@@ -23,7 +23,7 @@ class Cart extends Component {
 
     getCart() {
         console.log("getCart is called");
-    	axios.get("http://localhost:8081/08_React_war_exploded/cart/" + 1)
+    	axios.get("http://localhost:8081/Loghmeh_war_exploded/cart/" + 1)
 		.then(res => {
             const data = res.data;
 			this.setState({ 
@@ -53,7 +53,7 @@ class Cart extends Component {
     removeFromCart(restaurantId, foodName, isFoodParty) {
         console.log("order lessssssss");
         // event.preventDefault();
-		axios.delete('http://localhost:8081/08_React_war_exploded/del_cart', 
+		axios.delete('http://localhost:8081/Loghmeh_war_exploded/del_cart', 
 			{params: {'userId': 1, 'restaurantId': restaurantId, 'foodName' : foodName, 'isFoodParty' : isFoodParty}}
 		).then( (response) => {this.getCart();})
         .catch((error) => {
@@ -78,7 +78,7 @@ class Cart extends Component {
     handleFinalize() {
         console.log("finaliiiiiize");
         event.preventDefault();
-		axios.put('http://localhost:8081/08_React_war_exploded/finalize', null,
+		axios.put('http://localhost:8081/Loghmeh_war_exploded/finalize', null,
 			{params: {'userId': 1}}
 		).then( (response) => {this.getCart()})
         .catch((error) => {

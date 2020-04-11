@@ -41,7 +41,7 @@ class FoodPartyFood extends Component {
     addToCart(restaurantId, foodName, isFoodParty) {
         console.log("order moreeeeeeeeee");
         event.preventDefault();
-		axios.put('http://localhost:8081/08_React_war_exploded/put_cart', null,
+		axios.put('http://localhost:8081/Loghmeh_war_exploded/put_cart', null,
 			{params: {'userId': 1, 'restaurantId': restaurantId, 'foodName' : foodName, 'isFoodParty' : isFoodParty}}
 		).then( (response) => {this.getFoodPartyFood(restaurantId, foodName);})
         .catch((error) => {
@@ -68,7 +68,7 @@ class FoodPartyFood extends Component {
 
     getFoodPartyFood(restaurantId, foodName) {
         console.log("getFoodPartyFood is called");
-    	axios.get("http://localhost:8081/08_React_war_exploded/foodparty_food/" + restaurantId + "/" + foodName)
+    	axios.get("http://localhost:8081/Loghmeh_war_exploded/foodparty_food/" + restaurantId + "/" + foodName)
 		.then(res => {
             const data = res.data;
 			this.updateCount(data.count);
