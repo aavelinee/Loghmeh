@@ -28,9 +28,9 @@ class Profile extends Component {
 								<a id="credit-link"> افزایش اعتبار </a>
 							</button>
 							<button type="button" id="orders" className="tab btn btn-primary z-depth-1" onClick={this.changeTab.bind(this, "orders")}>
-								<a id="orders-link">سفارش‌ها</a>
+							``	<a id="orders-link">سفارش‌ها</a>
 							</button>
-						</div>
+					``	</div>
 						{this.state.tab == "credit" ? <Credit onClick={this.handleCreditIncrease}/> : <Orders />}
 					</div>
 				</div>
@@ -59,7 +59,7 @@ class Profile extends Component {
 
 	handleCreditIncrease(credit) {
 		event.preventDefault();
-		axios.put('http://localhost:8081/Loghmeh_war_exploded/credit', null, 
+		axios.put('http://localhost:8081/08_React_war_exploded/credit', null, 
 			{params: {'userId': 1, 'creditIncrease': credit}}
 		).then( (response) => {this.userInfoElement.current.updateUserInfo();})
 		.catch((error) => {console.log(error);});

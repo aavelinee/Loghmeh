@@ -4,7 +4,6 @@ import axios from 'axios';
 import './FoodItem.css';
 import PersianNumber from '../../../common/PersianNumber';
 import FoodDetail from '../../../Home/food/FoodDetail';
-import {getCart, removeFromCart} from '../../../common/ApiCalls';
 
 class FoodItem extends Component {
     constructor(props) {
@@ -35,7 +34,7 @@ class FoodItem extends Component {
 
     getCart() {
         console.log("getCart is called");
-    	axios.get("http://localhost:8081/Loghmeh_war_exploded/cart/" + 1)
+    	axios.get("http://localhost:8081/08_React_war_exploded/cart/" + 1)
 		.then(res => {
             const data = res.data;
 			this.setState({ 
@@ -47,7 +46,7 @@ class FoodItem extends Component {
     addToCart(restaurantId, foodName, isFoodParty) {
         console.log("order moreeeeeeeeee");
         event.preventDefault();
-		axios.put('http://localhost:8081/Loghmeh_war_exploded/put_cart', null,
+		axios.put('http://localhost:8081/08_React_war_exploded/put_cart', null,
 			{params: {'userId': 1, 'restaurantId': restaurantId, 'foodName' : foodName, 'isFoodParty' : isFoodParty}}
 		).then( (response) => {this.getCart();})
         .catch((error) => {
@@ -69,7 +68,7 @@ class FoodItem extends Component {
 
     handleMinusRemoveFromCart(foodName, isFoodParty) {
         console.log("on click minus: ", foodName, this.state);
-        removeFromCart(this.state.cart.restaurant.id, foodName, isFoodParty);
+        // removeFromCart(this.state.cart.restaurant.id, foodName, isFoodParty);
     }
 
     render() {

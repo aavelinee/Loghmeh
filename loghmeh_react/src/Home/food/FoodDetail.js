@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import FOODIMG from '../../images/foodpic.jpeg';
 import './FoodDetail.css';
 import PersianNumber from '../../common/PersianNumber';
-import axios from 'axios';
 
 
 class FoodDetail extends Component {

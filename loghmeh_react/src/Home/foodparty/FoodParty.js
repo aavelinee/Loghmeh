@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import './FoodParty.css';
 import FoodPartyFood from './FoodPartyFood';
+import PersianNumber from '../../common/PersianNumber';
+import moment from 'moment';
 
 class FoodParty extends Component {
     constructor(props) {
@@ -15,7 +17,7 @@ class FoodParty extends Component {
         this.getFoodPartyFoods();
         this.getNextFoodPartyUpdateDelay();
 
-        this.pageTime = setInterval(() => this.tick, 1000);
+        this.pageTime = setInterval(this.tick, 1000);
     }
 
 
@@ -25,9 +27,10 @@ class FoodParty extends Component {
     }
 
     tick() {
-        this.setState({
-          remainingTime: this.state.remainingTime - 1
-        });
+        if(this.state.remainingTime > 0)
+            this.setState({
+            remainingTime: this.state.remainingTime - 1
+            });
       }
 
     firstFoodPartyGetHandler() {
@@ -39,8 +42,6 @@ class FoodParty extends Component {
             60 * 1000
         );
     }
-
-
 
     getNextFoodPartyUpdateDelay() {
         axios.get("http://localhost:8081/08_React_war_exploded/next_time")
@@ -81,7 +82,7 @@ class FoodParty extends Component {
             <FoodPartyFood food={foodPartyFood} key={foodPartyFood.name + foodPartyFood.restaurantName}/>);
         }
         console.log("foodparty item var: ", foodPartyItems);
-
+        
         return (
             <div className="container-fluid food-party">
                 <div className="row foodparty-row foodparty-title">
@@ -90,7 +91,9 @@ class FoodParty extends Component {
                     </h1>
                 </div>
                 <div className="row foodparty-row foodparty-time">
-                    <h1 className="remaining-time">زمان باقی‌مانده: {this.state.remainingTime}</h1>
+                    <h1 className="remaining-time">زمان باقی‌مانده: {<PersianNumber number={moment().startOf('day')
+                                                                    .seconds(this.state.remainingTime)
+                                                                    .format('H:mm:ss')} />}</h1>
                 </div>
                 <div className="row foodParyFoods">
                     {foodPartyItems}

@@ -1,6 +1,5 @@
 import React, { Component} from 'react';
 import Home from './Home/Home'
-import MultiCrousel from './Test';
 import './App.css';
 import FoodDetail from './Home/food/FoodDetail';
 import Cart from './menu/cart/Cart';
@@ -24,8 +23,8 @@ class App extends Component {
     console.log(this.state.show); 
     return (
       <div>
-        {/* <Home /> */}
-        <BaseCrousel> <Cart /> <Cart /> <Cart /> <Cart /> </BaseCrousel>
+        <Home />
+        {/* <BaseCrousel> <Cart /> <Cart /> <Cart /> <Cart /> </BaseCrousel> */}
       </div>
     );
   }
