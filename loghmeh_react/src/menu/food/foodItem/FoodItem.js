@@ -74,7 +74,7 @@ class FoodItem extends Component {
                             </div>
                             <div className="row fooditem-buy-btn">
                                 {this.props.isAvailable ? 
-                                    <button type="button" className="available-btn" onClick={() => this.props.onClickBuy(this.state.food.name)}>افزودن به سبد خرید</button>
+                                    <button type="button" className="available-btn" onClick={() => this.props.onClickBuy(this.props.food.name)}>افزودن به سبد خرید</button>
                                     :
                                     <button type="button" className="notavailable-btn">ناموجود</button>
                                 }

@@ -24,7 +24,7 @@
     font-size: 28px;
     padding-left: 7vmin;
     padding-right: 7vmin;
-    margin-left: -68vmin;
+    margin-left: -65vmin;
 }
 
 @media screen and (max-width: 800px) {
@@ -42,6 +42,10 @@
     display: flex;
     justify-content: center;
     border-left: 1px dashed rgb(77, 165, 124);
+}
+
+.cart-container-right-col {
+    width: 80%;
 }
 
 .menu-left {

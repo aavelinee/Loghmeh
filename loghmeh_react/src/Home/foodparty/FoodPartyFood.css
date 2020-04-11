@@ -3,8 +3,8 @@
     border: solid lightgrey;
     border-width: 1px;
     padding: 20px; 
-    width: 25vmin;
-    height: 25vmin;
+    width: 30vmin;
+    height: 30vmin;
     background-color: white;
     box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     margin-left: 20px;
@@ -12,7 +12,6 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
-    align-self: center;
 }
 
 
@@ -84,7 +83,7 @@
     text-align: center;
     color: white;
     margin-top: 2vmin;
-    padding-bottom: 0.5vmin;
+    padding: 0px;
 }
 
 .foodparty-buy-btn:focus {

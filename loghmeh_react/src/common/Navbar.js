@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { Modal } from 'react-bootstrap';
-
-import './Navbar.css';
-import '../images/icons/flaticon.css';
-
+import {Modal} from 'react-bootstrap';
 import LOGO from '../images/LOGO.png';
 import Profile from '../profile/Profile';
+import './Navbar.css';
+import '../images/icons/flaticon.css';
+import Orders from '../profile/orders/Orders';
 import Cart from '../menu/cart/Cart';
 
 class Navbar extends Component {
@@ -37,6 +36,14 @@ class Navbar extends Component {
 		);
 	}
 
+	handleShow() {
+        this.setState({showModal: true});
+    }
+    
+    handleClose() {
+        this.setState({showModal: false});
+    }
+
 	render() {
 		return (
 			<nav className="navbar">
@@ -65,6 +72,9 @@ class Navbar extends Component {
 						</div>
 					</div>
 				</div>
+				<Modal show={this.state.showModal} onHide={this.handleClose}>
+                    <Cart />
+                </Modal>
 			</nav>
 		);
 	}
