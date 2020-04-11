@@ -8,7 +8,6 @@ import axios from 'axios';
 class FoodDetail extends Component {
     constructor(props) {
         super(props);
-        this.state = {cart: null};
     }
 
     render() {
@@ -46,17 +45,10 @@ class FoodDetail extends Component {
                         }
                     </div>
                     <div className="fooddetail-cart-addcart col-md-8">
-                        {/* <div className="plus"> */}
-                            <a className="fooddetail-icon flaticon-plus" onClick={() => this.props.onClickPlus(this.props.foodDetail.name, false)}></a>
-                        {/* </div> */}
-                        {/* <div className="fooddetail-ord-num"> */}
-                            {/* <FoodNum /> */}
-                            <p id="fooddetail-ord-num" data-href="#"><PersianNumber number={this.props.foodCount} /></p>
-                        {/* </div> */}
-                        {/* <div className="fooddetail-minus"> */}
-                            <a className="fooddetail-icon flaticon-minus" onClick={() => this.props.onClickMinus(this.props.foodDetail.name, false)}></a> 
-                        {/* </div> */}
-                        <button type="button" className="fooddetail-cart-buybtn">افزودن به سبد خرید</button>
+                        <a className="fooddetail-icon flaticon-plus" onClick={() => this.props.onClickPlus(this.props.foodDetail.name, false)}></a>
+                        <p id="fooddetail-ord-num" data-href="#"><PersianNumber number={this.props.foodCount} /></p>
+                        <a className="fooddetail-icon flaticon-minus" onClick={() => this.props.onClickMinus(this.props.foodDetail.name, false)}></a> 
+                        <button type="button" className="fooddetail-cart-buybtn" onClick={() => this.props.onClickAddToCart(this.props.foodDetail.name, false)}>افزودن به سبد خرید</button>
                     </div>
                 </div> 
             </div>

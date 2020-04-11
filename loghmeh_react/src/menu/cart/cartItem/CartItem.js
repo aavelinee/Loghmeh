@@ -19,13 +19,13 @@ class CartItem extends Component {
                     <div className="cart-ord-add-cart col-md-3">
                         <div className="addcart-box">
                             <div className="cart-plus">
-                                <a className="flaticon-plus" onClick={() => this.props.onClickPlus(this.state.name, false)}></a>
+                                <a className="flaticon-plus" onClick={() => this.props.onClickPlus(this.state.name, false, 1)}></a>
                             </div>
                             <div className="cart-ord-num">
                             <p className="food-number"><PersianNumber number={this.props.number} /></p>
                             </div>
                             <div className="cart-minus">
-                                <a className="flaticon-minus" onClick={() => this.props.onClickMinus(this.state.name, false)}></a> 
+                                <a className="flaticon-minus" onClick={() => this.props.onClickMinus(this.state.name, false, 1)}></a> 
                             </div>
                         </div>
                     </div>
