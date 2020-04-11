@@ -4,7 +4,7 @@ import moment from 'moment';
 import './FoodParty.css';
 import FoodPartyFood from './FoodPartyFood';
 import PersianNumber from '../../common/PersianNumber';
-// import BaseCrousel from './Home/foodparty/Carousel';
+import BaseCrousel from './Carousel';
 
 class FoodParty extends Component {
     constructor(props) {
@@ -94,9 +94,9 @@ class FoodParty extends Component {
                                                                     .format('H:mm:ss')} />}</h1>
                 </div>
                 <div className="row foodParyFoods">
-                    {/* <BaseCrousel>  */}
+                    <BaseCrousel> 
                     {foodPartyItems} 
-                    {/* </BaseCrousel> */}
+                    </BaseCrousel>
 
 
                 </div>
