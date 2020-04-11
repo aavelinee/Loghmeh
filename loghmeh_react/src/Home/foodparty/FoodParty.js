@@ -73,15 +73,12 @@ class FoodParty extends Component {
     }
 
     render() {
-        console.log("foodparty rests:", this.state.foodPartyFoods);
 
         var foodPartyItems;
         if(this.state.foodPartyFoods){
-            console.log("null nis");
             foodPartyItems = this.state.foodPartyFoods.map((foodPartyFood) =>
             <FoodPartyFood food={foodPartyFood} key={foodPartyFood.name + foodPartyFood.restaurantName}/>);
         }
-        console.log("foodparty item var: ", foodPartyItems);
         
         return (
             <div className="container-fluid food-party">

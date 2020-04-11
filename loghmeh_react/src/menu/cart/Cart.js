@@ -1,20 +1,25 @@
 import React, { Component, Fragment } from 'react';
 import axios from 'axios';
 import CartItem from './cartItem/CartItem';
-import Example from '../../common/Modal'
+import {Modal} from 'react-bootstrap';
 import './Cart.css';
 import PersianNumber from '../../common/PersianNumber';
 
 class Cart extends Component {
     constructor(props) {
         super(props);
-        this.state = {cart : null};
+        this.state = {cart : null, showModal: false, msg:""};
         this.getCart = this.getCart.bind(this);
         this.addToCart = this.addToCart.bind(this);
         this.removeFromCart = this.removeFromCart.bind(this);
         this.handlePlusAddToCart = this.handlePlusAddToCart.bind(this);
         this.handleMinusRemoveFromCart = this.handleMinusRemoveFromCart.bind(this);
         this.handleFinalize = this.handleFinalize.bind(this);
+
+        this.handleShow = this.handleShow.bind(this);
+		this.handleClose = this.handleClose.bind(this);
+
+
     }
 
     componentDidMount() {
@@ -39,9 +44,10 @@ class Cart extends Component {
 			{params: {'userId': 1, 'restaurantId': restaurantId, 'foodName' : foodName, 'isFoodParty' : isFoodParty}}
 		).then( (response) => {this.getCart();})
         .catch((error) => {
-            if (error.response.status === 403) {
-              return <Example test={<p>شما مجاز به سفارش غذا از رستوران‌های متفاوت نیستید.</p>}/>
-
+            if (error.response.status == 403) {
+                console.log("different restsssssssss");
+                this.setState({msg:"شما مجاز به سفارش غذا از رستوران‌های متفاوت نیستید."});
+                this.handleShow();
             } else {
                 console.log(error);
             }
@@ -89,6 +95,13 @@ class Cart extends Component {
           })  
     }
 
+    handleShow() {
+		this.setState({showModal: true});
+	}
+
+	handleClose() {
+		this.setState({showModal: false});
+	}
 
     render() {
         console.log("cart", this.state.cart);
@@ -122,6 +135,8 @@ class Cart extends Component {
                 : <p id="empty-cart">سبد خرید شما خالی است.</p>
                        
                 }
+                <Modal show={this.state.showModal} onHide={this.handleClose} ><p>{this.state.msg}</p></Modal>
+
             </div>
         );
     }

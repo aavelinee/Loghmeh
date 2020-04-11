@@ -8,7 +8,7 @@ class OrderBill extends Component {
     }
 
     render() {
-        const order = this.props.order.map((item) =>
+        const order = this.props.orders.map((item) =>
             <tr>
                 <td id="table-row"><PersianNumber number={this.props.order.indexOf(item)+1} /></td>
                 <td id="table-food">{item.food.name}</td>
