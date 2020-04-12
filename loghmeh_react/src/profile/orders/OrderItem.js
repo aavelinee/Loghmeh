@@ -53,7 +53,7 @@ class OrderItem extends Component {
          if(this.state.order.status != "Delivered") {
             setTimeout(this.timeOut, 5000);
          }
-         else{
+         else {
             clearTimeout();
          }
         console.log("in orders page");
@@ -63,7 +63,18 @@ class OrderItem extends Component {
                 <div class="col col-1 right-col">{this.state.orders.indexOf(this.props.order) + 1}</div>
                 <div class="col col-6"> {this.props.order.restaurant.name}</div>
                 <div class="col col-5 left-col">
-                    <button type="button" class="factor on-the-way" onClick={this.handleShow}>{status[this.state.order.status]}</button>
+                    {this.state.order.status == "Delivered" &&
+                        <button type="button" class="factor delivered" onClick={this.handleShow}>{status[this.state.order.status]}</button>
+                    }
+                    {this.state.order.status == "OnTheWay" &&
+                        <button type="button" class="factor on-the-way" onClick={this.handleShow}>{status[this.state.order.status]}</button>
+                    }   
+                    {this.state.order.status == "DeliverySearch" &&
+                        <button type="button" class="factor delivery-search" onClick={this.handleShow}>{status[this.state.order.status]}</button>
+                    }
+                    {this.state.order.status == "Ordering" &&
+                        <button type="button" class="factor delivery-search" onClick={this.handleShow}>{status[this.state.order.status]}</button>
+                    }
                     <Modal show={this.state.showModal} onHide={this.handleClose}>
                         <OrderBill order={this.props.order} />
                     </Modal>
