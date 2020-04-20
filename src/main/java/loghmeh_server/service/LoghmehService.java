@@ -76,7 +76,6 @@ public class LoghmehService {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ArrayList<Order> getOrdersController(HttpServletResponse servletResponse) {
         servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
-        System.out.println("orrrrdeeeerrrrsss" + Loghmeh.getInstance().getCustomer(0).getOrders().size());
         return Loghmeh.getInstance().getCustomer(0).getOrders();
     }
 
@@ -133,7 +132,6 @@ public class LoghmehService {
             customer.increaseCredit(creditIncrease);
             result.setSuccessful(true);
             servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
-            System.out.println("customer credit" + customer.getCredit());
         }
         else{
             result.setSuccessful(false);
@@ -177,9 +175,6 @@ public class LoghmehService {
         String result = Loghmeh.getInstance().finalizeOrder(userId);
         ReqResult resp = new ReqResult();
         if(result.equals("done")){
-            if(order == null){
-                System.out.println("inja hammmmmmmmmm nuleeeeeeee");
-            }
             Loghmeh.getInstance().findDelivery(order);
             resp.setSuccessful(true);
             servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);

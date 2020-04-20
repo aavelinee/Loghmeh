@@ -66,7 +66,6 @@ public class Loghmeh {
 
     public String addFoodPartyRestaurants(String jsonInput) {
         ArrayList<Restaurant> restaurants = loghmeh_server.deserializer.restaurantDeserializer.deserializeFoodPartyRestaurants(jsonInput);
-        System.out.println("foodparty rest size: " + restaurants.size());
         for (Restaurant restaurant: restaurants){
             Restaurant existedRestaurant = restaurantAlreadyExists(restaurant);
             if(existedRestaurant != null) {
@@ -266,49 +265,13 @@ public class Loghmeh {
         return true;
     }
 
-    public String getRecommendedRestaurants() {
-        ArrayList<RecommendationItem> recommendations = new ArrayList<RecommendationItem>();
-        for(Restaurant restaurant: restaurants){
-            recommendations.add(new RecommendationItem(restaurant, restaurant.getMenuPopulationAverage() / (restaurant.getLocation().euclideanDistance(new Location(.0f, .0f))) ));
-        }
-        Collections.sort(recommendations, new Comparator<RecommendationItem>(){
-            public int compare(RecommendationItem recommendationItem1, RecommendationItem recommendationItem2){
-                if(recommendationItem1.getRatingForUser() == recommendationItem2.getRatingForUser())
-                    return 0;
-                return recommendationItem1.getRatingForUser() > recommendationItem2.getRatingForUser() ? -1 : 1;
-            }
-        });
-        String result = "";
-        for(int i = 0; i < 3; i++){
-            if(i < recommendations.size()){
-                result += (recommendations.get(i).getRestaurant().getName() + "\n");
-            }
-        }
-        if(result.contains("\n")){
-            result = result.substring(0, result.length() - 1);
-        }
-        return result;
-
-    }
-
     public void assignDelivery(Order order, Customer customer, ArrayList<Delivery> deliveries) {
         double deliveryTime = Double.POSITIVE_INFINITY;
         double time, distance;
         Delivery selectedDelivery = null;
 
-        System.out.println(deliveries.size());
-        System.out.println("------------------");
         for(Delivery delivery: deliveries) {
-            if(order == null){
-                System.out.println("nuuuuuuuuuuuleeeeeeeeeeeee");
-            }
             Location restaurantLocation = order.getRestaurant().getLocation();
-            System.out.println("here? :ss");
-            System.out.println(restaurantLocation.getX());
-            System.out.println(restaurantLocation.getY());
-            System.out.println(delivery.getLocation().getX());
-            System.out.println(customer.getLocation().getX());
-            System.out.println(delivery.getVelocity());
             distance = Math.sqrt(Math.pow(delivery.getLocation().getX() - restaurantLocation.getX(), 2) + Math.pow(delivery.getLocation().getY() - restaurantLocation.getY(), 2));
             distance += Math.sqrt(Math.pow(customer.getLocation().getX() - restaurantLocation.getX(), 2) + Math.pow(customer.getLocation().getY() - restaurantLocation.getY(), 2));
             time = distance / delivery.getVelocity();
@@ -316,16 +279,12 @@ public class Loghmeh {
                 deliveryTime = time;
                 selectedDelivery = delivery;
             }
-            System.out.println(deliveryTime);
         }
-        System.out.println("in assign Deliverrrrrrrrrryyyyyyyyyyyyyyy");
         order.setDelivery(selectedDelivery);
         order.setStatus(Order.orderStatus.OnTheWay);
         order.setEstimatedDeliveryTime(deliveryTime);
         order.setDeliveryDate(new Date());
         setStatusToDeliveredTimer(order, deliveryTime);
-        System.out.println("estimation: " + deliveryTime);
-        System.out.println(order.getDeliveryDate());
     }
 
     public void findDelivery(final Order order) {
@@ -333,10 +292,7 @@ public class Loghmeh {
             public void run() {
                 String deliveriesJson = loghmeh_server.external_services.ExternalServices.getFromExtenalAPI("http://138.197.181.131:8080/deliveries");
                 ArrayList<Delivery> deliveries = loghmeh_server.deserializer.deliveryDeserializer.deserialize(deliveriesJson);
-                System.out.println("in findddddddd Delivery");
                 if(deliveries.size() != 0){
-                    System.out.println("delivery siiizeee is not 0");
-                    System.out.println(deliveries.get(0).getLocation().getX());
                     assignDelivery(order, customers.get(0), deliveries);
                     cancel();
                 }
@@ -364,14 +320,6 @@ public class Loghmeh {
         return String.format("%02d h %02d min %02d.%d sec", hour, minute, second, millis);
     }
 
-    public String getFoodFromRestaurant(String jsonInput) {
-        String restaurantName = foodDeserializer.getRestaurantNameFromJson(jsonInput);
-        Restaurant restaurant = getRestaurantByName(restaurantName);
-        if(restaurant == null)
-            return ("There Is No Restaurant Named " + restaurantName);
-        return restaurant.getFood(jsonInput);
-    }
-
     public Restaurant getRestaurantByName(String restaurantName) {
         for(Restaurant rest: restaurants){
             if(rest.getName().equals(restaurantName))
@@ -390,31 +338,6 @@ public class Loghmeh {
         }
         return null;
     }
-
-    public String getIndexFromRestaurantId(String restaurantId) {
-        return idToIndex.get(restaurantId);
-    }
-
-    public ArrayList<Restaurant> getChainingRestaurantsByName(String restaurantName) {
-        ArrayList<Restaurant> chainingRestaurants = new ArrayList<Restaurant>();
-
-        for(Restaurant rest: restaurants){
-            if(rest.getName().equals(restaurantName))
-                chainingRestaurants.add(rest);
-        }
-        return chainingRestaurants;
-    }
-
-    public ArrayList<Restaurant> getChainingRestaurantsById(String restaurantId) {
-        ArrayList<Restaurant> chainingRestaurants = new ArrayList<Restaurant>();
-
-        for(Restaurant rest: restaurants){
-            if(rest.getId().equals(restaurantId))
-                chainingRestaurants.add(rest);
-        }
-        return chainingRestaurants;
-    }
-
 
     public ArrayList<Restaurant> getRestaurants() {
         return restaurants;
@@ -441,4 +364,63 @@ public class Loghmeh {
     public float getNextFoodPartySchedulerFire() {
         return nextFoodPartySchedulerFire;
     }
+
+
+    public String getRecommendedRestaurants() {
+        ArrayList<RecommendationItem> recommendations = new ArrayList<RecommendationItem>();
+        for(Restaurant restaurant: restaurants){
+            recommendations.add(new RecommendationItem(restaurant, restaurant.getMenuPopulationAverage() / (restaurant.getLocation().euclideanDistance(new Location(.0f, .0f))) ));
+        }
+        Collections.sort(recommendations, new Comparator<RecommendationItem>(){
+            public int compare(RecommendationItem recommendationItem1, RecommendationItem recommendationItem2){
+                if(recommendationItem1.getRatingForUser() == recommendationItem2.getRatingForUser())
+                    return 0;
+                return recommendationItem1.getRatingForUser() > recommendationItem2.getRatingForUser() ? -1 : 1;
+            }
+        });
+        String result = "";
+        for(int i = 0; i < 3; i++){
+            if(i < recommendations.size()){
+                result += (recommendations.get(i).getRestaurant().getName() + "\n");
+            }
+        }
+        if(result.contains("\n")){
+            result = result.substring(0, result.length() - 1);
+        }
+        return result;
+    }
+
+    public String getFoodFromRestaurant(String jsonInput) {
+        String restaurantName = foodDeserializer.getRestaurantNameFromJson(jsonInput);
+        Restaurant restaurant = getRestaurantByName(restaurantName);
+        if(restaurant == null)
+            return ("There Is No Restaurant Named " + restaurantName);
+        return restaurant.getFood(jsonInput);
+    }
+
+
+    public String getIndexFromRestaurantId(String restaurantId) {
+        return idToIndex.get(restaurantId);
+    }
+
+    public ArrayList<Restaurant> getChainingRestaurantsByName(String restaurantName) {
+        ArrayList<Restaurant> chainingRestaurants = new ArrayList<Restaurant>();
+
+        for(Restaurant rest: restaurants){
+            if(rest.getName().equals(restaurantName))
+                chainingRestaurants.add(rest);
+        }
+        return chainingRestaurants;
+    }
+
+    public ArrayList<Restaurant> getChainingRestaurantsById(String restaurantId) {
+        ArrayList<Restaurant> chainingRestaurants = new ArrayList<Restaurant>();
+
+        for(Restaurant rest: restaurants){
+            if(rest.getId().equals(restaurantId))
+                chainingRestaurants.add(rest);
+        }
+        return chainingRestaurants;
+    }
+
 }

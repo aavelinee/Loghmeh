@@ -3,7 +3,7 @@ import {Modal} from 'react-bootstrap';
 import ReactStarsRating from 'react-awesome-stars-rating';
 import './FoodItem.css';
 import PersianNumber from '../../../common/PersianNumber';
-import FoodDetail from '../../../Home/food/FoodDetail';
+import FoodDetail from '../../../home/food/FoodDetail';
 
 class FoodItem extends Component {
     constructor(props) {

@@ -1,7 +1,7 @@
 import React, { Component} from 'react';
-import Home from './Home/Home';
+import Home from './home/Home';
 import Cart from './menu/cart/Cart';
-import BaseCrousel from './Home/foodparty/Carousel';
+import BaseCrousel from './home/foodparty/Carousel';
 import Sign from './sign/Sign'
 import './App.css';
 

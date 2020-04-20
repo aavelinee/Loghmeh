@@ -6,7 +6,7 @@ import Profile from '../profile/Profile';
 import './Navbar.css';
 import '../images/icons/flaticon.css';
 import Cart from '../menu/cart/Cart';
-import Home from '../Home/Home';
+import Home from '../home/Home';
 
 class Navbar extends Component {
 	constructor(props) {
