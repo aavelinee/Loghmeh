@@ -7,28 +7,8 @@ import java.sql.*;
 
 public class LocationMapper extends Mapper<Location, Integer> implements ILocationMapper {
 
-    private static final String COLUMNS = " id, x, y ";
-    private static final String TABLE_NAME = "location_table";
-
-    private Boolean doManage;
-
-    public LocationMapper(Boolean doManage) throws SQLException {
-        if (this.doManage = doManage) {
-            Connection con = ConnectionPool.getConnection();
-            Statement st = con.createStatement();
-            st.executeUpdate(String.format("DROP TABLE IF EXISTS %s", TABLE_NAME));
-            st.executeUpdate(String.format(
-                    "CREATE TABLE  %s " +
-                            "(" +
-                            "id integer PRIMARY KEY, " +
-                            "x float" +
-                            "y float" +
-                            ");",
-                    TABLE_NAME));
-            st.close();
-            con.close();
-        }
-    }
+    private static final String COLUMNS = " x, y ";
+    private static final String TABLE_NAME = "locations";
 
     @Override
     protected String getFindStatement(Integer id) {
@@ -42,7 +22,6 @@ public class LocationMapper extends Mapper<Location, Integer> implements ILocati
         return "INSERT INTO " + TABLE_NAME +
                 "(" + COLUMNS + ")" + " VALUES "+
                 "("+
-                "id INT PRIMARY KEY AUTO_INCREMENT ," +
                 '"' + location.getX().toString() + ',' +
                 '"' + location.getY().toString() + '"' +
                 ");";
