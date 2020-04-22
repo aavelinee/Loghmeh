@@ -1,4 +1,4 @@
-create table customer
+create table customers
 (
   id int not null auto_increment,
   first_name varchar(255),
@@ -8,5 +8,5 @@ create table customer
   credit float,
   location_id int,
   primary key(id),
-  foreign key (location_id) references location(id) on delete set null
+  foreign key (location_id) references locations(id) on delete set null
 );

@@ -1,4 +1,4 @@
-create table location
+create table locations
 (
   id int not null auto_increment,
   x float,
