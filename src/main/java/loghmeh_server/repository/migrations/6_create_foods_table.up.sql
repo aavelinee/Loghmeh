@@ -1,8 +1,8 @@
 create table foods
 (
   id int not null auto_increment,
-  name varchar(255),
-  description varchar(255),
+  name varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci,
+  description varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci,
   price float,
   popularity float,
   image_url varchar(255),

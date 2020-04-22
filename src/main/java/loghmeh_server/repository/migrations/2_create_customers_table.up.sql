@@ -1,9 +1,9 @@
 create table customers
 (
   id int not null auto_increment,
-  first_name varchar(255),
-  last_name varchar(255),
-  phone_number varchar(255),
+  first_name varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci,
+  last_name varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci,
+  phone_number varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci unique,
   email varchar(255),
   credit float,
   location_id int,
