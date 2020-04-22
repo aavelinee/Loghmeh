@@ -29,7 +29,7 @@ class OrderItem extends Component {
     }
 
     getOrderStatus() {
-        axios.get("http://localhost:8081/Loghmeh_war_exploded/order/" + this.state.order.id)
+        axios.get("http://localhost:8080/Loghmeh_war_exploded/order/" + this.state.order.id)
         .then(res => {
             const data = res.data;
             this.setState({ 

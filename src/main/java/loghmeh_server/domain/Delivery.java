@@ -1,5 +1,7 @@
 package loghmeh_server.domain;
 
+import loghmeh_server.repository.location.Location;
+
 public class Delivery {
     private String id;
     private float velocity;

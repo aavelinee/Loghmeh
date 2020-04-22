@@ -72,7 +72,7 @@ class Profile extends Component {
 		}
 		else{
 			event.preventDefault();
-			axios.put('http://localhost:8081/Loghmeh_war_exploded/credit', null, 
+			axios.put('http://localhost:8080/Loghmeh_war_exploded/credit', null,
 				{params: {'userId': 1, 'creditIncrease': credit}}
 			).then( (response) => {this.userInfoElement.current.updateUserInfo();})
 			.catch((error) => {console.log(error);});

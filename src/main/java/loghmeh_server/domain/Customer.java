@@ -1,5 +1,7 @@
 package loghmeh_server.domain;
 
+import loghmeh_server.repository.location.Location;
+
 import java.util.ArrayList;
 
 public class Customer {

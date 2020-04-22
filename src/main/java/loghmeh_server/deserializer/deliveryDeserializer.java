@@ -3,7 +3,7 @@ package loghmeh_server.deserializer;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import loghmeh_server.domain.Delivery;
-import loghmeh_server.domain.Location;
+import loghmeh_server.repository.location.Location;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;

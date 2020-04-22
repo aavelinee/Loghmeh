@@ -1,7 +1,7 @@
 package loghmeh_server.domain;
 
-import loghmeh_server.controller.FoodParty;
 import loghmeh_server.deserializer.*;
+import loghmeh_server.repository.location.Location;
 import loghmeh_server.serializer.*;
 
 public class Restaurant {

@@ -1,7 +1,5 @@
 package loghmeh_server.domain;
 
-import loghmeh_server.controller.FoodParty;
-
 import java.util.ArrayList;
 
 public class Menu {

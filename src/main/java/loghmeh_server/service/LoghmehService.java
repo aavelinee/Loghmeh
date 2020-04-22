@@ -1,6 +1,5 @@
 package loghmeh_server.service;
 
-import loghmeh_server.controller.FoodParty;
 import loghmeh_server.domain.*;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;

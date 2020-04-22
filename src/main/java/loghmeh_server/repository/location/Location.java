@@ -1,4 +1,4 @@
-package loghmeh_server.domain;
+package loghmeh_server.repository.location;
 
 import java.lang.Math;
 

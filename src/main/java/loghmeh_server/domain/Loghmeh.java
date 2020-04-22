@@ -2,6 +2,7 @@ package loghmeh_server.domain;
 
 import java.util.*;
 import loghmeh_server.deserializer.*;
+import loghmeh_server.repository.location.Location;
 
 //Singleton class
 public class Loghmeh {
@@ -154,37 +155,27 @@ public class Loghmeh {
             return "not found";
         }
 
+        Food food;
         if(isFoodParty){
-            FoodPartyFood foodPartyFood = restaurant.getFoodPartyFoodByName(foodName);
-            if(foodPartyFood == null){
-                System.out.println("Food Party Food Does Not Exist");
-                return "not found";
-            }
-            if(operation.equals("add")){
-                if (customer.addToCart(restaurant, foodPartyFood, foodCount)){
-                    return "added";
-                }
-                return "different restaurant order";
-            }
-            else if(operation.equals("remove")) {
-                return customer.removeFromCart(restaurantId, foodName);
-            }
+            food = restaurant.getFoodPartyFoodByName(foodName);
         }
         else{
-            Food food = restaurant.getFoodByName(foodName);
-            if(food == null){
-                System.out.println("Food Does Not Exist");
-                return "not found";
+            food = restaurant.getFoodByName(foodName);
+        }
+        if(food == null){
+            System.out.println("Food Does Not Exist");
+            return "not found";
+        }
+
+
+        if(operation.equals("add")){
+            if (customer.addToCart(restaurant, food, foodCount)){
+                return "added";
             }
-            if(operation.equals("add")){
-                if (customer.addToCart(restaurant, food, foodCount)){
-                    return "added";
-                }
-                return "different restaurant order";
-            }
-            else if(operation.equals("remove")) {
-                return customer.removeFromCart(restaurantId, foodName);
-            }
+            return "different restaurant order";
+        }
+        else if(operation.equals("remove")) {
+            return customer.removeFromCart(restaurantId, foodName);
         }
         return "not found";
     }

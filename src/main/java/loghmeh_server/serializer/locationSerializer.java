@@ -1,6 +1,6 @@
 package loghmeh_server.serializer;
 
-import loghmeh_server.domain.Location;
+import loghmeh_server.repository.location.Location;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
