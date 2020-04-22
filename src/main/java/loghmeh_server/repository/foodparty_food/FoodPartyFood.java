@@ -1,6 +1,8 @@
-package loghmeh_server.domain;
+package loghmeh_server.repository.foodparty_food;
 
-public class FoodPartyFood extends Food{
+import loghmeh_server.repository.food.Food;
+
+public class FoodPartyFood extends Food {
     private int count;
     private float oldPrice;
 
@@ -17,6 +19,14 @@ public class FoodPartyFood extends Food{
             return true;
         }
         return false;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public void setOldPrice(float oldPrice) {
+        this.oldPrice = oldPrice;
     }
 
     public int getCount() {

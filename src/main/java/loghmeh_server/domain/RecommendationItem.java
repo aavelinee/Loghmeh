@@ -1,5 +1,7 @@
 package loghmeh_server.domain;
 
+import loghmeh_server.repository.restaurant.Restaurant;
+
 public class RecommendationItem {
     private Restaurant restaurant;
     private double ratingForUser;

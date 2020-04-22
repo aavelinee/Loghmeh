@@ -1,5 +1,8 @@
 package loghmeh_server.domain;
 
+import loghmeh_server.repository.food.Food;
+import loghmeh_server.repository.foodparty_food.FoodPartyFood;
+
 public class OrderItem {
     private Food food;
     private int orderCount;

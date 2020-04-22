@@ -1,4 +1,6 @@
-package loghmeh_server.domain;
+package loghmeh_server.repository.food;
+
+import loghmeh_server.repository.menu.Menu;
 
 public class Food {
     private String name;
@@ -28,6 +30,34 @@ public class Food {
 
     public Menu getMenu() {
         return menu;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setPopularity(float popularity) {
+        this.popularity = popularity;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public void setRestaurantId(String restaurantId) {
+        this.restaurantId = restaurantId;
+    }
+
+    public void setRestaurantName(String restaurantName) {
+        this.restaurantName = restaurantName;
     }
 
     public void setMenu(Menu menu) {

@@ -1,9 +1,12 @@
 package loghmeh_server.deserializer;
 
-import loghmeh_server.domain.*;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
+import loghmeh_server.repository.food.Food;
+import loghmeh_server.repository.foodparty_food.FoodPartyFood;
 import loghmeh_server.repository.location.Location;
+import loghmeh_server.repository.menu.Menu;
+import loghmeh_server.repository.restaurant.Restaurant;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;

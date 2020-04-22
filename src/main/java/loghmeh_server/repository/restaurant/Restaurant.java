@@ -1,7 +1,10 @@
-package loghmeh_server.domain;
+package loghmeh_server.repository.restaurant;
 
 import loghmeh_server.deserializer.*;
+import loghmeh_server.repository.food.Food;
+import loghmeh_server.repository.foodparty_food.FoodPartyFood;
 import loghmeh_server.repository.location.Location;
+import loghmeh_server.repository.menu.Menu;
 import loghmeh_server.serializer.*;
 
 public class Restaurant {

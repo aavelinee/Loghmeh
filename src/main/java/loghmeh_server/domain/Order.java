@@ -1,5 +1,9 @@
 package loghmeh_server.domain;
 
+import loghmeh_server.repository.food.Food;
+import loghmeh_server.repository.foodparty_food.FoodPartyFood;
+import loghmeh_server.repository.restaurant.Restaurant;
+
 import java.util.ArrayList;
 import java.util.Date;
 

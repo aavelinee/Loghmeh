@@ -1,6 +1,9 @@
 package loghmeh_server.service;
 
 import loghmeh_server.domain.*;
+import loghmeh_server.repository.customer.Customer;
+import loghmeh_server.repository.foodparty_food.FoodPartyFood;
+import loghmeh_server.repository.restaurant.Restaurant;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 

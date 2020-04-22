@@ -1,18 +1,28 @@
 package loghmeh_server.repository.location;
 
 import loghmeh_server.repository.ConnectionPool;
+import loghmeh_server.repository.Mapper;
 
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 
 
-public class LocationMapper {
+public class LocationMapper extends Mapper {
+    private static LocationMapper locationMapper = null;
+
 
     private static final String COLUMNS = "x, y";
     private static final String TABLE_NAME = "locations";
 
     private Map<Integer, Location> loadedMap = new HashMap<Integer, Location>();
+
+    public static LocationMapper getInstance() {
+        if(locationMapper == null){
+            locationMapper = new LocationMapper();
+        }
+        return locationMapper;
+    }
 
     public Location find(int id) throws SQLException {
         Location result = loadedMap.get(id);
@@ -55,19 +65,7 @@ public class LocationMapper {
     }
 
     public void delete(int id) throws SQLException {
-        try (Connection con = ConnectionPool.getConnection();
-             PreparedStatement preparedStatement = con.prepareStatement(
-                     "delete from " + TABLE_NAME + " where id = (?)"
-             )
-        ) {
-            preparedStatement.setInt(1, id);
-            try {
-                preparedStatement.executeUpdate();
-            } catch (SQLException ex) {
-                System.out.println("error in Mapper.delete query.");
-                throw ex;
-            }
-        }
+        this.delete(TABLE_NAME, id);
     }
 
     private Location convertResultSetToObject(ResultSet rs) throws SQLException {

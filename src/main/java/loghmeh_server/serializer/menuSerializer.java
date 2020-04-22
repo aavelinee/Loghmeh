@@ -1,7 +1,7 @@
 package loghmeh_server.serializer;
 
-import loghmeh_server.domain.*;
 import com.google.gson.*;
+import loghmeh_server.repository.food.Food;
 
 import java.util.ArrayList;
 
