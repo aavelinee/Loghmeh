@@ -5,7 +5,7 @@ public class CustomerInfo {
     private String lastName;
     private String phoneNumber;
     private String email;
-    private int credit;
+    private float credit;
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
@@ -23,7 +23,7 @@ public class CustomerInfo {
         this.email = email;
     }
 
-    public void setCredit(int credit) {
+    public void setCredit(float credit) {
         this.credit = credit;
     }
 }

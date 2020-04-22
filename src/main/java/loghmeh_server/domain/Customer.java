@@ -11,7 +11,7 @@ public class Customer {
     private String lastName;
     private String phoneNumber;
     private String email;
-    private int credit;
+    private float credit;
     private Location location;
 
 
@@ -145,7 +145,7 @@ public class Customer {
         return email;
     }
 
-    public int getCredit() {
+    public float getCredit() {
         return credit;
     }
 

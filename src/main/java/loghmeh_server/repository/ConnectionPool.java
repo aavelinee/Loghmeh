@@ -13,7 +13,7 @@ public class ConnectionPool {
         // remote db
         dataSource.setUrl("jdbc:mysql://localhost/Loghmeh");
         dataSource.setUsername("root");
-        dataSource.setPassword("");
+        dataSource.setPassword("password");
         dataSource.setMinIdle(1);
         dataSource.setMaxIdle(5);
         dataSource.setMaxOpenPreparedStatements(100);
