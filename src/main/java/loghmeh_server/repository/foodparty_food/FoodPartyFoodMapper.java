@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,7 +18,7 @@ public class FoodPartyFoodMapper extends Mapper {
     private static FoodPartyFoodMapper foodPartyFoodMapper = null;
 
 
-    private static final String COLUMNS = "count, old_price";
+    private static final String COLUMNS = "food_id, count, old_price";
     private static final String TABLE_NAME = "foodpartyfoods";
     private Map<Integer, FoodPartyFood> loadedMap = new HashMap<Integer, FoodPartyFood>();
 
@@ -36,19 +37,44 @@ public class FoodPartyFoodMapper extends Mapper {
             return result;
 
         try (Connection con = ConnectionPool.getConnection();
-             PreparedStatement preparedStatement = con.prepareStatement(
+             PreparedStatement ps = con.prepareStatement(
                      "select " + COLUMNS + " from " + TABLE_NAME + " where id = (?)"
              )
         ) {
-            preparedStatement.setInt(1, id);
+            ps.setInt(1, id);
             ResultSet resultSet;
             try {
                 Food food = FoodMapper.getInstance().find(id, menu);
-                resultSet = preparedStatement.executeQuery();
-                resultSet.next();
-                return convertResultSetToObject(resultSet, menu, food);
+                resultSet = ps.executeQuery();
+                if(resultSet.next())
+                    return convertResultSetToObject(resultSet, food);
+                else
+                    return null;
             } catch (SQLException ex) {
-                System.out.println("error in Mapper.findByID query.");
+                System.out.println("error in FoodPartyFoodMapper.findByID query.");
+                throw ex;
+            }
+        }
+    }
+
+    public ArrayList<FoodPartyFood> find__foodparty_foods(int menu_id, Menu menu) throws SQLException{
+        try (Connection con = ConnectionPool.getConnection();
+             PreparedStatement ps = con.prepareStatement(
+                     "select " + "id from " + "foods" + " where menu_id = (?) and " +
+                             "id in (select food_id from foodpartyfoods"
+             )
+        ) {
+            ps.setInt(1, menu_id);
+            ResultSet resultSet;
+            try {
+                resultSet = ps.executeQuery();
+                ArrayList<FoodPartyFood> foodPartyFoods = new ArrayList<>();
+                while(resultSet.next()) {
+                    foodPartyFoods.add(find(resultSet.getInt(1), menu));
+                }
+                return foodPartyFoods;
+            } catch (SQLException ex) {
+                System.out.println("error in FoodPartyFoodMapper.findFoodPartyFoodsByMenuID query.");
                 throw ex;
             }
         }
@@ -56,17 +82,18 @@ public class FoodPartyFoodMapper extends Mapper {
 
     public void insert(FoodPartyFood obj, int menu_id) throws SQLException {
         try (Connection connection = ConnectionPool.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(
-                     "insert into " + TABLE_NAME + "(" + COLUMNS + ")" + " values (?, ?)"
+             PreparedStatement ps = connection.prepareStatement(
+                     "insert into " + TABLE_NAME + "(" + COLUMNS + ")" + " values (?, ?, ?)"
              )
         ) {
-            preparedStatement.setInt(1, obj.getCount());
-            preparedStatement.setFloat(2, obj.getOldPrice());
+            FoodMapper.getInstance().insert(obj, menu_id);
+            ps.setInt(1, FoodMapper.getInstance().find(menu_id, obj.getName()));
+            ps.setInt(2, obj.getCount());
+            ps.setFloat(3, obj.getOldPrice());
             try {
-                FoodMapper.getInstance().insert(obj, menu_id);
-                preparedStatement.executeUpdate();
+                ps.executeUpdate();
             } catch (SQLException ex) {
-                System.out.println("error in Mapper.insert query.");
+                System.out.println("error in FoodPartyFoodMapper.insert query.");
                 throw ex;
             }
         }
@@ -77,10 +104,10 @@ public class FoodPartyFoodMapper extends Mapper {
     }
 
 
-    private FoodPartyFood convertResultSetToObject(ResultSet rs, Menu menu, Food food) throws SQLException {
+    private FoodPartyFood convertResultSetToObject(ResultSet rs, Food food) throws SQLException {
         FoodPartyFood foodPartyFood = (FoodPartyFood)food;
-        foodPartyFood.setCount(rs.getInt(1));
-        foodPartyFood.setOldPrice(rs.getFloat(2));
+        foodPartyFood.setCount(rs.getInt(2));
+        foodPartyFood.setOldPrice(rs.getFloat(3));
 
         return foodPartyFood;
     }

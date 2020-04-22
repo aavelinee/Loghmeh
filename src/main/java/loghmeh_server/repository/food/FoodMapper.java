@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,18 +35,58 @@ public class FoodMapper extends Mapper {
             return result;
 
         try (Connection con = ConnectionPool.getConnection();
-             PreparedStatement preparedStatement = con.prepareStatement(
+             PreparedStatement ps = con.prepareStatement(
                      "select " + COLUMNS + " from " + TABLE_NAME + " where id = (?)"
              )
         ) {
-            preparedStatement.setInt(1, id);
-            ResultSet resultSet;
+            ps.setInt(1, id);
             try {
-                resultSet = preparedStatement.executeQuery();
-                resultSet.next();
-                return convertResultSetToObject(resultSet, menu);
+                ResultSet resultSet = ps.executeQuery();
+                if(resultSet.next())
+                    return convertResultSetToObject(resultSet, menu);
+                return null;
             } catch (SQLException ex) {
-                System.out.println("error in Mapper.findByID query.");
+                System.out.println("error in FoodMapper.findByID query.");
+                throw ex;
+            }
+        }
+    }
+
+    public ArrayList<Food> find_foods(int menu_id, Menu menu) throws SQLException{
+        try (Connection con = ConnectionPool.getConnection();
+             PreparedStatement ps = con.prepareStatement(
+                     "select " + COLUMNS + " from " + TABLE_NAME + " where menu_id = (?) and id not in " +
+                             "(select food_id from foodparty_foods)"
+             )
+        ) {
+            ps.setInt(1, menu_id);
+            try {
+                ResultSet resultSet = ps.executeQuery();
+                ArrayList<Food> foods = new ArrayList<>();
+                while(resultSet.next()) {
+                    foods.add(convertResultSetToObject(resultSet, menu));
+                }
+                return foods;
+            } catch (SQLException ex) {
+                System.out.println("error in FoodMapper.findFoodsByMenuID query.");
+                throw ex;
+            }
+        }
+    }
+
+    public int find(int menu_id, String food_name) throws SQLException{
+        try (Connection con = ConnectionPool.getConnection();
+             PreparedStatement ps = con.prepareStatement(
+                     "select id from " + TABLE_NAME + " where menu_id = (?) and name = (?)"
+             )
+        ) {
+            ps.setInt(1, menu_id);
+            ps.setString(2, food_name);
+            try {
+                ResultSet resultSet = ps.executeQuery();
+                return resultSet.getInt(1);
+            } catch (SQLException ex) {
+                System.out.println("error in FoodMapper.findFoodsByMenuID query.");
                 throw ex;
             }
         }
@@ -53,18 +94,18 @@ public class FoodMapper extends Mapper {
 
     public void insert(Food obj, int menu_id) throws SQLException {
         try (Connection connection = ConnectionPool.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(
+             PreparedStatement ps = connection.prepareStatement(
                      "insert into " + TABLE_NAME + "(" + COLUMNS + ")" + " values (?, ?, ?, ?, ?, ?)"
              )
         ) {
-            preparedStatement.setString(1, obj.getName());
-            preparedStatement.setString(2, obj.getDescription());
-            preparedStatement.setFloat(3, obj.getPrice());
-            preparedStatement.setFloat(4, obj.getPopularity());
-            preparedStatement.setString(5, obj.getImage());
-            preparedStatement.setInt(6, menu_id);
+            ps.setString(1, obj.getName());
+            ps.setString(2, obj.getDescription());
+            ps.setFloat(3, obj.getPrice());
+            ps.setFloat(4, obj.getPopularity());
+            ps.setString(5, obj.getImage());
+            ps.setInt(6, menu_id);
             try {
-                preparedStatement.executeUpdate();
+                ps.executeUpdate();
             } catch (SQLException ex) {
                 System.out.println("error in Mapper.insert query.");
                 throw ex;
@@ -85,6 +126,8 @@ public class FoodMapper extends Mapper {
         food.setPopularity(rs.getFloat(4));
         food.setImage(rs.getString(5));
         food.setMenu(menu);
+        food.setRestaurantId(menu.getRestaurant().getId());
+        food.setRestaurantName(menu.getRestaurant().getName());
 
         return food;
     }

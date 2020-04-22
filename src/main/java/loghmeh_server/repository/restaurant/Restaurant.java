@@ -23,6 +23,8 @@ public class Restaurant {
         this.menu = menu;
     }
 
+    public Restaurant(){};
+
     public void addFoodToMenu(String jsonInput) {
         Food food = foodDeserializer.deserialize(jsonInput);
         menu.addFood(food);
@@ -73,6 +75,26 @@ public class Restaurant {
 
     public void setMenu(Menu menu) {
         this.menu = menu;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     @Override

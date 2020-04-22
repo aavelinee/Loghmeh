@@ -38,8 +38,32 @@ public class LocationMapper extends Mapper {
             ResultSet resultSet;
             try {
                 resultSet = preparedStatement.executeQuery();
-                resultSet.next();
-                return convertResultSetToObject(resultSet);
+                if(resultSet.next())
+                    return convertResultSetToObject(resultSet);
+                else
+                    return null;
+            } catch (SQLException ex) {
+                System.out.println("error in Mapper.findByID query.");
+                throw ex;
+            }
+        }
+    }
+
+    public int find(float x, float y) throws SQLException {
+        try (Connection con = ConnectionPool.getConnection();
+             PreparedStatement preparedStatement = con.prepareStatement(
+                     "select id from " + TABLE_NAME + " where x = (?) and y = (?)"
+             )
+        ) {
+            preparedStatement.setFloat(1, x);
+            preparedStatement.setFloat(2, y);
+            ResultSet resultSet;
+            try {
+                resultSet = preparedStatement.executeQuery();
+                if(resultSet.next())
+                    return resultSet.getInt(1);
+                else
+                    return -1;
             } catch (SQLException ex) {
                 System.out.println("error in Mapper.findByID query.");
                 throw ex;
