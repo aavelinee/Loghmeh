@@ -81,11 +81,14 @@ public class FoodMapper extends Mapper {
     public int find(int menu_id, String food_name) throws SQLException{
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(
-                     "select id from " + TABLE_NAME + " where menu_id = (?) and name = (?)"
+                     "select id from " + TABLE_NAME + " where menu_id = (?) and name = (?) and " +
+                             "id = (select max(id) from " + TABLE_NAME + "  where menu_id = (?) and name = (?))"
              )
         ) {
             ps.setInt(1, menu_id);
             ps.setString(2, food_name);
+            ps.setInt(3, menu_id);
+            ps.setString(4, food_name);
             try {
                 ResultSet resultSet = ps.executeQuery();
                 if(resultSet.next())

@@ -77,7 +77,7 @@ public class FoodPartyFoodMapper extends Mapper {
         }
     }
 
-    public ArrayList<FoodPartyFood> find__foodparty_foods(Menu menu) throws SQLException{
+    public ArrayList<FoodPartyFood> find_foodparty_foods(Menu menu) throws SQLException{
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(
                      "select food_id from foodpartyfoods where food_id in (select id from foods where menu_id=(?)) and expiration_time > now()"
@@ -107,7 +107,7 @@ public class FoodPartyFoodMapper extends Mapper {
         ArrayList<FoodPartyFood>foodPartyFoods = new ArrayList<>();
         for(Restaurant restaurant: foodPartyRestaurants) {
             try{
-                foodPartyFoods.addAll(find__foodparty_foods(restaurant.getMenu()));
+                foodPartyFoods.addAll(find_foodparty_foods(restaurant.getMenu()));
             } catch (SQLException ex) {
                 System.out.println("SQL Exception in finding all foodparty foods");
                 continue;
@@ -120,7 +120,7 @@ public class FoodPartyFoodMapper extends Mapper {
     public boolean is_expired(FoodPartyFood foodPartyFood) {
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(
-                     "select count(*) from foodpartyfoods where food_id in (select id from foods where menu_id=(?)) and name = (?) and expiration_time > now()"
+                     "select count(*) from foodpartyfoods where food_id in (select id from foods where menu_id = (?)  and name = (?)) and expiration_time > now()"
              )
         ) {
             int menu_id = MenuMapper.getInstance().find_menu_id(foodPartyFood.getMenu().getRestaurant());

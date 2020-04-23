@@ -41,6 +41,4 @@ public class BackgroundGetFoodPartyManager implements ServletContextListener {
         }
     }
 
-
-
 }

@@ -16,7 +16,7 @@ public class ConnectionPool {
         dataSource.setPassword("");
         dataSource.setMinIdle(1);
         dataSource.setMaxIdle(5);
-        dataSource.setMaxOpenPreparedStatements(100);
+        dataSource.setMaxOpenPreparedStatements(200);
     }
 
     public static Connection getConnection() throws SQLException {

@@ -40,14 +40,15 @@ public class Loghmeh {
     public String addRestaurants(String jsonInput) {
         ArrayList<Restaurant> restaurants = loghmeh_server.deserializer.restaurantDeserializer.deserializeRestaurants(jsonInput);
         RestaurantMapper.getInstance().insert_restaurants(restaurants);
-        for(Restaurant restaurant: RestaurantMapper.getInstance().find_restaurants("ordinary"))
-            System.out.println("rest: " + restaurant.getName());
+//        for(Restaurant restaurant: RestaurantMapper.getInstance().find_restaurants("ordinary"))
+//            System.out.println("rest: " + restaurant.getName());
         return "Restaurants Added Successfully";
     }
 
     public String addFoodPartyRestaurants(String jsonInput) {
         ArrayList<Restaurant> restaurants = loghmeh_server.deserializer.restaurantDeserializer.deserializeFoodPartyRestaurants(jsonInput);
         RestaurantMapper.getInstance().insert_foodparty_restaurants(restaurants);
+        System.out.println("insert foodparty rests");
         for(Restaurant restaurant: RestaurantMapper.getInstance().find_restaurants("foodparty"))
             System.out.println("foodparty rest: " + restaurant.getName());
         System.out.println("*************************************");
