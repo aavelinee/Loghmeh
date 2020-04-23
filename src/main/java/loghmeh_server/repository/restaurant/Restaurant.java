@@ -23,7 +23,7 @@ public class Restaurant {
         this.menu = menu;
     }
 
-    public Restaurant(){};
+    public Restaurant(){}
 
     public void addFoodToMenu(String jsonInput) {
         Food food = foodDeserializer.deserialize(jsonInput);

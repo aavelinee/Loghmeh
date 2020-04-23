@@ -1,5 +1,8 @@
-package loghmeh_server.domain;
+package loghmeh_server.repository.order;
 
+import loghmeh_server.repository.customer.Customer;
+import loghmeh_server.repository.delivery.Delivery;
+import loghmeh_server.repository.order_item.OrderItem;
 import loghmeh_server.repository.food.Food;
 import loghmeh_server.repository.foodparty_food.FoodPartyFood;
 import loghmeh_server.repository.restaurant.Restaurant;
@@ -21,13 +24,17 @@ public class Order {
     private double estimatedDeliveryTime;
     private Date deliveryDate;
     private float totalPrice;
+    private Customer customer;
 
-    public Order(int id, Restaurant restaurant) {
+    public Order(int id, Restaurant restaurant, Customer customer) {
         status = orderStatus.Ordering;
         this.id = id;
         this.restaurant = restaurant;
         this.totalPrice = 0;
+        this.customer = customer;
     }
+
+    public Order(){}
 
     public boolean addToCart(Restaurant restaurant, Food food, int foodCount) {
         if(!this.restaurant.equals(restaurant)){
@@ -40,7 +47,7 @@ public class Order {
                 return true;
             }
         }
-        OrderItem orderItem = new OrderItem(food, foodCount);
+        OrderItem orderItem = new OrderItem(food, foodCount, this);
         orders.add(orderItem);
         return true;
     }
@@ -95,19 +102,32 @@ public class Order {
         return id;
     }
 
-    public orderStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(orderStatus status) {
-        this.status = status;
-    }
-
     public ArrayList<OrderItem> getOrders() {
         return orders;
     }
 
+    public orderStatus getStatus() {
+        return status;
+    }
+
     public Restaurant getRestaurant() { return restaurant; }
+
+    public double getEstimatedDeliveryTime() {
+        return estimatedDeliveryTime;
+    }
+
+    public Date getDeliveryDate() { return deliveryDate; }
+
+    public Delivery getDelivery() { return delivery; }
+
+    public float getTotalPrice() { return totalPrice; }
+
+    public Customer getCustomer() { return customer; }
+
+
+    public void setStatus(orderStatus status) {
+        this.status = status;
+    }
 
     public void setDelivery(Delivery delivery) {
         this.delivery = delivery;
@@ -117,15 +137,17 @@ public class Order {
         this.estimatedDeliveryTime = estimatedDeliveryTime;
     }
 
-    public double getEstimatedDeliveryTime() {
-        return estimatedDeliveryTime;
-    }
-
     public void setDeliveryDate(Date deliveryDate) {
         this.deliveryDate = deliveryDate;
     }
 
-    public Date getDeliveryDate() {
-        return deliveryDate;
-    }
+    public void setId(int id) { this.id = id; }
+
+    public void setRestaurant(Restaurant restaurant) { this.restaurant = restaurant; }
+
+    public void setOrders(ArrayList<OrderItem> orders) { this.orders = orders; }
+
+    public void setTotalPrice(float totalPrice) { this.totalPrice = totalPrice; }
+
+    public void setCustomer(Customer customer) {this.customer = customer; }
 }

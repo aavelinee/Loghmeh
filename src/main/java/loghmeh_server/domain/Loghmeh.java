@@ -2,9 +2,13 @@ package loghmeh_server.domain;
 
 import java.util.*;
 import loghmeh_server.deserializer.*;
+import loghmeh_server.repository.customer.Customer;
+import loghmeh_server.repository.delivery.Delivery;
 import loghmeh_server.repository.food.Food;
 import loghmeh_server.repository.foodparty_food.FoodPartyFood;
 import loghmeh_server.repository.location.Location;
+import loghmeh_server.repository.order.Order;
+import loghmeh_server.repository.order_item.OrderItem;
 import loghmeh_server.repository.restaurant.Restaurant;
 
 //Singleton class
