@@ -1,15 +1,16 @@
 package loghmeh_server.domain;
 
 import java.util.*;
-import loghmeh_server.deserializer.*;
 import loghmeh_server.repository.customer.Customer;
 import loghmeh_server.repository.delivery.Delivery;
 import loghmeh_server.repository.food.Food;
 import loghmeh_server.repository.foodparty_food.FoodPartyFood;
+import loghmeh_server.repository.foodparty_food.FoodPartyFoodMapper;
 import loghmeh_server.repository.location.Location;
 import loghmeh_server.repository.order.Order;
 import loghmeh_server.repository.order_item.OrderItem;
 import loghmeh_server.repository.restaurant.Restaurant;
+import loghmeh_server.repository.restaurant.RestaurantMapper;
 
 //Singleton class
 public class Loghmeh {
@@ -18,17 +19,13 @@ public class Loghmeh {
     private ArrayList<Restaurant> restaurants;
     private ArrayList<Customer> customers;
 
-    private HashMap<String, String> idToIndex; //from user view id to restaurant id
-    private HashMap<String, String> indexToId; //from restaurant id to user view id
 
     float nextFoodPartySchedulerFire;
 
     private Loghmeh() {
-        restaurants = new ArrayList<Restaurant>();
-        customers = new ArrayList<Customer>();
+        restaurants = new ArrayList<>();
+        customers = new ArrayList<>();
         customers.add(new Customer(1, "احسان", "خامس‌پناه", "۰۹۱۲۳۴۵۶۷۸۹", "ekhamespanah@yahoo.com", 0f, 0f));
-        idToIndex = new HashMap<String, String>();
-        indexToId = new HashMap<String , String>();
     }
 
     public static Loghmeh getInstance() {
@@ -38,119 +35,42 @@ public class Loghmeh {
         return loghmeh;
     }
 
-    public Restaurant restaurantAlreadyExists(Restaurant restaurant) {
-        for (Restaurant rest : restaurants){
-            if (restaurant.equals(rest)) {
-                return rest;
-            }
-        }
-        return null;
-    }
 
-    public Restaurant sameRestaurant(Restaurant restaurant) {
-        for (Restaurant rest : restaurants){
-            if(rest.getName().equals(restaurant.getName()) && !rest.getLocation().equals(restaurant.getLocation()) &&
-                    rest.getMenu().equals(restaurant.getMenu())){//chain restaurant
-                return restaurant;
-            }
-        }
-        return null;
-    }
 
     public String addRestaurants(String jsonInput) {
         ArrayList<Restaurant> restaurants = loghmeh_server.deserializer.restaurantDeserializer.deserializeRestaurants(jsonInput);
-        for (Restaurant restaurant : restaurants){
-            if(restaurantAlreadyExists(restaurant) != null){
-                return "Restaurant Already Exists\n";
-            }
-            Restaurant otherBranch = sameRestaurant(restaurant);
-            if(otherBranch != null){
-                restaurant.setMenu(otherBranch.getMenu());
-            }
-            addRestaurantInfo(restaurant);
-        }
+        RestaurantMapper.getInstance().insert_restaurants(restaurants);
+        for(Restaurant restaurant: RestaurantMapper.getInstance().find_restaurants("ordinary"))
+            System.out.println("rest: " + restaurant.getName());
         return "Restaurants Added Successfully";
     }
 
     public String addFoodPartyRestaurants(String jsonInput) {
         ArrayList<Restaurant> restaurants = loghmeh_server.deserializer.restaurantDeserializer.deserializeFoodPartyRestaurants(jsonInput);
-        for (Restaurant restaurant: restaurants){
-            Restaurant existedRestaurant = restaurantAlreadyExists(restaurant);
-            if(existedRestaurant != null) {
-                existedRestaurant.getMenu().setFoodPartyFoods(restaurant.getMenu().getFoodPartyFoods());
-                continue;
-            }
-            Restaurant otherBranch = sameRestaurant(restaurant);
-            if(otherBranch != null){
-                restaurant.setMenu(otherBranch.getMenu());
-            }
-            addRestaurantInfo(restaurant);
-        }
+        RestaurantMapper.getInstance().insert_foodparty_restaurants(restaurants);
+        for(Restaurant restaurant: RestaurantMapper.getInstance().find_restaurants("foodparty"))
+            System.out.println("foodparty rest: " + restaurant.getName());
+        System.out.println("*************************************");
+        for(FoodPartyFood foodPartyFood: getFoodPartyFoods())
+            System.out.println("foodpartyfood:" + foodPartyFood.getName());
         return "Restaurant With Food Party Added Successfully";
     }
 
-    public void addRestaurantInfo(Restaurant restaurant) {
-        indexToId.put(Integer.toString(this.restaurants.size()+1), restaurant.getId());
-        idToIndex.put(restaurant.getId(), Integer.toString(this.restaurants.size()+1));
-        this.restaurants.add(restaurant);
-    }
-
-    public void deleteFoodParty() {
-        for(int j = this.restaurants.size() - 1; j >= 0; j--){
-            if(this.restaurants.get(j).getMenu().getFoodPartyFoods() != null && this.restaurants.get(j).getMenu().getFoods() == null){
-                this.restaurants.remove(j);
-            }
-            else if(this.restaurants.get(j).getMenu().getFoodPartyFoods() != null && this.restaurants.get(j).getMenu().getFoods() != null) {
-                restaurants.get(j).getMenu().setFoodPartyFoods(null);
-            }
-        }
-    }
-
     public ArrayList<Restaurant> getSpecifiedRestaurants(String type) {
-        ArrayList<Restaurant>selectedRestaurants = new ArrayList<>();
-        if(type.equals("ordinary")){
-            for(Restaurant restaurant: this.restaurants) {
-                if(restaurant.getMenu().getFoods() != null) {
-                    selectedRestaurants.add(restaurant);
-                }
-
-            }
-        }
-
-        else if(type.equals("foodparty")) {
-            for(Restaurant restaurant: this.restaurants) {
-                if(restaurant.getMenu().getFoodPartyFoods() != null){
-                    selectedRestaurants.add(restaurant);
-                }
-            }
-        }
-        return selectedRestaurants;
+        return RestaurantMapper.getInstance().find_restaurants(type);
     }
 
     public ArrayList<FoodPartyFood> getFoodPartyFoods() {
-        ArrayList<Restaurant> foodPartyRests = getSpecifiedRestaurants("foodparty");
-        ArrayList<FoodPartyFood> foodPartyFoods = new ArrayList<>();
-        for(Restaurant restaurant: foodPartyRests){
-            for(FoodPartyFood foodPartyFood: restaurant.getMenu().getFoodPartyFoods()) {
-                foodPartyFoods.add(foodPartyFood);
-            }
-        }
-        return foodPartyFoods;
+        return FoodPartyFoodMapper.getInstance().find_all_foodparty_foods();
     }
 
-    public FoodPartyFood getFoodPartyFood(String restarantId, String foodName) {
-        ArrayList<Restaurant> foodPartyRests = getSpecifiedRestaurants("foodparty");
-        for(Restaurant restaurant: foodPartyRests){
-            for(FoodPartyFood foodPartyFood: restaurant.getMenu().getFoodPartyFoods()) {
-                if(foodPartyFood.getName().equals(foodName) && foodPartyFood.getRestaurantId().equals(restarantId))
-                    return foodPartyFood;
-            }
-        }
-        return null;
+    public FoodPartyFood getFoodPartyFood(String restaurantId, String foodName) {
+        return FoodPartyFoodMapper.getInstance().find(restaurantId, foodName);
     }
 
     public String updateCart(int customerId, String restaurantId, String foodName, int foodCount, boolean isFoodParty, String operation) {
-        Restaurant restaurant = getRestaurantById(restaurantId);
+
+        Restaurant restaurant = RestaurantMapper.getInstance().find(restaurantId);
         if(restaurant == null) {
             System.out.println("There Is No Restaurant With ID " + restaurantId);
             return "not found";
@@ -222,31 +142,17 @@ public class Loghmeh {
         return "not found";
     }
 
-    public boolean doesRestaurantExist(Restaurant restaurant) {
-        for(Restaurant rest: this.restaurants) {
-            if(restaurant.equals(rest)){
-                return true;
-            }
-        }
-        return false;
-    }
-
     public boolean isNewFoodParty(Order order) {
+
+        Restaurant restaurant = RestaurantMapper.getInstance().find(order.getRestaurant().getId());
+        if (restaurant == null) {
+            System.out.println("No restaurant");
+            return false;
+        }
         for (OrderItem orderItem : order.getOrders()) {
             if (orderItem.getFood() instanceof FoodPartyFood) {
-                if (!doesRestaurantExist(orderItem.getFood().getMenu().getRestaurant())) {
+                if(FoodPartyFoodMapper.getInstance().is_expired((FoodPartyFood) orderItem.getFood()))
                     return false;
-                }
-
-                if (orderItem.getFood().getMenu().getFoodPartyFoods() == null) {
-                    return false;
-                }
-                for (FoodPartyFood foodPartyFood : orderItem.getFood().getMenu().getFoodPartyFoods()) {
-                    if (((FoodPartyFood) orderItem.getFood()).equals(foodPartyFood)){
-                       return true;
-                    }
-                }
-                return false;
             }
         }
         return true;
@@ -309,38 +215,6 @@ public class Loghmeh {
         timer.schedule(setStatusToDelivered, (long)delay * 1000);
     }
 
-    public String convertMillisToDateFormat(long durationInMillis) {
-        long millis = durationInMillis % 1000;
-        long second = (durationInMillis / 1000) % 60;
-        long minute = (durationInMillis / (1000 * 60)) % 60;
-        long hour = (durationInMillis / (1000 * 60 * 60)) % 24;
-
-        return String.format("%02d h %02d min %02d.%d sec", hour, minute, second, millis);
-    }
-
-    public Restaurant getRestaurantByName(String restaurantName) {
-        for(Restaurant rest: restaurants){
-            if(rest.getName().equals(restaurantName))
-                return rest;
-        }
-        return null;
-    }
-
-    public Restaurant getRestaurantById(String restaurantId) {
-        if(restaurantId == null) {
-            return null;
-        }
-        for(Restaurant rest: this.restaurants){
-            if(rest.getId().equals(restaurantId))
-                return rest;
-        }
-        return null;
-    }
-
-    public ArrayList<Restaurant> getRestaurants() {
-        return restaurants;
-    }
-
     public Customer getCustomer(int i) {
         if(i >= this.customers.size())
             return null;
@@ -363,62 +237,138 @@ public class Loghmeh {
         return nextFoodPartySchedulerFire;
     }
 
-
-    public String getRecommendedRestaurants() {
-        ArrayList<RecommendationItem> recommendations = new ArrayList<RecommendationItem>();
-        for(Restaurant restaurant: restaurants){
-            recommendations.add(new RecommendationItem(restaurant, restaurant.getMenuPopulationAverage() / (restaurant.getLocation().euclideanDistance(new Location(.0f, .0f))) ));
-        }
-        Collections.sort(recommendations, new Comparator<RecommendationItem>(){
-            public int compare(RecommendationItem recommendationItem1, RecommendationItem recommendationItem2){
-                if(recommendationItem1.getRatingForUser() == recommendationItem2.getRatingForUser())
-                    return 0;
-                return recommendationItem1.getRatingForUser() > recommendationItem2.getRatingForUser() ? -1 : 1;
-            }
-        });
-        String result = "";
-        for(int i = 0; i < 3; i++){
-            if(i < recommendations.size()){
-                result += (recommendations.get(i).getRestaurant().getName() + "\n");
-            }
-        }
-        if(result.contains("\n")){
-            result = result.substring(0, result.length() - 1);
-        }
-        return result;
-    }
-
-    public String getFoodFromRestaurant(String jsonInput) {
-        String restaurantName = foodDeserializer.getRestaurantNameFromJson(jsonInput);
-        Restaurant restaurant = getRestaurantByName(restaurantName);
-        if(restaurant == null)
-            return ("There Is No Restaurant Named " + restaurantName);
-        return restaurant.getFood(jsonInput);
-    }
-
-
-    public String getIndexFromRestaurantId(String restaurantId) {
-        return idToIndex.get(restaurantId);
-    }
-
-    public ArrayList<Restaurant> getChainingRestaurantsByName(String restaurantName) {
-        ArrayList<Restaurant> chainingRestaurants = new ArrayList<Restaurant>();
-
-        for(Restaurant rest: restaurants){
-            if(rest.getName().equals(restaurantName))
-                chainingRestaurants.add(rest);
-        }
-        return chainingRestaurants;
-    }
-
-    public ArrayList<Restaurant> getChainingRestaurantsById(String restaurantId) {
-        ArrayList<Restaurant> chainingRestaurants = new ArrayList<Restaurant>();
-
-        for(Restaurant rest: restaurants){
-            if(rest.getId().equals(restaurantId))
-                chainingRestaurants.add(rest);
-        }
-        return chainingRestaurants;
-    }
-
+//
+//    public String getRecommendedRestaurants() {
+//        ArrayList<RecommendationItem> recommendations = new ArrayList<RecommendationItem>();
+//        for(Restaurant restaurant: restaurants){
+//            recommendations.add(new RecommendationItem(restaurant, restaurant.getMenuPopulationAverage() / (restaurant.getLocation().euclideanDistance(new Location(.0f, .0f))) ));
+//        }
+//        Collections.sort(recommendations, new Comparator<RecommendationItem>(){
+//            public int compare(RecommendationItem recommendationItem1, RecommendationItem recommendationItem2){
+//                if(recommendationItem1.getRatingForUser() == recommendationItem2.getRatingForUser())
+//                    return 0;
+//                return recommendationItem1.getRatingForUser() > recommendationItem2.getRatingForUser() ? -1 : 1;
+//            }
+//        });
+//        String result = "";
+//        for(int i = 0; i < 3; i++){
+//            if(i < recommendations.size()){
+//                result += (recommendations.get(i).getRestaurant().getName() + "\n");
+//            }
+//        }
+//        if(result.contains("\n")){
+//            result = result.substring(0, result.length() - 1);
+//        }
+//        return result;
+//    }
+//
+//    public String getFoodFromRestaurant(String jsonInput) {
+//        String restaurantName = foodDeserializer.getRestaurantNameFromJson(jsonInput);
+//        Restaurant restaurant = getRestaurantByName(restaurantName);
+//        if(restaurant == null)
+//            return ("There Is No Restaurant Named " + restaurantName);
+//        return restaurant.getFood(jsonInput);
+//    }
+//
+//
+//    public String getIndexFromRestaurantId(String restaurantId) {
+//        return idToIndex.get(restaurantId);
+//    }
+//
+//    public ArrayList<Restaurant> getChainingRestaurantsByName(String restaurantName) {
+//        ArrayList<Restaurant> chainingRestaurants = new ArrayList<Restaurant>();
+//
+//        for(Restaurant rest: restaurants){
+//            if(rest.getName().equals(restaurantName))
+//                chainingRestaurants.add(rest);
+//        }
+//        return chainingRestaurants;
+//    }
+//
+//    public ArrayList<Restaurant> getChainingRestaurantsById(String restaurantId) {
+//        ArrayList<Restaurant> chainingRestaurants = new ArrayList<Restaurant>();
+//
+//        for(Restaurant rest: restaurants){
+//            if(rest.getId().equals(restaurantId))
+//                chainingRestaurants.add(rest);
+//        }
+//        return chainingRestaurants;
+//    }
+//////////////
+//
+//    public Restaurant restaurantAlreadyExists(Restaurant restaurant) {
+//        for (Restaurant rest : restaurants){
+//            if (restaurant.equals(rest)) {
+//                return rest;
+//            }
+//        }
+//        return null;
+//    }
+//
+//    public Restaurant sameRestaurant(Restaurant restaurant) {
+//        for (Restaurant rest : restaurants){
+//            if(rest.getName().equals(restaurant.getName()) && !rest.getLocation().equals(restaurant.getLocation()) &&
+//                    rest.getMenu().equals(restaurant.getMenu())){//chain restaurant
+//                return restaurant;
+//            }
+//        }
+//        return null;
+//    }
+//
+//    public void addRestaurantInfo(Restaurant restaurant) {
+//        indexToId.put(Integer.toString(this.restaurants.size()+1), restaurant.getId());
+//        idToIndex.put(restaurant.getId(), Integer.toString(this.restaurants.size()+1));
+//        this.restaurants.add(restaurant);
+//    }
+//
+//    public void deleteFoodParty() {
+//        for(int j = this.restaurants.size() - 1; j >= 0; j--){
+//            if(this.restaurants.get(j).getMenu().getFoodPartyFoods() != null && this.restaurants.get(j).getMenu().getFoods() == null){
+//                this.restaurants.remove(j);
+//            }
+//            else if(this.restaurants.get(j).getMenu().getFoodPartyFoods() != null && this.restaurants.get(j).getMenu().getFoods() != null) {
+//                restaurants.get(j).getMenu().setFoodPartyFoods(null);
+//            }
+//        }
+//    }
+//
+//    public boolean doesRestaurantExist(Restaurant restaurant) {
+//        for(Restaurant rest: this.restaurants) {
+//            if(restaurant.equals(rest)){
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
+//
+//    public String convertMillisToDateFormat(long durationInMillis) {
+//        long millis = durationInMillis % 1000;
+//        long second = (durationInMillis / 1000) % 60;
+//        long minute = (durationInMillis / (1000 * 60)) % 60;
+//        long hour = (durationInMillis / (1000 * 60 * 60)) % 24;
+//
+//        return String.format("%02d h %02d min %02d.%d sec", hour, minute, second, millis);
+//    }
+//
+//    public Restaurant getRestaurantByName(String restaurantName) {
+//        for(Restaurant rest: restaurants){
+//            if(rest.getName().equals(restaurantName))
+//                return rest;
+//        }
+//        return null;
+//    }
+//
+//    public ArrayList<Restaurant> getRestaurants() {
+//        return restaurants;
+//    }
+//public Restaurant getRestaurantById(String restaurantId) {
+//    if(restaurantId == null) {
+//        return null;
+//    }
+//    for(Restaurant rest: this.restaurants){
+//        if(rest.getId().equals(restaurantId))
+//            return rest;
+//    }
+//    return null;
+//}
 }

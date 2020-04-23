@@ -3,6 +3,7 @@ package loghmeh_server.repository.food;
 import loghmeh_server.repository.menu.Menu;
 import loghmeh_server.repository.ConnectionPool;
 import loghmeh_server.repository.Mapper;
+import loghmeh_server.repository.menu.MenuMapper;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -52,25 +53,28 @@ public class FoodMapper extends Mapper {
         }
     }
 
-    public ArrayList<Food> find_foods(int menu_id, Menu menu) throws SQLException{
+    public ArrayList<Food> find_foods(Menu menu) throws SQLException{
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(
                      "select " + COLUMNS + " from " + TABLE_NAME + " where menu_id = (?) and id not in " +
                              "(select food_id from foodpartyfoods)"
              )
         ) {
-            ps.setInt(1, menu_id);
-            try {
-                ResultSet resultSet = ps.executeQuery();
-                ArrayList<Food> foods = new ArrayList<>();
-                while(resultSet.next()) {
-                    foods.add(convertResultSetToObject(resultSet, menu));
+            ArrayList<Food> foods = new ArrayList<>();
+            int menu_id = MenuMapper.getInstance().find_menu_id(menu.getRestaurant());
+            if(menu_id != -1){
+                ps.setInt(1, menu_id);
+                try {
+                    ResultSet resultSet = ps.executeQuery();
+                    while(resultSet.next()) {
+                        foods.add(convertResultSetToObject(resultSet, menu));
+                    }
+                } catch (SQLException ex) {
+                    System.out.println("error in FoodMapper.findFoodsByMenuID query.");
+                    throw ex;
                 }
-                return foods;
-            } catch (SQLException ex) {
-                System.out.println("error in FoodMapper.findFoodsByMenuID query.");
-                throw ex;
             }
+            return foods;
         }
     }
 
