@@ -36,30 +36,31 @@ public class RestaurantMapper extends Mapper {
 
 
     public Restaurant find(String id) {
-//        System.out.println("1");
+        System.out.println("rest id " + id);
+        System.out.println("11");
         Restaurant result = loadedMap.get(id);
         if (result != null)
             return result;
-//        System.out.println("2");
+        System.out.println("22");
 
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(
                      "select " + COLUMNS + " from " + TABLE_NAME + " where id = (?)"
              )
         ) {
-//            System.out.println("3");
+            System.out.println("33");
 
             ps.setString(1, id);
             try {
-//                System.out.println("4");
+                System.out.println("44");
                 ResultSet resultSet = ps.executeQuery();
-//                System.out.println("5");
+                System.out.println("55");
                 if(resultSet.next()) {
-//                    System.out.println("6");
+                    System.out.println("66");
                     return convertResultSetToObject(resultSet);
                 }
                 else{
-//                    System.out.println("7");
+                    System.out.println("77");
                     return null;
                 }
             } catch (SQLException ex) {
@@ -73,19 +74,25 @@ public class RestaurantMapper extends Mapper {
     }
 
     public ArrayList<Restaurant> find_restaurants(String type) {
+        System.out.println(type);
         ArrayList<Restaurant> restaurants = new ArrayList<>();
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(
                      "select id from " + TABLE_NAME
              )
         ) {
+            System.out.println("1");
             try {
                 ResultSet resultSet = ps.executeQuery();
+                System.out.println("2");
                 while(resultSet.next()) {
                     try {
+                        System.out.println("3");
                         Restaurant restaurant = find(resultSet.getString(1));
+                        System.out.println("4");
                         if(restaurant != null) {
                             if(type.equals("ordinary") && restaurant.getMenu().getFoods().size() != 0) {
+                                System.out.println("5");
                                 restaurants.add(restaurant);
                             }
 
@@ -103,7 +110,7 @@ public class RestaurantMapper extends Mapper {
             }
         }catch (SQLException ex) {
             System.out.println("SQL Exception in RestaurantMapper.findrests query.");
-            return null;
+            return restaurants;
         }
         return restaurants;
     }
@@ -149,20 +156,20 @@ public class RestaurantMapper extends Mapper {
     public void insert_foodparty_restaurants(ArrayList<Restaurant>restaurants) {
         for (Restaurant restaurant: restaurants){
             try {
-//                System.out.println("before find" + restaurant.getName());
+                System.out.println("before find" + restaurant.getName());
                 Restaurant existedRestaurant = find(restaurant.getId());
-//                System.out.println("after find" + restaurant.getName());
+                System.out.println("after find" + restaurant.getName());
 
                 if(existedRestaurant != null) {
-//                    System.out.println("repeated before insert");
+                    System.out.println("repeated before insert");
 
                     FoodPartyFoodMapper.getInstance().insert_foodparty_foods(restaurant.getMenu().getFoodPartyFoods(), MenuMapper.getInstance().find_menu_id(existedRestaurant));
-//                    System.out.println("repeated after insert");
+                    System.out.println("repeated after insert");
                     continue;
                 }
-//                System.out.println("not repeated before insert");
+                System.out.println("not repeated before insert");
                 insert(restaurant);
-//                System.out.println("not repeated after insert");
+                System.out.println("not repeated after insert");
             } catch(SQLException se) {
                 System.out.println("SQL Exception in inserting foodparty restaurant");
                 continue;
@@ -193,10 +200,10 @@ public class RestaurantMapper extends Mapper {
         restaurant.setLogo(rs.getString(3));
         restaurant.setDescription(rs.getString(4));
         restaurant.setLocation(LocationMapper.getInstance().find(rs.getInt(5)));
-//        System.out.println("AA");
+        System.out.println("AA");
 
         restaurant.setMenu(MenuMapper.getInstance().find(restaurant));
-//        System.out.println("BB");
+        System.out.println("BB");
 
         return restaurant;
     }
