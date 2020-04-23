@@ -138,9 +138,12 @@ public class MenuMapper extends Mapper {
     private Menu convertResultSetToObject(ResultSet rs, Restaurant restaurant) throws SQLException {
         Menu menu = new Menu();
         menu.setRestaurant(restaurant);
-
+//        System.out.println("^^^^");
         menu.setFoods(FoodMapper.getInstance().find_foods(menu));
-        menu.setFoodPartyFoods(FoodPartyFoodMapper.getInstance().find__foodparty_foods(menu));
+//        System.out.println("####");
+
+        menu.setFoodPartyFoods(FoodPartyFoodMapper.getInstance().find_foodparty_foods(menu));
+//        System.out.println("$$$$");
 
 
         return menu;
