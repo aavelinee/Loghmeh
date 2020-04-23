@@ -14,6 +14,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,7 +35,7 @@ public class RestaurantMapper extends Mapper {
     }
 
 
-    public Restaurant find(String id) throws SQLException {
+    public Restaurant find(String id) {
         Restaurant result = loadedMap.get(id);
         if (result != null)
             return result;
@@ -52,10 +53,48 @@ public class RestaurantMapper extends Mapper {
                 else
                     return null;
             } catch (SQLException ex) {
-                System.out.println("error in RestaurantMapper.findByID query.");
                 throw ex;
             }
+        }catch (SQLException ex) {
+            System.out.println("SQL Exception in RestaurantMapper.findByID query.");
+            return null;
         }
+    }
+
+    public ArrayList<Restaurant> find_restaurants(String type) {
+        ArrayList<Restaurant> restaurants = new ArrayList<>();
+        try (Connection con = ConnectionPool.getConnection();
+             PreparedStatement ps = con.prepareStatement(
+                     "select id from " + TABLE_NAME
+             )
+        ) {
+            try {
+                ResultSet resultSet = ps.executeQuery();
+                while(resultSet.next()) {
+                    try {
+                        Restaurant restaurant = find(resultSet.getString(1));
+                        if(restaurant != null) {
+                            if(type.equals("ordinary") && restaurant.getMenu().getFoods().size() != 0) {
+                                restaurants.add(restaurant);
+                            }
+
+                            else if(type.equals("foodparty") && restaurant.getMenu().getFoodPartyFoods().size() != 0){
+                                restaurants.add(restaurant);
+                            }
+                        }
+                    } catch (SQLException ex) {
+                        System.out.println("SQL Exception in RestaurantMapper.findrests query.");
+                        continue;
+                    }
+                }
+            } catch (SQLException ex) {
+                throw ex;
+            }
+        }catch (SQLException ex) {
+            System.out.println("SQL Exception in RestaurantMapper.findrests query.");
+            return null;
+        }
+        return restaurants;
     }
 
     public void insert(Restaurant obj) throws SQLException {
@@ -81,6 +120,37 @@ public class RestaurantMapper extends Mapper {
         }
     }
 
+    public void insert_restaurants(ArrayList<Restaurant>restaurants) {
+        for (Restaurant restaurant : restaurants){
+            try {
+                if (find(restaurant.getId()) != null) {
+                    System.out.println("Restaurant Already Exists\n");
+                    continue;
+                }
+                insert(restaurant);
+            } catch (SQLException se) {
+                System.out.println("SQL Exception in inserting restaurant");
+                continue;
+            }
+        }
+    }
+
+    public void insert_foodparty_restaurants(ArrayList<Restaurant>restaurants) {
+        for (Restaurant restaurant: restaurants){
+            try {
+                Restaurant existedRestaurant = find(restaurant.getId());
+                if(existedRestaurant != null) {
+                    FoodPartyFoodMapper.getInstance().insert_foodparty_foods(restaurant.getMenu().getFoodPartyFoods(), MenuMapper.getInstance().find_menu_id(restaurant));
+                    continue;
+                }
+                insert(restaurant);
+            } catch(SQLException se) {
+                System.out.println("SQL Exception in inserting foodparty restaurant");
+                continue;
+            }
+        }
+    }
+
     public void delete(String id) throws SQLException {
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(
@@ -96,7 +166,6 @@ public class RestaurantMapper extends Mapper {
             }
         }
     }
-
 
     private Restaurant convertResultSetToObject(ResultSet rs) throws SQLException {
         Restaurant restaurant = new Restaurant();

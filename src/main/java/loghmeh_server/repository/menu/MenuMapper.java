@@ -78,6 +78,26 @@ public class MenuMapper extends Mapper {
         }
     }
 
+    public int find_menu_id(Restaurant restaurant) throws SQLException {
+        try (Connection con = ConnectionPool.getConnection();
+             PreparedStatement ps = con.prepareStatement(
+                     "select id from " + TABLE_NAME + " where restaurant_id = (?)"
+             )
+        ) {
+            ps.setString(1, restaurant.getId());
+            try {
+                ResultSet resultSet = ps.executeQuery();
+                if(resultSet.next())
+                    return resultSet.getInt(1);
+                else
+                    return -1;
+            } catch (SQLException ex) {
+                System.out.println("error in MenuMapper.findByID query.");
+                throw ex;
+            }
+        }
+    }
+
     public void insert(Menu obj, String restaurant_id) throws SQLException {
         try (Connection connection = ConnectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(
@@ -119,8 +139,8 @@ public class MenuMapper extends Mapper {
         Menu menu = new Menu();
         menu.setRestaurant(restaurant);
 
-        menu.setFoods(FoodMapper.getInstance().find_foods(rs.getInt(1), menu));
-        menu.setFoodPartyFoods(FoodPartyFoodMapper.getInstance().find__foodparty_foods(rs.getInt(1), menu));
+        menu.setFoods(FoodMapper.getInstance().find_foods(menu));
+        menu.setFoodPartyFoods(FoodPartyFoodMapper.getInstance().find__foodparty_foods(menu));
 
 
         return menu;

@@ -91,42 +91,6 @@ public class Customer {
         this.credit += credit;
     }
 
-    public boolean isRestaurantClose(Location location){
-        if(this.location.euclideanDistance(location) <= 170)
-            return true;
-        return false;
-    }
-
-    public Order getLastOrder() {
-        if(orders.size() == 0){
-            return null;
-        }
-        return orders.get(orders.size() - 1);
-    }
-
-
-    public ArrayList<Restaurant> getCloseRestaurants() {
-        ArrayList<Restaurant> restaurants = Loghmeh.getInstance().getRestaurants();
-        ArrayList<Restaurant> closeRestaurants = new ArrayList<Restaurant>();
-        for(Restaurant restaurant: restaurants) {
-            if (restaurant.getLocation().euclideanDistance(location) <= 170 && restaurant.getMenu().getFoods() != null){
-                closeRestaurants.add(restaurant);
-            }
-        }
-        return closeRestaurants;
-    }
-
-    public ArrayList<Restaurant> getCloseFoodPartyRestaurants() {
-        ArrayList<Restaurant> restaurants = Loghmeh.getInstance().getRestaurants();
-        ArrayList<Restaurant> closeFoodPartyRestaurants = new ArrayList<Restaurant>();
-        for(Restaurant restaurant: restaurants) {
-            if (restaurant.getLocation().euclideanDistance(location) <= 170 && restaurant.getMenu().getFoodPartyFoods() != null){
-                closeFoodPartyRestaurants.add(restaurant);
-            }
-        }
-        return closeFoodPartyRestaurants;
-    }
-
     public int getCustomerId() {
         return customerId;
     }
@@ -158,4 +122,42 @@ public class Customer {
     public ArrayList<Order> getOrders() {
         return orders;
     }
+
+
+//
+//    public boolean isRestaurantClose(Location location){
+//        if(this.location.euclideanDistance(location) <= 170)
+//            return true;
+//        return false;
+//    }
+//
+//    public Order getLastOrder() {
+//        if(orders.size() == 0){
+//            return null;
+//        }
+//        return orders.get(orders.size() - 1);
+//    }
+//
+//
+//    public ArrayList<Restaurant> getCloseRestaurants() {
+//        ArrayList<Restaurant> restaurants = Loghmeh.getInstance().getRestaurants();
+//        ArrayList<Restaurant> closeRestaurants = new ArrayList<Restaurant>();
+//        for(Restaurant restaurant: restaurants) {
+//            if (restaurant.getLocation().euclideanDistance(location) <= 170 && restaurant.getMenu().getFoods() != null){
+//                closeRestaurants.add(restaurant);
+//            }
+//        }
+//        return closeRestaurants;
+//    }
+//
+//    public ArrayList<Restaurant> getCloseFoodPartyRestaurants() {
+//        ArrayList<Restaurant> restaurants = Loghmeh.getInstance().getRestaurants();
+//        ArrayList<Restaurant> closeFoodPartyRestaurants = new ArrayList<Restaurant>();
+//        for(Restaurant restaurant: restaurants) {
+//            if (restaurant.getLocation().euclideanDistance(location) <= 170 && restaurant.getMenu().getFoodPartyFoods() != null){
+//                closeFoodPartyRestaurants.add(restaurant);
+//            }
+//        }
+//        return closeFoodPartyRestaurants;
+//    }
 }
