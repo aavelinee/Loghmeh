@@ -1,8 +1,10 @@
 import loghmeh_server.repository.ConnectionPool;
+import loghmeh_server.repository.food.FoodMapper;
 import loghmeh_server.repository.location.Location;
 import loghmeh_server.repository.location.LocationMapper;
 import loghmeh_server.repository.restaurant.Restaurant;
 import loghmeh_server.repository.restaurant.RestaurantMapper;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -42,21 +44,47 @@ public class test {
         for(Restaurant restaurant: restaurants) {
             RestaurantMapper.getInstance().insert(restaurant);
         }
-        
-        jsonInput = "[{\"id\":\"5e4fcf14af68ed25d5900eca\",\"name\":\"آش و حلیم سید (سعادت آباد)\",\"location\":{\"x\":34,\"y\":-83},\"logo\":\"https://static.snapp-food.com/media/cache/vendor_logo/uploads/images/vendors/logos/5c114da18bc6d.jpg\",\"menu\":[{\"count\":1,\"oldPrice\":23000,\"name\":\"سمنو یک پرس (حدودا نیم کیلو)\",\"description\":\"سمنو یک پرس (حدودا نیم کیلو) تهیه شده از بهترین مواد اولیه\",\"price\":12300,\"popularity\":0.5,\"image\":\"https://static.snapp-food.com/200x201/cdn/31/67/3/product_image/vendor/5d3d82200a1e0.jpg\"}]},{\"id\":\"5e4fcf14af68ed25d5900f42\",\"name\":\"فست فود کلیز برگر\",\"location\":{\"x\":5,\"y\":42},\"logo\":\"https://static.snapp-food.com/media/cache/vendor_logo/uploads/images/vendors/logos/5cc58ae011199.jpg\",\"menu\":[{\"count\":2,\"oldPrice\":17000,\"name\":\"سالاد فصل\",\"description\":\"سالاد فصل تهیه شده از بهترین مواد اولیه\",\"price\":14432,\"popularity\":0.0,\"image\":\"https://static.snapp-food.com/200x201/cdn/41/09/8/vendor/5cc7e684e7f43.jpg\"}]},{\"id\":\"5e4fcf14af68ed25d5900f0f\",\"name\":\"دیزی بار مزه بازار (شیخ بهایی)\",\"location\":{\"x\":-73,\"y\":87},\"logo\":\"https://static.snapp-food.com/media/cache/vendor_logo/uploads/images/vendors/logos/5e121d2a372e8.jpeg\",\"menu\":[{\"count\":2,\"oldPrice\":12000,\"name\":\"دیزی سفیری (با ظروف یک بار مصرف) فلفلی\",\"description\":\"دیزی سفیری (با ظروف یک بار مصرف) فلفلی تهیه شده از بهترین مواد اولیه\",\"price\":10325,\"popularity\":0.6,\"image\":\"https://static.snapp-food.com/200x201/cdn/52/51/4/vendor/5e491f2a66862.jpeg\"}]}]";
+
+        jsonInput = "[{\"id\":\"5e4fcf14af68ed25d5900eca\",\"name\":\"آش و حلیم سید (سعادت آباد)\",\"location\":{\"x\":34,\"y\":-83},\"logo\":\"https://static.snapp-food.com/media/cache/vendor_logo/uploads/images/vendors/logos/5c114da18bc6d.jpg\"," +
+                "\"menu\":[{\"count\":1,\"oldPrice\":23000,\"name\":\"سمنو یک پرس (حدودا نیم کیلو)\",\"description\":\"سمنو یک پرس (حدودا نیم کیلو) تهیه شده از بهترین مواد اولیه\",\"price\":12300,\"popularity\":0.5,\"image\":\"https://static.snapp-food.com/200x201/cdn/31/67/3/product_image/vendor/5d3d82200a1e0.jpg\"}]}," +
+                "{\"id\":\"5e4fcf14af68ed25d5900f42\",\"name\":\"فست فود کلیز برگر\",\"location\":{\"x\":5,\"y\":42},\"logo\":\"https://static.snapp-food.com/media/cache/vendor_logo/uploads/images/vendors/logos/5cc58ae011199.jpg\"," +
+                "\"menu\":[{\"count\":2,\"oldPrice\":17000,\"name\":\"سالاد فصل\",\"description\":\"سالاد فصل تهیه شده از بهترین مواد اولیه\",\"price\":14432,\"popularity\":0.0,\"image\":\"https://static.snapp-food.com/200x201/cdn/41/09/8/vendor/5cc7e684e7f43.jpg\"}]}," +
+                "{\"id\":\"5e4fcf14af68ed25d5900f0f\",\"name\":\"دیزی بار مزه بازار (شیخ بهایی)\",\"location\":{\"x\":-73,\"y\":87},\"logo\":\"https://static.snapp-food.com/media/cache/vendor_logo/uploads/images/vendors/logos/5e121d2a372e8.jpeg\"," +
+                "\"menu\":[{\"count\":2,\"oldPrice\":12000,\"name\":\"دیزی سفیری (با ظروف یک بار مصرف) فلفلی\",\"description\":\"دیزی سفیری (با ظروف یک بار مصرف) فلفلی تهیه شده از بهترین مواد اولیه\",\"price\":10325,\"popularity\":0.6,\"image\":\"https://static.snapp-food.com/200x201/cdn/52/51/4/vendor/5e491f2a66862.jpeg\"}]}]";
         ArrayList<Restaurant> fprestaurants = loghmeh_server.deserializer.restaurantDeserializer.deserializeFoodPartyRestaurants(jsonInput);
         for(Restaurant r: fprestaurants) {
             RestaurantMapper.getInstance().insert(r);
         }
 
+        Restaurant rest = RestaurantMapper.getInstance().find("5e4fcf14af68ed25d5900eca");
+        assertEquals(rest, fprestaurants.get(0));
+//        FoodMapper.getInstance().delete(737);
+
+
+
     }
-//
-//    @After
-//    public void terminate() throws SQLException {
-//        System.out.println(\"deleting location\");
-//        mapper.delete(1);
-//        mapper.delete(2);
-//        connection.close();
-//    }
+
+    @After
+    public void terminate() throws SQLException {
+//        try (Connection con = ConnectionPool.getConnection();
+//             PreparedStatement ps = con.prepareStatement(
+//                     "delete from (?)"
+//             )
+//        ) {
+//            try {
+//                ps.setString(1, "restaurants");
+//                ps.executeUpdate();
+//                ps.setString(1, "locations");
+//                ps.executeUpdate();
+//                ps.setString(1, "menus");
+//                ps.executeUpdate();
+//                ps.setString(1, "foods");
+//                ps.executeUpdate();
+//            } catch (SQLException ex) {
+//                System.out.println("error in Test.delete query.");
+//                throw ex;
+//            }
+//        }
+    }
 
 }

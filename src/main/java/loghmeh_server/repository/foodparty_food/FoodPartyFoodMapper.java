@@ -38,7 +38,7 @@ public class FoodPartyFoodMapper extends Mapper {
 
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(
-                     "select " + COLUMNS + " from " + TABLE_NAME + " where id = (?)"
+                     "select " + COLUMNS + " from " + TABLE_NAME + " where food_id = (?)"
              )
         ) {
             ps.setInt(1, id);
@@ -60,8 +60,8 @@ public class FoodPartyFoodMapper extends Mapper {
     public ArrayList<FoodPartyFood> find__foodparty_foods(int menu_id, Menu menu) throws SQLException{
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(
-                     "select " + "id from " + "foods" + " where menu_id = (?) and " +
-                             "id in (select food_id from foodpartyfoods"
+                     "select id from foods where menu_id = (?) and " +
+                             "id in (select food_id from foodpartyfoods)"
              )
         ) {
             ps.setInt(1, menu_id);
@@ -105,7 +105,15 @@ public class FoodPartyFoodMapper extends Mapper {
 
 
     private FoodPartyFood convertResultSetToObject(ResultSet rs, Food food) throws SQLException {
-        FoodPartyFood foodPartyFood = (FoodPartyFood)food;
+        FoodPartyFood foodPartyFood = new FoodPartyFood();
+        foodPartyFood.setName(food.getName());
+        foodPartyFood.setDescription(food.getDescription());
+        foodPartyFood.setPopularity(food.getPopularity());
+        foodPartyFood.setPrice(food.getPrice());
+        foodPartyFood.setImage(food.getImage());
+        foodPartyFood.setRestaurantId(food.getRestaurantId());
+        foodPartyFood.setRestaurantName(food.getRestaurantName());
+        foodPartyFood.setMenu(food.getMenu());
         foodPartyFood.setCount(rs.getInt(2));
         foodPartyFood.setOldPrice(rs.getFloat(3));
 

@@ -56,7 +56,7 @@ public class FoodMapper extends Mapper {
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(
                      "select " + COLUMNS + " from " + TABLE_NAME + " where menu_id = (?) and id not in " +
-                             "(select food_id from foodparty_foods)"
+                             "(select food_id from foodpartyfoods)"
              )
         ) {
             ps.setInt(1, menu_id);
@@ -84,7 +84,10 @@ public class FoodMapper extends Mapper {
             ps.setString(2, food_name);
             try {
                 ResultSet resultSet = ps.executeQuery();
-                return resultSet.getInt(1);
+                if(resultSet.next())
+                    return resultSet.getInt(1);
+                else
+                    return -1;
             } catch (SQLException ex) {
                 System.out.println("error in FoodMapper.findFoodsByMenuID query.");
                 throw ex;

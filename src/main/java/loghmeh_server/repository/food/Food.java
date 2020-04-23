@@ -36,6 +36,10 @@ public class Food {
         this.name = name;
     }
 
+    public String getRestaurantName() {
+        return restaurantName;
+    }
+
     public void setDescription(String description) {
         this.description = description;
     }

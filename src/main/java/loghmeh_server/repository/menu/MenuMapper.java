@@ -39,7 +39,7 @@ public class MenuMapper extends Mapper {
 
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement preparedStatement = con.prepareStatement(
-                     "select menu_id, " + COLUMNS + " from " + TABLE_NAME + " where id = (?)"
+                     "select id, " + COLUMNS + " from " + TABLE_NAME + " where id = (?)"
              )
         ) {
             preparedStatement.setInt(1, id);
@@ -61,7 +61,7 @@ public class MenuMapper extends Mapper {
     public Menu find(Restaurant restaurant) throws SQLException {
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(
-                     "select menu_id, " + COLUMNS + " from " + TABLE_NAME + " where restaurant_id = (?)"
+                     "select id, " + COLUMNS + " from " + TABLE_NAME + " where restaurant_id = (?)"
              )
         ) {
             ps.setString(1, restaurant.getId());
