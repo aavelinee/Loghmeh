@@ -58,13 +58,14 @@ public class OrderMapper extends Mapper {
                      "insert into" + TABLE_NAME + "(" + COLUMNS + ")" + "values (?, ?, ?, ?, ?, ?, ?)"
              )
         ) {
-//            ps.setString(2, FoodMapper.getInstance().find());
-            ps.setInt(3, obj.getCustomer().getCustomerId());
-            ps.setString(4, obj.getRestaurant().getId());
-            ps.setString(5, obj.getDelivery().getId());
-            ps.setDouble(6, obj.getEstimatedDeliveryTime());
-//            ps.setDate(7, obj.getDeliveryDate());
-            ps.setFloat(8, obj.getTotalPrice());
+            ps.setString(1, obj.getStatus().toString());
+            ps.setInt(2, obj.getCustomer().getCustomerId());
+            ps.setString(3, obj.getRestaurant().getId());
+            ps.setString(4, obj.getDelivery().getId());
+            ps.setDouble(5, obj.getEstimatedDeliveryTime());
+            java.sql.Date sqlDate = new java.sql.Date(obj.getDeliveryDate().getTime());
+            ps.setDate(6, sqlDate);
+            ps.setFloat(7, obj.getTotalPrice());
 
             try {
                 ps.executeUpdate();
@@ -83,7 +84,8 @@ public class OrderMapper extends Mapper {
         Order order = new Order();
 
         order.setId(rs.getInt(1));
-//        order.setStatus(rs.);
+        Order.orderStatus status = Order.orderStatus.valueOf(rs.getString(2));
+        order.setStatus(status);
         order.setCustomer(CustomerMapper.getInstance().find(rs.getInt(3)));
         order.setRestaurant(RestaurantMapper.getInstance().find(rs.getString(4)));
         order.setDelivery(DeliveryMapper.getInstance().find(rs.getString(5)));

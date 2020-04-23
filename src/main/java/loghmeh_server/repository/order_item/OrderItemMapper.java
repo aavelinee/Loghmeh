@@ -57,7 +57,7 @@ public class OrderItemMapper extends Mapper {
              )
         ) {
             ps.setInt(1, obj.getOrder().getId());
-//            ps.setString(2, FoodMapper.getInstance().find());
+//            ps.setString(2, FoodMapper.getInstance().);
             ps.setInt(3, obj.getOrderCount());
 
             try {

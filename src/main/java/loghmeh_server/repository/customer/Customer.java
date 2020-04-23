@@ -1,6 +1,5 @@
 package loghmeh_server.repository.customer;
 
-import loghmeh_server.domain.Loghmeh;
 import loghmeh_server.repository.order.Order;
 import loghmeh_server.repository.food.Food;
 import loghmeh_server.repository.location.Location;
