@@ -53,17 +53,34 @@ public class Customer {
     }
 
     public Order getCart() {
-        if(orders.size() == 0 || orders.get(orders.size()-1).getStatus() != Order.orderStatus.Ordering){
+        Order order;
+        try {
+            order = OrderMapper.getInstance().find_last_order();
+        } catch (SQLException ex) {
+            System.out.print("Sql exception in find last order in get cart");
             return null;
         }
-        return orders.get(orders.size()-1);
+        return order;
     }
 
     public void removeCart() {
-        if(orders.size() == 0 || orders.get(orders.size()-1).getStatus() != Order.orderStatus.Ordering){
+        Order order;
+        try {
+            order = OrderMapper.getInstance().find_last_order();
+        } catch (SQLException ex) {
+            System.out.print("Sql exception in find last order in add to cart");
             return;
         }
-        orders.remove(orders.size()-1);
+        if(order == null){
+            return;
+        }
+        try {
+            OrderMapper.getInstance().delete(order.getId());
+        } catch (SQLException ex) {
+            System.out.print("Sql exception in delete order in remove cart");
+            return;
+        }
+        System.out.print("order deleted successfully");
     }
 
     public String removeFromCart(String restaurantId, String foodName) {
@@ -138,10 +155,6 @@ public class Customer {
 
     public ArrayList<Order> getOrders() {
         return orders;
-    }
-
-    public void setOrders(ArrayList<Order> orders) {
-        this.orders = orders;
     }
 
     public void setCustomerId(int customerId) {
