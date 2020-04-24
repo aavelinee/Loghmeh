@@ -69,6 +69,10 @@ public class Loghmeh {
         return RestaurantMapper.getInstance().find_restaurants(type);
     }
 
+    public ArrayList<Restaurant> getSearchedRestaurants(String restaurantName, String foodName) {
+        return RestaurantMapper.getInstance().find_searched_restaurants(restaurantName, foodName);
+    }
+
     public ArrayList<FoodPartyFood> getFoodPartyFoods() {
         return FoodPartyFoodMapper.getInstance().find_all_foodparty_foods();
     }

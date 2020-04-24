@@ -1,9 +1,7 @@
 package loghmeh_server.service;
 
 import loghmeh_server.domain.*;
-import loghmeh_server.repository.customer.Customer;
 import loghmeh_server.repository.foodparty_food.FoodPartyFood;
-import loghmeh_server.repository.order.Order;
 import loghmeh_server.repository.restaurant.Restaurant;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +37,7 @@ public class LoghmehService {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ArrayList<Restaurant> getOrdinaryRestaurantsController(HttpServletResponse servletResponse) {
         servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
-        System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa get rest");
+        System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa get rests" + Loghmeh.getInstance().getSpecifiedRestaurants("ordinary").size());
         return Loghmeh.getInstance().getSpecifiedRestaurants("ordinary");
     }
 
@@ -47,8 +45,17 @@ public class LoghmehService {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ArrayList<Restaurant> getFoodPartyRestaurantsController(HttpServletResponse servletResponse) {
         servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
-        System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa get food partyrest" + Loghmeh.getInstance().getSpecifiedRestaurants("foodparty").size());
+        System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa get foodparty rests" + Loghmeh.getInstance().getSpecifiedRestaurants("foodparty").size());
         return Loghmeh.getInstance().getSpecifiedRestaurants("foodparty");
+    }
+
+    @RequestMapping(value = "/searched_restaurants", method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ArrayList<Restaurant> getSearchedRestaurantsController(HttpServletResponse servletResponse
+            , @RequestParam(value = "restaurantName") String restaurantName,  @RequestParam(value = "foodName") String foodName) {
+        System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa get searched rests" + restaurantName + foodName);
+        servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
+        return Loghmeh.getInstance().getSearchedRestaurants(restaurantName, foodName);
     }
 
     @RequestMapping(value = "/foodparty_foods", method = RequestMethod.GET,

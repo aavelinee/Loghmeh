@@ -63,7 +63,6 @@ public class RestaurantMapper extends Mapper {
     }
 
     public ArrayList<Restaurant> find_restaurants(String type) {
-        System.out.println(type);
         ArrayList<Restaurant> restaurants = new ArrayList<>();
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(
@@ -97,6 +96,44 @@ public class RestaurantMapper extends Mapper {
             return restaurants;
         }
         return restaurants;
+    }
+
+    public ArrayList<Restaurant> find_searched_restaurants(String restaurant_name, String food_name) {
+        ArrayList<Restaurant> found_restaurants = new ArrayList<>();
+        System.out.println("restname:" + restaurant_name);
+        System.out.println("foodname:" + food_name);
+        try (Connection con = ConnectionPool.getConnection();
+             PreparedStatement ps = con.prepareStatement(
+                     "select distinct selected_restaurants.id" +
+                     " from (select * from restaurants where locate((?), name) > 0)as selected_restaurants inner join (menus) on selected_restaurants.id = menus.restaurant_id" +
+                     " inner join (select * from foods where locate((?), name) > 0)as selected_foods on  menus.id = selected_foods.menu_id"
+             )
+        ) {
+            ps.setString(1, restaurant_name);
+            ps.setString(2, food_name);
+            try {
+                System.out.println("before query");
+                ResultSet resultSet = ps.executeQuery();
+                System.out.println("after query");
+                while(resultSet.next()) {
+                    System.out.println("here: " + resultSet.getString(1));
+                    Restaurant restaurant = find(resultSet.getString(1));
+                    if(restaurant != null)
+                        found_restaurants.add(restaurant);
+                }
+
+            } catch (SQLException ex) {
+                System.out.println("error in RestaurantMapper.search query.");
+                System.out.println(ex);
+                throw ex;
+            }
+
+
+        }catch (SQLException ex) {
+            System.out.println("SQL Exception in restaurant search");
+            return found_restaurants;
+        }
+        return found_restaurants;
     }
 
     public void insert(Restaurant obj) throws SQLException {
@@ -145,20 +182,13 @@ public class RestaurantMapper extends Mapper {
     public void insert_foodparty_restaurants(ArrayList<Restaurant>restaurants) {
         for (Restaurant restaurant: restaurants){
             try {
-                System.out.println("before find" + restaurant.getName());
                 Restaurant existedRestaurant = find(restaurant.getId());
-                System.out.println("after find" + restaurant.getName());
 
                 if(existedRestaurant != null) {
-                    System.out.println("repeated before insert");
-
                     FoodPartyFoodMapper.getInstance().insert_foodparty_foods(restaurant.getMenu().getFoodPartyFoods(), MenuMapper.getInstance().find_menu_id(existedRestaurant));
-                    System.out.println("repeated after insert");
                     continue;
                 }
-                System.out.println("not repeated before insert");
                 insert(restaurant);
-                System.out.println("not repeated after insert");
             } catch(SQLException se) {
                 System.out.println("SQL Exception in inserting foodparty restaurant");
                 continue;

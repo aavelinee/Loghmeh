@@ -8,6 +8,7 @@ class Restaurants extends Component {
     constructor(props) {
         super(props);
         this.getRestaurants = this.getRestaurants.bind(this);
+        this.getSearchedRestaurant = this.getSearchedRestaurant.bind(this);
         this.state = {restaurants : []};
     }
 
@@ -18,6 +19,19 @@ class Restaurants extends Component {
     getRestaurants() {
         axios.get("http://localhost:8080/Loghmeh_war_exploded/ordinary_restaurants")
         .then(res => {
+            const data = res.data;
+            this.setState({ 
+                restaurants: data
+                });
+        }).catch(error => {console.log(error);});
+    }
+
+    getSearchedRestaurant(restaurantName, foodName) {
+        event.preventDefault();
+        let body = {restaurantName : restaurantName, foodName : foodName};
+        axios.get("http://localhost:8080/Loghmeh_war_exploded/searched_restaurants", { params: body })
+        .then(res => {
+            console.log("******************************************************************************\n************************************************************************************\n************************************************************8")
             const data = res.data;
             this.setState({ 
                 restaurants: data
