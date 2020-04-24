@@ -1,7 +1,9 @@
 package loghmeh_server.service;
 
 import loghmeh_server.domain.*;
+import loghmeh_server.repository.customer.Customer;
 import loghmeh_server.repository.foodparty_food.FoodPartyFood;
+import loghmeh_server.repository.order.Order;
 import loghmeh_server.repository.restaurant.Restaurant;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -91,7 +93,7 @@ public class LoghmehService {
     @RequestMapping(value = "/order/{orderId}", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public Order getOrder(HttpServletResponse servletResponse,
-                                         @PathVariable(value = "orderId") int orderId){
+                          @PathVariable(value = "orderId") int orderId){
         for(Order order : Loghmeh.getInstance().getCustomer(0).getOrders()) {
             if (order.getId() == orderId) {
                 servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);

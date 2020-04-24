@@ -19,15 +19,9 @@ import loghmeh_server.repository.restaurant.RestaurantMapper;
 public class Loghmeh {
     private static Loghmeh loghmeh = null;
 
-    private ArrayList<Restaurant> restaurants;
-    private ArrayList<Customer> customers;
-
-
     float nextFoodPartySchedulerFire;
 
     private Loghmeh() {
-//        restaurants = new ArrayList<>();
-//        customers = new ArrayList<>();
         Customer customer = new Customer(1, "احسان", "خامس‌پناه", "۰۹۱۲۳۴۵۶۷۸۹", "ekhamespanah@yahoo.com", 0f, 0f);
         try {
             CustomerMapper.getInstance().insert(customer);
@@ -43,25 +37,15 @@ public class Loghmeh {
         return loghmeh;
     }
 
-
-
     public String addRestaurants(String jsonInput) {
         ArrayList<Restaurant> restaurants = loghmeh_server.deserializer.restaurantDeserializer.deserializeRestaurants(jsonInput);
         RestaurantMapper.getInstance().insert_restaurants(restaurants);
-//        for(Restaurant restaurant: RestaurantMapper.getInstance().find_restaurants("ordinary"))
-//            System.out.println("rest: " + restaurant.getName());
         return "Restaurants Added Successfully";
     }
 
     public String addFoodPartyRestaurants(String jsonInput) {
         ArrayList<Restaurant> restaurants = loghmeh_server.deserializer.restaurantDeserializer.deserializeFoodPartyRestaurants(jsonInput);
         RestaurantMapper.getInstance().insert_foodparty_restaurants(restaurants);
-        System.out.println("insert foodparty rests");
-        for(Restaurant restaurant: RestaurantMapper.getInstance().find_restaurants("foodparty"))
-            System.out.println("foodparty rest: " + restaurant.getName());
-        System.out.println("*************************************");
-        for(FoodPartyFood foodPartyFood: getFoodPartyFoods())
-            System.out.println("foodpartyfood:" + foodPartyFood.getName());
         return "Restaurant With Food Party Added Successfully";
     }
 
