@@ -82,7 +82,7 @@ public class LocationMapper extends Mapper {
             try {
                 preparedStatement.executeUpdate();
             } catch (SQLException ex) {
-                System.out.println("error in Mapper.insert query.");
+                System.out.println("error in Location Mapper.insert query.");
                 throw ex;
             }
         } catch (SQLException ex) {

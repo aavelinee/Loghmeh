@@ -146,8 +146,13 @@ public class RestaurantMapper extends Mapper {
             ps.setString(2, obj.getName());
             ps.setString(3, obj.getLogoURL());
             ps.setString(4, obj.getDescription());
-            LocationMapper.getInstance().insert(obj.getLocation());
-            ps.setInt(5, LocationMapper.getInstance().find(obj.getLocation().getX(), obj.getLocation().getY()));
+            int locationId = LocationMapper.getInstance().find(obj.getLocation().getX(), obj.getLocation().getY());
+            if(locationId == -1) {
+                LocationMapper.getInstance().insert(obj.getLocation());
+                locationId = LocationMapper.getInstance().find(obj.getLocation().getX(), obj.getLocation().getY());
+            }
+            ps.setInt(5, locationId);
+
             try {
                 ps.executeUpdate();
                 MenuMapper.getInstance().insert(obj.getMenu(), obj.getId());

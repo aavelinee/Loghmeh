@@ -6,6 +6,7 @@ import loghmeh_server.repository.Mapper;
 import loghmeh_server.repository.food.Food;
 import loghmeh_server.repository.food.FoodMapper;
 import loghmeh_server.repository.menu.MenuMapper;
+import loghmeh_server.repository.order_item.OrderItemMapper;
 import loghmeh_server.repository.restaurant.Restaurant;
 import loghmeh_server.repository.restaurant.RestaurantMapper;
 
@@ -142,6 +143,30 @@ public class FoodPartyFoodMapper extends Mapper {
         return true;
     }
 
+    public boolean is_foodparty(int food_id) {
+        try (Connection con = ConnectionPool.getConnection();
+             PreparedStatement ps = con.prepareStatement(
+                     "select count(*) from foodpartyfoods where food_id = (?)"
+             )
+        ) {
+            try{
+                ps.setInt(1, food_id);
+                ResultSet resultSet = ps.executeQuery();
+                resultSet.next();
+                if(resultSet.getInt(1) == 0)
+                    return false;
+                else
+                    return true;
+            } catch (SQLException ex) {
+                throw ex;
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("SQL Exception in checking is foodparty");
+            return false;
+        }
+    }
+
     public void insert(FoodPartyFood obj, int menu_id) throws SQLException {
         try (Connection connection = ConnectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(
@@ -174,6 +199,27 @@ public class FoodPartyFoodMapper extends Mapper {
 
     public void delete(int id) throws SQLException {
         this.delete(TABLE_NAME, id);
+    }
+
+    public void update_count(int food_id, int count) {
+        try (Connection connection = ConnectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement (
+                     "update " + TABLE_NAME + " set count = (?) where food_id = (?)"
+             )
+        ){
+
+            ps.setInt(2, food_id);
+            ps.setInt(1, count);
+            try {
+                ps.executeUpdate();
+            } catch (SQLException ex) {
+                System.out.println("error in OrderMapper.update foodpartyfood count query.");
+                throw ex;
+            }
+
+        } catch(SQLException ex) {
+            System.out.println("SQL Exception in updating foodpartyfood count");
+        }
     }
 
 

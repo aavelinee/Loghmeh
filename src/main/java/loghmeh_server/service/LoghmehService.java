@@ -68,10 +68,10 @@ public class LoghmehService {
         return Loghmeh.getInstance().getFoodPartyFoods();
     }
 
-    @RequestMapping(value = "/foodparty_food/{restaurantId}/{foodName}", method = RequestMethod.GET,
+    @RequestMapping(value = "/foodparty_food", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public FoodPartyFood getFoodPartyFoodController(HttpServletResponse servletResponse
-            , @PathVariable(value = "restaurantId") String restaurantId,  @PathVariable(value = "foodName") String foodName) {
+            , @RequestParam(value = "restaurantId") String restaurantId,  @RequestParam(value = "foodName") String foodName) {
         FoodPartyFood foodPartyFood = Loghmeh.getInstance().getFoodPartyFood(restaurantId, foodName);
         System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa get foooood " + restaurantId + foodName);
         if(foodPartyFood != null) {
@@ -87,7 +87,7 @@ public class LoghmehService {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ArrayList<Order> getOrdersController(HttpServletResponse servletResponse) {
         servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
-        return Loghmeh.getInstance().getCustomer(0).getOrders();
+        return Loghmeh.getInstance().getCustomer(1).getOrders();
     }
 
     @RequestMapping(value = "/order/{orderId}", method = RequestMethod.GET,
@@ -109,16 +109,21 @@ public class LoghmehService {
     public Order getRestaurantsController(HttpServletResponse servletResponse, @PathVariable(value = "userId") int customerId) {
         servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
         System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa get cart");
+        System.out.println(customerId);
         Customer customer = Loghmeh.getInstance().getCustomerById(customerId);
         if(customer == null){
+            System.out.println("No Customer found");
             servletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
             return null;
         }
         Order cart = customer.getCart();
-        if(cart != null)
+        if(cart != null) {
+            System.out.println("Cart Found");
             servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
-        else
+        } else {
+            System.out.println("No cart found");
             servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
+        }
         return cart;
     }
 

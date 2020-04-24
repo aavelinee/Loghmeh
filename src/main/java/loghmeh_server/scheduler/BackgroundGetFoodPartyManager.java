@@ -38,7 +38,7 @@ public class BackgroundGetFoodPartyManager implements ServletContextListener {
         @Override
         public void run() {
 
-            System.out.println("delay" + future.getDelay(TimeUnit.SECONDS));
+//            System.out.println("delay" + future.getDelay(TimeUnit.SECONDS));
             Loghmeh.getInstance().setNextFoodPartySchedulerFire(future.getDelay(TimeUnit.SECONDS));
         }
     }

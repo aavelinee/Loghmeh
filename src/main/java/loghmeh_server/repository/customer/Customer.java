@@ -3,12 +3,13 @@ package loghmeh_server.repository.customer;
 import loghmeh_server.repository.order.Order;
 import loghmeh_server.repository.food.Food;
 import loghmeh_server.repository.location.Location;
+import loghmeh_server.repository.order.OrderMapper;
 import loghmeh_server.repository.restaurant.Restaurant;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Customer {
-    private ArrayList<Order> orders = new ArrayList<>();
     private int customerId;
     private String firstName;
     private String lastName;
@@ -31,25 +32,54 @@ public class Customer {
     public Customer(){}
 
     public Boolean addToCart(Restaurant restaurant, Food food, int foodCount) {
-        if(orders.size() == 0 || orders.get(orders.size() - 1).getStatus() != Order.orderStatus.Ordering){
-            Order order = new Order(orders.size() + 1, restaurant, this);
-            orders.add(order);
+        Order order;
+        try {
+            order = OrderMapper.getInstance().find_cart(this);
+        } catch (SQLException ex) {
+            System.out.print("Sql exception in find last order in add to cart");
+            return false;
         }
-        return getCart().addToCart(restaurant, food, foodCount);
+        if(order == null){
+            try {
+                OrderMapper.getInstance().insert(new Order(restaurant, this));
+                order = OrderMapper.getInstance().find_cart(this);
+            } catch (SQLException ex) {
+                System.out.print("SQL exception in inserting order");
+                return false;
+            }
+        }
+        return order.addToCart(restaurant, food, foodCount);
     }
 
     public Order getCart() {
-        if(orders.size() == 0 || orders.get(orders.size()-1).getStatus() != Order.orderStatus.Ordering){
+        Order order;
+        try {
+            order = OrderMapper.getInstance().find_cart(this);
+        } catch (SQLException ex) {
+            System.out.print("Sql exception in find last order in get cart");
             return null;
         }
-        return orders.get(orders.size()-1);
+        return order;
     }
 
     public void removeCart() {
-        if(orders.size() == 0 || orders.get(orders.size()-1).getStatus() != Order.orderStatus.Ordering){
+        Order order;
+        try {
+            order = OrderMapper.getInstance().find_cart(this);
+        } catch (SQLException ex) {
+            System.out.print("Sql exception in find last order in add to cart");
             return;
         }
-        orders.remove(orders.size()-1);
+        if(order == null){
+            return;
+        }
+        try {
+            OrderMapper.getInstance().delete(order.getId());
+        } catch (SQLException ex) {
+            System.out.print("Sql exception in delete order in remove cart");
+            return;
+        }
+        System.out.print("order deleted successfully");
     }
 
     public String removeFromCart(String restaurantId, String foodName) {
@@ -70,6 +100,8 @@ public class Customer {
 
     public void removeFoodPartyFoodsFromCart() {
         Order cart = getCart();
+        if(cart == null)
+            return;
         cart.removeFoodPartyFoodsFromCart();
         if(cart.getOrders().size() == 0)
             removeCart();
@@ -85,13 +117,14 @@ public class Customer {
             cart.decreaseFoodCounts();
             cart.setStatus(Order.orderStatus.DeliverySearch);
             credit -= orderPrice;
+            CustomerMapper.getInstance().update_credit(customerId, credit);
             return true;
         }
         return false;
     }
 
-    public void increaseCredit(int credit) {
-        this.credit += credit;
+    public void increaseCredit(float credit) {
+        CustomerMapper.getInstance().update_credit(customerId, this.credit + credit);
     }
 
     public int getCustomerId() {
@@ -123,11 +156,7 @@ public class Customer {
     }
 
     public ArrayList<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(ArrayList<Order> orders) {
-        this.orders = orders;
+        return OrderMapper.getInstance().find_orders(this);
     }
 
     public void setCustomerId(int customerId) {

@@ -56,7 +56,7 @@ public class CustomerMapper extends Mapper {
 
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(
-                     "select " + COLUMNS + " from " + TABLE_NAME + " where id = (?)"
+                     "select " + "id, " + COLUMNS + " from " + TABLE_NAME + " where id = (?)"
              )
         ) {
             ps.setInt(1, id);
@@ -70,6 +70,29 @@ public class CustomerMapper extends Mapper {
                 System.out.println("error in CustomerMapper.findByID query.");
                 throw ex;
             }
+        }
+    }
+
+    public int find_customer_id(Customer obj) {
+        try (Connection con = ConnectionPool.getConnection();
+             PreparedStatement ps = con.prepareStatement(
+                     "select " + "id from " + TABLE_NAME + " where phone_number = (?)"
+             )
+        ) {
+            ps.setString(1, obj.getPhoneNumber());
+            try {
+                ResultSet resultSet = ps.executeQuery();
+                if(resultSet.next())
+                    return resultSet.getInt(1);
+                else
+                    return -1;
+            } catch (SQLException ex) {
+                System.out.println("error in CustomerMapper.find customer id query.");
+                throw ex;
+            }
+        } catch(SQLException ex) {
+            System.out.println("SQLExcepion in finding customer id");
+            return -1;
         }
     }
 
@@ -93,7 +116,6 @@ public class CustomerMapper extends Mapper {
                 LocationMapper.getInstance().insert(obj.getLocation());
                 locationId = LocationMapper.getInstance().find(obj.getLocation().getX(), obj.getLocation().getY());
             }
-            System.out.println(locationId);
             ps.setInt(6, locationId);
 
             try {
@@ -107,6 +129,26 @@ public class CustomerMapper extends Mapper {
 
     public void delete(int id) throws SQLException {
         this.delete(TABLE_NAME, id);
+    }
+
+    public void update_credit(int id, float credit) {
+        try (Connection connection = ConnectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement (
+                     "update " + TABLE_NAME + " set credit = (?) where id = (?)"
+             )
+        ){
+            ps.setInt(2, id);
+            ps.setFloat(1, credit);
+            try {
+                ps.executeUpdate();
+            } catch (SQLException ex) {
+                System.out.println("error in CustomerMapper.update_credit query.");
+                throw ex;
+            }
+
+        } catch(SQLException ex) {
+            System.out.println("SQL Exception in updating credit");
+        }
     }
 
     private Customer convertResultSetToObject(ResultSet rs) throws SQLException {

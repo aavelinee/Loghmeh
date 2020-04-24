@@ -83,10 +83,6 @@ public class DeliveryMapper {
         } catch (SQLException ex) {
          return null;
         }
-        System.out.println("innnnnnnnnnnnnn");
-        System.out.println(deliveries.size());
-        System.out.println("innnnnnnnnnnnnn");
-
         return deliveries;
     }
 

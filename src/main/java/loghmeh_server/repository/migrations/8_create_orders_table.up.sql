@@ -1,12 +1,12 @@
 create table orders
 (
   id int not null auto_increment,
-  status enum('Delivered', 'OnTheWay', 'DeliverySearch', 'Ordering'),
+  status varchar (25),
   customer_id int,
   restaurant_id varchar(255),
-  delivery_id varchar(255),
-  estimated_delivery_time double,
-  delivery_date date,
+  delivery_id varchar(255) default null,
+  estimated_delivery_time double default 0,
+  delivery_date date default null,
   total_price float,
   primary key(id),
   foreign key (customer_id)   references customers(id)    on delete set null,
