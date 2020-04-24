@@ -56,7 +56,7 @@ public class CustomerMapper extends Mapper {
 
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(
-                     "select " + COLUMNS + " from " + TABLE_NAME + " where id = (?)"
+                     "select " + "id, " + COLUMNS + " from " + TABLE_NAME + " where id = (?)"
              )
         ) {
             ps.setInt(1, id);

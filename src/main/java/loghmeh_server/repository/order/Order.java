@@ -26,9 +26,9 @@ public class Order {
     private float totalPrice;
     private Customer customer;
 
-    public Order(int id, Restaurant restaurant, Customer customer) {
+    public Order(Restaurant restaurant, Customer customer) {
         status = orderStatus.Ordering;
-        this.id = id;
+//        this.id = id;
         this.restaurant = restaurant;
         this.totalPrice = 0;
         this.customer = customer;
@@ -41,6 +41,7 @@ public class Order {
             return false;
         }
         this.totalPrice +=  (foodCount*food.getPrice());
+
         for(OrderItem orderItem: orders){
             if(orderItem.getFood().equals(food)) {
                 orderItem.orderMore(foodCount);

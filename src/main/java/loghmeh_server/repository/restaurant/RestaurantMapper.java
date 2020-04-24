@@ -33,31 +33,23 @@ public class RestaurantMapper extends Mapper {
 
 
     public Restaurant find(String id) {
-        System.out.println("rest id " + id);
-        System.out.println("11");
         Restaurant result = loadedMap.get(id);
         if (result != null)
             return result;
-        System.out.println("22");
 
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(
                      "select " + COLUMNS + " from " + TABLE_NAME + " where id = (?)"
              )
         ) {
-            System.out.println("33");
 
             ps.setString(1, id);
             try {
-                System.out.println("44");
                 ResultSet resultSet = ps.executeQuery();
-                System.out.println("55");
                 if(resultSet.next()) {
-                    System.out.println("66");
                     return convertResultSetToObject(resultSet);
                 }
                 else{
-                    System.out.println("77");
                     return null;
                 }
             } catch (SQLException ex) {
@@ -78,18 +70,13 @@ public class RestaurantMapper extends Mapper {
                      "select id from " + TABLE_NAME
              )
         ) {
-            System.out.println("1");
             try {
                 ResultSet resultSet = ps.executeQuery();
-                System.out.println("2");
                 while(resultSet.next()) {
                     try {
-                        System.out.println("3");
                         Restaurant restaurant = find(resultSet.getString(1));
-                        System.out.println("4");
                         if(restaurant != null) {
                             if(type.equals("ordinary") && restaurant.getMenu().getFoods().size() != 0) {
-                                System.out.println("5");
                                 restaurants.add(restaurant);
                             }
 
@@ -122,8 +109,13 @@ public class RestaurantMapper extends Mapper {
             ps.setString(2, obj.getName());
             ps.setString(3, obj.getLogoURL());
             ps.setString(4, obj.getDescription());
-            LocationMapper.getInstance().insert(obj.getLocation());
-            ps.setInt(5, LocationMapper.getInstance().find(obj.getLocation().getX(), obj.getLocation().getY()));
+            int locationId = LocationMapper.getInstance().find(obj.getLocation().getX(), obj.getLocation().getY());
+            if(locationId == -1) {
+                LocationMapper.getInstance().insert(obj.getLocation());
+                locationId = LocationMapper.getInstance().find(obj.getLocation().getX(), obj.getLocation().getY());
+            }
+            ps.setInt(5, locationId);
+
             try {
                 ps.executeUpdate();
                 MenuMapper.getInstance().insert(obj.getMenu(), obj.getId());
@@ -197,10 +189,8 @@ public class RestaurantMapper extends Mapper {
         restaurant.setLogo(rs.getString(3));
         restaurant.setDescription(rs.getString(4));
         restaurant.setLocation(LocationMapper.getInstance().find(rs.getInt(5)));
-        System.out.println("AA");
 
         restaurant.setMenu(MenuMapper.getInstance().find(restaurant));
-        System.out.println("BB");
 
         return restaurant;
     }

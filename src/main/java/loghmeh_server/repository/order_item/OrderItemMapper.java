@@ -3,12 +3,14 @@ package loghmeh_server.repository.order_item;
 import loghmeh_server.repository.ConnectionPool;
 import loghmeh_server.repository.Mapper;
 import loghmeh_server.repository.food.FoodMapper;
+import loghmeh_server.repository.order.Order;
 import loghmeh_server.repository.order.OrderMapper;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,7 +35,7 @@ public class OrderItemMapper extends Mapper {
 
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(
-                     "select " + COLUMNS + " from " + TABLE_NAME + " where id = (?)"
+                     "select " + "id, " + COLUMNS + " from " + TABLE_NAME + " where id = (?)"
              )
         ) {
             ps.setInt(1, id);
@@ -50,24 +52,56 @@ public class OrderItemMapper extends Mapper {
         }
     }
 
-    public void insert(OrderItem obj) throws SQLException {
-        try (Connection connection = ConnectionPool.getConnection();
-             PreparedStatement ps = connection.prepareStatement (
-                     "insert into" + TABLE_NAME + "(" + COLUMNS + ")" + "values (?, ?, ?)"
+    public ArrayList<OrderItem> find_by_order_id(int order_id) throws SQLException {
+        ArrayList<OrderItem> orderItems = new ArrayList<>();
+
+        try (Connection con = ConnectionPool.getConnection();
+             PreparedStatement ps = con.prepareStatement(
+                     "select " + COLUMNS +" from " + TABLE_NAME + " where order_id = (?)"
              )
         ) {
-            ps.setInt(1, obj.getOrder().getId());
-//            ps.setString(2, FoodMapper.getInstance().);
-            ps.setInt(3, obj.getOrderCount());
-
+            ps.setInt(1, order_id);
             try {
-                ps.executeUpdate();
+                ResultSet resultSet = ps.executeQuery();
+                while(resultSet.next()) {
+                    try {
+                        OrderItem orderItem = find(resultSet.getInt(1));
+                        if(orderItem != null) {
+                            orderItems.add(orderItem);
+                        }
+                    } catch (SQLException ex) {
+                        System.out.println("SQL Exception in OrderItemMapper.findbyorderId query.");
+                        continue;
+                    }
+                }
             } catch (SQLException ex) {
-                System.out.println("error in OrderItemMapper.insert query.");
+                System.out.println("SQL Exception in OrderItemMapper.findByOrdeerId query.");
                 throw ex;
             }
+        } catch (SQLException ex) {
+            return null;
         }
+        return orderItems;
     }
+
+//    public void insert(OrderItem obj) throws SQLException {
+//        try (Connection connection = ConnectionPool.getConnection();
+//             PreparedStatement ps = connection.prepareStatement (
+//                     "insert into " + TABLE_NAME + "(" + COLUMNS + ")" + "values (?, ?, ?)"
+//             )
+//        ) {
+//            ps.setInt(1, obj.getOrder().getId());
+//            ps.setInt(2, obj.getOrder().);
+//            ps.setInt(3, obj.getOrderCount());
+//
+//            try {
+//                ps.executeUpdate();
+//            } catch (SQLException ex) {
+//                System.out.println("error in OrderItemMapper.insert query.");
+//                throw ex;
+//            }
+//        }
+//    }
 
     public void delete(int id) throws SQLException {
         this.delete(TABLE_NAME, id);

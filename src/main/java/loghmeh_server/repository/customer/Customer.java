@@ -3,8 +3,10 @@ package loghmeh_server.repository.customer;
 import loghmeh_server.repository.order.Order;
 import loghmeh_server.repository.food.Food;
 import loghmeh_server.repository.location.Location;
+import loghmeh_server.repository.order.OrderMapper;
 import loghmeh_server.repository.restaurant.Restaurant;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Customer {
@@ -31,11 +33,23 @@ public class Customer {
     public Customer(){}
 
     public Boolean addToCart(Restaurant restaurant, Food food, int foodCount) {
-        if(orders.size() == 0 || orders.get(orders.size() - 1).getStatus() != Order.orderStatus.Ordering){
-            Order order = new Order(orders.size() + 1, restaurant, this);
-            orders.add(order);
+        Order order;
+        try {
+            order = OrderMapper.getInstance().find_last_order();
+        } catch (SQLException ex) {
+            System.out.print("Sql exception in find last order in add to cart");
+            return false;
         }
-        return orders.get(orders.size() - 1).addToCart(restaurant, food, foodCount);
+        if(order == null){
+            order = new Order(restaurant, this);
+            try {
+                OrderMapper.getInstance().insert(order);
+            } catch (SQLException ex) {
+                System.out.print("SQL exception in inserting order");
+                return false;
+            }
+        }
+        return order.addToCart(restaurant, food, foodCount);
     }
 
     public Order getCart() {

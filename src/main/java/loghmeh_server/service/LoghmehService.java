@@ -100,16 +100,22 @@ public class LoghmehService {
     public Order getRestaurantsController(HttpServletResponse servletResponse, @PathVariable(value = "userId") int customerId) {
         servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
         System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa get cart");
+        System.out.println(customerId);
         Customer customer = Loghmeh.getInstance().getCustomerById(customerId);
         if(customer == null){
+            System.out.println("No Customer found");
             servletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
             return null;
         }
         Order cart = customer.getCart();
-        if(cart != null)
+        if(cart != null) {
+            System.out.println("Cart Found");
             servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
-        else
+        } else {
+            System.out.println("No cart found");
             servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
+        }
+        System.out.println(cart.getStatus());
         return cart;
     }
 
