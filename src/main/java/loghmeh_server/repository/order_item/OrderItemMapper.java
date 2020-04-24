@@ -120,7 +120,7 @@ public class OrderItemMapper extends Mapper {
 
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(
-                     "select " + COLUMNS +" from " + TABLE_NAME + " where order_id = (?)"
+                     "select id, " + COLUMNS +" from " + TABLE_NAME + " where order_id = (?)"
              )
         ) {
             ps.setInt(1, order.getId());
@@ -138,7 +138,7 @@ public class OrderItemMapper extends Mapper {
                     }
                 }
             } catch (SQLException ex) {
-                System.out.println("SQL Exception in OrderItemMapper.findByOrdeerId query.");
+                System.out.println("SQL Exception in OrderItemMapper.findByOrderId query.");
                 throw ex;
             }
         } catch (SQLException ex) {

@@ -74,13 +74,13 @@ class Cart extends Component {
     handlePlusAddToCart(foodName, isFoodParty, foodCount) {
         console.log("order moreeeeeeeeee in cart", isFoodParty);
         console.log("hhhhhhhhhhhhhh", foodCount);
-        this.addToCart(this.state.cart.restaurant.id, foodName, isFoodParty, foodCount);
+        this.addToCart(this.state.cart.restaurantId, foodName, isFoodParty, foodCount);
 
     }
 
     handleMinusRemoveFromCart(foodName, isFoodParty, foodCount) {
         console.log("on click minus: ", foodName, this.state);
-        this.removeFromCart(this.state.cart.restaurant.id, foodName, isFoodParty);
+        this.removeFromCart(this.state.cart.restaurantId, foodName, isFoodParty);
     }
 
     handleFinalize() {

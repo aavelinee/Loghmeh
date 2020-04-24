@@ -36,6 +36,17 @@ public class test {
         for(OrderItem orderItem: order.getOrders()) {
             System.out.println(orderItem.getFood().getName());
         }
+        System.out.println("***************************");
+        ArrayList<Order> orders = OrderMapper.getInstance().find_orders(customer);
+        System.out.println(orders.size());
+        for(Order ord: orders) {
+            System.out.println(ord.getId());
+            System.out.println(ord.getRestaurant().getName());
+            System.out.println(ord.getOrders().size());
+            for(OrderItem orderItem: ord.getOrders()) {
+                System.out.println(orderItem.getFood().getName());
+            }
+        }
     }
 
 

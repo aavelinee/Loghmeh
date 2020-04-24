@@ -9,6 +9,7 @@ public class orderSerializer implements JsonSerializer<Order> {
 
     @Override
     public JsonElement serialize(Order order, Type type, JsonSerializationContext jsonSerializationContext) {
+        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
         JsonArray jsonOrders = new JsonArray();
 
         for(OrderItem orderItem: order.getOrders()){

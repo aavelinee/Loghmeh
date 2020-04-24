@@ -4,6 +4,7 @@ import loghmeh_server.domain.*;
 import loghmeh_server.repository.customer.Customer;
 import loghmeh_server.repository.foodparty_food.FoodPartyFood;
 import loghmeh_server.repository.order.Order;
+import loghmeh_server.repository.order_item.OrderItem;
 import loghmeh_server.repository.restaurant.Restaurant;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -119,6 +120,14 @@ public class LoghmehService {
         Order cart = customer.getCart();
         if(cart != null) {
             System.out.println("Cart Found");
+            ///
+            System.out.println(cart.getId());
+            System.out.println(cart.getRestaurant().getName());
+            System.out.println(cart.getOrders().size());
+            for(OrderItem orderItem: cart.getOrders()) {
+                System.out.println(orderItem.getFood().getName());
+            }
+            ///
             servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
         } else {
             System.out.println("No cart found");

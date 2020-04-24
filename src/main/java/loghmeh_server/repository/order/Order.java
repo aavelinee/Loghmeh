@@ -20,7 +20,8 @@ public class Order {
     private int id;
     private orderStatus status;
 
-    private Restaurant restaurant;
+    private transient Restaurant restaurant;
+    private String restaurantId;
     private ArrayList<OrderItem> orders = new ArrayList<OrderItem>();
     private Delivery delivery;
     private double estimatedDeliveryTime;
@@ -32,6 +33,7 @@ public class Order {
         status = orderStatus.Ordering;
 //        this.id = id;
         this.restaurant = restaurant;
+        this.restaurantId = restaurant.getId();
         this.totalPrice = 0;
         this.customer = customer;
     }
@@ -165,6 +167,13 @@ public class Order {
 
     public Customer getCustomer() { return customer; }
 
+    public String getRestaurantId() {
+        return restaurantId;
+    }
+
+    public void setRestaurantId(String restaurantId) {
+        this.restaurantId = restaurantId;
+    }
 
     public void setStatus(orderStatus status) {
         this.status = status;
