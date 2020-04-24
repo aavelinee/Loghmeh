@@ -93,7 +93,6 @@ public class CustomerMapper extends Mapper {
                 LocationMapper.getInstance().insert(obj.getLocation());
                 locationId = LocationMapper.getInstance().find(obj.getLocation().getX(), obj.getLocation().getY());
             }
-            System.out.println(locationId);
             ps.setInt(6, locationId);
 
             try {
@@ -104,6 +103,10 @@ public class CustomerMapper extends Mapper {
             }
         }
     }
+
+//    public void update_credit(int credit, int id) throws SQLException {
+//        Customer customer =
+//    }
 
     public void delete(int id) throws SQLException {
         this.delete(TABLE_NAME, id);

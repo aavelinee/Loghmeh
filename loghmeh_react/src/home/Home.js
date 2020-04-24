@@ -15,7 +15,7 @@ class Home extends Component {
     }
 
     informSearch(restaurantName, foodName) {
-        this.restaurantRef.current.getSearchedRestaurant(restaurantName, foodName);
+        this.restaurantRef.current.getSearchedRestaurant(restaurantName, foodName, 1);
     }
 
     render() {

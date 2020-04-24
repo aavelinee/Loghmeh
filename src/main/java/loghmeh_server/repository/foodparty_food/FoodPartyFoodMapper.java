@@ -103,7 +103,7 @@ public class FoodPartyFoodMapper extends Mapper {
     }
 
     public ArrayList<FoodPartyFood> find_all_foodparty_foods() {
-        ArrayList<Restaurant> foodPartyRestaurants = RestaurantMapper.getInstance().find_restaurants("foodparty");
+        ArrayList<Restaurant> foodPartyRestaurants = RestaurantMapper.getInstance().find_restaurants("foodparty", 0);
         ArrayList<FoodPartyFood>foodPartyFoods = new ArrayList<>();
         for(Restaurant restaurant: foodPartyRestaurants) {
             try{

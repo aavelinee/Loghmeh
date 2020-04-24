@@ -85,6 +85,47 @@
     }
 }
 
+.load-more-or-less {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.next-page-btn {
+    font-size: 12px;
+    border: solid 1px #4ECDC4;
+    border-radius: 6px;    
+    background-color: #4ECDC4;
+    min-width: 20vmin;
+    height: 4vmin;
+    text-align: center;
+    color: white;
+}
+
+.prev-page-btn {
+    font-size: 12px;
+    border: solid 1px #4ECDC4;
+    border-radius: 6px;    
+    background-color: #4ECDC4;
+    min-width: 20vmin;
+    height: 4vmin;
+    text-align: center;
+    color: white;
+    margin-top: 2%;
+}
+
+.no-prev-page-btn {
+    font-size: 12px;
+    border: solid 1px rgb(136, 136, 136);
+    border-radius: 6px;    
+    background-color: rgb(136, 136, 136);;
+    min-width: 20vmin;
+    height: 4vmin;
+    text-align: center;
+    color: white;
+    margin-top: 2%;
+}
+
 .home-restname {
     height: 3vmin;
     width: 24vmin;   

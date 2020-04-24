@@ -62,13 +62,24 @@ public class RestaurantMapper extends Mapper {
         }
     }
 
-    public ArrayList<Restaurant> find_restaurants(String type) {
+    public ArrayList<Restaurant> find_restaurants(String type, int page) {
         ArrayList<Restaurant> restaurants = new ArrayList<>();
+        String stmt;
+        int limit = 8;
+        int offset = limit * (page - 1);
+        if(type.equals("ordinary")){
+            stmt = "select id from " + TABLE_NAME + " limit 8 offset " + offset;
+        } else if(type.equals("foodparty")) {
+            stmt = "select id from " + TABLE_NAME;
+        } else {
+            System.out.print("Bad type in get restaurant");
+            return null;
+        }
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(
-                     "select id from " + TABLE_NAME
+                stmt
              )
-        ) {
+        ){
             try {
                 ResultSet resultSet = ps.executeQuery();
                 while(resultSet.next()) {
@@ -77,6 +88,7 @@ public class RestaurantMapper extends Mapper {
                         if(restaurant != null) {
                             if(type.equals("ordinary") && restaurant.getMenu().getFoods().size() != 0) {
                                 restaurants.add(restaurant);
+
                             }
 
                             else if(type.equals("foodparty") && restaurant.getMenu().getFoodPartyFoods().size() != 0){
@@ -98,15 +110,19 @@ public class RestaurantMapper extends Mapper {
         return restaurants;
     }
 
-    public ArrayList<Restaurant> find_searched_restaurants(String restaurant_name, String food_name) {
+
+
+    public ArrayList<Restaurant> find_searched_restaurants(String restaurant_name, String food_name, int page) {
         ArrayList<Restaurant> found_restaurants = new ArrayList<>();
         System.out.println("restname:" + restaurant_name);
         System.out.println("foodname:" + food_name);
+        int limit = 8;
+        int offset = limit * (page - 1);
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(
                      "select distinct selected_restaurants.id" +
                      " from (select * from restaurants where locate((?), name) > 0)as selected_restaurants inner join (menus) on selected_restaurants.id = menus.restaurant_id" +
-                     " inner join (select * from foods where locate((?), name) > 0)as selected_foods on  menus.id = selected_foods.menu_id"
+                     " inner join (select * from foods where locate((?), name) > 0)as selected_foods on  menus.id = selected_foods.menu_id limit " + limit + " offset " + offset
              )
         ) {
             ps.setString(1, restaurant_name);

@@ -35,29 +35,33 @@ public class LoghmehService {
         }
     }
 
-    @RequestMapping(value = "/ordinary_restaurants", method = RequestMethod.GET,
+    @RequestMapping(value = "/ordinary_restaurants/{page}", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ArrayList<Restaurant> getOrdinaryRestaurantsController(HttpServletResponse servletResponse) {
+    public ArrayList<Restaurant> getOrdinaryRestaurantsController(HttpServletResponse servletResponse,
+              @PathVariable(value = "page") int page) {
         servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
-        System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa get rests" + Loghmeh.getInstance().getSpecifiedRestaurants("ordinary").size());
-        return Loghmeh.getInstance().getSpecifiedRestaurants("ordinary");
+        System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa get rests" + Loghmeh.getInstance().getSpecifiedRestaurants("ordinary", page).size());
+        return Loghmeh.getInstance().getSpecifiedRestaurants("ordinary", page);
     }
 
     @RequestMapping(value = "/foodparty_restaurants", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ArrayList<Restaurant> getFoodPartyRestaurantsController(HttpServletResponse servletResponse) {
         servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
-        System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa get foodparty rests" + Loghmeh.getInstance().getSpecifiedRestaurants("foodparty").size());
-        return Loghmeh.getInstance().getSpecifiedRestaurants("foodparty");
+        int page = 0;
+        System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa get foodparty rests" + Loghmeh.getInstance().getSpecifiedRestaurants("foodparty", page).size());
+        return Loghmeh.getInstance().getSpecifiedRestaurants("foodparty", page);
     }
 
     @RequestMapping(value = "/searched_restaurants", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ArrayList<Restaurant> getSearchedRestaurantsController(HttpServletResponse servletResponse
-            , @RequestParam(value = "restaurantName") String restaurantName,  @RequestParam(value = "foodName") String foodName) {
+    public ArrayList<Restaurant> getSearchedRestaurantsController(HttpServletResponse servletResponse,
+              @RequestParam(value = "restaurantName") String restaurantName,
+              @RequestParam(value = "foodName") String foodName,
+              @RequestParam(value = "page") int page) {
         System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa get searched rests" + restaurantName + foodName);
         servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
-        return Loghmeh.getInstance().getSearchedRestaurants(restaurantName, foodName);
+        return Loghmeh.getInstance().getSearchedRestaurants(restaurantName, foodName, page);
     }
 
     @RequestMapping(value = "/foodparty_foods", method = RequestMethod.GET,
