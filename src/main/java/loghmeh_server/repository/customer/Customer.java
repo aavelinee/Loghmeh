@@ -10,7 +10,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Customer {
-    private ArrayList<Order> orders = new ArrayList<>();
     private int customerId;
     private String firstName;
     private String lastName;
@@ -35,15 +34,15 @@ public class Customer {
     public Boolean addToCart(Restaurant restaurant, Food food, int foodCount) {
         Order order;
         try {
-            order = OrderMapper.getInstance().find_last_order();
+            order = OrderMapper.getInstance().find_cart(this);
         } catch (SQLException ex) {
             System.out.print("Sql exception in find last order in add to cart");
             return false;
         }
         if(order == null){
-            order = new Order(restaurant, this);
             try {
-                OrderMapper.getInstance().insert(order);
+                OrderMapper.getInstance().insert(new Order(restaurant, this));
+                order = OrderMapper.getInstance().find_cart(this);
             } catch (SQLException ex) {
                 System.out.print("SQL exception in inserting order");
                 return false;
@@ -55,7 +54,7 @@ public class Customer {
     public Order getCart() {
         Order order;
         try {
-            order = OrderMapper.getInstance().find_last_order();
+            order = OrderMapper.getInstance().find_cart(this);
         } catch (SQLException ex) {
             System.out.print("Sql exception in find last order in get cart");
             return null;
@@ -66,7 +65,7 @@ public class Customer {
     public void removeCart() {
         Order order;
         try {
-            order = OrderMapper.getInstance().find_last_order();
+            order = OrderMapper.getInstance().find_cart(this);
         } catch (SQLException ex) {
             System.out.print("Sql exception in find last order in add to cart");
             return;
@@ -101,6 +100,8 @@ public class Customer {
 
     public void removeFoodPartyFoodsFromCart() {
         Order cart = getCart();
+        if(cart == null)
+            return;
         cart.removeFoodPartyFoodsFromCart();
         if(cart.getOrders().size() == 0)
             removeCart();
@@ -116,13 +117,14 @@ public class Customer {
             cart.decreaseFoodCounts();
             cart.setStatus(Order.orderStatus.DeliverySearch);
             credit -= orderPrice;
+            CustomerMapper.getInstance().update_credit(customerId, credit);
             return true;
         }
         return false;
     }
 
-    public void increaseCredit(int credit) {
-        this.credit += credit;
+    public void increaseCredit(float credit) {
+        CustomerMapper.getInstance().update_credit(customerId, this.credit + credit);
     }
 
     public int getCustomerId() {
@@ -154,7 +156,7 @@ public class Customer {
     }
 
     public ArrayList<Order> getOrders() {
-        return orders;
+        return OrderMapper.getInstance().find_orders(this);
     }
 
     public void setCustomerId(int customerId) {
@@ -184,41 +186,4 @@ public class Customer {
     public void setLocation(Location location) {
         this.location = location;
     }
-
-//
-//    public boolean isRestaurantClose(Location location){
-//        if(this.location.euclideanDistance(location) <= 170)
-//            return true;
-//        return false;
-//    }
-//
-//    public Order getLastOrder() {
-//        if(orders.size() == 0){
-//            return null;
-//        }
-//        return orders.get(orders.size() - 1);
-//    }
-//
-//
-//    public ArrayList<Restaurant> getCloseRestaurants() {
-//        ArrayList<Restaurant> restaurants = Loghmeh.getInstance().getRestaurants();
-//        ArrayList<Restaurant> closeRestaurants = new ArrayList<Restaurant>();
-//        for(Restaurant restaurant: restaurants) {
-//            if (restaurant.getLocation().euclideanDistance(location) <= 170 && restaurant.getMenu().getFoods() != null){
-//                closeRestaurants.add(restaurant);
-//            }
-//        }
-//        return closeRestaurants;
-//    }
-//
-//    public ArrayList<Restaurant> getCloseFoodPartyRestaurants() {
-//        ArrayList<Restaurant> restaurants = Loghmeh.getInstance().getRestaurants();
-//        ArrayList<Restaurant> closeFoodPartyRestaurants = new ArrayList<Restaurant>();
-//        for(Restaurant restaurant: restaurants) {
-//            if (restaurant.getLocation().euclideanDistance(location) <= 170 && restaurant.getMenu().getFoodPartyFoods() != null){
-//                closeFoodPartyRestaurants.add(restaurant);
-//            }
-//        }
-//        return closeFoodPartyRestaurants;
-//    }
 }

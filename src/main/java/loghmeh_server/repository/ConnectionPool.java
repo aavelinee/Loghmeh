@@ -31,7 +31,7 @@ public class ConnectionPool {
 
         dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/Loghmeh?useUnicode=true&characterEncoding=UTF-8");
         dataSource.setUser("root");
-        dataSource.setPassword("");
+        dataSource.setPassword("password");
 
         dataSource.setInitialPoolSize(5);
         dataSource.setMinPoolSize(5);

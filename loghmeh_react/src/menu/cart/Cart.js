@@ -28,7 +28,7 @@ class Cart extends Component {
 
     getCart() {
         console.log("getCart is called");
-    	axios.get("http://localhost:8080/Loghmeh_war_exploded/cart/" + 14)
+    	axios.get("http://localhost:8080/Loghmeh_war_exploded/cart/" + 1)
 		.then(res => {
             const data = res.data;
 			this.setState({ 
@@ -43,7 +43,7 @@ class Cart extends Component {
         console.log(foodCount)
         event.preventDefault();
 		axios.put('http://localhost:8080/Loghmeh_war_exploded/put_cart', null,
-			{params: {'userId': 14, 'restaurantId': restaurantId, 'foodName' : foodName, 'isFoodParty' : isFoodParty, 'foodCount' : foodCount}}
+			{params: {'userId': 1, 'restaurantId': restaurantId, 'foodName' : foodName, 'isFoodParty' : isFoodParty, 'foodCount' : foodCount}}
 		).then( (response) => {this.getCart();})
         .catch((error) => {
             if (error.response.status == 403) {

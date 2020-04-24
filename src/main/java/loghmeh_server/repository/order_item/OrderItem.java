@@ -1,6 +1,5 @@
 package loghmeh_server.repository.order_item;
 
-import com.sun.org.apache.xpath.internal.operations.Or;
 import loghmeh_server.repository.food.Food;
 import loghmeh_server.repository.foodparty_food.FoodPartyFood;
 import loghmeh_server.repository.order.Order;

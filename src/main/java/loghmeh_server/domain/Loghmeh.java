@@ -11,6 +11,7 @@ import loghmeh_server.repository.foodparty_food.FoodPartyFood;
 import loghmeh_server.repository.foodparty_food.FoodPartyFoodMapper;
 import loghmeh_server.repository.location.Location;
 import loghmeh_server.repository.order.Order;
+import loghmeh_server.repository.order.OrderMapper;
 import loghmeh_server.repository.order_item.OrderItem;
 import loghmeh_server.repository.restaurant.Restaurant;
 import loghmeh_server.repository.restaurant.RestaurantMapper;
@@ -19,20 +20,20 @@ import loghmeh_server.repository.restaurant.RestaurantMapper;
 public class Loghmeh {
     private static Loghmeh loghmeh = null;
 
-    private ArrayList<Restaurant> restaurants;
-    private ArrayList<Customer> customers;
-
-
     float nextFoodPartySchedulerFire;
 
     private Loghmeh() {
-//        restaurants = new ArrayList<>();
-//        customers = new ArrayList<>();
-        Customer customer = new Customer(1, "احسان", "خامس‌پناه", "۰۹۱۲۳۴۵۶۷۸۹", "ekhamespanah@yahoo.com", 0f, 0f);
-        try {
-            CustomerMapper.getInstance().insert(customer);
-        } catch (SQLException ex) {
-            return;
+        try{
+            if(CustomerMapper.getInstance().find(1) == null){
+                Customer customer = new Customer(1, "احسان", "خامس‌پناه", "۰۹۱۲۳۴۵۶۷۸۹", "ekhamespanah@yahoo.com", 0f, 0f);
+                try {
+                    CustomerMapper.getInstance().insert(customer);
+                } catch (SQLException ex) {
+                    return;
+                }
+            }
+        } catch(SQLException ex) {
+            System.out.println("SQL Exception in finding customer.");
         }
     }
 
@@ -43,25 +44,15 @@ public class Loghmeh {
         return loghmeh;
     }
 
-
-
     public String addRestaurants(String jsonInput) {
         ArrayList<Restaurant> restaurants = loghmeh_server.deserializer.restaurantDeserializer.deserializeRestaurants(jsonInput);
         RestaurantMapper.getInstance().insert_restaurants(restaurants);
-//        for(Restaurant restaurant: RestaurantMapper.getInstance().find_restaurants("ordinary"))
-//            System.out.println("rest: " + restaurant.getName());
         return "Restaurants Added Successfully";
     }
 
     public String addFoodPartyRestaurants(String jsonInput) {
         ArrayList<Restaurant> restaurants = loghmeh_server.deserializer.restaurantDeserializer.deserializeFoodPartyRestaurants(jsonInput);
         RestaurantMapper.getInstance().insert_foodparty_restaurants(restaurants);
-        System.out.println("insert foodparty rests");
-        for(Restaurant restaurant: RestaurantMapper.getInstance().find_restaurants("foodparty", 0))
-            System.out.println("foodparty rest: " + restaurant.getName());
-        System.out.println("*************************************");
-        for(FoodPartyFood foodPartyFood: getFoodPartyFoods())
-            System.out.println("foodpartyfood:" + foodPartyFood.getName());
         return "Restaurant With Food Party Added Successfully";
     }
 
@@ -79,6 +70,13 @@ public class Loghmeh {
 
     public FoodPartyFood getFoodPartyFood(String restaurantId, String foodName) {
         return FoodPartyFoodMapper.getInstance().find(restaurantId, foodName);
+    }
+
+    public Order getCart(int i) {
+        Customer customer = getCustomerById(i);
+        if(customer == null)
+            return null;
+        return customer.getCart();
     }
 
     public String updateCart(int customerId, String restaurantId, String foodName, int foodCount, boolean isFoodParty, String operation) {
@@ -120,16 +118,6 @@ public class Loghmeh {
         return "not found";
     }
 
-
-    public Order getCart(int i) {
-        try {
-            Customer customer = CustomerMapper.getInstance().find(i);
-            return customer.getCart();
-        } catch (SQLException ex) {
-            System.out.println("SQL exception in getCart");
-            return null;
-        }
-    }
 
     public String finalizeOrder(int customerId) {
         Customer customer = getCustomerById(customerId);
@@ -210,10 +198,13 @@ public class Loghmeh {
                 selectedDelivery = delivery;
             }
         }
-        order.setDelivery(selectedDelivery);
+
         order.setStatus(Order.orderStatus.OnTheWay);
+        order.setDelivery(selectedDelivery);
         order.setEstimatedDeliveryTime(deliveryTime);
         order.setDeliveryDate(new Date());
+        OrderMapper.getInstance().update_delivery_info(order.getId(), selectedDelivery.getId(), deliveryTime);
+
         setStatusToDeliveredTimer(order, deliveryTime);
     }
 
@@ -231,7 +222,7 @@ public class Loghmeh {
                 }
                 if(deliveries.size() != 0){
                     try {
-                        Customer customer = CustomerMapper.getInstance().find(0);
+                        Customer customer = CustomerMapper.getInstance().find(1);
                         assignDelivery(order, customer);
                     } catch (SQLException ex) {
                         System.out.println("SQL Esception for getting customer in finding delivery");

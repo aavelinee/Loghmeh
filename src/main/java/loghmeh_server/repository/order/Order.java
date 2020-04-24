@@ -5,8 +5,10 @@ import loghmeh_server.repository.delivery.Delivery;
 import loghmeh_server.repository.order_item.OrderItem;
 import loghmeh_server.repository.food.Food;
 import loghmeh_server.repository.foodparty_food.FoodPartyFood;
+import loghmeh_server.repository.order_item.OrderItemMapper;
 import loghmeh_server.repository.restaurant.Restaurant;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -40,17 +42,28 @@ public class Order {
         if(!this.restaurant.equals(restaurant)){
             return false;
         }
-        this.totalPrice +=  (foodCount*food.getPrice());
 
-        for(OrderItem orderItem: orders){
+        for(OrderItem orderItem: orders) {
             if(orderItem.getFood().equals(food)) {
                 orderItem.orderMore(foodCount);
+                OrderItemMapper.getInstance().update_orderitem_count(id, food,orderItem.getOrderCount());
+                this.totalPrice += (foodCount*food.getPrice());
+                OrderMapper.getInstance().update_total_price(id, this.totalPrice);
                 return true;
             }
         }
+
         OrderItem orderItem = new OrderItem(food, foodCount, this);
-        orders.add(orderItem);
-        return true;
+        try{
+            OrderItemMapper.getInstance().insert(orderItem);
+            this.totalPrice += (foodCount*food.getPrice());
+            OrderMapper.getInstance().update_total_price(id, this.totalPrice);
+            return true;
+        } catch(SQLException ex) {
+            System.out.println("SQL Exception in inserting orderitem");
+            return false;
+        }
+
     }
 
     public float getPrice() {
@@ -73,9 +86,21 @@ public class Order {
         for(OrderItem orderItem: orders) {
             if(orderItem.getFood().getName().equals(foodName)) {
                 orderItem.orderLess();
+                OrderItemMapper.getInstance().update_orderitem_count(id, orderItem.getFood(), orderItem.getOrderCount() - 1);
                 this.totalPrice -= orderItem.getFood().getPrice();
+                OrderMapper.getInstance().update_total_price(id, this.totalPrice);
                 if(orderItem.getOrderCount() == 0) {
                     orders.remove(orderItem);
+                    int orderitem_id = OrderItemMapper.getInstance().find_orderitem_id(id, orderItem.getFood());
+                    if(orderitem_id == -1)
+                        return;
+                    try {
+                        OrderItemMapper.getInstance().delete(orderitem_id);
+                    } catch (SQLException ex) {
+                        System.out.print("Sql exception in delete orderitem in remove from order");
+                        return;
+                    }
+                    System.out.print("orderitem deleted successfully");
                 }
                 break;
             }
@@ -84,8 +109,23 @@ public class Order {
 
     public void removeFoodPartyFoodsFromCart() {
         for(int i = orders.size() - 1; i >= 0; i--) {
-            if(orders.get(i).getFood() instanceof FoodPartyFood)
+            if(orders.get(i).getFood() instanceof FoodPartyFood){
+                int food_count = ((FoodPartyFood) orders.get(i).getFood()).getCount();
+                this.totalPrice -= (orders.get(i).getFood().getPrice()* food_count);
+                int orderitem_id = OrderItemMapper.getInstance().find_orderitem_id(id, orders.get(i).getFood());
+                if(orderitem_id == -1) {
+                    return;
+                }
+                OrderMapper.getInstance().update_total_price(id, this.totalPrice);
+                try {
+                    OrderItemMapper.getInstance().delete(orderitem_id);
+                } catch (SQLException ex) {
+                    System.out.print("Sql exception in delete orderitem in remove from order");
+                    return;
+                }
                 orders.remove(orders.get(i));
+                System.out.print("orderitem deleted successfully");
+            }
         }
     }
 
@@ -128,6 +168,7 @@ public class Order {
 
     public void setStatus(orderStatus status) {
         this.status = status;
+        OrderMapper.getInstance().update_status(id, status);
     }
 
     public void setDelivery(Delivery delivery) {

@@ -1,11 +1,13 @@
 package loghmeh_server.repository.order;
 
-import com.sun.org.apache.xpath.internal.operations.Or;
 import loghmeh_server.repository.ConnectionPool;
 import loghmeh_server.repository.Mapper;
+import loghmeh_server.repository.customer.Customer;
 import loghmeh_server.repository.customer.CustomerMapper;
 import loghmeh_server.repository.delivery.Delivery;
 import loghmeh_server.repository.delivery.DeliveryMapper;
+import loghmeh_server.repository.order_item.OrderItem;
+import loghmeh_server.repository.order_item.OrderItemMapper;
 import loghmeh_server.repository.restaurant.RestaurantMapper;
 
 import java.sql.Connection;
@@ -19,8 +21,8 @@ import java.util.Map;
 public class OrderMapper extends Mapper {
     private static OrderMapper orderMapper = null;
 
-    private static final String COLUMNS = "status, customer_id, restaurant_id, delivery_id, " +
-            "estimated_delivery_time, delivery_date, total_price";
+    private static final String COLUMNS = "status, customer_id, restaurant_id, delivery_id," +
+            " estimated_delivery_time, delivery_date, total_price";
     private static final String TABLE_NAME = "orders";
     private Map<Integer, Order> loadedMap = new HashMap<Integer, Order>();
 
@@ -55,15 +57,18 @@ public class OrderMapper extends Mapper {
         }
     }
 
-    public ArrayList<Order> find_orders() throws SQLException {
+    public ArrayList<Order> find_orders(Customer customer) {
         ArrayList<Order> orders = new ArrayList<>();
-
+//        int customer_id = CustomerMapper.getInstance().find_customer_id(customer);
+//        if(customer_id == -1)
+//            return orders;
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(
-                     "select " + COLUMNS +" from " + TABLE_NAME
+                     "select id from " + TABLE_NAME + " where customer_id = (?)"
              )
         ) {
             try {
+                ps.setInt(1, customer.getCustomerId());
                 ResultSet resultSet = ps.executeQuery();
                 while(resultSet.next()) {
                     try {
@@ -81,18 +86,19 @@ public class OrderMapper extends Mapper {
                 throw ex;
             }
         } catch (SQLException ex) {
-            return null;
+            return orders;
         }
         return orders;
     }
 
-    public Order find_last_order() throws SQLException{
+    public Order find_cart(Customer customer) throws SQLException{
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(
                      "select " + "id, " + COLUMNS + " from " + TABLE_NAME +
-                             " where status = 'Ordering'"
+                             " where status = 'Ordering' and customer_id = (?)"
              )
         ) {
+            ps.setInt(1, customer.getCustomerId());
             try {
                 ResultSet resultSet = ps.executeQuery();
                 if(resultSet.next())
@@ -116,8 +122,6 @@ public class OrderMapper extends Mapper {
              )
         ) {
             ps.setString(1, obj.getStatus().toString());
-            System.out.print(obj.getStatus().toString());
-            System.out.print("09090");
             ps.setInt(2, obj.getCustomer().getCustomerId());
             ps.setString(3, obj.getRestaurant().getId());
             ps.setFloat(4, obj.getTotalPrice());
@@ -135,6 +139,71 @@ public class OrderMapper extends Mapper {
         this.delete(TABLE_NAME, id);
     }
 
+    public void update_total_price(int id, float total_price) {
+        try (Connection connection = ConnectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement (
+                     "update " + TABLE_NAME + " set total_price = (?) where id = (?)"
+             )
+        ){
+            ps.setInt(2, id);
+            ps.setFloat(1, total_price);
+            try {
+                ps.executeUpdate();
+            } catch (SQLException ex) {
+                System.out.println("error in OrderMapper.update_totalprice query.");
+                throw ex;
+            }
+
+        } catch(SQLException ex) {
+            System.out.println("SQL Exception in updating total price");
+        }
+    }
+
+    public void update_status(int id, Order.orderStatus status) {
+        try (Connection connection = ConnectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement (
+                     "update " + TABLE_NAME + " set status = (?) where id = (?)"
+             )
+        ){
+
+            ps.setInt(2, id);
+            ps.setString(1, status.toString());
+            try {
+                ps.executeUpdate();
+            } catch (SQLException ex) {
+                System.out.println("error in OrderMapper.update order status query.");
+                throw ex;
+            }
+
+        } catch(SQLException ex) {
+            System.out.println("SQL Exception in updating order status");
+        }
+    }
+
+    public void update_delivery_info(int id, String delivery_id, double estimated_delivery_time) {
+        try (Connection connection = ConnectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement (
+                     "update " + TABLE_NAME + " set delivery_id = (?), estimated_delivery_time = (?), " +
+                             "delivery_date = now() where id = (?)"
+             )
+        ){
+
+            ps.setInt(3, id);
+            ps.setString(1, delivery_id);
+            ps.setDouble(2, estimated_delivery_time);
+
+            try {
+                ps.executeUpdate();
+            } catch (SQLException ex) {
+                System.out.println("error in OrderMapper.update delivery info query.");
+                throw ex;
+            }
+
+        } catch(SQLException ex) {
+            System.out.println("SQL Exception in updating delivery info");
+        }
+    }
+
     private Order convertResultSetToObject(ResultSet rs) throws SQLException {
         Order order = new Order();
         order.setId(rs.getInt(1));
@@ -146,6 +215,8 @@ public class OrderMapper extends Mapper {
         order.setEstimatedDeliveryTime(rs.getDouble(6));
         order.setDeliveryDate(rs.getDate(7));
         order.setTotalPrice(rs.getFloat(8));
+
+        order.setOrders(OrderItemMapper.getInstance().find_orderitems(order));
 
         return order;
     }
