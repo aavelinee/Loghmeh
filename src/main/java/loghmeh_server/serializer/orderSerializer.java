@@ -1,7 +1,7 @@
 package loghmeh_server.serializer;
 
-import loghmeh_server.domain.Order;
-import loghmeh_server.domain.OrderItem;
+import loghmeh_server.repository.order.Order;
+import loghmeh_server.repository.order_item.OrderItem;
 import com.google.gson.*;
 import java.lang.reflect.Type;
 

@@ -1,5 +1,6 @@
-package loghmeh_server.domain;
+package loghmeh_server.repository.customer;
 
+import loghmeh_server.repository.order.Order;
 import loghmeh_server.repository.food.Food;
 import loghmeh_server.repository.location.Location;
 import loghmeh_server.repository.restaurant.Restaurant;
@@ -27,9 +28,11 @@ public class Customer {
         this.location = new Location(x, y);
     }
 
+    public Customer(){}
+
     public Boolean addToCart(Restaurant restaurant, Food food, int foodCount) {
         if(orders.size() == 0 || orders.get(orders.size() - 1).getStatus() != Order.orderStatus.Ordering){
-            Order order = new Order(orders.size() + 1, restaurant);
+            Order order = new Order(orders.size() + 1, restaurant, this);
             orders.add(order);
         }
         return orders.get(orders.size() - 1).addToCart(restaurant, food, foodCount);
@@ -123,6 +126,37 @@ public class Customer {
         return orders;
     }
 
+    public void setOrders(ArrayList<Order> orders) {
+        this.orders = orders;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setCredit(float credit) {
+        this.credit = credit;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
 
 //
 //    public boolean isRestaurantClose(Location location){

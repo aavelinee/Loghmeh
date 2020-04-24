@@ -1,21 +1,28 @@
-package loghmeh_server.domain;
+package loghmeh_server.repository.order_item;
 
+import com.sun.org.apache.xpath.internal.operations.Or;
 import loghmeh_server.repository.food.Food;
 import loghmeh_server.repository.foodparty_food.FoodPartyFood;
+import loghmeh_server.repository.order.Order;
 
 public class OrderItem {
+
+    private Order order;
     private Food food;
     private int orderCount;
     private boolean isFoodParty;
 
-    public OrderItem(Food food, int foodCount) {
+    public OrderItem(Food food, int foodCount, Order order) {
         this.orderCount = foodCount;
         this.food = food;
         if(food instanceof FoodPartyFood)
             this.isFoodParty = true;
         else
             this.isFoodParty = false;
+        this.order = order;
     }
+
+    public OrderItem(){}
 
     public void orderMore(int orderCount) {
         this.orderCount += orderCount;
@@ -32,6 +39,17 @@ public class OrderItem {
     public int getOrderCount() {
         return orderCount;
     }
+
+    public Order getOrder() { return order; }
+
+
+    public void setOrder(Order order) { this.order = order; }
+
+    public void setFood(Food food) { this.food = food; }
+
+    public void setOrderCount(int orderCount) { this.orderCount = orderCount; }
+
+    public void setIsFoodParty(boolean foodParty) { isFoodParty = foodParty; }
 
     @Override
     public boolean equals(Object object) {

@@ -85,6 +85,8 @@ public class LocationMapper extends Mapper {
                 System.out.println("error in Mapper.insert query.");
                 throw ex;
             }
+        } catch (SQLException ex) {
+            throw ex;
         }
     }
 
