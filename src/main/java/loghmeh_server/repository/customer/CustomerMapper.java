@@ -127,6 +127,10 @@ public class CustomerMapper extends Mapper {
         }
     }
 
+//    public void update_credit(int credit, int id) throws SQLException {
+//        Customer customer =
+//    }
+
     public void delete(int id) throws SQLException {
         this.delete(TABLE_NAME, id);
     }

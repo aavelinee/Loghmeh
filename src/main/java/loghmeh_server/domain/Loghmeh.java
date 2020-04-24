@@ -56,12 +56,12 @@ public class Loghmeh {
         return "Restaurant With Food Party Added Successfully";
     }
 
-    public ArrayList<Restaurant> getSpecifiedRestaurants(String type) {
-        return RestaurantMapper.getInstance().find_restaurants(type);
+    public ArrayList<Restaurant> getSpecifiedRestaurants(String type, int page) {
+        return RestaurantMapper.getInstance().find_restaurants(type, page);
     }
 
-    public ArrayList<Restaurant> getSearchedRestaurants(String restaurantName, String foodName) {
-        return RestaurantMapper.getInstance().find_searched_restaurants(restaurantName, foodName);
+    public ArrayList<Restaurant> getSearchedRestaurants(String restaurantName, String foodName, int page) {
+        return RestaurantMapper.getInstance().find_searched_restaurants(restaurantName, foodName, page);
     }
 
     public ArrayList<FoodPartyFood> getFoodPartyFoods() {

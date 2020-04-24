@@ -9,26 +9,57 @@ class Restaurants extends Component {
         super(props);
         this.getRestaurants = this.getRestaurants.bind(this);
         this.getSearchedRestaurant = this.getSearchedRestaurant.bind(this);
-        this.state = {restaurants : []};
+        this.loadNextPage = this.loadNextPage.bind(this);
+        this.loadPrevPage = this.loadPrevPage.bind(this);
+        this.state = {restaurants : [], page: 1, searchPage: 1, isSearch: false,
+             restNameSearch: "", foodNameSearch: ""};
     }
 
     componentDidMount() {
-        this.getRestaurants();
+        this.getRestaurants(1);
     }
 
-    getRestaurants() {
-        axios.get("http://localhost:8080/Loghmeh_war_exploded/ordinary_restaurants")
+    loadNextPage() {
+        console.log("page: ");
+        console.log(this.state.page);
+        if(this.state.isSearch == true){
+            this.setState({searchPage: this.state.searchPage + 1})
+            this.getSearchedRestaurant(this.state.restNameSearch,
+                this.state.foodNameSearch, this.state.searchPage + 1)
+        }
+        else {
+            this.setState({page: this.state.page + 1});
+            this.getRestaurants(this.state.page + 1);
+        }
+    }
+
+    loadPrevPage() {
+        if(this.state.isSearch == true){
+            this.setState({searchPage: this.state.searchPage - 1})
+            this.getSearchedRestaurant(this.state.restNameSearch,
+                this.state.foodNameSearch, this.state.searchPage - 1)
+        }
+        else {
+            this.setState({page: this.state.page - 1});
+            this.getRestaurants(this.state.page - 1);
+        }
+    }
+
+    getRestaurants(page) {
+        axios.get("http://localhost:8080/Loghmeh_war_exploded/ordinary_restaurants/" + (page))
         .then(res => {
             const data = res.data;
             this.setState({ 
                 restaurants: data
                 });
         }).catch(error => {console.log(error);});
+        
     }
 
-    getSearchedRestaurant(restaurantName, foodName) {
+    getSearchedRestaurant(restaurantName, foodName, page) {
+        this.setState({isSearch: true, restNameSearch: restaurantName, foodNameSearch: foodName});
         event.preventDefault();
-        let body = {restaurantName : restaurantName, foodName : foodName};
+        let body = {restaurantName : restaurantName, foodName : foodName, page : page};
         axios.get("http://localhost:8080/Loghmeh_war_exploded/searched_restaurants", { params: body })
         .then(res => {
             console.log("******************************************************************************\n************************************************************************************\n************************************************************8")
@@ -78,6 +109,27 @@ class Restaurants extends Component {
                     <b id="restaurants-heading">رستوران‌ها</b>
                 </div>
                 {content}
+                <div className="load-more-or-less">
+                    <button onClick={this.loadNextPage} type="button" className="next-page-btn">صفحه بعد</button>
+                    {
+                        this.state.isSearch ?
+                        (
+                            this.state.searchPage == 1 
+                            ?
+                            <button type="button" className="no-prev-page-btn">صفحه قبل</button>
+                            :
+                            <button onClick={this.loadPrevPage} type="button" className="prev-page-btn">صفحه قبل</button>
+                            )
+                            :
+                            (
+                                this.state.page == 1 
+                                ?
+                                <button type="button" className="no-prev-page-btn">صفحه قبل</button>
+                                :
+                                <button onClick={this.loadPrevPage} type="button" className="prev-page-btn">صفحه قبل</button>
+                                )
+                    }
+                </div>
             </div>
         );
     }
