@@ -39,7 +39,7 @@ public class LoghmehService {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ArrayList<Restaurant> getOrdinaryRestaurantsController(HttpServletResponse servletResponse) {
         servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
-        System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa get rest" + Loghmeh.getInstance().getSpecifiedRestaurants("ordinary").size());
+        System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa get rest");
         return Loghmeh.getInstance().getSpecifiedRestaurants("ordinary");
     }
 

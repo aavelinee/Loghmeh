@@ -1,6 +1,8 @@
 import loghmeh_server.domain.Loghmeh;
 import loghmeh_server.repository.customer.Customer;
 import loghmeh_server.repository.customer.CustomerMapper;
+import loghmeh_server.repository.delivery.Delivery;
+import loghmeh_server.repository.delivery.DeliveryMapper;
 import loghmeh_server.repository.foodparty_food.FoodPartyFood;
 import loghmeh_server.repository.foodparty_food.FoodPartyFoodMapper;
 import loghmeh_server.repository.location.Location;
@@ -78,7 +80,7 @@ public class test {
 
     @Test
     public void addCustomer() throws SQLException {
-        Customer customer = new Customer(1, "Aylin", "Jamali", "09335159216", "aylinjam@yahoo.com", 0f, 0f);
+        Customer customer = new Customer(1, "Aylin", "Jamali", "09335159217", "aylinjam@yahoo.com", 0f, 0f);
         CustomerMapper.getInstance().insert(customer);
 //        Customer cust = CustomerMapper.getInstance().find(1);
 //        System.out.println(cust.getLocation().getY());
@@ -96,6 +98,16 @@ public class test {
         Customer customer = CustomerMapper.getInstance().find(1);
         Order order = new Order(3, restaurant, customer);
         OrderMapper.getInstance().insert(order);
+    }
+
+    @Test
+    public void addDelivery() throws SQLException {
+        Location location = new Location(0f, 6f);
+        Delivery delivery = new Delivery("7th delivery", 10f, location);
+//        DeliveryMapper.getInstance().insert(delivery);
+        ArrayList<Delivery> deliveries;
+        deliveries = DeliveryMapper.getInstance().find_deliveries();
+        System.out.println(deliveries.size());
     }
 
 //    @After

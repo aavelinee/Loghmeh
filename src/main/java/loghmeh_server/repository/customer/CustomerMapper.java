@@ -2,7 +2,6 @@ package loghmeh_server.repository.customer;
 
 import loghmeh_server.repository.ConnectionPool;
 import loghmeh_server.repository.Mapper;
-import loghmeh_server.repository.location.Location;
 import loghmeh_server.repository.location.LocationMapper;
 
 import java.sql.Connection;
@@ -15,7 +14,7 @@ import java.util.Map;
 public class CustomerMapper extends Mapper {
     private static CustomerMapper customerMapper = null;
 
-    private static final String COLUMNS = "id, first_name, last_name, phone_number, email, credit, location_id";
+    private static final String COLUMNS = "first_name, last_name, phone_number, email, credit, location_id";
     private static final String TABLE_NAME = "customers";
     private Map<Integer, Customer> loadedMap = new HashMap<Integer, Customer>();
 
@@ -33,7 +32,7 @@ public class CustomerMapper extends Mapper {
             return result;
         try (Connection con = ConnectionPool.getConnection();
             PreparedStatement ps = con.prepareStatement(
-                    "select " + COLUMNS + " from " + TABLE_NAME + " where phone_number = (?)"
+                    "select " + "id, " + COLUMNS + " from " + TABLE_NAME + " where phone_number = (?)"
             )
         ) {
             ps.setString(1, phone_number);
@@ -92,6 +91,7 @@ public class CustomerMapper extends Mapper {
             int locationId = LocationMapper.getInstance().find(obj.getLocation().getX(), obj.getLocation().getY());
             if(locationId == -1) {
                 LocationMapper.getInstance().insert(obj.getLocation());
+                locationId = LocationMapper.getInstance().find(obj.getLocation().getX(), obj.getLocation().getY());
             }
             System.out.println(locationId);
             ps.setInt(6, locationId);

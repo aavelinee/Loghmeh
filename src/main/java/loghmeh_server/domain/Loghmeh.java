@@ -1,8 +1,11 @@
 package loghmeh_server.domain;
 
+import java.sql.SQLException;
 import java.util.*;
 import loghmeh_server.repository.customer.Customer;
+import loghmeh_server.repository.customer.CustomerMapper;
 import loghmeh_server.repository.delivery.Delivery;
+import loghmeh_server.repository.delivery.DeliveryMapper;
 import loghmeh_server.repository.food.Food;
 import loghmeh_server.repository.foodparty_food.FoodPartyFood;
 import loghmeh_server.repository.foodparty_food.FoodPartyFoodMapper;
@@ -23,9 +26,14 @@ public class Loghmeh {
     float nextFoodPartySchedulerFire;
 
     private Loghmeh() {
-        restaurants = new ArrayList<>();
-        customers = new ArrayList<>();
-        customers.add(new Customer(1, "احسان", "خامس‌پناه", "۰۹۱۲۳۴۵۶۷۸۹", "ekhamespanah@yahoo.com", 0f, 0f));
+//        restaurants = new ArrayList<>();
+//        customers = new ArrayList<>();
+        Customer customer = new Customer(1, "احسان", "خامس‌پناه", "۰۹۱۲۳۴۵۶۷۸۹", "ekhamespanah@yahoo.com", 0f, 0f);
+        try {
+            CustomerMapper.getInstance().insert(customer);
+        } catch (SQLException ex) {
+            return;
+        }
     }
 
     public static Loghmeh getInstance() {
@@ -110,7 +118,13 @@ public class Loghmeh {
 
 
     public Order getCart(int i) {
-        return customers.get(i).getCart();
+        try {
+            Customer customer = CustomerMapper.getInstance().find(i);
+            return customer.getCart();
+        } catch (SQLException ex) {
+            System.out.println("SQL exception in getCart");
+            return null;
+        }
     }
 
     public String finalizeOrder(int customerId) {
@@ -170,10 +184,17 @@ public class Loghmeh {
         return true;
     }
 
-    public void assignDelivery(Order order, Customer customer, ArrayList<Delivery> deliveries) {
+    public void assignDelivery(Order order, Customer customer) {
         double deliveryTime = Double.POSITIVE_INFINITY;
         double time, distance;
         Delivery selectedDelivery = null;
+        ArrayList<Delivery> deliveries;
+        try {
+            deliveries = DeliveryMapper.getInstance().find_deliveries();
+        } catch (SQLException ex) {
+            System.out.println("Exception in find deliveries");
+            return;
+        }
 
         for(Delivery delivery: deliveries) {
             Location restaurantLocation = order.getRestaurant().getLocation();
@@ -197,8 +218,21 @@ public class Loghmeh {
             public void run() {
                 String deliveriesJson = loghmeh_server.external_services.ExternalServices.getFromExtenalAPI("http://138.197.181.131:8080/deliveries");
                 ArrayList<Delivery> deliveries = loghmeh_server.deserializer.deliveryDeserializer.deserialize(deliveriesJson);
+                for(Delivery delivery: deliveries) {
+                    try {
+                        DeliveryMapper.getInstance().insert(delivery);
+                    } catch (SQLException ex) {
+                        return;
+                    }
+                }
                 if(deliveries.size() != 0){
-                    assignDelivery(order, customers.get(0), deliveries);
+                    try {
+                        Customer customer = CustomerMapper.getInstance().find(0);
+                        assignDelivery(order, customer);
+                    } catch (SQLException ex) {
+                        System.out.println("SQL Esception for getting customer in finding delivery");
+                        return;
+                    }
                     cancel();
                 }
             }
@@ -217,17 +251,19 @@ public class Loghmeh {
     }
 
     public Customer getCustomer(int i) {
-        if(i >= this.customers.size())
+        try {
+            return CustomerMapper.getInstance().find(i);
+        } catch (SQLException ex) {
             return null;
-        return customers.get(i);
+        }
     }
 
     public Customer getCustomerById(int id) {
-        for(Customer customer: this.customers){
-            if(customer.getCustomerId() == id)
-                return customer;
+        try {
+            return CustomerMapper.getInstance().find(id);
+        } catch (SQLException ex) {
+            return null;
         }
-        return null;
     }
 
     public void setNextFoodPartySchedulerFire(float nextFoodPartySchedulerFire) {
