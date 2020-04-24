@@ -8,16 +8,24 @@ import Footer from '../common/Footer'
 import './Home.css'
 
 class Home extends Component {
+    constructor(props) {
+        super(props);
+        this.restaurantRef = React.createRef();
+        this.informSearch = this.informSearch.bind(this);
+    }
 
+    informSearch(restaurantName, foodName) {
+        this.restaurantRef.current.getSearchedRestaurant(restaurantName, foodName);
+    }
 
     render() {
         return(
             <Fragment>
                 <Navbar logo={false} account={true} cart={true} quit={true} />
-                <HomeJumbotron searchBox={true} />
+                <HomeJumbotron searchBox={true} handleSearch={this.informSearch}/>
                 <div className="home-main-content">
                     <FoodParty />
-                    <Restaurants />
+                    <Restaurants ref={this.restaurantRef}/>
                 </div>
                 <Footer />
             </Fragment>
