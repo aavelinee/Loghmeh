@@ -4,9 +4,7 @@ import loghmeh_server.repository.ConnectionPool;
 import loghmeh_server.repository.Mapper;
 import loghmeh_server.repository.customer.Customer;
 import loghmeh_server.repository.customer.CustomerMapper;
-import loghmeh_server.repository.delivery.Delivery;
 import loghmeh_server.repository.delivery.DeliveryMapper;
-import loghmeh_server.repository.order_item.OrderItem;
 import loghmeh_server.repository.order_item.OrderItemMapper;
 import loghmeh_server.repository.restaurant.RestaurantMapper;
 
@@ -15,8 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+
 
 public class OrderMapper extends Mapper {
     private static OrderMapper orderMapper = null;
@@ -24,7 +21,6 @@ public class OrderMapper extends Mapper {
     private static final String COLUMNS = "status, customer_id, restaurant_id, delivery_id," +
             " estimated_delivery_time, delivery_date, total_price";
     private static final String TABLE_NAME = "orders";
-    private Map<Integer, Order> loadedMap = new HashMap<Integer, Order>();
 
     public static OrderMapper getInstance() {
         if(orderMapper == null){
@@ -34,10 +30,6 @@ public class OrderMapper extends Mapper {
     }
 
     public Order find(int id) throws SQLException {
-        Order result = loadedMap.get(id);
-        if (result != null)
-            return result;
-
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(
                      "select " + "id, " + COLUMNS + " from " + TABLE_NAME + " where id = (?)"
@@ -59,9 +51,6 @@ public class OrderMapper extends Mapper {
 
     public ArrayList<Order> find_orders(Customer customer) {
         ArrayList<Order> orders = new ArrayList<>();
-//        int customer_id = CustomerMapper.getInstance().find_customer_id(customer);
-//        if(customer_id == -1)
-//            return orders;
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(
                      "select id from " + TABLE_NAME + " where customer_id = (?)"
@@ -113,9 +102,6 @@ public class OrderMapper extends Mapper {
     }
 
     public void insert(Order obj) throws SQLException {
-        if (obj == null) {
-            System.out.println("nulll");
-        }
         try (Connection connection = ConnectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement (
                      "insert into " + TABLE_NAME + "(" + "status, customer_id, restaurant_id, total_price" + ")" + "values (?, ?, ?, ?)"

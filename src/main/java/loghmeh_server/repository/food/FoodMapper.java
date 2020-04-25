@@ -10,8 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+
 
 public class FoodMapper extends Mapper {
     private static FoodMapper foodMapper = null;
@@ -19,8 +18,6 @@ public class FoodMapper extends Mapper {
 
     private static final String COLUMNS = "name, description, price, popularity, image_url, menu_id";
     private static final String TABLE_NAME = "foods";
-    private Map<Integer, Food> loadedMap = new HashMap<Integer, Food>();
-
 
     public static FoodMapper getInstance() {
         if(foodMapper == null){
@@ -31,9 +28,6 @@ public class FoodMapper extends Mapper {
 
 
     public Food find(int id, Menu menu) throws SQLException {
-        Food result = loadedMap.get(id);
-        if (result != null)
-            return result;
 
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(

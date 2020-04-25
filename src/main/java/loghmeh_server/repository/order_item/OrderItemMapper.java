@@ -7,22 +7,19 @@ import loghmeh_server.repository.food.FoodMapper;
 import loghmeh_server.repository.foodparty_food.FoodPartyFoodMapper;
 import loghmeh_server.repository.menu.MenuMapper;
 import loghmeh_server.repository.order.Order;
-import loghmeh_server.repository.order.OrderMapper;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+
 
 public class OrderItemMapper extends Mapper {
     private static OrderItemMapper orderItemMapper = null;
 
     private static final String COLUMNS = "order_id, food_id, order_count";
     private static final String TABLE_NAME = "orderitems";
-    private Map<Integer, OrderItem> loadedMap = new HashMap<Integer, OrderItem>();
 
     public static OrderItemMapper getInstance() {
         if(orderItemMapper == null){
@@ -32,10 +29,6 @@ public class OrderItemMapper extends Mapper {
     }
 
     public OrderItem find(Order order, int id) throws SQLException {
-        OrderItem result = loadedMap.get(id);
-        if (result != null)
-            return result;
-
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(
                      "select " + "id, " + COLUMNS + " from " + TABLE_NAME + " where id = (?)"
@@ -54,34 +47,6 @@ public class OrderItemMapper extends Mapper {
             }
         }
     }
-
-//    public OrderItem find(int order_id, Food food) throws SQLException {
-//        int menu_id = MenuMapper.getInstance().find_menu_id(food.getMenu().getRestaurant());
-//        if(menu_id == -1)
-//            return null;
-//        int food_id = FoodMapper.getInstance().find(menu_id, food.getName());
-//        if(food_id == -1)
-//            return null;
-//
-//        try (Connection con = ConnectionPool.getConnection();
-//             PreparedStatement ps = con.prepareStatement(
-//                     "select " + "id, " + COLUMNS + " from " + TABLE_NAME + " where order_id = (?) and food_id = (?)"
-//             )
-//        ) {
-//            ps.setInt(1, order_id);
-//            ps.setInt(2, food_id);
-//            try {
-//                ResultSet resultSet = ps.executeQuery();
-//                if(resultSet.next())
-//                    return convertResultSetToObject(resultSet);
-//                else
-//                    return null;
-//            } catch (SQLException ex) {
-//                System.out.println("error in OrderItemMapper.findByID from orderid and food query.");
-//                throw ex;
-//            }
-//        }
-//    }
 
     public int find_orderitem_id(int order_id, Food food) {
         try (Connection con = ConnectionPool.getConnection();
@@ -153,13 +118,10 @@ public class OrderItemMapper extends Mapper {
                      "insert into " + TABLE_NAME + "(" + COLUMNS + ")" + "values (?, ?, ?)"
              )
         ) {
-            System.out.println("orderid: " + obj.getOrder().getId());
             ps.setInt(1, obj.getOrder().getId());
             int menu_id = MenuMapper.getInstance().find_menu_id(obj.getOrder().getRestaurant());
             ps.setInt(2, FoodMapper.getInstance().find(menu_id, obj.getFood().getName()));
-            System.out.println("foodid: " + FoodMapper.getInstance().find(menu_id, obj.getFood().getName()));
             ps.setInt(3, obj.getOrderCount());
-            System.out.println("count:" + obj.getOrderCount());
 
             try {
                 ps.executeUpdate();
@@ -202,12 +164,10 @@ public class OrderItemMapper extends Mapper {
         OrderItem orderItem = new OrderItem();
         orderItem.setOrder(order);
         if(FoodPartyFoodMapper.getInstance().is_foodparty(rs.getInt(3))){
-            System.out.println("foodparty");
             orderItem.setFood(FoodPartyFoodMapper.getInstance().find(rs.getInt(3), orderItem.getOrder().getRestaurant().getMenu()));
             orderItem.setIsFoodParty(true);
         }
         else{
-            System.out.println("food");
             orderItem.setFood(FoodMapper.getInstance().find(rs.getInt(3), orderItem.getOrder().getRestaurant().getMenu()));
             orderItem.setIsFoodParty(false);
         }

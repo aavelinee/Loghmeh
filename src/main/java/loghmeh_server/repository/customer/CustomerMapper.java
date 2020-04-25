@@ -8,15 +8,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
+
 
 public class CustomerMapper extends Mapper {
     private static CustomerMapper customerMapper = null;
 
     private static final String COLUMNS = "first_name, last_name, phone_number, email, credit, location_id";
     private static final String TABLE_NAME = "customers";
-    private Map<Integer, Customer> loadedMap = new HashMap<Integer, Customer>();
 
 
     public static CustomerMapper getInstance() {
@@ -27,9 +25,6 @@ public class CustomerMapper extends Mapper {
     }
 
     public Customer findByCellphone(String phone_number) throws SQLException {
-        Customer result = loadedMap.get(phone_number);
-        if (result != null)
-            return result;
         try (Connection con = ConnectionPool.getConnection();
             PreparedStatement ps = con.prepareStatement(
                     "select " + "id, " + COLUMNS + " from " + TABLE_NAME + " where phone_number = (?)"
@@ -50,10 +45,6 @@ public class CustomerMapper extends Mapper {
     }
 
     public Customer find(int id) throws SQLException {
-        Customer result = loadedMap.get(id);
-        if (result != null)
-            return result;
-
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(
                      "select " + "id, " + COLUMNS + " from " + TABLE_NAME + " where id = (?)"
@@ -70,29 +61,6 @@ public class CustomerMapper extends Mapper {
                 System.out.println("error in CustomerMapper.findByID query.");
                 throw ex;
             }
-        }
-    }
-
-    public int find_customer_id(Customer obj) {
-        try (Connection con = ConnectionPool.getConnection();
-             PreparedStatement ps = con.prepareStatement(
-                     "select " + "id from " + TABLE_NAME + " where phone_number = (?)"
-             )
-        ) {
-            ps.setString(1, obj.getPhoneNumber());
-            try {
-                ResultSet resultSet = ps.executeQuery();
-                if(resultSet.next())
-                    return resultSet.getInt(1);
-                else
-                    return -1;
-            } catch (SQLException ex) {
-                System.out.println("error in CustomerMapper.find customer id query.");
-                throw ex;
-            }
-        } catch(SQLException ex) {
-            System.out.println("SQLExcepion in finding customer id");
-            return -1;
         }
     }
 
@@ -126,10 +94,6 @@ public class CustomerMapper extends Mapper {
             }
         }
     }
-
-//    public void update_credit(int credit, int id) throws SQLException {
-//        Customer customer =
-//    }
 
     public void delete(int id) throws SQLException {
         this.delete(TABLE_NAME, id);

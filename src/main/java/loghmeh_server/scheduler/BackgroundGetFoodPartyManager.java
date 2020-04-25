@@ -37,8 +37,6 @@ public class BackgroundGetFoodPartyManager implements ServletContextListener {
     public class SetDelay implements Runnable{
         @Override
         public void run() {
-
-//            System.out.println("delay" + future.getDelay(TimeUnit.SECONDS));
             Loghmeh.getInstance().setNextFoodPartySchedulerFire(future.getDelay(TimeUnit.SECONDS));
         }
     }

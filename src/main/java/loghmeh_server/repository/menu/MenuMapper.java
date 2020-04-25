@@ -12,8 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
+
 
 public class MenuMapper extends Mapper {
     private static MenuMapper menuMapper = null;
@@ -21,7 +20,6 @@ public class MenuMapper extends Mapper {
 
     private static final String COLUMNS = "restaurant_id";
     private static final String TABLE_NAME = "menus";
-    private Map<Integer, Menu> loadedMap = new HashMap<Integer, Menu>();
 
 
     public static MenuMapper getInstance() {
@@ -29,33 +27,6 @@ public class MenuMapper extends Mapper {
             menuMapper = new MenuMapper();
         }
         return menuMapper;
-    }
-
-
-    public Menu find(int id, Restaurant restaurant) throws SQLException {
-        Menu result = loadedMap.get(id);
-        if (result != null)
-            return result;
-
-        try (Connection con = ConnectionPool.getConnection();
-             PreparedStatement preparedStatement = con.prepareStatement(
-                     "select id, " + COLUMNS + " from " + TABLE_NAME + " where id = (?)"
-             )
-        ) {
-            preparedStatement.setInt(1, id);
-            ResultSet resultSet;
-            try {
-                resultSet = preparedStatement.executeQuery();
-
-                if(resultSet.next())
-                    return convertResultSetToObject(resultSet, restaurant);
-                else
-                    return null;
-            } catch (SQLException ex) {
-                System.out.println("error in MenuMapper.findByID query.");
-                throw ex;
-            }
-        }
     }
 
     public Menu find(Restaurant restaurant) throws SQLException {
@@ -141,7 +112,6 @@ public class MenuMapper extends Mapper {
         menu.setFoods(FoodMapper.getInstance().find_foods(menu));
 
         menu.setFoodPartyFoods(FoodPartyFoodMapper.getInstance().find_foodparty_foods(menu));
-
 
         return menu;
     }

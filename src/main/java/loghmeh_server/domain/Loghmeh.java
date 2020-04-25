@@ -80,7 +80,6 @@ public class Loghmeh {
     }
 
     public String updateCart(int customerId, String restaurantId, String foodName, int foodCount, boolean isFoodParty, String operation) {
-        System.out.println("is food party?" + isFoodParty);
         Restaurant restaurant = RestaurantMapper.getInstance().find(restaurantId);
         if(restaurant == null) {
             System.out.println("There Is No Restaurant With ID " + restaurantId);
@@ -128,23 +127,19 @@ public class Loghmeh {
         if(order != null){
             String result;
             if(isNewFoodParty(order) && areFoodPartyFoodsAvailable(order)){
-                System.out.println("here1");
                 if(customer.finalizeOrder())
                     result = "done";
                 else
                     result = "no credit";
             }
             else if(isNewFoodParty(order) && !areFoodPartyFoodsAvailable(order)){
-                System.out.println("here2");
                 result = "count problem";
             }
             else if(!isNewFoodParty(order) && areFoodPartyFoodsAvailable(order)){
-                System.out.println("here3");
                 customer.removeFoodPartyFoodsFromCart();
                 result = "time problem";
             }
             else{
-                System.out.println("here4");
                 customer.removeFoodPartyFoodsFromCart();
                 result = "both problem";
             }
@@ -157,7 +152,6 @@ public class Loghmeh {
 
         Restaurant restaurant = RestaurantMapper.getInstance().find(order.getRestaurant().getId());
         if (restaurant == null) {
-            System.out.println("No restaurant");
             return false;
         }
         for (OrderItem orderItem : order.getOrders()) {
@@ -194,8 +188,6 @@ public class Loghmeh {
 
         for(Delivery delivery: deliveries) {
             Location restaurantLocation = order.getRestaurant().getLocation();
-            System.out.println("Del location: " + delivery.getLocation().getX() + ", " + delivery.getLocation().getY());
-            System.out.println("Rest location: " + restaurantLocation.getX() + ", " + restaurantLocation.getY());
             distance = Math.sqrt(Math.pow(delivery.getLocation().getX() - restaurantLocation.getX(), 2) + Math.pow(delivery.getLocation().getY() - restaurantLocation.getY(), 2));
             distance += Math.sqrt(Math.pow(customer.getLocation().getX() - restaurantLocation.getX(), 2) + Math.pow(customer.getLocation().getY() - restaurantLocation.getY(), 2));
             time = distance / delivery.getVelocity();

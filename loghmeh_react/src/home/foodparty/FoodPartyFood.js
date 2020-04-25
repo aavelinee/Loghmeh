@@ -64,7 +64,7 @@ class FoodPartyFood extends Component {
     }
 
     addToCart(foodName, foodCount) {
-        console.log("state foodCount: ", this.state.foodCount, foodCount)
+        console.log("state foodCount: ", this.state.food.restaurantId," - ", foodCount, foodName);
         event.preventDefault();
 		axios.put('http://localhost:8080/Loghmeh_war_exploded/put_cart', null,
 			{params: {

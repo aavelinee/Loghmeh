@@ -1,12 +1,12 @@
 package loghmeh_server.repository.foodparty_food;
 
+import loghmeh_server.domain.Loghmeh;
 import loghmeh_server.repository.menu.Menu;
 import loghmeh_server.repository.ConnectionPool;
 import loghmeh_server.repository.Mapper;
 import loghmeh_server.repository.food.Food;
 import loghmeh_server.repository.food.FoodMapper;
 import loghmeh_server.repository.menu.MenuMapper;
-import loghmeh_server.repository.order_item.OrderItemMapper;
 import loghmeh_server.repository.restaurant.Restaurant;
 import loghmeh_server.repository.restaurant.RestaurantMapper;
 
@@ -15,8 +15,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+
 
 public class FoodPartyFoodMapper extends Mapper {
     private static FoodPartyFoodMapper foodPartyFoodMapper = null;
@@ -24,7 +23,6 @@ public class FoodPartyFoodMapper extends Mapper {
 
     private static final String COLUMNS = "food_id, count, old_price, expiration_time";
     private static final String TABLE_NAME = "foodpartyfoods";
-    private Map<Integer, FoodPartyFood> loadedMap = new HashMap<Integer, FoodPartyFood>();
 
 
     public static FoodPartyFoodMapper getInstance() {
@@ -36,9 +34,6 @@ public class FoodPartyFoodMapper extends Mapper {
 
 
     public FoodPartyFood find(int id, Menu menu) throws SQLException {
-        FoodPartyFood result = loadedMap.get(id);
-        if (result != null)
-            return result;
 
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(
@@ -114,7 +109,6 @@ public class FoodPartyFoodMapper extends Mapper {
                 continue;
             }
         }
-        System.out.println("found all foodparty foods");
         return foodPartyFoods;
     }
 
@@ -204,12 +198,13 @@ public class FoodPartyFoodMapper extends Mapper {
     public void update_count(int food_id, int count) {
         try (Connection connection = ConnectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement (
-                     "update " + TABLE_NAME + " set count = (?) where food_id = (?)"
+                     "update " + TABLE_NAME + " set count = (?), expiration_time = (now() + interval (?) second ) where food_id = (?)"
              )
         ){
 
-            ps.setInt(2, food_id);
+            ps.setInt(3, food_id);
             ps.setInt(1, count);
+            ps.setFloat(2, Loghmeh.getInstance().getNextFoodPartySchedulerFire());
             try {
                 ps.executeUpdate();
             } catch (SQLException ex) {

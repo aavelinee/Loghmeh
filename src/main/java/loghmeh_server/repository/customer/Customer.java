@@ -112,9 +112,7 @@ public class Customer {
         if(cart == null){
             return false;
         }
-//        float orderPrice = cart.getPrice();
         if(credit >= cart.getTotalPrice()) {
-            System.out.println("total bill price: " + cart.getTotalPrice());
             cart.decreaseFoodCounts();
             cart.setStatus(Order.orderStatus.DeliverySearch);
             credit -= cart.getTotalPrice();

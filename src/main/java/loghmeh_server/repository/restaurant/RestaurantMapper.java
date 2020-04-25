@@ -12,8 +12,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class RestaurantMapper extends Mapper {
     private static RestaurantMapper restaurantMapper = null;
@@ -21,7 +19,6 @@ public class RestaurantMapper extends Mapper {
 
     private static final String COLUMNS = "id, name, logo, description, location_id";
     private static final String TABLE_NAME = "restaurants";
-    private Map<Integer, Restaurant> loadedMap = new HashMap<Integer, Restaurant>();
 
 
     public static RestaurantMapper getInstance() {
@@ -33,10 +30,6 @@ public class RestaurantMapper extends Mapper {
 
 
     public Restaurant find(String id) {
-        Restaurant result = loadedMap.get(id);
-        if (result != null)
-            return result;
-
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(
                      "select " + COLUMNS + " from " + TABLE_NAME + " where id = (?)"
@@ -53,7 +46,7 @@ public class RestaurantMapper extends Mapper {
                     return null;
                 }
             } catch (SQLException ex) {
-                System.out.println("excccccccception");
+                System.out.println("SQL Exception in RestaurantMapper.findByID query.");
                 throw ex;
             }
         }catch (SQLException ex) {
@@ -72,7 +65,6 @@ public class RestaurantMapper extends Mapper {
         } else if(type.equals("foodparty")) {
             stmt = "select id from " + TABLE_NAME;
         } else {
-            System.out.print("Bad type in get restaurant");
             return null;
         }
         try (Connection con = ConnectionPool.getConnection();
@@ -114,8 +106,6 @@ public class RestaurantMapper extends Mapper {
 
     public ArrayList<Restaurant> find_searched_restaurants(String restaurant_name, String food_name, int page) {
         ArrayList<Restaurant> found_restaurants = new ArrayList<>();
-        System.out.println("restname:" + restaurant_name);
-        System.out.println("foodname:" + food_name);
         int limit = 8;
         int offset = limit * (page - 1);
         try (Connection con = ConnectionPool.getConnection();
@@ -128,11 +118,8 @@ public class RestaurantMapper extends Mapper {
             ps.setString(1, restaurant_name);
             ps.setString(2, food_name);
             try {
-                System.out.println("before query");
                 ResultSet resultSet = ps.executeQuery();
-                System.out.println("after query");
                 while(resultSet.next()) {
-                    System.out.println("here: " + resultSet.getString(1));
                     Restaurant restaurant = find(resultSet.getString(1));
                     if(restaurant != null)
                         found_restaurants.add(restaurant);
@@ -140,7 +127,6 @@ public class RestaurantMapper extends Mapper {
 
             } catch (SQLException ex) {
                 System.out.println("error in RestaurantMapper.search query.");
-                System.out.println(ex);
                 throw ex;
             }
 

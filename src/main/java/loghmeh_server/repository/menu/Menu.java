@@ -43,9 +43,7 @@ public class Menu {
     }
 
     public FoodPartyFood getFoodPartyFood(String foodName) {
-        System.out.println("selectedfood: " + foodName);
         for(FoodPartyFood foodPartyFood: foodPartyFoods){
-            System.out.println("food:" + foodPartyFood.getName());
             if(foodPartyFood.getName().equals(foodName)){
                 return foodPartyFood;
             }

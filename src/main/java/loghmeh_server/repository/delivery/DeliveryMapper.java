@@ -1,25 +1,20 @@
 package loghmeh_server.repository.delivery;
 
 import loghmeh_server.repository.ConnectionPool;
-import loghmeh_server.repository.location.Location;
 import loghmeh_server.repository.location.LocationMapper;
-import loghmeh_server.repository.restaurant.Restaurant;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+
 
 public class DeliveryMapper {
     private static DeliveryMapper deliveryMapper = null;
 
     private static final String COLUMNS = "id, velocity, location_id";
     private static final String TABLE_NAME = "deliveries";
-    private Map<Integer, Delivery> loadedMap = new HashMap<Integer, Delivery>();
-
 
     public static DeliveryMapper getInstance() {
         if(deliveryMapper == null){
@@ -30,10 +25,6 @@ public class DeliveryMapper {
 
 
     public Delivery find(String id) throws SQLException {
-        Delivery result = loadedMap.get(id);
-        if (result != null)
-            return result;
-
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(
                      "select " + COLUMNS + " from " + TABLE_NAME + " where id = (?)"
@@ -99,7 +90,6 @@ public class DeliveryMapper {
                 LocationMapper.getInstance().insert(obj.getLocation());
                 locationId = LocationMapper.getInstance().find(obj.getLocation().getX(), obj.getLocation().getY());
             }
-            System.out.println(locationId);
             ps.setInt(3, locationId);
             try {
                 ps.executeUpdate();
