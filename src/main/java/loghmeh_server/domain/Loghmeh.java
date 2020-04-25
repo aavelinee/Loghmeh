@@ -80,7 +80,7 @@ public class Loghmeh {
     }
 
     public String updateCart(int customerId, String restaurantId, String foodName, int foodCount, boolean isFoodParty, String operation) {
-
+        System.out.println("is food party?" + isFoodParty);
         Restaurant restaurant = RestaurantMapper.getInstance().find(restaurantId);
         if(restaurant == null) {
             System.out.println("There Is No Restaurant With ID " + restaurantId);

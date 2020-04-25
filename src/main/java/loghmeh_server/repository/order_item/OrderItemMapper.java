@@ -204,10 +204,12 @@ public class OrderItemMapper extends Mapper {
         if(FoodPartyFoodMapper.getInstance().is_foodparty(rs.getInt(3))){
             System.out.println("foodparty");
             orderItem.setFood(FoodPartyFoodMapper.getInstance().find(rs.getInt(3), orderItem.getOrder().getRestaurant().getMenu()));
+            orderItem.setIsFoodParty(true);
         }
         else{
             System.out.println("food");
             orderItem.setFood(FoodMapper.getInstance().find(rs.getInt(3), orderItem.getOrder().getRestaurant().getMenu()));
+            orderItem.setIsFoodParty(false);
         }
         orderItem.setOrderCount(rs.getInt(4));
 
