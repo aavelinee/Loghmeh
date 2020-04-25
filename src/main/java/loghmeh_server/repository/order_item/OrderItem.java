@@ -6,7 +6,7 @@ import loghmeh_server.repository.order.Order;
 
 public class OrderItem {
 
-    private Order order;
+    private transient Order order;
     private Food food;
     private int orderCount;
     private boolean isFoodParty;

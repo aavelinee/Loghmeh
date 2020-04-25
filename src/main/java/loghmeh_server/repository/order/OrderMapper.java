@@ -212,6 +212,7 @@ public class OrderMapper extends Mapper {
         order.setCustomer(CustomerMapper.getInstance().find(rs.getInt(3)));
         order.setRestaurant(RestaurantMapper.getInstance().find(rs.getString(4)));
         order.setRestaurantId(order.getRestaurant().getId());
+        order.setRestaurantName(order.getRestaurant().getName());
         order.setDelivery(DeliveryMapper.getInstance().find(rs.getString(5)));
         order.setEstimatedDeliveryTime(rs.getDouble(6));
         order.setDeliveryDate(rs.getDate(7));

@@ -22,6 +22,7 @@ public class Order {
 
     private transient Restaurant restaurant;
     private String restaurantId;
+    private String restaurantName;
     private ArrayList<OrderItem> orders = new ArrayList<OrderItem>();
     private Delivery delivery;
     private double estimatedDeliveryTime;
@@ -34,6 +35,7 @@ public class Order {
 //        this.id = id;
         this.restaurant = restaurant;
         this.restaurantId = restaurant.getId();
+        this.restaurantName = restaurant.getName();
         this.totalPrice = 0;
         this.customer = customer;
     }
@@ -88,14 +90,15 @@ public class Order {
         for(OrderItem orderItem: orders) {
             if(orderItem.getFood().getName().equals(foodName)) {
                 orderItem.orderLess();
-                OrderItemMapper.getInstance().update_orderitem_count(id, orderItem.getFood(), orderItem.getOrderCount() - 1);
+                OrderItemMapper.getInstance().update_orderitem_count(id, orderItem.getFood(), orderItem.getOrderCount());
                 this.totalPrice -= orderItem.getFood().getPrice();
                 OrderMapper.getInstance().update_total_price(id, this.totalPrice);
                 if(orderItem.getOrderCount() == 0) {
-                    orders.remove(orderItem);
                     int orderitem_id = OrderItemMapper.getInstance().find_orderitem_id(id, orderItem.getFood());
-                    if(orderitem_id == -1)
+                    if(orderitem_id == -1) {
                         return;
+                    }
+                    orders.remove(orderItem);
                     try {
                         OrderItemMapper.getInstance().delete(orderitem_id);
                     } catch (SQLException ex) {
@@ -169,6 +172,14 @@ public class Order {
 
     public String getRestaurantId() {
         return restaurantId;
+    }
+
+    public String getRestaurantName() {
+        return restaurantName;
+    }
+
+    public void setRestaurantName(String restaurantName) {
+        this.restaurantName = restaurantName;
     }
 
     public void setRestaurantId(String restaurantId) {

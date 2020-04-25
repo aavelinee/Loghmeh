@@ -61,7 +61,7 @@ class OrderItem extends Component {
         return (
             <div class="row order-item">
                 <div class="col col-1 right-col">{this.state.orders.indexOf(this.props.order) + 1}</div>
-                <div class="col col-6"> {this.props.order.restaurant.name}</div>
+                <div class="col col-6"> {this.props.order.restaurantName}</div>
                 <div class="col col-5 left-col">
                     {this.state.order.status == "Delivered" &&
                         <button type="button" class="factor delivered" onClick={this.handleShow}>{status[this.state.order.status]}</button>

@@ -99,7 +99,7 @@ public class LoghmehService {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public Order getOrder(HttpServletResponse servletResponse,
                           @PathVariable(value = "orderId") int orderId){
-        for(Order order : Loghmeh.getInstance().getCustomer(0).getOrders()) {
+        for(Order order : Loghmeh.getInstance().getCustomer(1).getOrders()) {
             if (order.getId() == orderId) {
                 servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
                 return order;
@@ -131,7 +131,6 @@ public class LoghmehService {
             for(OrderItem orderItem: cart.getOrders()) {
                 System.out.println(orderItem.getFood().getName());
             }
-            ///
             servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
         } else {
             System.out.println("No cart found");
@@ -177,7 +176,7 @@ public class LoghmehService {
                                          @RequestParam(value = "foodName") String foodName,
                                          @RequestParam(value = "foodCount") int foodCount,
                                          @RequestParam(value = "isFoodParty") boolean isFoodParty){
-        System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa put in cart");
+        System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa put in cart " + foodName);
         String result = Loghmeh.getInstance().updateCart(userId, restaurantId, foodName, foodCount, isFoodParty, "add");
         ReqResult resp = new ReqResult();
         if(result.equals("added")){
@@ -200,9 +199,10 @@ public class LoghmehService {
     public ReqResult finalizeController(HttpServletResponse servletResponse,
                                         @RequestParam(value = "userId") int userId){
         System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa put in finalize");
-        Order order = Loghmeh.getInstance().getCart(0);
+        Order order = Loghmeh.getInstance().getCart(1);
         String result = Loghmeh.getInstance().finalizeOrder(userId);
         ReqResult resp = new ReqResult();
+        System.out.println("res: " + result);
         if(result.equals("done")){
             Loghmeh.getInstance().findDelivery(order);
             resp.setSuccessful(true);
@@ -230,7 +230,7 @@ public class LoghmehService {
                                               @RequestParam(value = "restaurantId") String restaurantId,
                                               @RequestParam(value = "foodName") String foodName,
                                               @RequestParam(value = "isFoodParty") boolean isFoodParty){
-        System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa del from cart");
+        System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa del from cart " + foodName);
         String result = Loghmeh.getInstance().updateCart(userId, restaurantId, foodName, 1, isFoodParty, "remove");
         ReqResult resp = new ReqResult();
         if(result.equals("removed")){

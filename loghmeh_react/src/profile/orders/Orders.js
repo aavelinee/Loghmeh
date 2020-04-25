@@ -43,7 +43,7 @@ class Orders extends Component {
             </div>
         );
 		return (
-			<div id="orders" class="orders-container container-sm border">
+			<div id="orders" className="orders-container container-sm border">
                 {orders}
 			</div>
 		);

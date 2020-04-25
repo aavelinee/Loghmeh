@@ -1,11 +1,9 @@
 package loghmeh_server.repository.restaurant;
 
-import loghmeh_server.deserializer.*;
 import loghmeh_server.repository.food.Food;
 import loghmeh_server.repository.foodparty_food.FoodPartyFood;
 import loghmeh_server.repository.location.Location;
 import loghmeh_server.repository.menu.Menu;
-import loghmeh_server.serializer.*;
 
 public class Restaurant {
     private String id;
@@ -25,19 +23,6 @@ public class Restaurant {
 
     public Restaurant(){}
 
-    public void addFoodToMenu(String jsonInput) {
-        Food food = foodDeserializer.deserialize(jsonInput);
-        menu.addFood(food);
-    }
-
-    public String getFood(String jsonInput) {
-        String foodName = foodDeserializer.getFoodNameFromJson(jsonInput);
-        Food food = menu.getFood(foodName);
-        if(food == null)
-            return "Food Does Not Exist";
-        return foodSerializer.serialize(food);
-
-    }
 
     public Food getFoodByName(String foodName) {
         return menu.getFood(foodName);
@@ -45,10 +30,6 @@ public class Restaurant {
 
     public FoodPartyFood getFoodPartyFoodByName(String foodName) {
         return menu.getFoodPartyFood(foodName);
-    }
-
-    public double getMenuPopulationAverage(){
-        return menu.getFoodsPopulationAverage();
     }
 
     public Location getLocation() {

@@ -51,17 +51,6 @@ public class Menu {
         return null;
     }
 
-    public float getFoodsPopulationAverage() {
-        float foodsPopulationAverage = 0;
-        for(Food food: foods){
-            foodsPopulationAverage += food.getPopularity();
-        }
-        if(foods.size() != 0){
-            foodsPopulationAverage /= foods.size();
-        }
-        return foodsPopulationAverage;
-    }
-
     public Restaurant getRestaurant() {
         return restaurant;
     }

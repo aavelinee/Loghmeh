@@ -19,7 +19,7 @@ class OrderBill extends Component {
         return(
             <div className="container order-bill">
                 <div className="row orderbill-restname">
-                    <p id="orderbill-restname">{this.props.order.restaurant.name}</p>
+                    <p id="orderbill-restname">{this.props.order.restaurantName}</p>
                 </div>
                 <div className="row order-table">
                 <table id="order-table">

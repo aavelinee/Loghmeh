@@ -100,6 +100,8 @@
     height: 4vmin;
     text-align: center;
     color: white;
+    margin: 1vmin;
+
 }
 
 .prev-page-btn {
@@ -111,7 +113,8 @@
     height: 4vmin;
     text-align: center;
     color: white;
-    margin-top: 2%;
+    margin: 1vmin;
+    /* margin-top: 2%; */
 }
 
 .no-prev-page-btn {
@@ -123,7 +126,12 @@
     height: 4vmin;
     text-align: center;
     color: white;
-    margin-top: 2%;
+    margin: 1vmin;
+    /* margin-top:  2%; */
+}
+
+.no-prev-page-btn:focus, .prev-page-btn:focus, .next-page-btn:focus {
+    outline: none;
 }
 
 .home-restname {
@@ -146,6 +154,7 @@
         width: 18vmin;
     }
 }
+
 
 .home-restmenu-btn {
     /* border: solid orange; */
