@@ -100,7 +100,7 @@ class FoodPartyFood extends Component {
     }
 
     getFoodPartyFood(restaurantId, foodName) {
-        console.log("getFoodPartyFood is called");
+        console.log("getFoodPartyFood is called", foodName);
         let body = {restaurantId : restaurantId, foodName : foodName}
     	axios.get("http://localhost:8080/Loghmeh_war_exploded/foodparty_food", { params: body })
 		.then(res => {

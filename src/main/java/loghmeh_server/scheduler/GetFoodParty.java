@@ -2,6 +2,7 @@ package loghmeh_server.scheduler;
 
 import loghmeh_server.domain.Loghmeh;
 
+
 public class GetFoodParty implements Runnable{
     @Override
     public void run() {

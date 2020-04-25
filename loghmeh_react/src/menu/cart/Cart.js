@@ -73,7 +73,7 @@ class Cart extends Component {
 
     handlePlusAddToCart(foodName, isFoodParty, foodCount) {
         console.log("order moreeeeeeeeee in cart", isFoodParty);
-        console.log("hhhhhhhhhhhhhh", foodCount);
+        console.log("hhhhhhhhhhhhhh", foodCount, foodName);
         this.addToCart(this.state.cart.restaurantId, foodName, isFoodParty, foodCount);
 
     }

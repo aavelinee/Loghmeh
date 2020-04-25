@@ -23,7 +23,8 @@ public class FoodPartyFood extends Food {
                 int menu_id = MenuMapper.getInstance().find_menu_id(getMenu().getRestaurant());
                 int food_id = FoodMapper.getInstance().find(menu_id, getName());
                 this.count -= count;
-                FoodPartyFoodMapper.getInstance().update_count(food_id, count);
+                System.out.println("update count:" + food_id + " to " + this.count);
+                FoodPartyFoodMapper.getInstance().update_count(food_id, this.count);
                 return true;
             } catch (SQLException ex) {
                 System.out.println("SQLException in decrease foodparty food count");
