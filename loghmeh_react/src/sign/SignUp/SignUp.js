@@ -24,12 +24,6 @@ class SignUp extends Component {
 					placeholder="ایمیل">
 				</input>
 				<input
-					type="text"
-					name="username"
-					className="sign-up-form form-control mb-2 mr-sm-2"
-					placeholder="نام کاربری">
-				</input>
-				<input
 					type="password"
 					name="password"
 					className="sign-up-form form-control mb-2 mr-sm-2"
