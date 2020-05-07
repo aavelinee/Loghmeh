@@ -6,6 +6,17 @@ import './HomeJumbotron.css'
 class HomeJumbotron extends Component {
     constructor(props) {
         super(props);
+        this.state = {searchedRestaurant : "", searchedFood : ""}
+        this.handleRestaurantInput = this.handleRestaurantInput.bind(this);
+        this.handleFoodInput = this.handleFoodInput.bind(this);
+    }
+
+    handleFoodInput() {
+        this.setState(prevState => ({searchedFood : event.target.value}));
+    }
+
+    handleRestaurantInput() {
+        this.setState(prevState => ({searchedRestaurant : event.target.value}));
     }
 
     render() {
@@ -20,13 +31,13 @@ class HomeJumbotron extends Component {
                     </div>
                     {this.props.searchBox &&
                         <div className="row  home-jumbotron-row searchBox">
-                            <form className="search-form form-inline">
+                            <form className="search-form form-inline" onSubmit={() => this.props.handleSearch(this.state.searchedRestaurant, this.state.searchedFood)}>
                                 <label className="sr-only" htmlFor="inlineFormInputName2">Credit</label>
-                                <input type="text" readOnly className="foodname-input form-control mb-2 mr-sm-2" id="inlineFormInputName2"
-                                    placeholder="نام غذا"></input>
-                                <input type="text" readOnly className="restname-input form-control mb-2 mr-sm-2" id="inlineFormInputName2"
-                                    placeholder="نام رستوران"></input>
-                                <button type="button" className="search-btn">جست‌و‌جو</button>
+                                <input type="text" className="foodname-input form-control mb-2 mr-sm-2" id="inlineFormInputName2"
+                                    placeholder="نام غذا" onChange={this.handleFoodInput}></input>
+                                <input type="text" className="restname-input form-control mb-2 mr-sm-2" id="inlineFormInputName2"
+                                    placeholder="نام رستوران" onChange={this.handleRestaurantInput}></input>
+                                <button type="submit" className="search-btn">جست‌و‌جو</button>
                             </form>
                         </div>
                     }

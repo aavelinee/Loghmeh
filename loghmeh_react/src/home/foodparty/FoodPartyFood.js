@@ -64,9 +64,9 @@ class FoodPartyFood extends Component {
     }
 
     addToCart(foodName, foodCount) {
-        console.log("state foodCount: ", this.state.foodCount, foodCount)
+        console.log("state foodCount: ", this.state.food.restaurantId," - ", foodCount, foodName);
         event.preventDefault();
-		axios.put('http://localhost:8081/Loghmeh_war_exploded/put_cart', null,
+		axios.put('http://localhost:8080/Loghmeh_war_exploded/put_cart', null,
 			{params: {
                 'userId': 1,
                 'restaurantId': this.state.food.restaurantId,
@@ -100,8 +100,9 @@ class FoodPartyFood extends Component {
     }
 
     getFoodPartyFood(restaurantId, foodName) {
-        console.log("getFoodPartyFood is called");
-    	axios.get("http://localhost:8081/Loghmeh_war_exploded/foodparty_food/" + restaurantId + "/" + foodName)
+        console.log("getFoodPartyFood is called", foodName);
+        let body = {restaurantId : restaurantId, foodName : foodName}
+    	axios.get("http://localhost:8080/Loghmeh_war_exploded/foodparty_food", { params: body })
 		.then(res => {
             const data = res.data;
 			this.updateCount(data.count);

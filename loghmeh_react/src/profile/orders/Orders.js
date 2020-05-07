@@ -25,7 +25,7 @@ class Orders extends Component {
     }
 
     getOrders() {
-		axios.get("http://localhost:8081/Loghmeh_war_exploded/orders")
+		axios.get("http://localhost:8080/Loghmeh_war_exploded/orders")
         .then(res => {
             const data = res.data;
             this.setState({ 
@@ -43,7 +43,7 @@ class Orders extends Component {
             </div>
         );
 		return (
-			<div id="orders" class="orders-container container-sm border">
+			<div id="orders" className="orders-container container-sm border">
                 {orders}
 			</div>
 		);

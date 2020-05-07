@@ -1,6 +1,6 @@
 package loghmeh_server.deserializer;
 
-import loghmeh_server.domain.Food;
+import loghmeh_server.repository.food.Food;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;

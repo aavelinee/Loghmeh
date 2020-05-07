@@ -28,7 +28,7 @@ class Cart extends Component {
 
     getCart() {
         console.log("getCart is called");
-    	axios.get("http://localhost:8081/Loghmeh_war_exploded/cart/" + 1)
+    	axios.get("http://localhost:8080/Loghmeh_war_exploded/cart/" + 1)
 		.then(res => {
             const data = res.data;
 			this.setState({ 
@@ -42,7 +42,7 @@ class Cart extends Component {
         console.log("order moreeeeeeeeee in cart", isFoodParty);
         console.log(foodCount)
         event.preventDefault();
-		axios.put('http://localhost:8081/Loghmeh_war_exploded/put_cart', null,
+		axios.put('http://localhost:8080/Loghmeh_war_exploded/put_cart', null,
 			{params: {'userId': 1, 'restaurantId': restaurantId, 'foodName' : foodName, 'isFoodParty' : isFoodParty, 'foodCount' : foodCount}}
 		).then( (response) => {this.getCart();})
         .catch((error) => {
@@ -58,7 +58,7 @@ class Cart extends Component {
     removeFromCart(restaurantId, foodName, isFoodParty) {
         console.log("order lessssssss", isFoodParty);
         // event.preventDefault();
-		axios.delete('http://localhost:8081/Loghmeh_war_exploded/del_cart', 
+		axios.delete('http://localhost:8080/Loghmeh_war_exploded/del_cart',
 			{params: {'userId': 1, 'restaurantId': restaurantId, 'foodName' : foodName, 'isFoodParty' : isFoodParty}}
 		).then( (response) => {this.getCart();})
         .catch((error) => {
@@ -73,20 +73,20 @@ class Cart extends Component {
 
     handlePlusAddToCart(foodName, isFoodParty, foodCount) {
         console.log("order moreeeeeeeeee in cart", isFoodParty);
-        console.log("hhhhhhhhhhhhhh", foodCount);
-        this.addToCart(this.state.cart.restaurant.id, foodName, isFoodParty, foodCount);
+        console.log("hhhhhhhhhhhhhh", foodCount, foodName);
+        this.addToCart(this.state.cart.restaurantId, foodName, isFoodParty, foodCount);
 
     }
 
     handleMinusRemoveFromCart(foodName, isFoodParty, foodCount) {
         console.log("on click minus: ", foodName, this.state);
-        this.removeFromCart(this.state.cart.restaurant.id, foodName, isFoodParty);
+        this.removeFromCart(this.state.cart.restaurantId, foodName, isFoodParty);
     }
 
     handleFinalize() {
         console.log("finaliiiiiize");
         event.preventDefault();
-		axios.put('http://localhost:8081/Loghmeh_war_exploded/finalize', null,
+		axios.put('http://localhost:8080/Loghmeh_war_exploded/finalize', null,
 			{params: {'userId': 1}}
 		).then( (response) => {this.getCart()})
         .catch((error) => {

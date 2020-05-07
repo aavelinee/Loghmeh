@@ -1,6 +1,6 @@
 package loghmeh_server.serializer;
 
-import loghmeh_server.domain.Food;
+import loghmeh_server.repository.food.Food;
 import com.google.gson.*;
 
 public class foodSerializer {

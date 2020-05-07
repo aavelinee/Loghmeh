@@ -1,6 +1,6 @@
 package loghmeh_server.serializer;
 
-import loghmeh_server.domain.Restaurant;
+import loghmeh_server.repository.restaurant.Restaurant;
 import com.google.gson.*;
 import java.util.ArrayList;
 

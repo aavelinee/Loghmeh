@@ -7,7 +7,7 @@ class Food extends Component {
     }
 
     render() {
-        console.log("in food: ", this.props.menu);
+        // console.log("in food: ", this.props.menu);
         const rows = [...Array( Math.ceil(this.props.menu.foods.length / 3) )];
         // chunk the menu into the array of rows
         const menuRows = rows.map( (row, idx) => (this.props.menu.foods.slice(idx * 3, idx * 3 + 3) ));

@@ -21,7 +21,7 @@ public class BackgroundGetFoodPartyManager implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent event) {
         scheduler = Executors.newSingleThreadScheduledExecutor();
-        future = scheduler.scheduleAtFixedRate(new GetFoodParty(), 0, 1, TimeUnit.MINUTES);
+        future = scheduler.scheduleAtFixedRate(new GetFoodParty(), 0, 2, TimeUnit.MINUTES);
 
         delaySetterTimer = Executors.newSingleThreadScheduledExecutor();
         delaySetterTimer.scheduleAtFixedRate(new SetDelay(), 0, 2, TimeUnit.SECONDS);
@@ -40,7 +40,5 @@ public class BackgroundGetFoodPartyManager implements ServletContextListener {
             Loghmeh.getInstance().setNextFoodPartySchedulerFire(future.getDelay(TimeUnit.SECONDS));
         }
     }
-
-
 
 }

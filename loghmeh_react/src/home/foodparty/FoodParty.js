@@ -11,7 +11,7 @@ class FoodParty extends Component {
         super(props);
         this.getFoodPartyFoods = this.getFoodPartyFoods.bind(this);
         this.tick = this.tick.bind(this);
-        this.state = {foodPartyFoods : [], remainingTime : 60 };
+        this.state = {foodPartyFoods : [], remainingTime : 120 };
     }
 
     componentDidMount() {
@@ -40,12 +40,12 @@ class FoodParty extends Component {
 
         this.getFoodPartyFoodsTimer = setInterval(
             () => this.getFoodPartyFoods(),
-            60 * 1000
+            120 * 1000
         );
     }
 
     getNextFoodPartyUpdateDelay() {
-        axios.get("http://localhost:8081/Loghmeh_war_exploded/next_time")
+        axios.get("http://localhost:8080/Loghmeh_war_exploded/next_time")
         .then(res => {
             const data = res.data;
             console.log("timeee:", data);
@@ -62,9 +62,9 @@ class FoodParty extends Component {
     getFoodPartyFoods() {
         this.setState(
             {
-                remainingTime : 60
+                remainingTime : 120
             });
-        axios.get("http://localhost:8081/Loghmeh_war_exploded/foodparty_foods")
+        axios.get("http://localhost:8080/Loghmeh_war_exploded/foodparty_foods")
         .then(res => {
             const data = res.data;
             this.setState({ 
