@@ -72,7 +72,10 @@ class FoodPartyFood extends Component {
                 'restaurantId': this.state.food.restaurantId,
                 'foodName' : foodName,
                 'foodCount': foodCount,
-                'isFoodParty' : true}}
+                'isFoodParty' : true},
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem("jwt_token")
+                }}
 		).then( (response) => {
             this.setState({foodCount : 0})
             this.getFoodPartyFood(this.state.food.restaurantId, foodName);})
@@ -102,7 +105,11 @@ class FoodPartyFood extends Component {
     getFoodPartyFood(restaurantId, foodName) {
         console.log("getFoodPartyFood is called", foodName);
         let body = {restaurantId : restaurantId, foodName : foodName}
-    	axios.get("http://localhost:8080/Loghmeh_war_exploded/foodparty_food", { params: body })
+    	axios.get("http://localhost:8080/Loghmeh_war_exploded/foodparty_food", { params: body ,
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem("jwt_token")
+            }
+        })
 		.then(res => {
             const data = res.data;
 			this.updateCount(data.count);

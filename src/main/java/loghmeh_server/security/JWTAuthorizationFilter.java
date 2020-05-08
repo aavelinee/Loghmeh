@@ -1,5 +1,7 @@
 package loghmeh_server.security;
 
+import loghmeh_server.domain.Loghmeh;
+
 import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -40,6 +42,12 @@ public class JWTAuthorizationFilter implements Filter {
 
             int userId = JWTUtils.getInstance().verifyJWTToken(header);
             if (userId == -1) {
+                System.out.println("no user id in filter");
+                ((HttpServletResponse) servletResponse).setStatus(HttpServletResponse.SC_FORBIDDEN);
+                return;
+            }
+            if(Loghmeh.getInstance().getCustomerById(userId) == null) {
+                System.out.println("no such user");
                 ((HttpServletResponse) servletResponse).setStatus(HttpServletResponse.SC_FORBIDDEN);
                 return;
             }

@@ -27,12 +27,13 @@ public class test {
 
     @Before
     public void setUp() throws SQLException {
-        token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLYp9it2LPYp9mGINiu2KfZhdiz4oCM2b7Zhtin2YciLCJpYXQiOjE1ODg5MDM3NjUsImlzcyI6InNlY3VyZS1hcGkiLCJleHAiOjE1ODg5MDM3NzAsInVzZXJJZCI6MX0.A-7WD3KZp_qbLDO691U_O2OO9C3Sk9drAPpdQkUcJD4";
+        token = "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1ODg5NDE5MjYsImlzcyI6InNlY3VyZS1hcGkiLCJleHAiOjE1ODkwMjgzMjYsInVzZXJJZCI6MzV9.dbGZviQcZPgrZ1rLabrn6bDIouCLuTsjNAhPW5_9kxU";
+
     }
 
     @Test
     public void whenLoaded_find() throws SQLException {
-        Object body = JWTUtils.getInstance().verifyJWTToken(JWTUtils.getInstance().generateJWTToken(customer));
+        Object body = JWTUtils.getInstance().verifyJWTToken(token);
         System.out.println(body);
     }
 

@@ -46,7 +46,11 @@ class Restaurants extends Component {
     }
 
     getRestaurants(page) {
-        axios.get("http://localhost:8080/Loghmeh_war_exploded/ordinary_restaurants/" + (page))
+        axios.get("http://localhost:8080/Loghmeh_war_exploded/ordinary_restaurants/" + (page), {
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem("jwt_token")
+            }
+        })
         .then(res => {
             const data = res.data;
             this.setState({ 
@@ -60,7 +64,11 @@ class Restaurants extends Component {
         this.setState({isSearch: true, restNameSearch: restaurantName, foodNameSearch: foodName});
         event.preventDefault();
         let body = {restaurantName : restaurantName, foodName : foodName, page : page};
-        axios.get("http://localhost:8080/Loghmeh_war_exploded/searched_restaurants", { params: body })
+        axios.get("http://localhost:8080/Loghmeh_war_exploded/searched_restaurants", { params: body ,
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem("jwt_token")
+            }
+        })
         .then(res => {
             console.log("******************************************************************************\n************************************************************************************\n************************************************************8")
             const data = res.data;

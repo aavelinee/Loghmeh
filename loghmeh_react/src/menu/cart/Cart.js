@@ -28,7 +28,11 @@ class Cart extends Component {
 
     getCart() {
         console.log("getCart is called");
-    	axios.get("http://localhost:8080/Loghmeh_war_exploded/cart/" + 1)
+    	axios.get("http://localhost:8080/Loghmeh_war_exploded/cart", {
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem("jwt_token")
+            }
+        })
 		.then(res => {
             const data = res.data;
 			this.setState({ 
@@ -43,7 +47,10 @@ class Cart extends Component {
         console.log(foodCount)
         event.preventDefault();
 		axios.put('http://localhost:8080/Loghmeh_war_exploded/put_cart', null,
-			{params: {'userId': 1, 'restaurantId': restaurantId, 'foodName' : foodName, 'isFoodParty' : isFoodParty, 'foodCount' : foodCount}}
+			{ params: {'restaurantId': restaurantId, 'foodName' : foodName, 'isFoodParty' : isFoodParty, 'foodCount' : foodCount},
+                    headers: {
+                        Authorization: 'Bearer ' + localStorage.getItem("jwt_token")
+                    }}
 		).then( (response) => {this.getCart();})
         .catch((error) => {
             if (error.response.status == 403) {
@@ -59,7 +66,10 @@ class Cart extends Component {
         console.log("order lessssssss", isFoodParty);
         // event.preventDefault();
 		axios.delete('http://localhost:8080/Loghmeh_war_exploded/del_cart',
-			{params: {'userId': 1, 'restaurantId': restaurantId, 'foodName' : foodName, 'isFoodParty' : isFoodParty}}
+			{ params: {'restaurantId': restaurantId, 'foodName' : foodName, 'isFoodParty' : isFoodParty},
+                    headers: {
+                        Authorization: 'Bearer ' + localStorage.getItem("jwt_token")
+                    }}
 		).then( (response) => {this.getCart();})
         .catch((error) => {
             // if (error.response.status === 403) {
@@ -87,7 +97,9 @@ class Cart extends Component {
         console.log("finaliiiiiize");
         event.preventDefault();
 		axios.put('http://localhost:8080/Loghmeh_war_exploded/finalize', null,
-			{params: {'userId': 1}}
+			{ headers: {
+                        Authorization: 'Bearer ' + localStorage.getItem("jwt_token")
+                    }}
 		).then( (response) => {this.getCart()})
         .catch((error) => {
             if (error.response.status == 403) {

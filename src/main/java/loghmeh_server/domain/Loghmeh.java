@@ -28,20 +28,7 @@ public class Loghmeh {
 
     float nextFoodPartySchedulerFire;
 
-    private Loghmeh() {
-//        try{
-//            if(CustomerMapper.getInstance().find(1) == null){
-//                Customer customer = new Customer(1, "احسان", "خامس‌پناه", "۰۹۱۲۳۴۵۶۷۸۹", "ekhamespanah@yahoo.com", 0f, 0f, "pass");
-//                try {
-//                    CustomerMapper.getInstance().insert(customer);
-//                } catch (SQLException ex) {
-//                    return;
-//                }
-//            }
-//        } catch(SQLException ex) {
-//            System.out.println("SQL Exception in finding customer.");
-//        }
-    }
+    private Loghmeh() {}
 
     public static Loghmeh getInstance() {
         if(loghmeh == null){
@@ -212,7 +199,7 @@ public class Loghmeh {
         setStatusToDeliveredTimer(order, deliveryTime);
     }
 
-    public void findDelivery(final Order order) {
+    public void findDelivery(final Order order, final int userId) {
         TimerTask getDeliveries = new TimerTask() {
             public void run() {
                 String deliveriesJson = loghmeh_server.external_services.ExternalServices.getFromExtenalAPI("http://138.197.181.131:8080/deliveries");
@@ -226,7 +213,7 @@ public class Loghmeh {
                 }
                 if(deliveries.size() != 0){
                     try {
-                        Customer customer = CustomerMapper.getInstance().find(1);
+                        Customer customer = CustomerMapper.getInstance().find(userId);
                         assignDelivery(order, customer);
                     } catch (SQLException ex) {
                         System.out.println("SQL Exception for getting customer in finding delivery");
@@ -283,14 +270,6 @@ public class Loghmeh {
             return null;
         }
         return customer;
-    }
-
-    public Customer getCustomer(int i) {
-        try {
-            return CustomerMapper.getInstance().find(i);
-        } catch (SQLException ex) {
-            return null;
-        }
     }
 
     public Customer getCustomerById(int id) {

@@ -25,8 +25,13 @@ class Orders extends Component {
     }
 
     getOrders() {
-		axios.get("http://localhost:8080/Loghmeh_war_exploded/orders")
-        .then(res => {
+		axios.get("http://localhost:8080/Loghmeh_war_exploded/orders",
+            {
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem("jwt_token")
+                }
+            })
+            .then(res => {
             const data = res.data;
             this.setState({ 
                 orders: data

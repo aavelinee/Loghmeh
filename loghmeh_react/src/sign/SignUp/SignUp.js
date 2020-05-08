@@ -4,7 +4,7 @@ import axios from 'axios';
 import './SignUp.css'
 import {Modal} from "react-bootstrap";
 import ReactDOM from "react-dom";
-import Home from "../../common/Navbar";
+import Home from "../../home/Home";
 
 class SignUp extends Component {
 	constructor(props) {
@@ -68,7 +68,7 @@ class SignUp extends Component {
 			return false;
 		}
 		if(!this.state.password.match('^(?=.*[0-9]$)(?=.*[a-zA-Z])')){
-			console.log("password2");
+			console.log("password2", this.state.password, "sal");
 			this.setState({msg:"رمز عبور وارد شده باید حاوی حروف و عدد باشد."});
 			this.handleShow();
 			return false;
@@ -85,8 +85,8 @@ class SignUp extends Component {
 					  'phone_number' : this.state.phone_number, 'email' : this.state.email,
 					  'password' : this.state.password}}
 			).then( (response) => {
-				console.log(response);
-				// localStorage.setItem("jtw_token", response)
+				console.log(response.headers["authorization"].split(" ")[1]);
+				localStorage.setItem("jwt_token", response.headers["authorization"].split(" ")[1])
 				this.renderHome();
 			})
 			.catch((error) => {
