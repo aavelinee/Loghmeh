@@ -24,7 +24,7 @@ class App extends Component {
       <div>
         {/*<Home />*/}
         {/* <BaseCrousel> <Cart /> <Cart /> <Cart /> <Cart /> </BaseCrousel> */}
-         <Sign isSignUp={true}/>
+         <Sign isSignUp={false}/>
       </div>
     );
   }

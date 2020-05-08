@@ -29,8 +29,10 @@ public class CORSFilter implements Filter {
             return;
         }
 
+        System.out.println("CORS before doFilter");
         // pass the request along the filter chain
         chain.doFilter(request, servletResponse);
+        System.out.println("CORS after doFilter");
     }
 
     public void init(FilterConfig config) throws ServletException {

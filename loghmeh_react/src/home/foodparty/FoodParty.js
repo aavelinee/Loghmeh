@@ -79,6 +79,7 @@ class FoodParty extends Component {
             this.setState({ 
                 foodPartyFoods: data
                 });
+            console.log(data);
         }).catch(error => {console.log(error);});
     }
 

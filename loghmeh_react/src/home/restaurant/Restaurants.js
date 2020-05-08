@@ -56,6 +56,7 @@ class Restaurants extends Component {
             this.setState({ 
                 restaurants: data
                 });
+            console.log(data);
         }).catch(error => {console.log(error);});
         
     }

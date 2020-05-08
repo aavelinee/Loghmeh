@@ -21,6 +21,14 @@
 
 }
 
+.sub {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 10vmin;
+    width: 40%;
+}
+
 .signin-form {
     justify-content: center;
     flex-direction: column;
@@ -43,6 +51,8 @@
     color: white;
     border-radius: 5px;
     width: 10vmin;
+    align-self: center;
+    width: 100%;
 }
 
 @media screen and (min-width: 800px) {
@@ -54,5 +64,18 @@
 }
 
 .signin-btn:focus{
+    outline: none;
+}
+
+.signup-link {
+    font-size: 12px;
+}
+
+.signup-link {
+    margin-top: 1vmin;
+    background-color: white;
+    border: none;
+}
+.signup-link:focus{
     outline: none;
 }

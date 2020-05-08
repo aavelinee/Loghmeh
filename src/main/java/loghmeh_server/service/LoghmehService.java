@@ -60,8 +60,10 @@ public class LoghmehService {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ArrayList<FoodPartyFood> getFoodPartyFoodsController(HttpServletResponse servletResponse) {
         servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
-        System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa get food " + Loghmeh.getInstance().getFoodPartyFoods().size());
-        return Loghmeh.getInstance().getFoodPartyFoods();
+        System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa get foodparty foods " + Loghmeh.getInstance().getFoodPartyFoods().size());
+        ArrayList<FoodPartyFood>foodPartyFoods = Loghmeh.getInstance().getFoodPartyFoods();
+        System.out.println("even here?://");
+        return foodPartyFoods;
     }
 
     @RequestMapping(value = "/foodparty_food", method = RequestMethod.GET,
@@ -75,6 +77,7 @@ public class LoghmehService {
         } else {
             servletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
         }
+        System.out.println("inja get food done");
         return foodPartyFood;
     }
 
