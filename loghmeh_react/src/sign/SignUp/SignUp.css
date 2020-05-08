@@ -106,6 +106,6 @@
     margin-left: 8px;
 }
 
-.sub.input {
-    background-color: #4ECDC4;
+.signup-btn:focus {
+    outline: none;
 }

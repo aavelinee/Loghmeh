@@ -1,5 +1,8 @@
 package loghmeh_server.domain;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.*;
 import loghmeh_server.repository.customer.Customer;
@@ -16,6 +19,9 @@ import loghmeh_server.repository.order_item.OrderItem;
 import loghmeh_server.repository.restaurant.Restaurant;
 import loghmeh_server.repository.restaurant.RestaurantMapper;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.bind.DatatypeConverter;
+
 //Singleton class
 public class Loghmeh {
     private static Loghmeh loghmeh = null;
@@ -23,18 +29,18 @@ public class Loghmeh {
     float nextFoodPartySchedulerFire;
 
     private Loghmeh() {
-        try{
-            if(CustomerMapper.getInstance().find(1) == null){
-                Customer customer = new Customer(1, "احسان", "خامس‌پناه", "۰۹۱۲۳۴۵۶۷۸۹", "ekhamespanah@yahoo.com", 0f, 0f);
-                try {
-                    CustomerMapper.getInstance().insert(customer);
-                } catch (SQLException ex) {
-                    return;
-                }
-            }
-        } catch(SQLException ex) {
-            System.out.println("SQL Exception in finding customer.");
-        }
+//        try{
+//            if(CustomerMapper.getInstance().find(1) == null){
+//                Customer customer = new Customer(1, "احسان", "خامس‌پناه", "۰۹۱۲۳۴۵۶۷۸۹", "ekhamespanah@yahoo.com", 0f, 0f, "pass");
+//                try {
+//                    CustomerMapper.getInstance().insert(customer);
+//                } catch (SQLException ex) {
+//                    return;
+//                }
+//            }
+//        } catch(SQLException ex) {
+//            System.out.println("SQL Exception in finding customer.");
+//        }
     }
 
     public static Loghmeh getInstance() {
@@ -223,7 +229,7 @@ public class Loghmeh {
                         Customer customer = CustomerMapper.getInstance().find(1);
                         assignDelivery(order, customer);
                     } catch (SQLException ex) {
-                        System.out.println("SQL Esception for getting customer in finding delivery");
+                        System.out.println("SQL Exception for getting customer in finding delivery");
                         return;
                     }
                     cancel();
@@ -241,6 +247,42 @@ public class Loghmeh {
         };
         Timer timer = new Timer();
         timer.schedule(setStatusToDelivered, (long)delay * 1000);
+    }
+
+    public Customer signUp (String name, String lastName, String email, String cellphone, String password) {
+//        try{
+//            if(CustomerMapper.getInstance().findByEmail(email) != null){
+//                System.out.println("invalid email");
+//                return null;
+//            }
+//        } catch (SQLException se) {
+//            System.out.println("email check exception");
+//        }
+        Customer customer = new Customer();
+        customer.setFirstName(name);
+        customer.setLastName(lastName);
+        customer.setEmail(email);
+        customer.setPhoneNumber(cellphone);
+        Location location = new Location(0f, 0f);
+        customer.setLocation(location);
+        customer.setCredit(0);
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            md.update(password.getBytes());
+            byte[] digest = md.digest();
+            String hashPass = DatatypeConverter.printHexBinary(digest).toUpperCase();
+            customer.setPassword(hashPass);
+        } catch (NoSuchAlgorithmException ex) {
+            System.out.println("NO such algorithm exception");
+        }
+        try {
+            CustomerMapper.getInstance().insert(customer);
+            customer.setCustomerId(CustomerMapper.getInstance().find(email));
+        } catch (SQLException ex) {
+            System.out.println("SQL Exception for inserting customer");
+            return null;
+        }
+        return customer;
     }
 
     public Customer getCustomer(int i) {

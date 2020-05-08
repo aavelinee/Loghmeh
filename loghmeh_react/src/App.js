@@ -22,9 +22,9 @@ class App extends Component {
     console.log(this.state.show); 
     return (
       <div>
-        <Home />
+        {/*<Home />*/}
         {/* <BaseCrousel> <Cart /> <Cart /> <Cart /> <Cart /> </BaseCrousel> */}
-        {/* <Sign isSignUp={true}/> */}
+         <Sign isSignUp={true}/>
       </div>
     );
   }

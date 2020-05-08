@@ -7,9 +7,13 @@ import loghmeh_server.repository.order.Order;
 import loghmeh_server.repository.restaurant.Restaurant;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import loghmeh_server.security.JWTUtils;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+
+import static loghmeh_server.security.SecurityConstants.HEADER_STRING;
+import static loghmeh_server.security.SecurityConstants.TOKEN_PREFIX;
 
 @RestController
 public class LoghmehService {
@@ -19,11 +23,10 @@ public class LoghmehService {
     public Customer getCustomerInfoController(HttpServletResponse servletResponse, @PathVariable(value = "userId") int customerId) {
         System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa get cust");
         Customer customer = Loghmeh.getInstance().getCustomerById(customerId);
-        if(customer != null){
+        if (customer != null) {
             servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
             return customer;
-        }
-        else{
+        } else {
             servletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
             return null;
         }
@@ -32,7 +35,7 @@ public class LoghmehService {
     @RequestMapping(value = "/ordinary_restaurants/{page}", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ArrayList<Restaurant> getOrdinaryRestaurantsController(HttpServletResponse servletResponse,
-              @PathVariable(value = "page") int page) {
+                                                                  @PathVariable(value = "page") int page) {
         servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
         System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa get rests" + Loghmeh.getInstance().getSpecifiedRestaurants("ordinary", page).size());
         return Loghmeh.getInstance().getSpecifiedRestaurants("ordinary", page);
@@ -50,9 +53,9 @@ public class LoghmehService {
     @RequestMapping(value = "/searched_restaurants", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ArrayList<Restaurant> getSearchedRestaurantsController(HttpServletResponse servletResponse,
-              @RequestParam(value = "restaurantName") String restaurantName,
-              @RequestParam(value = "foodName") String foodName,
-              @RequestParam(value = "page") int page) {
+                                                                  @RequestParam(value = "restaurantName") String restaurantName,
+                                                                  @RequestParam(value = "foodName") String foodName,
+                                                                  @RequestParam(value = "page") int page) {
         System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa get searched rests" + restaurantName + foodName);
         servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
         return Loghmeh.getInstance().getSearchedRestaurants(restaurantName, foodName, page);
@@ -69,13 +72,12 @@ public class LoghmehService {
     @RequestMapping(value = "/foodparty_food", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public FoodPartyFood getFoodPartyFoodController(HttpServletResponse servletResponse
-            , @RequestParam(value = "restaurantId") String restaurantId,  @RequestParam(value = "foodName") String foodName) {
+            , @RequestParam(value = "restaurantId") String restaurantId, @RequestParam(value = "foodName") String foodName) {
         FoodPartyFood foodPartyFood = Loghmeh.getInstance().getFoodPartyFood(restaurantId, foodName);
         System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa get foooood " + restaurantId + foodName);
-        if(foodPartyFood != null) {
+        if (foodPartyFood != null) {
             servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
-        }
-        else {
+        } else {
             servletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
         }
         return foodPartyFood;
@@ -91,8 +93,8 @@ public class LoghmehService {
     @RequestMapping(value = "/order/{orderId}", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public Order getOrder(HttpServletResponse servletResponse,
-                          @PathVariable(value = "orderId") int orderId){
-        for(Order order : Loghmeh.getInstance().getCustomer(1).getOrders()) {
+                          @PathVariable(value = "orderId") int orderId) {
+        for (Order order : Loghmeh.getInstance().getCustomer(1).getOrders()) {
             if (order.getId() == orderId) {
                 servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
                 return order;
@@ -108,13 +110,13 @@ public class LoghmehService {
         servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
         System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa get cart");
         Customer customer = Loghmeh.getInstance().getCustomerById(customerId);
-        if(customer == null){
+        if (customer == null) {
             System.out.println("No Customer found");
             servletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
             return null;
         }
         Order cart = customer.getCart();
-        if(cart != null) {
+        if (cart != null) {
             System.out.println("Cart Found");
             servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
         } else {
@@ -137,16 +139,15 @@ public class LoghmehService {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ReqResult increaseCreditController(HttpServletResponse servletResponse,
                                               @RequestParam(value = "userId") int userId,
-                                              @RequestParam(value = "creditIncrease") int creditIncrease){
+                                              @RequestParam(value = "creditIncrease") int creditIncrease) {
         System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa put credit");
         Customer customer = Loghmeh.getInstance().getCustomerById(userId);
         ReqResult result = new ReqResult();
-        if(customer != null){
+        if (customer != null) {
             customer.increaseCredit(creditIncrease);
             result.setSuccessful(true);
             servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
-        }
-        else{
+        } else {
             result.setSuccessful(false);
             servletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
         }
@@ -160,19 +161,17 @@ public class LoghmehService {
                                          @RequestParam(value = "restaurantId") String restaurantId,
                                          @RequestParam(value = "foodName") String foodName,
                                          @RequestParam(value = "foodCount") int foodCount,
-                                         @RequestParam(value = "isFoodParty") boolean isFoodParty){
+                                         @RequestParam(value = "isFoodParty") boolean isFoodParty) {
         System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa put in cart ");
         String result = Loghmeh.getInstance().updateCart(userId, restaurantId, foodName, foodCount, isFoodParty, "add");
         ReqResult resp = new ReqResult();
-        if(result.equals("added")){
+        if (result.equals("added")) {
             resp.setSuccessful(true);
             servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
-        }
-        else if(result.equals("not found")){
+        } else if (result.equals("not found")) {
             resp.setSuccessful(false);
             servletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
-        }
-        else if(result.equals("different restaurant order")){
+        } else if (result.equals("different restaurant order")) {
             resp.setSuccessful(false);
             servletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
         }
@@ -182,21 +181,19 @@ public class LoghmehService {
     @RequestMapping(value = "/finalize", method = RequestMethod.PUT,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ReqResult finalizeController(HttpServletResponse servletResponse,
-                                        @RequestParam(value = "userId") int userId){
+                                        @RequestParam(value = "userId") int userId) {
         System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa put in finalize");
         Order order = Loghmeh.getInstance().getCart(1);
         String result = Loghmeh.getInstance().finalizeOrder(userId);
         ReqResult resp = new ReqResult();
-        if(result.equals("done")){
+        if (result.equals("done")) {
             Loghmeh.getInstance().findDelivery(order);
             resp.setSuccessful(true);
             servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
-        }
-        else if(result.equals("not found")){
+        } else if (result.equals("not found")) {
             resp.setSuccessful(false);
             servletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
-        }
-        else{
+        } else {
             resp.setSuccessful(false);
             servletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN, result);
             resp.setErrorMsg(result);
@@ -212,15 +209,14 @@ public class LoghmehService {
                                               @RequestParam(value = "userId") int userId,
                                               @RequestParam(value = "restaurantId") String restaurantId,
                                               @RequestParam(value = "foodName") String foodName,
-                                              @RequestParam(value = "isFoodParty") boolean isFoodParty){
+                                              @RequestParam(value = "isFoodParty") boolean isFoodParty) {
         System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa del from cart ");
         String result = Loghmeh.getInstance().updateCart(userId, restaurantId, foodName, 1, isFoodParty, "remove");
         ReqResult resp = new ReqResult();
-        if(result.equals("removed")){
+        if (result.equals("removed")) {
             resp.setSuccessful(true);
             servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
-        }
-        else if(result.equals("not found")){
+        } else if (result.equals("not found")) {
             resp.setSuccessful(false);
             servletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
         }
@@ -228,5 +224,26 @@ public class LoghmehService {
         return resp;
     }
 
-
+    @RequestMapping(value = "/sign_up", method = RequestMethod.PUT,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ReqResult signUp(HttpServletResponse servletResponse,
+                            @RequestParam(value = "firstname") String firstName,
+                            @RequestParam(value = "lastname") String lastName,
+                            @RequestParam(value = "email") String email,
+                            @RequestParam(value = "phone_number") String phoneNumber,
+                            @RequestParam(value = "password") String password) {
+        System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa sign up ");
+        ReqResult resp = new ReqResult();
+        Customer customer = Loghmeh.getInstance().signUp(firstName, lastName, email, phoneNumber, password);
+        if(customer != null) {
+            resp.setSuccessful(true);
+            servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
+            servletResponse.setHeader(HEADER_STRING, TOKEN_PREFIX + JWTUtils.getInstance().generateJWTToken(customer));
+            System.out.println("set header authorization");
+        } else {
+            resp.setSuccessful(false);
+            servletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
+        return resp;
+    }
 }
