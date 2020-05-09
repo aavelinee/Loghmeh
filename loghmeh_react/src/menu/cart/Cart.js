@@ -47,10 +47,11 @@ class Cart extends Component {
         console.log(foodCount)
         event.preventDefault();
 		axios.put('http://localhost:8080/Loghmeh_war_exploded/put_cart', null,
-			{ params: {'restaurantId': restaurantId, 'foodName' : foodName, 'isFoodParty' : isFoodParty, 'foodCount' : foodCount},
-                    headers: {
-                        Authorization: 'Bearer ' + localStorage.getItem("jwt_token")
-                    }}
+			{ 
+                params: {'restaurantId': restaurantId, 'foodName' : foodName, 'isFoodParty' : isFoodParty, 'foodCount' : foodCount},
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem("jwt_token")
+                }}
 		).then( (response) => {this.getCart();})
         .catch((error) => {
             if (error.response.status == 403) {
@@ -66,10 +67,11 @@ class Cart extends Component {
         console.log("order lessssssss", isFoodParty);
         // event.preventDefault();
 		axios.delete('http://localhost:8080/Loghmeh_war_exploded/del_cart',
-			{ params: {'restaurantId': restaurantId, 'foodName' : foodName, 'isFoodParty' : isFoodParty},
-                    headers: {
-                        Authorization: 'Bearer ' + localStorage.getItem("jwt_token")
-                    }}
+			{ 
+                params: {'restaurantId': restaurantId, 'foodName' : foodName, 'isFoodParty' : isFoodParty},
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem("jwt_token")
+                }}
 		).then( (response) => {this.getCart();})
         .catch((error) => {
             // if (error.response.status === 403) {

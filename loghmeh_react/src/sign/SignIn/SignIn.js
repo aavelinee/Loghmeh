@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import './SignIn.css'
 import ReactDOM from "react-dom";
 import Sign from "../Sign";
+import Home from "../../home/Home";
 import axios from "axios";
+import {Modal} from "react-bootstrap";
 
 class SignIn extends Component {
     constructor(props) {
@@ -13,6 +15,7 @@ class SignIn extends Component {
         this.handlePasswordInput = this.handlePasswordInput.bind(this);
         this.handleShow = this.handleShow.bind(this);
         this.handleClose = this.handleClose.bind(this);
+        this.renderHome = this.renderHome.bind(this);
 
         this.prepareLoginButton = this.prepareLoginButton.bind(this);
         this.googleSDK = this.googleSDK.bind(this);
@@ -37,6 +40,13 @@ class SignIn extends Component {
         );
     }
 
+    renderHome() {
+        ReactDOM.render(
+            <Home />,
+            document.getElementById('root')
+        );
+    }
+
     handleSignin() {
         event.preventDefault();
 
@@ -51,11 +61,13 @@ class SignIn extends Component {
         axios.put('http://localhost:8080/Loghmeh_war_exploded/sign_in', null,
             {params: {'email' : this.state.email, 'password' : this.state.password}}
         ).then( (response) => {
-            console.log(response.headers["authorization"].split(" ")[1]);
-            localStorage.setItem("jwt_token", response.headers["authorization"].split(" ")[1])
+            var authHeader = response.headers["authorization"].split(" ")[1]
+            console.log(authHeader);
+            localStorage.setItem("jwt_token", authHeader)
             this.renderHome();
         })
         .catch((error) => {
+          console.log("error");
             if (error.response.status == 400){
                 this.setState({msg:"ایمیل یا رمزعبور اشتباه است."});
                 this.handleShow();
@@ -95,7 +107,6 @@ class SignIn extends Component {
           console.log('Name: ' + profile.getName());
           console.log('Image URL: ' + profile.getImageUrl());
           console.log('Email: ' + profile.getEmail());
-          //YOUR CODE HERE
           this.signIn(googleUser.getAuthResponse().id_token)
    
    
@@ -137,14 +148,20 @@ class SignIn extends Component {
         ).then( (response) => {
                 console.log("respoonnnse amaaadd")
                 console.log(response)
+                var authHeader = response.headers["authorization"].split(" ")[1]
+                console.log(authHeader);
+                localStorage.setItem("jwt_token", authHeader)
+                this.renderHome()
+        })
             .catch((error) => {
-                if (error.response.status == 403) {
-                    console.log("erorrrrrrr")
+                console.log("birin");
+                if (error.response.status == 400) {
+                    console.log("tuuuuu");
+                    this.handleSignup();
                 } else {
                     console.log(error);
                 }
-              })    
-        })
+              })
       }
 
       signOut() {
@@ -180,6 +197,7 @@ class SignIn extends Component {
                   <button className="signup-link" onClick={this.handleSignup} style={{cursor: 'pointer'}}>ثبت‌نام نکرده‌اید؟</button>
               </div>
           </form>
+            <Modal show={this.state.showModal} onHide={this.handleClose} ><p id="error-msg">{this.state.msg}</p></Modal>
         </div>
       );
     }

@@ -68,14 +68,13 @@ class FoodPartyFood extends Component {
         event.preventDefault();
 		axios.put('http://localhost:8080/Loghmeh_war_exploded/put_cart', null,
 			{params: {
-                'userId': 1,
                 'restaurantId': this.state.food.restaurantId,
                 'foodName' : foodName,
                 'foodCount': foodCount,
                 'isFoodParty' : true},
-                headers: {
-                    Authorization: 'Bearer ' + localStorage.getItem("jwt_token")
-                }}
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem("jwt_token")
+            }}
 		).then( (response) => {
             this.setState({foodCount : 0})
             this.getFoodPartyFood(this.state.food.restaurantId, foodName);})

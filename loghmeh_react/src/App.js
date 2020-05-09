@@ -19,7 +19,10 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state.show); 
+    console.log(this.state.show);
+    if() {
+
+    }
     return (
       <div>
         {/*<Home />*/}

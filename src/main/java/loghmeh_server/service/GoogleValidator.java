@@ -38,8 +38,6 @@ public class GoogleValidator {
                 .setAudience(Collections.singletonList(CLIENT_ID))
                 .build();
 
-
-// (Receive idTokenString by HTTPS POST)
         GoogleIdToken idToken;
         try {
             idToken = verifier.verify(this.idTokenString);

@@ -18,6 +18,7 @@ import loghmeh_server.repository.order.OrderMapper;
 import loghmeh_server.repository.order_item.OrderItem;
 import loghmeh_server.repository.restaurant.Restaurant;
 import loghmeh_server.repository.restaurant.RestaurantMapper;
+import loghmeh_server.service.GoogleValidator;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.DatatypeConverter;
@@ -285,33 +286,26 @@ public class Loghmeh {
             return null;
         }
     }
-//        public String signInWithGoogle(String token) {
-//        GoogleValidator.getInstance().setIdTokenString(token);
-//        String email = GoogleValidator.getInstance().verify();
-//        if(email == "email not verified") {
-//            return
-//        } else if(email == "invalid ID") {
-//            return
-//        } else if(email == "error") {
-//            return
-//        }
-//        Customer customer = new Customer();
-//        try {
-//            customer = CustomerMapper.getInstance().findByEmail(email);
-//        } catch (SQLException ex) {
-//            System.out.println("SQL Exception");
-//            System.out.println(ex);
-//            return "error";
-//        }
-//        if(customer == null) {
-//            return
-//        }
-//        //return jwt
-//    }
-//
-//    public String signIn(String email, String password) {
-//
-//    }
+
+    public Customer signInWithGoogle(String token) {
+        GoogleValidator.getInstance().setIdTokenString(token);
+        String email = GoogleValidator.getInstance().verify();
+        if(email.equals("email not verified")) {
+            return null;
+        } else if(email.equals("invalid ID")) {
+            return null;
+        } else if(email.equals("error")) {
+            return null;
+        }
+        try {
+            return CustomerMapper.getInstance().findByEmail(email);
+        } catch (SQLException ex) {
+            System.out.println("SQL Exception");
+            System.out.println(ex);
+            return null;
+        }
+    }
+
 
 
     public Customer getCustomerById(int id) {

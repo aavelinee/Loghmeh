@@ -247,8 +247,20 @@ public class LoghmehService {
                                   @RequestParam(value = "token") String token) {
         System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa google sign in");
         System.out.println(token);
-//        String res = Loghmeh.getInstance().signInWithGoogle(token);
+        Customer customer = Loghmeh.getInstance().signInWithGoogle(token);
         ReqResult resp = new ReqResult();
+        if(customer != null) {
+            System.out.println(customer.getFirstName());
+            resp.setSuccessful(true);
+            servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
+            servletResponse.setHeader(HEADER_STRING, TOKEN_PREFIX + JWTUtils.getInstance().generateJWTToken(customer));
+            servletResponse.setHeader("Access-Control-Expose-Headers", HEADER_STRING);
+            System.out.println("set header authorization in google signin");
+        } else {
+            resp.setSuccessful(false);
+            System.out.println("chaaaaaaap");
+            servletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
         return resp;
     }
 

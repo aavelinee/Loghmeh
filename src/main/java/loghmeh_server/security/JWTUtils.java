@@ -41,8 +41,9 @@ public class JWTUtils {
         try {
             System.out.println("key: "+SECRET_KEY);
             Jws<Claims> jws = Jwts.parserBuilder().setSigningKey(SECRET_KEY).build().parseClaimsJws(jwtToken);
-            System.out.println((int)jws.getBody().get("userId"));
-            return (int)jws.getBody().get("userId");
+            Double id = (Double)(jws.getBody().get("userId"));
+            System.out.println("id: " + id.intValue());
+            return id.intValue();
 
         }catch (JwtException ex) {
             System.out.println("JWT Exception in Structure");

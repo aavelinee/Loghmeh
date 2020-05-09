@@ -7,6 +7,7 @@ import './Navbar.css';
 import '../images/icons/flaticon.css';
 import Cart from '../menu/cart/Cart';
 import Home from '../home/Home';
+import Sign from '../sign/Sign';
 
 class Navbar extends Component {
 	constructor(props) {
@@ -18,6 +19,8 @@ class Navbar extends Component {
 		this.renderHome = this.renderHome.bind(this);
 		this.handleShow = this.handleShow.bind(this);
 		this.handleClose = this.handleClose.bind(this);
+		this.handleSignOut = this.handleSignOut.bind(this);
+		this.renderSignIn = this.renderSignIn.bind(this);
 
 	}
 
@@ -43,6 +46,13 @@ class Navbar extends Component {
 		);
 	}
 
+	renderSignIn() {
+		ReactDOM.render(
+			<Sign isSignUp={false}/>,
+			document.getElementById('root')
+		);
+	}
+
 	handleShow() {
         this.setState({showModal: true});
     }
@@ -50,6 +60,11 @@ class Navbar extends Component {
     handleClose() {
         this.setState({showModal: false});
     }
+
+	handleSignOut() {
+		localStorage.removeItem("jwt_token");
+		this.renderSignIn();
+	}
 
 	render() {
 		return (
@@ -74,7 +89,7 @@ class Navbar extends Component {
 								<a className="profile" onClick={this.renderProfile}>حساب کاربری</a>
 							}
 							{this.state.quit &&
-								<a className="quit-link">خروج</a>
+								<a className="quit-link" onClick={this.handleSignOut}>خروج</a>
 							}
 						</div>
 					</div>

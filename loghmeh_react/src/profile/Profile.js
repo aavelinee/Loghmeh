@@ -73,10 +73,11 @@ class Profile extends Component {
 		else{
 			event.preventDefault();
 			axios.put('http://localhost:8080/Loghmeh_war_exploded/credit', null,
-				{	params: {'creditIncrease': credit},
-						headers: {
-							Authorization: 'Bearer ' + localStorage.getItem("jwt_token")
-						}}
+				{	
+					params: {'creditIncrease': credit},
+					headers: {
+						Authorization: 'Bearer ' + localStorage.getItem("jwt_token")
+					}}
 			).then( (response) => {this.userInfoElement.current.updateUserInfo();})
 			.catch((error) => {console.log(error);});
 		}

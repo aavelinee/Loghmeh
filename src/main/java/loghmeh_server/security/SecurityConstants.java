@@ -15,4 +15,5 @@ public class SecurityConstants {
     public static final String HEADER_STRING = "Authorization";
     public static final String SIGN_UP_URL = "/sign_up";
     public static final String SIGN_IN_URL = "/sign_in";
+    public static final String GOOGLE_SIGN_IN = "/google_sign_in";
 }

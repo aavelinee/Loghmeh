@@ -1,17 +1,5 @@
 import loghmeh_server.domain.Loghmeh;
 import loghmeh_server.repository.customer.Customer;
-import loghmeh_server.repository.customer.CustomerMapper;
-import loghmeh_server.repository.delivery.Delivery;
-import loghmeh_server.repository.delivery.DeliveryMapper;
-import loghmeh_server.repository.foodparty_food.FoodPartyFood;
-import loghmeh_server.repository.foodparty_food.FoodPartyFoodMapper;
-import loghmeh_server.repository.location.Location;
-import loghmeh_server.repository.location.LocationMapper;
-import loghmeh_server.repository.order.Order;
-import loghmeh_server.repository.order.OrderMapper;
-import loghmeh_server.repository.order_item.OrderItem;
-import loghmeh_server.repository.restaurant.Restaurant;
-import loghmeh_server.repository.restaurant.RestaurantMapper;
 import loghmeh_server.security.JWTUtils;
 import org.junit.After;
 import org.junit.Before;
