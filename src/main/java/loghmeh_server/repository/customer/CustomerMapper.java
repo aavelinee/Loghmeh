@@ -86,6 +86,31 @@ public class CustomerMapper extends Mapper {
         }
     }
 
+    public Customer find(String email, String hashedPassword) {
+        try (Connection con = ConnectionPool.getConnection();
+             PreparedStatement ps = con.prepareStatement(
+                     "select " + "id, " + COLUMNS + " from " + TABLE_NAME + " where email = (?) and password = (?)"
+             )
+        ) {
+            ps.setString(1, email);
+            ps.setString(2, hashedPassword);
+            try {
+                ResultSet resultSet = ps.executeQuery();
+                if(resultSet.next())
+                    return convertResultSetToObject(resultSet);
+                else
+                    return null;
+            } catch (SQLException ex) {
+                System.out.println("error in CustomerMapper.find by email and password query.");
+                return null;
+            }
+        } catch (SQLException ex) {
+            System.out.println("error in finding customer with such email and password");
+            return null;
+        }
+    }
+
+
     public void insert(Customer obj) throws SQLException {
         try (Connection connection = ConnectionPool.getConnection();
             PreparedStatement ps = connection.prepareStatement (

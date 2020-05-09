@@ -258,9 +258,20 @@ public class LoghmehService {
                             @RequestParam(value = "email") String email,
                             @RequestParam(value = "password") String password) {
         System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa sign in");
-//        String res = Loghmeh.getInstance().signIn(email, password);
         ReqResult resp = new ReqResult();
+        Customer customer = Loghmeh.getInstance().authenticate(email, password);
+        if(customer != null) {
+            resp.setSuccessful(true);
+            servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
+            servletResponse.setHeader(HEADER_STRING, TOKEN_PREFIX + JWTUtils.getInstance().generateJWTToken(customer));
+            servletResponse.setHeader("Access-Control-Expose-Headers", HEADER_STRING);
+            System.out.println("set header authorization in signin");
+        } else {
+            resp.setSuccessful(false);
+            servletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
         return resp;
     }
+
 
 }

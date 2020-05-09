@@ -235,7 +235,6 @@ public class Loghmeh {
         Timer timer = new Timer();
         timer.schedule(setStatusToDelivered, (long)delay * 1000);
     }
-
     public Customer signUp (String name, String lastName, String email, String cellphone, String password) {
 //        try{
 //            if(CustomerMapper.getInstance().findByEmail(email) != null){
@@ -253,15 +252,10 @@ public class Loghmeh {
         Location location = new Location(0f, 0f);
         customer.setLocation(location);
         customer.setCredit(0);
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            md.update(password.getBytes());
-            byte[] digest = md.digest();
-            String hashPass = DatatypeConverter.printHexBinary(digest).toUpperCase();
-            customer.setPassword(hashPass);
-        } catch (NoSuchAlgorithmException ex) {
-            System.out.println("NO such algorithm exception");
-        }
+        String hashedPassword = getPasswordHash(password);
+        if(hashedPassword == null)
+            return null;
+        customer.setPassword(hashedPassword);
         try {
             CustomerMapper.getInstance().insert(customer);
             customer.setCustomerId(CustomerMapper.getInstance().find(email));
@@ -272,6 +266,25 @@ public class Loghmeh {
         return customer;
     }
 
+    public Customer authenticate(String email, String password) {
+        String hashedPassword = getPasswordHash(password);
+        if(hashedPassword == null)
+            return null;
+        return CustomerMapper.getInstance().find(email, hashedPassword);
+    }
+
+    public String getPasswordHash(String password) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            md.update(password.getBytes());
+            byte[] digest = md.digest();
+            return DatatypeConverter.printHexBinary(digest).toUpperCase();
+
+        } catch (NoSuchAlgorithmException ex) {
+            System.out.println("NO such algorithm exception");
+            return null;
+        }
+    }
 //        public String signInWithGoogle(String token) {
 //        GoogleValidator.getInstance().setIdTokenString(token);
 //        String email = GoogleValidator.getInstance().verify();
