@@ -240,4 +240,27 @@ public class LoghmehService {
         }
         return resp;
     }
+
+    @RequestMapping(value = "/google_sign_in", method = RequestMethod.PUT,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ReqResult GoogleSignIn(HttpServletResponse servletResponse,
+                                  @RequestParam(value = "token") String token) {
+        System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa google sign in");
+        System.out.println(token);
+//        String res = Loghmeh.getInstance().signInWithGoogle(token);
+        ReqResult resp = new ReqResult();
+        return resp;
+    }
+
+    @RequestMapping(value = "/sign_in", method = RequestMethod.PUT,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ReqResult signIn(HttpServletResponse servletResponse,
+                            @RequestParam(value = "email") String email,
+                            @RequestParam(value = "password") String password) {
+        System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa sign in");
+//        String res = Loghmeh.getInstance().signIn(email, password);
+        ReqResult resp = new ReqResult();
+        return resp;
+    }
+
 }

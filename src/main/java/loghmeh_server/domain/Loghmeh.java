@@ -272,6 +272,35 @@ public class Loghmeh {
         return customer;
     }
 
+//        public String signInWithGoogle(String token) {
+//        GoogleValidator.getInstance().setIdTokenString(token);
+//        String email = GoogleValidator.getInstance().verify();
+//        if(email == "email not verified") {
+//            return
+//        } else if(email == "invalid ID") {
+//            return
+//        } else if(email == "error") {
+//            return
+//        }
+//        Customer customer = new Customer();
+//        try {
+//            customer = CustomerMapper.getInstance().findByEmail(email);
+//        } catch (SQLException ex) {
+//            System.out.println("SQL Exception");
+//            System.out.println(ex);
+//            return "error";
+//        }
+//        if(customer == null) {
+//            return
+//        }
+//        //return jwt
+//    }
+//
+//    public String signIn(String email, String password) {
+//
+//    }
+
+
     public Customer getCustomerById(int id) {
         try {
             return CustomerMapper.getInstance().find(id);
