@@ -68,7 +68,7 @@ class SignIn extends Component {
         })
         .catch((error) => {
           console.log("error");
-            if (error.response.status == 400){
+            if (error.response.status == 403){
                 this.setState({msg:"ایمیل یا رمزعبور اشتباه است."});
                 this.handleShow();
             }
@@ -155,7 +155,7 @@ class SignIn extends Component {
         })
             .catch((error) => {
                 console.log("birin");
-                if (error.response.status == 400) {
+                if (error.response.status == 403) {
                     console.log("tuuuuu");
                     this.handleSignup();
                 } else {
@@ -193,7 +193,7 @@ class SignIn extends Component {
               </input>
               <div className="sub">
                   <input type="submit" value="ورود" className="signin-btn pull-center" onClick={this.handleSignin}></input>
-                  <button className="g-signin2" ref="googleLoginBtn">ورود با گوگل</button>
+                  <button className="g-signin2" ref="googleLoginBtn" onClick={this.googleSDK}>ورود با گوگل</button>
                   <button className="signup-link" onClick={this.handleSignup} style={{cursor: 'pointer'}}>ثبت‌نام نکرده‌اید؟</button>
               </div>
           </form>

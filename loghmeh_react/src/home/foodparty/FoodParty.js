@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import ReactDOM from "react-dom";
 import axios from 'axios';
 import moment from 'moment';
 import './FoodParty.css';
 import FoodPartyFood from './FoodPartyFood';
 import PersianNumber from '../../common/PersianNumber';
-import BaseCrousel from './Carousel';
+import Sign from '../../sign/Sign';
+
 
 class FoodParty extends Component {
     constructor(props) {
@@ -12,6 +14,7 @@ class FoodParty extends Component {
         this.getFoodPartyFoods = this.getFoodPartyFoods.bind(this);
         this.tick = this.tick.bind(this);
         this.state = {foodPartyFoods : [], remainingTime : 120 };
+        this.renderSignIn = this.renderSignIn.bind(this);
     }
 
     componentDidMount() {
@@ -20,6 +23,7 @@ class FoodParty extends Component {
 
         this.pageTime = setInterval(this.tick, 1000);
     }
+
 
 
     componentWillUnmount() {
@@ -33,7 +37,6 @@ class FoodParty extends Component {
             remainingTime: this.state.remainingTime - 1
             });
       }
-
     firstFoodPartyGetHandler() {
         this.getFoodPartyFoods();
         clearInterval(this.getFoodPartyFoodsTimer);
@@ -43,7 +46,13 @@ class FoodParty extends Component {
             120 * 1000
         );
     }
-
+    renderSignIn() {
+        console.log("in render sign in");
+        ReactDOM.render(
+            <Sign isSignUp={false}/>,
+            document.getElementById('root')
+        );
+    }
     getNextFoodPartyUpdateDelay() {
         axios.get("http://localhost:8080/Loghmeh_war_exploded/next_time", {
             headers: {
@@ -60,7 +69,14 @@ class FoodParty extends Component {
                 () => this.firstFoodPartyGetHandler(),
                 (data+1) * 1000
                 );
-        }).catch(error => {console.log(error);});
+        }).catch(error => {
+            console.log("inja dge namusan!");
+            if (error.response.status == 401 || error.response.status == 403){
+                console.log(error);
+                console.log("in caaaaaaatch!!");
+                this.renderSignIn();
+
+            }});
     }
 
     getFoodPartyFoods() {
@@ -80,7 +96,14 @@ class FoodParty extends Component {
                 foodPartyFoods: data
                 });
             console.log(data);
-        }).catch(error => {console.log(error);});
+        }).catch(error => {
+            console.log("inja dge namusan!");
+            if (error.response.status == 401 || error.response.status == 403){
+                console.log(error);
+                console.log("in caaaaaaatch!!");
+                this.renderSignIn();
+            }
+        });
     }
 
     render() {

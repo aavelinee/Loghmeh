@@ -166,7 +166,7 @@ public class LoghmehService {
             servletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
         } else if (result.equals("different restaurant order")) {
             resp.setSuccessful(false);
-            servletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            servletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
         return resp;
     }
@@ -259,7 +259,7 @@ public class LoghmehService {
         } else {
             resp.setSuccessful(false);
             System.out.println("chaaaaaaap");
-            servletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            servletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
         }
         return resp;
     }
@@ -280,7 +280,7 @@ public class LoghmehService {
             System.out.println("set header authorization in signin");
         } else {
             resp.setSuccessful(false);
-            servletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            servletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
         }
         return resp;
     }

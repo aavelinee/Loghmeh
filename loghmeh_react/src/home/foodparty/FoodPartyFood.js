@@ -5,6 +5,8 @@ import ReactStarsRating from 'react-awesome-stars-rating';
 import './FoodPartyFood.css';
 import FoodDetail from '../food/FoodDetail';
 import PersianNumber from '../../common/PersianNumber';
+import Sign from '../../sign/Sign';
+import ReactDOM from "react-dom";
 
 class FoodPartyFood extends Component {
     constructor(props) {
@@ -19,6 +21,8 @@ class FoodPartyFood extends Component {
         this.handleMinus = this.handleMinus.bind(this);
         this.handleCloseErrorModal = this.handleCloseErrorModal.bind(this);
         this.handleShowErrorModal = this.handleShowErrorModal.bind(this);
+
+        this.renderSignIn = this.renderSignIn.bind(this);
 
     }
 
@@ -35,6 +39,13 @@ class FoodPartyFood extends Component {
         clearInterval(this.getCountTimer);
     }
 
+    renderSignIn() {
+        console.log("in render sign in");
+        ReactDOM.render(
+            <Sign isSignUp={false}/>,
+            document.getElementById('root')
+        );
+    }
 
     handleShow() {
         this.setState({showModal: true});
@@ -79,9 +90,12 @@ class FoodPartyFood extends Component {
             this.setState({foodCount : 0})
             this.getFoodPartyFood(this.state.food.restaurantId, foodName);})
         .catch((error) => {
-            if (error.response.status == 403) {
+            if (error.response.status == 400) {
                 this.setState({msg:"شما مجاز به سفارش غذا از رستوران‌های متفاوت نیستید."});
                 this.handleShowErrorModal();
+            } else if (error.response.status == 401 || error.response.status == 403){
+                console.log(error);
+                this.renderSignIn();
             } else {
                 console.log(error);
             }
@@ -112,7 +126,14 @@ class FoodPartyFood extends Component {
 		.then(res => {
             const data = res.data;
 			this.updateCount(data.count);
-        }).catch(error => {console.log(error);})
+        }).catch(error => {
+            console.log("inja dge namusan!");
+            if (error.response.status == 401 || error.response.status == 403){
+                console.log(error);
+                console.log("in caaaaaaatch!!");
+                this.renderSignIn();
+            }
+        })
     }
 
     render() {

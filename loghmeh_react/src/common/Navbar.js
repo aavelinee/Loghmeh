@@ -9,6 +9,8 @@ import Cart from '../menu/cart/Cart';
 import Home from '../home/Home';
 import Sign from '../sign/Sign';
 
+/* global gapi*/
+
 class Navbar extends Component {
 	constructor(props) {
 		super(props);
