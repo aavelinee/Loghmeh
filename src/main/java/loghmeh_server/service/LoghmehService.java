@@ -132,6 +132,14 @@ public class LoghmehService {
         return Loghmeh.getInstance().getNextFoodPartySchedulerFire();
     }
 
+    @RequestMapping(value = "/token_validation", method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public boolean isTokenValid(HttpServletResponse servletResponse) {
+        System.out.println("injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa token validation");
+        servletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
+        return true;
+    }
+
     @RequestMapping(value = "/credit", method = RequestMethod.PUT,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ReqResult increaseCreditController(HttpServletResponse servletResponse,
@@ -188,7 +196,7 @@ public class LoghmehService {
             servletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
         } else {
             resp.setSuccessful(false);
-            servletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN, result);
+            servletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST, result);
             resp.setErrorMsg(result);
 
         }

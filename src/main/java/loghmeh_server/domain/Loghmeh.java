@@ -237,14 +237,6 @@ public class Loghmeh {
         timer.schedule(setStatusToDelivered, (long)delay * 1000);
     }
     public Customer signUp (String name, String lastName, String email, String cellphone, String password) {
-//        try{
-//            if(CustomerMapper.getInstance().findByEmail(email) != null){
-//                System.out.println("invalid email");
-//                return null;
-//            }
-//        } catch (SQLException se) {
-//            System.out.println("email check exception");
-//        }
         Customer customer = new Customer();
         customer.setFirstName(name);
         customer.setLastName(lastName);

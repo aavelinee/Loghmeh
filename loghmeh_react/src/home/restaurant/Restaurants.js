@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 import Menu from '../../menu/Menu';
 import './Restaurants.css';
+import Sign from "../../profile/Profile";
 
 class Restaurants extends Component {
     constructor(props) {
@@ -11,8 +12,9 @@ class Restaurants extends Component {
         this.getSearchedRestaurant = this.getSearchedRestaurant.bind(this);
         this.loadNextPage = this.loadNextPage.bind(this);
         this.loadPrevPage = this.loadPrevPage.bind(this);
+        this.renderSignin = this.renderSignin.bind(this);
         this.state = {restaurants : [], page: 1, searchPage: 1, isSearch: false,
-             restNameSearch: "", foodNameSearch: ""};
+            restNameSearch: "", foodNameSearch: ""};
     }
 
     componentDidMount() {
@@ -45,46 +47,61 @@ class Restaurants extends Component {
         }
     }
 
-    getRestaurants(page) {
-        axios.get("http://localhost:8080/Loghmeh_war_exploded/ordinary_restaurants/" + (page), {
-            headers: {
-                Authorization: 'Bearer ' + localStorage.getItem("jwt_token")
-            }
-        })
-        .then(res => {
-            const data = res.data;
-            this.setState({ 
-                restaurants: data
-                });
-            console.log(data);
-        }).catch(error => {console.log(error);});
-        
-    }
-
     getSearchedRestaurant(restaurantName, foodName, page) {
         this.setState({isSearch: true, restNameSearch: restaurantName, foodNameSearch: foodName});
-        event.preventDefault();
         let body = {restaurantName : restaurantName, foodName : foodName, page : page};
         axios.get("http://localhost:8080/Loghmeh_war_exploded/searched_restaurants", { params: body ,
             headers: {
                 Authorization: 'Bearer ' + localStorage.getItem("jwt_token")
             }
         })
-        .then(res => {
-            console.log("******************************************************************************\n************************************************************************************\n************************************************************8")
-            const data = res.data;
-            this.setState({ 
-                restaurants: data
+            .then(res => {
+                console.log("******************************************************************************\n************************************************************************************\n************************************************************8")
+                const data = res.data;
+                this.setState({
+                    restaurants: data
                 });
-        }).catch(error => {console.log(error);});
+            }).catch((error) => {
+                if (error.response.status == 401 || error.response.status == 403) {
+                    this.renderSignin();
+                }
+            }
+        );
+    }
+
+    getRestaurants(page) {
+        axios.get("http://localhost:8080/Loghmeh_war_exploded/ordinary_restaurants/" + (page), {
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem("jwt_token")
+            }
+        })
+            .then(res => {
+                const data = res.data;
+                this.setState({
+                    restaurants: data
+                });
+                console.log(data);
+            }).catch((error) => {
+            if(error.response.status == 401 || error.response.status == 403) {
+                this.renderSignin();
+            }
+        });
+
+    }
+
+    renderSignin() {
+        ReactDOM.render(
+            <Sign isSignUp={false}/>,
+            document.getElementById('root')
+        );
     }
 
     renderRestaurantMenu(restaurant) {
         console.log("after click on show menu", restaurant);
-		ReactDOM.render(
-			<Menu restaurant={restaurant} />,
-			document.getElementById('root')
-		);
+        ReactDOM.render(
+            <Menu restaurant={restaurant} />,
+            document.getElementById('root')
+        );
     }
 
     render() {
@@ -95,21 +112,21 @@ class Restaurants extends Component {
         const restaurantRows = rows.map( (row, idx) => (this.state.restaurants.slice(idx * 4, idx * 4 + 4) ));
         // map the rows as div.row
         const content = restaurantRows.map((row, idx) => (
-            <div className="row home-restaurants-row" key={idx}>    
-            { row.map( restaurant => <div key={restaurant.id} className="home-restaurants-col col-md-3">
-                <div className="container home-restaurant">
-                    <div className="row home-restpic">
-                        <img  id="home-restpic" src={restaurant.logo} className="rounded" alt="Restaurant"></img>
+            <div className="row home-restaurants-row" key={idx}>
+                { row.map( restaurant => <div key={restaurant.id} className="home-restaurants-col col-md-3">
+                    <div className="container home-restaurant">
+                        <div className="row home-restpic">
+                            <img  id="home-restpic" src={restaurant.logo} className="rounded" alt="Restaurant"></img>
+                        </div>
+                        <div className="row home-restname">
+                            <p id="home-restname">{restaurant.name}</p>
+                        </div>
+                        <div className="row home-restmenu-btn">
+                            <button type="button" id="home-restmenu-btn" onClick={this.renderRestaurantMenu.bind(this, restaurant)}>نمایش منو</button>
+                        </div>
                     </div>
-                    <div className="row home-restname">
-                        <p id="home-restname">{restaurant.name}</p>
-                    </div>
-                    <div className="row home-restmenu-btn">
-                        <button type="button" id="home-restmenu-btn" onClick={this.renderRestaurantMenu.bind(this, restaurant)}>نمایش منو</button>
-                    </div>
-                </div>
 
-            </div> )}
+                </div> )}
             </div> )
         );
         return (
@@ -122,21 +139,21 @@ class Restaurants extends Component {
                     <button onClick={this.loadNextPage} type="button" className="next-page-btn">صفحه بعد</button>
                     {
                         this.state.isSearch ?
-                        (
-                            this.state.searchPage == 1 
-                            ?
-                            <button type="button" className="no-prev-page-btn">صفحه قبل</button>
-                            :
-                            <button onClick={this.loadPrevPage} type="button" className="prev-page-btn">صفحه قبل</button>
+                            (
+                                this.state.searchPage == 1
+                                    ?
+                                    <button type="button" className="no-prev-page-btn">صفحه قبل</button>
+                                    :
+                                    <button onClick={this.loadPrevPage} type="button" className="prev-page-btn">صفحه قبل</button>
                             )
                             :
                             (
-                                this.state.page == 1 
-                                ?
-                                <button type="button" className="no-prev-page-btn">صفحه قبل</button>
-                                :
-                                <button onClick={this.loadPrevPage} type="button" className="prev-page-btn">صفحه قبل</button>
-                                )
+                                this.state.page == 1
+                                    ?
+                                    <button type="button" className="no-prev-page-btn">صفحه قبل</button>
+                                    :
+                                    <button onClick={this.loadPrevPage} type="button" className="prev-page-btn">صفحه قبل</button>
+                            )
                     }
                 </div>
             </div>

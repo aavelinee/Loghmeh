@@ -127,10 +127,12 @@ public class CustomerMapper extends Mapper {
             ps.setString(4, obj.getEmail());
             ps.setFloat(5, obj.getCredit());
             int locationId = LocationMapper.getInstance().find(obj.getLocation().getX(), obj.getLocation().getY());
+            System.out.println("loc IDDDD: " + locationId);
             if(locationId == -1) {
                 LocationMapper.getInstance().insert(obj.getLocation());
                 locationId = LocationMapper.getInstance().find(obj.getLocation().getX(), obj.getLocation().getY());
             }
+            System.out.println("loc after!!" + locationId);
             ps.setInt(6, locationId);
             ps.setString(7, obj.getPassword());
 

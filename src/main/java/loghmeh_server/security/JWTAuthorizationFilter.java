@@ -26,10 +26,13 @@ public class JWTAuthorizationFilter implements Filter {
             ((HttpServletResponse) servletResponse).setStatus(HttpServletResponse.SC_ACCEPTED);
             return;
         }
-        System.out.println("is authorized?!");
         HttpServletRequest request = (HttpServletRequest) servletRequest;
-        System.out.println("0000000000000000000000000  " + request.getRequestURI());
-        String uri = "/" + request.getRequestURI().split("/")[2];
+
+        String[] uriTokens = request.getRequestURI().split("/");
+        if(uriTokens.length < 3) {
+            return;
+        }
+        String uri = "/" + uriTokens[2];
         if (uri.equals(SIGN_UP_URL) || uri.equals(SIGN_IN_URL) || uri.equals(GOOGLE_SIGN_IN)) {
             chain.doFilter(servletRequest, servletResponse);
         }
@@ -52,7 +55,6 @@ public class JWTAuthorizationFilter implements Filter {
                 return;
             }
             request.setAttribute("userId", userId);
-            System.out.println("userid" + userId);
         }
         System.out.println("AUTH before doFilter");
         chain.doFilter(request, servletResponse);

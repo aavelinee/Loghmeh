@@ -1,9 +1,11 @@
 import React, { Component, Fragment } from 'react';
+import ReactDOM from "react-dom";
 import axios from 'axios';
 import CartItem from './cartItem/CartItem';
 import {Modal} from 'react-bootstrap';
 import './Cart.css';
 import PersianNumber from '../../common/PersianNumber';
+import Sign from "../../sign/Sign";
 
 class Cart extends Component {
     constructor(props) {
@@ -18,12 +20,20 @@ class Cart extends Component {
 
         this.handleShow = this.handleShow.bind(this);
 		this.handleClose = this.handleClose.bind(this);
+		this.renderSignin = this.renderSignin.bind(this);
 
 
     }
 
     componentDidMount() {
         this.getCart();
+    }
+
+    renderSignin() {
+        ReactDOM.render(
+            <Sign isSignUp={false}/>,
+            document.getElementById('root')
+        );
     }
 
     getCart() {
@@ -38,7 +48,13 @@ class Cart extends Component {
 			this.setState({ 
 				cart : data
 			});
-        }).catch(error => {console.log(error);})
+        }).catch(error => {
+            if(error.response.status == 401 || error.response.status == 403) {
+                this.renderSignin();
+            } else {
+                console.log(error);
+            }
+        })
     }
 
 
@@ -54,9 +70,11 @@ class Cart extends Component {
                 }}
 		).then( (response) => {this.getCart();})
         .catch((error) => {
-            if (error.response.status == 403) {
+            if (error.response.status == 400) {
                 this.setState({msg:"شما مجاز به سفارش غذا از رستوران‌های متفاوت نیستید."});
                 this.handleShow();
+            } else if(error.response.status == 401 || error.response.status == 403) {
+                this.renderSignin();
             } else {
                 console.log(error);
             }
@@ -74,13 +92,12 @@ class Cart extends Component {
                 }}
 		).then( (response) => {this.getCart();})
         .catch((error) => {
-            // if (error.response.status === 403) {
-            //   return <Example test={<p>شما مجاز به سفارش غذا از رستوران‌های متفاوت نیستید.</p>}/>
-
-            // } else {
+            if(error.response.status == 401 || error.response.status == 403) {
+                this.renderSignin();
+            } else {
                 console.log(error);
-            // }
-          })    
+            }
+          })
     }
 
     handlePlusAddToCart(foodName, isFoodParty, foodCount) {
@@ -104,7 +121,7 @@ class Cart extends Component {
                     }}
 		).then( (response) => {this.getCart()})
         .catch((error) => {
-            if (error.response.status == 403) {
+            if (error.response.status == 400) {
                 if(error.response.data.errorMsg == "no credit") {
                     this.setState({msg:"اعتبار شما کافی نیست."});
                     this.handleShow();
@@ -122,6 +139,10 @@ class Cart extends Component {
                     this.setState({msg:"مهلت جشن غذای سفارش شما به پایان رسید."});
                     this.handleShow();
                 }
+            } else if(error.response.status == 401 || error.response.status == 403) {
+                this.renderSignin();
+            } else {
+                console.log(error);
             }
           })  
     }
