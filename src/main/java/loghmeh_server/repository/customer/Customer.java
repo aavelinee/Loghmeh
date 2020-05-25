@@ -17,9 +17,10 @@ public class Customer {
     private String email;
     private float credit;
     private Location location;
+    private String password;
 
 
-    public Customer(int id, String firstName, String lastName, String phoneNumber, String email, Float x, Float y) {
+    public Customer(int id, String firstName, String lastName, String phoneNumber, String email, Float x, Float y, String password) {
         this.customerId = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -27,9 +28,11 @@ public class Customer {
         this.email = email;
         this.credit = 0;
         this.location = new Location(x, y);
+        this.password = password;
     }
 
-    public Customer(){}
+    public Customer() {
+    }
 
     public Boolean addToCart(Restaurant restaurant, Food food, int foodCount) {
         Order order;
@@ -39,7 +42,7 @@ public class Customer {
             System.out.print("Sql exception in find last order in add to cart");
             return false;
         }
-        if(order == null){
+        if (order == null) {
             try {
                 OrderMapper.getInstance().insert(new Order(restaurant, this));
                 order = OrderMapper.getInstance().find_cart(this);
@@ -70,7 +73,7 @@ public class Customer {
             System.out.print("Sql exception in find last order in add to cart");
             return;
         }
-        if(order == null){
+        if (order == null) {
             return;
         }
         try {
@@ -84,15 +87,15 @@ public class Customer {
 
     public String removeFromCart(String restaurantId, String foodName) {
         Order cart = getCart();
-        if(cart == null)
+        if (cart == null)
             return "not found";
-        if(!cart.getRestaurant().getId().equals(restaurantId))
+        if (!cart.getRestaurant().getId().equals(restaurantId))
             return "not found";
-        if(!cart.isFoodInOrder(foodName))
+        if (!cart.isFoodInOrder(foodName))
             return "not found";
         cart.removeItemFromOrder(foodName);
 
-        if(cart.getOrders().size() == 0)
+        if (cart.getOrders().size() == 0)
             removeCart();
 
         return "removed";
@@ -100,19 +103,19 @@ public class Customer {
 
     public void removeFoodPartyFoodsFromCart() {
         Order cart = getCart();
-        if(cart == null)
+        if (cart == null)
             return;
         cart.removeFoodPartyFoodsFromCart();
-        if(cart.getOrders().size() == 0)
+        if (cart.getOrders().size() == 0)
             removeCart();
     }
 
     public boolean finalizeOrder() {
         Order cart = this.getCart();
-        if(cart == null){
+        if (cart == null) {
             return false;
         }
-        if(credit >= cart.getTotalPrice()) {
+        if (credit >= cart.getTotalPrice()) {
             cart.decreaseFoodCounts();
             cart.setStatus(Order.orderStatus.DeliverySearch);
             credit -= cart.getTotalPrice();
@@ -154,6 +157,10 @@ public class Customer {
         return location;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
     public ArrayList<Order> getOrders() {
         return OrderMapper.getInstance().find_orders(this);
     }
@@ -185,4 +192,6 @@ public class Customer {
     public void setLocation(Location location) {
         this.location = location;
     }
+
+    public void setPassword(String password) { this.password = password; }
 }

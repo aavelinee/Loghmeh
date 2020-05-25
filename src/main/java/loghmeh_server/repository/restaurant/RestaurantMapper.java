@@ -124,12 +124,10 @@ public class RestaurantMapper extends Mapper {
                     if(restaurant != null)
                         found_restaurants.add(restaurant);
                 }
-
             } catch (SQLException ex) {
                 System.out.println("error in RestaurantMapper.search query.");
                 throw ex;
             }
-
 
         }catch (SQLException ex) {
             System.out.println("SQL Exception in restaurant search");

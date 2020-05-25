@@ -18,8 +18,7 @@ public class CORSFilter implements Filter {
         // Authorize (allow) all domains to consume the content
         ((HttpServletResponse) servletResponse).setHeader("Access-Control-Allow-Origin", "*");
         ((HttpServletResponse) servletResponse).setHeader("Access-Control-Allow-Methods","GET, OPTIONS, HEAD, PUT, POST, DELETE");
-//        ((HttpServletResponse) servletResponse).setHeader("Access-Control-Allow-Headers", "X-Requested-With,Origin,Content-Type, Accept, x-device-user-agent, Content-Type");
-
+        ((HttpServletResponse) servletResponse).setHeader("Access-Control-Allow-Headers", "Authorization");
 
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
 
@@ -29,8 +28,10 @@ public class CORSFilter implements Filter {
             return;
         }
 
+        System.out.println("CORS before doFilter");
         // pass the request along the filter chain
         chain.doFilter(request, servletResponse);
+        System.out.println("CORS after doFilter");
     }
 
     public void init(FilterConfig config) throws ServletException {

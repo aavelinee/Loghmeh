@@ -101,9 +101,11 @@ public class FoodPartyFoodMapper extends Mapper {
     public ArrayList<FoodPartyFood> find_all_foodparty_foods() {
         ArrayList<Restaurant> foodPartyRestaurants = RestaurantMapper.getInstance().find_restaurants("foodparty", 0);
         ArrayList<FoodPartyFood>foodPartyFoods = new ArrayList<>();
+        System.out.println("here?!");
         for(Restaurant restaurant: foodPartyRestaurants) {
             try{
                 foodPartyFoods.addAll(find_foodparty_foods(restaurant.getMenu()));
+                System.out.println("hmmm:-?" + restaurant.getName());
             } catch (SQLException ex) {
                 System.out.println("SQL Exception in finding all foodparty foods");
                 continue;

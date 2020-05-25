@@ -1,33 +1,47 @@
-import React, { Component} from 'react';
+import React, {Component} from 'react';
 import Home from './home/Home';
-import Cart from './menu/cart/Cart';
-import BaseCrousel from './home/foodparty/Carousel';
 import Sign from './sign/Sign'
 import './App.css';
+import axios from "axios";
 
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {show: false};
-    this.handleShow = this.handleShow.bind(this);
-    // this.handleClose = this.handleClose.bind(this);
-  }
+    constructor(props) {
+        super(props);
+        this.tokenValidation = this.tokenValidation.bind(this);
+        this.state = {isTokenValid: false};
+    }
 
-  handleShow() {
-    this.setState({show: true});
-  }
 
-  render() {
-    console.log(this.state.show); 
-    return (
-      <div>
-        <Home />
-        {/* <BaseCrousel> <Cart /> <Cart /> <Cart /> <Cart /> </BaseCrousel> */}
-        {/* <Sign isSignUp={true}/> */}
-      </div>
-    );
-  }
+    tokenValidation() {
+
+        console.log("token validation is called");
+        if (localStorage.getItem("jwt_token") == null)
+            return;
+        axios.get("http://localhost:8080/Loghmeh_war_exploded/token_validation", {
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem("jwt_token")
+            }
+        })
+            .then(res => {
+                this.setState({isTokenValid: true})
+            }).catch(error => {
+                if(this.state.isTokenValid)
+                    this.setState({isTokenValid: false})
+        })
+    }
+
+    componentDidMount() {
+        this.tokenValidation();
+    }
+
+    render() {
+        return (
+            <div>
+                {this.state.isTokenValid ? <Home/> : <Sign isSignUp={false}/>}
+            </div>
+        );
+    }
 }
 
 export default App;

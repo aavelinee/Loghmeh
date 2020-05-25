@@ -1,10 +1,12 @@
 import React, { Component } from "react";
+import ReactDOM from 'react-dom';
 import {Modal} from 'react-bootstrap';
 import axios from 'axios';
 
 import './OrderItem.css';
 
 import OrderBill from './OrderBill';
+import Sign from "../../menu/cart/Cart";
 
 class OrderItem extends Component {
     constructor(props) {
@@ -14,6 +16,7 @@ class OrderItem extends Component {
         this.handleClose = this.handleClose.bind(this);
         this.timeOut = this.timeOut.bind(this);
         this.getOrderStatus = this.getOrderStatus.bind(this);
+        this.renderSignin = this.renderSignin.bind(this);
     }
 
     handleShow() {
@@ -28,14 +31,29 @@ class OrderItem extends Component {
         this.getOrderStatus();
     }
 
+    renderSignin() {
+        ReactDOM.render(
+            <Sign isSignUp={false}/>,
+            document.getElementById('root')
+        );
+    }
+
     getOrderStatus() {
-        axios.get("http://localhost:8080/Loghmeh_war_exploded/order/" + this.state.order.id)
+        axios.get("http://localhost:8080/Loghmeh_war_exploded/order/" + this.state.order.id, {
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem("jwt_token")
+            }
+        })
         .then(res => {
             const data = res.data;
             this.setState({ 
                 order: data,
                 }).catch(error => {
+                if(error.response.status == 401 || error.response.status == 403) {
+                    this.renderSignin();
+                } else {
                     console.log(error)
+                }
                 });
         })
         console.log("new data");

@@ -1,5 +1,8 @@
 package loghmeh_server.domain;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.*;
 import loghmeh_server.repository.customer.Customer;
@@ -15,6 +18,10 @@ import loghmeh_server.repository.order.OrderMapper;
 import loghmeh_server.repository.order_item.OrderItem;
 import loghmeh_server.repository.restaurant.Restaurant;
 import loghmeh_server.repository.restaurant.RestaurantMapper;
+import loghmeh_server.service.GoogleValidator;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.bind.DatatypeConverter;
 
 //Singleton class
 public class Loghmeh {
@@ -22,20 +29,7 @@ public class Loghmeh {
 
     float nextFoodPartySchedulerFire;
 
-    private Loghmeh() {
-        try{
-            if(CustomerMapper.getInstance().find(1) == null){
-                Customer customer = new Customer(1, "احسان", "خامس‌پناه", "۰۹۱۲۳۴۵۶۷۸۹", "ekhamespanah@yahoo.com", 0f, 0f);
-                try {
-                    CustomerMapper.getInstance().insert(customer);
-                } catch (SQLException ex) {
-                    return;
-                }
-            }
-        } catch(SQLException ex) {
-            System.out.println("SQL Exception in finding customer.");
-        }
-    }
+    private Loghmeh() {}
 
     public static Loghmeh getInstance() {
         if(loghmeh == null){
@@ -206,7 +200,7 @@ public class Loghmeh {
         setStatusToDeliveredTimer(order, deliveryTime);
     }
 
-    public void findDelivery(final Order order) {
+    public void findDelivery(final Order order, final int userId) {
         TimerTask getDeliveries = new TimerTask() {
             public void run() {
                 String deliveriesJson = loghmeh_server.external_services.ExternalServices.getFromExtenalAPI("http://138.197.181.131:8080/deliveries");
@@ -220,10 +214,10 @@ public class Loghmeh {
                 }
                 if(deliveries.size() != 0){
                     try {
-                        Customer customer = CustomerMapper.getInstance().find(1);
+                        Customer customer = CustomerMapper.getInstance().find(userId);
                         assignDelivery(order, customer);
                     } catch (SQLException ex) {
-                        System.out.println("SQL Esception for getting customer in finding delivery");
+                        System.out.println("SQL Exception for getting customer in finding delivery");
                         return;
                     }
                     cancel();
@@ -242,14 +236,69 @@ public class Loghmeh {
         Timer timer = new Timer();
         timer.schedule(setStatusToDelivered, (long)delay * 1000);
     }
-
-    public Customer getCustomer(int i) {
+    public Customer signUp (String name, String lastName, String email, String cellphone, String password) {
+        Customer customer = new Customer();
+        customer.setFirstName(name);
+        customer.setLastName(lastName);
+        customer.setEmail(email);
+        customer.setPhoneNumber(cellphone);
+        Location location = new Location(0f, 0f);
+        customer.setLocation(location);
+        customer.setCredit(0);
+        String hashedPassword = getPasswordHash(password);
+        if(hashedPassword == null)
+            return null;
+        customer.setPassword(hashedPassword);
         try {
-            return CustomerMapper.getInstance().find(i);
+            CustomerMapper.getInstance().insert(customer);
+            customer.setCustomerId(CustomerMapper.getInstance().find(email));
         } catch (SQLException ex) {
+            System.out.println("SQL Exception for inserting customer");
+            return null;
+        }
+        return customer;
+    }
+
+    public Customer authenticate(String email, String password) {
+        String hashedPassword = getPasswordHash(password);
+        if(hashedPassword == null)
+            return null;
+        return CustomerMapper.getInstance().find(email, hashedPassword);
+    }
+
+    public String getPasswordHash(String password) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            md.update(password.getBytes());
+            byte[] digest = md.digest();
+            return DatatypeConverter.printHexBinary(digest).toUpperCase();
+
+        } catch (NoSuchAlgorithmException ex) {
+            System.out.println("NO such algorithm exception");
             return null;
         }
     }
+
+    public Customer signInWithGoogle(String token) {
+        GoogleValidator.getInstance().setIdTokenString(token);
+        String email = GoogleValidator.getInstance().verify();
+        if(email.equals("email not verified")) {
+            return null;
+        } else if(email.equals("invalid ID")) {
+            return null;
+        } else if(email.equals("error")) {
+            return null;
+        }
+        try {
+            return CustomerMapper.getInstance().findByEmail(email);
+        } catch (SQLException ex) {
+            System.out.println("SQL Exception");
+            System.out.println(ex);
+            return null;
+        }
+    }
+
+
 
     public Customer getCustomerById(int id) {
         try {

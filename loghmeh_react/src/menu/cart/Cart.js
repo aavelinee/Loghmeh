@@ -1,9 +1,11 @@
 import React, { Component, Fragment } from 'react';
+import ReactDOM from "react-dom";
 import axios from 'axios';
 import CartItem from './cartItem/CartItem';
 import {Modal} from 'react-bootstrap';
 import './Cart.css';
 import PersianNumber from '../../common/PersianNumber';
+import Sign from "../../sign/Sign";
 
 class Cart extends Component {
     constructor(props) {
@@ -18,6 +20,7 @@ class Cart extends Component {
 
         this.handleShow = this.handleShow.bind(this);
 		this.handleClose = this.handleClose.bind(this);
+		this.renderSignin = this.renderSignin.bind(this);
 
 
     }
@@ -26,15 +29,32 @@ class Cart extends Component {
         this.getCart();
     }
 
+    renderSignin() {
+        ReactDOM.render(
+            <Sign isSignUp={false}/>,
+            document.getElementById('root')
+        );
+    }
+
     getCart() {
         console.log("getCart is called");
-    	axios.get("http://localhost:8080/Loghmeh_war_exploded/cart/" + 1)
+    	axios.get("http://localhost:8080/Loghmeh_war_exploded/cart", {
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem("jwt_token")
+            }
+        })
 		.then(res => {
             const data = res.data;
 			this.setState({ 
 				cart : data
 			});
-        }).catch(error => {console.log(error);})
+        }).catch(error => {
+            if(error.response.status == 401 || error.response.status == 403) {
+                this.renderSignin();
+            } else {
+                console.log(error);
+            }
+        })
     }
 
 
@@ -43,12 +63,18 @@ class Cart extends Component {
         console.log(foodCount)
         event.preventDefault();
 		axios.put('http://localhost:8080/Loghmeh_war_exploded/put_cart', null,
-			{params: {'userId': 1, 'restaurantId': restaurantId, 'foodName' : foodName, 'isFoodParty' : isFoodParty, 'foodCount' : foodCount}}
+			{ 
+                params: {'restaurantId': restaurantId, 'foodName' : foodName, 'isFoodParty' : isFoodParty, 'foodCount' : foodCount},
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem("jwt_token")
+                }}
 		).then( (response) => {this.getCart();})
         .catch((error) => {
-            if (error.response.status == 403) {
+            if (error.response.status == 400) {
                 this.setState({msg:"شما مجاز به سفارش غذا از رستوران‌های متفاوت نیستید."});
                 this.handleShow();
+            } else if(error.response.status == 401 || error.response.status == 403) {
+                this.renderSignin();
             } else {
                 console.log(error);
             }
@@ -59,16 +85,19 @@ class Cart extends Component {
         console.log("order lessssssss", isFoodParty);
         // event.preventDefault();
 		axios.delete('http://localhost:8080/Loghmeh_war_exploded/del_cart',
-			{params: {'userId': 1, 'restaurantId': restaurantId, 'foodName' : foodName, 'isFoodParty' : isFoodParty}}
+			{ 
+                params: {'restaurantId': restaurantId, 'foodName' : foodName, 'isFoodParty' : isFoodParty},
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem("jwt_token")
+                }}
 		).then( (response) => {this.getCart();})
         .catch((error) => {
-            // if (error.response.status === 403) {
-            //   return <Example test={<p>شما مجاز به سفارش غذا از رستوران‌های متفاوت نیستید.</p>}/>
-
-            // } else {
+            if(error.response.status == 401 || error.response.status == 403) {
+                this.renderSignin();
+            } else {
                 console.log(error);
-            // }
-          })    
+            }
+          })
     }
 
     handlePlusAddToCart(foodName, isFoodParty, foodCount) {
@@ -87,10 +116,12 @@ class Cart extends Component {
         console.log("finaliiiiiize");
         event.preventDefault();
 		axios.put('http://localhost:8080/Loghmeh_war_exploded/finalize', null,
-			{params: {'userId': 1}}
+			{ headers: {
+                        Authorization: 'Bearer ' + localStorage.getItem("jwt_token")
+                    }}
 		).then( (response) => {this.getCart()})
         .catch((error) => {
-            if (error.response.status == 403) {
+            if (error.response.status == 400) {
                 if(error.response.data.errorMsg == "no credit") {
                     this.setState({msg:"اعتبار شما کافی نیست."});
                     this.handleShow();
@@ -108,6 +139,10 @@ class Cart extends Component {
                     this.setState({msg:"مهلت جشن غذای سفارش شما به پایان رسید."});
                     this.handleShow();
                 }
+            } else if(error.response.status == 401 || error.response.status == 403) {
+                this.renderSignin();
+            } else {
+                console.log(error);
             }
           })  
     }

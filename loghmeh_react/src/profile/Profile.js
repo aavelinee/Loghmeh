@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from "react-dom";
 import axios from 'axios';
 import {Modal} from 'react-bootstrap';
 import Navbar from '../common/Navbar';
@@ -7,6 +8,7 @@ import Credit from './credit/Credit';
 import Orders from './orders/Orders';
 import Footer from '../common/Footer';
 import './Profile.css'
+import Sign from "../sign/Sign";
 
 
 class Profile extends Component {
@@ -16,8 +18,8 @@ class Profile extends Component {
 		this.userInfoElement = React.createRef();
 		this.handleCreditIncrease = this.handleCreditIncrease.bind(this);
 
-
-        this.handleShow = this.handleShow.bind(this);
+		this.renderSignin = this.renderSignin.bind(this);
+		this.handleShow = this.handleShow.bind(this);
 		this.handleClose = this.handleClose.bind(this);
 	}
 
@@ -40,7 +42,7 @@ class Profile extends Component {
 					</div>
 				</div>
 				<Modal show={this.state.showModal} onHide={this.handleClose} ><p id="error-msg">{this.state.msg}</p></Modal>
-            	<Footer />
+				<Footer />
 			</div>
 		);
 	}
@@ -73,11 +75,25 @@ class Profile extends Component {
 		else{
 			event.preventDefault();
 			axios.put('http://localhost:8080/Loghmeh_war_exploded/credit', null,
-				{params: {'userId': 1, 'creditIncrease': credit}}
+				{	params: {'creditIncrease': credit},
+					headers: {
+						Authorization: 'Bearer ' + localStorage.getItem("jwt_token")
+					}}
 			).then( (response) => {this.userInfoElement.current.updateUserInfo();})
-			.catch((error) => {console.log(error);});
+				.catch((error) => {
+					if(error.response.status == 401 || error.response.status == 403){
+						this.renderSignin();
+					}
+				});
 		}
-	} 
+	}
+
+	renderSignin() {
+		ReactDOM.render(
+			<Sign isSignUp={false}/>,
+			document.getElementById('root')
+		);
+	}
 
 	handleShow() {
 		this.setState({showModal: true});
