@@ -20,15 +20,14 @@ class Home extends Component {
 
     render() {
         return(
-            <Fragment>
+            <div className="home-content">
                 <Navbar logo={false} account={true} cart={true} quit={true} />
                 <HomeJumbotron searchBox={true} handleSearch={this.informSearch}/>
                 <div className="home-main-content">
                     <FoodParty />
                     <Restaurants ref={this.restaurantRef}/>
                 </div>
-                <Footer />
-            </Fragment>
+            </div>
         );
     }
 
