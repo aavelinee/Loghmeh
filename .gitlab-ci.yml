@@ -20,6 +20,7 @@ build:
   stage: build
   script:
     - docker build --pull -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" .
+    - echo "$CI_REGISTRY_PASSWORD"
     - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"
   except:
     - master
