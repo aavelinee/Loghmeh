@@ -1,4 +1,4 @@
-create table deliveries
+create table if not exists deliveries
 (
   id varchar(255) not null,
   velocity float,

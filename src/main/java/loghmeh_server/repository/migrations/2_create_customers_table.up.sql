@@ -1,4 +1,4 @@
-create table customers
+create table if not exists customers
 (
   id int not null auto_increment,
   first_name varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci,
