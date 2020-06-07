@@ -54,7 +54,7 @@ class FoodParty extends Component {
         );
     }
     getNextFoodPartyUpdateDelay() {
-        axios.get("http://localhost:8080/Loghmeh_war_exploded/next_time", {
+        axios.get("http://loghmeh-back:8080/Loghmeh_war_exploded/next_time", {
             headers: {
                 Authorization: 'Bearer ' + localStorage.getItem("jwt_token")
             }
@@ -84,7 +84,7 @@ class FoodParty extends Component {
             {
                 remainingTime : 120
             });
-        axios.get("http://localhost:8080/Loghmeh_war_exploded/foodparty_foods",
+        axios.get("http://loghmeh-back:8080/Loghmeh_war_exploded/foodparty_foods",
             {
                 headers: {
                     Authorization: 'Bearer ' + localStorage.getItem("jwt_token")

@@ -34,7 +34,7 @@ create table if not exists deliveries
   foreign key (location_id) references locations(id) on delete set null
 );
 
-create table if not exists restaurants 
+create table if not exists restaurants
 (
     id            varchar (255)  not null,
     name          varchar (255)  CHARACTER SET utf8 COLLATE utf8_general_ci not null,
@@ -45,7 +45,7 @@ create table if not exists restaurants
     foreign key (location_id)  references locations(id) on delete set null
 );
 
-create table if not exists menus 
+create table if not exists menus
 (
   id int auto_increment,
   restaurant_id varchar (255) not null,

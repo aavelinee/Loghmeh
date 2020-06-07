@@ -29,7 +29,7 @@ public class ConnectionPool {
             e.printStackTrace();
         }
 
-        dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/Loghmeh?useUnicode=true&characterEncoding=UTF-8");
+        dataSource.setJdbcUrl("jdbc:mysql://loghmeh-db:3306/Loghmeh?useUnicode=true&characterEncoding=UTF-8");
         dataSource.setUser("root");
         dataSource.setPassword("password");
 

@@ -14,7 +14,6 @@ COPY . .
 # Build the project and copy the files
 RUN npm run build
 
-
 FROM nginx:alpine
 
 #!/bin/sh
