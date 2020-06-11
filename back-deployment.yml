@@ -1,41 +1,43 @@
 apiVersion: apps/v1           # API version
 kind: Deployment              # Type of kubernetes resource
 metadata:
-  name: polling-app-server    # Name of the kubernetes resource
+  name: loghmeh-server        # Name of the kubernetes resource
+  namespace: baharan-aylin-ns
   labels:                     # Labels that will be applied to this resource
-    app: polling-app-server
+    app: loghmeh-server
 spec:
   replicas: 2                 # No. of replicas/pods to run in this deployment
   selector:
     matchLabels:              # The deployment applies to any pods mayching the specified labels
-      app: polling-app-server
+      app: loghmeh-server
   template:                   # Template for creating the pods in this deployment
     metadata:
       labels:                 # Labels that will be applied to each Pod in this deployment
-        app: polling-app-server
+        app: loghmeh-server
     spec:                     # Spec for the containers that will be run in the Pods
       containers:
-        - name: polling-app-server
+        - name: loghmeh-server
           image: baharankhatami/loghmeh-backend:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - name: http
               containerPort: 8080 # The port that the container exposes
           resources:
             limits:
-              cpu: 0.2
-              memory: "100Mi"
+              cpu: "200m"
+              memory: "200Mi"
 ---
 apiVersion: v1                # API version
 kind: Service                 # Type of the kubernetes resource
 metadata:
-  name: polling-app-server    # Name of the kubernetes resource
+  name: loghmeh-server        # Name of the kubernetes resource
+  namespace: baharan-aylin-ns
   labels:                     # Labels that will be applied to this resource
-    app: polling-app-server
+    app: loghmeh-server
 spec:
   type: NodePort              # The service will be exposed by opening a Port on each node and proxying it.
   selector:
-    app: polling-app-server   # The service exposes Pods with label `app=polling-app-server`
+    app: loghmeh-server       # The service exposes Pods with label `app=polling-app-server`
   ports:                      # Forward incoming connections on port 8080 to the target port 8080
     - name: http
       port: 8080
