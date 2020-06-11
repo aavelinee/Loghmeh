@@ -1,35 +1,21 @@
 package loghmeh_server.repository;
 
-import org.apache.commons.dbcp.BasicDataSource;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 
 public class ConnectionPool {
-//    private static BasicDataSource dataSource = new BasicDataSource();
     private static ComboPooledDataSource dataSource = new ComboPooledDataSource();
 
-
-
     static {
-//        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-//        // remote db
-//        dataSource.setUrl("jdbc:mysql://localhost:3306/Loghmeh?useUnicode=true&characterEncoding=UTF-8");
-//        dataSource.setUsername("root");
-//        dataSource.setPassword("password");
-//        dataSource.setMinIdle(1);
-//        dataSource.setMaxIdle(5);
-//        dataSource.setMaxOpenPreparedStatements(200);
-
         try {
             Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
 
-        dataSource.setJdbcUrl("jdbc:mysql://loghmeh-db:3306/Loghmeh?useUnicode=true&characterEncoding=UTF-8");
+        dataSource.setJdbcUrl("jdbc:mysql://loghmeh-mysql:3306/loghmeh?useUnicode=true&characterEncoding=UTF-8");
         dataSource.setUser("root");
         dataSource.setPassword("password");
 
