@@ -9,7 +9,7 @@
 #EXPOSE 8080
 
 
-FROM maven:3.6.1-jdk-8 AS build_dir
+FROM maven:3.6-jdk-8 AS build_dir
 WORKDIR /app
 ADD pom.xml /app
 RUN ["/usr/local/bin/mvn-entrypoint.sh", "mvn", "verify", "clean", "--fail-never"]

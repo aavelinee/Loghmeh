@@ -29,11 +29,11 @@ spec:
               value: loghmeh
           resources:
             requests:
-              memory: 400Mi
-              cpu: 400m
+              memory: 350Mi
+              cpu: 250m
             limits:
-              memory: 500Mi
-              cpu: 600m
+              memory: 400Mi
+              cpu: 300m
           ports:
             - containerPort: 3306
               name: mysql
