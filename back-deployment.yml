@@ -24,8 +24,8 @@ spec:
               containerPort: 8080 # The port that the container exposes
           resources:
             limits:
-              cpu: "200m"
-              memory: "200Mi"
+              cpu: "100m"
+              memory: "250Mi"
 #---
 #apiVersion: v1                # API version
 #kind: Service                 # Type of the kubernetes resource
