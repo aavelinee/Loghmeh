@@ -1,6 +1,7 @@
 stages:
   - build
   - deliver
+  - deploy
 
 build:
   image: docker:latest
@@ -18,8 +19,6 @@ build:
 
 deliver:
   image: docker:latest
-  services:
-    - docker:dind
   stage: deliver
   dependencies:
     - build
@@ -29,3 +28,13 @@ deliver:
 #    - docker tag ${CI_PROJECT_NAME} "$CI_REGISTRY_IMAGE_DOCKERHUB"
   script:
     - docker push "$CI_REGISTRY_IMAGE_DOCKERHUB"
+
+deploy:
+  image: openshift/origin-cli:latest
+  stage: deploy
+  when: manual
+  dependencies:
+    - deliver
+  script:
+    - oc process -f back-deployment.yml
+    - oc expose deployment loghmeh-server --type NodePort --port 8080
