@@ -32,6 +32,8 @@ deliver:
     - docker push "$CI_REGISTRY_IMAGE_DOCKERHUB"
 
 deploy:
+  tags:
+    - loghmeh-runner
   image:
     name: bitnami/kubectl
     entrypoint: [""]
