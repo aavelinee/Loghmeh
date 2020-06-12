@@ -11,6 +11,10 @@ build:
     - docker build --pull -t "$CI_REGISTRY_IMAGE_DOCKERHUB" .
   after_script:
     - docker save -o ${CI_PROJECT_NAME}.tar "$CI_REGISTRY_IMAGE_DOCKERHUB"
+  artifacts:
+    name: "docker-image-$CI_PROJECT_NAME"
+    paths:
+      - ${CI_PROJECT_NAME}.tar
 
 deliver:
   image: docker:latest
