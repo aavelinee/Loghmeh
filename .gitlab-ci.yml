@@ -41,8 +41,8 @@ deploy:
   dependencies:
     - deliver
   script:
-    - cd k8s
-    - export KUBECONFIG=./k8s.conf
+#    - cd k8s
+    - export KUBECONFIG= config.yml
 #    - export PWD="/home/baharan/Desktop/IE/React/08-React"
 #    - export KUBECONFIG="${KUBECONFIG}:${PWD}/config.yml"
 #    - kubectl config use-context baharan-aylin-ns
