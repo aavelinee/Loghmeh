@@ -41,6 +41,5 @@ deploy:
     - deliver
   script:
     - export KUBECONFIG=./config.conf
-    - kubectl delete deployment loghmeh-server
-#    - kubectl apply -f back-deployment.yml
-    - kubectl rolling-update loghmeh-server -f back-deployment.yml
+    - kubectl delete deployment loghmeh-server --ignore-not-found=true
+    - kubectl apply -f back-deployment.yml
