@@ -29,19 +29,3 @@ spec:
             requests:
               cpu: "250m"
               memory: "200Mi"
-#---
-#apiVersion: v1                # API version
-#kind: Service                 # Type of the kubernetes resource
-#metadata:
-#  name: loghmeh-server        # Name of the kubernetes resource
-#  namespace: baharan-aylin-ns
-#  labels:                     # Labels that will be applied to this resource
-#    app: loghmeh-server
-#spec:
-#  type: NodePort              # The service will be exposed by opening a Port on each node and proxying it.
-#  selector:
-#    app: loghmeh-server       # The service exposes Pods with label `app=polling-app-server`
-#  ports:                      # Forward incoming connections on port 8080 to the target port 8080
-#    - name: http
-#      port: 8080
-#      targetPort: 8080
