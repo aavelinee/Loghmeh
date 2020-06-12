@@ -42,9 +42,9 @@ deploy:
     - deliver
   script:
 #    - cd k8s
-    - export KUBECONFIG= config.yml
+    - export KUBECONFIG=./config.conf
 #    - export PWD="/home/baharan/Desktop/IE/React/08-React"
-#    - export KUBECONFIG="${KUBECONFIG}:${PWD}/config.yml"
+#    - export KUBECONFIG="${KUBECONFIG}:${PWD}/config.conf"
 #    - kubectl config use-context baharan-aylin-ns
     - kubectl apply -f back-deployment.yml
     - kubectl expose deployment loghmeh-server --type NodePort --port 8080
