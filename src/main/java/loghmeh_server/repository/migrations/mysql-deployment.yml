@@ -65,3 +65,4 @@ spec:
     limits:
       memory: 600Mi
       cpu: 600m
+#kubectl expose deployment loghmeh-mysql --port 3306

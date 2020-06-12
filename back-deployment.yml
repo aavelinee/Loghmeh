@@ -29,3 +29,5 @@ spec:
             requests:
               cpu: "250m"
               memory: "200Mi"
+#  kubectl expose deployment loghmeh-server --type NodePort --port 8080
+#  kubectl get deployment loghmeh-server -o yaml --export > back-service.yml
