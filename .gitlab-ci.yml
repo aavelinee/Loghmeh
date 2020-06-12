@@ -1,23 +1,26 @@
 # This file is a template, and might need editing before it works on your project.
 # Official docker image.
-stages:
-  - build
-  - deliver
+image: docker:latest
 
-build:
-  image: docker:latest
-  services:
-    - docker:dind
+services:
+  - docker:dind
+
+before_script:
+  - docker login -u "$CI_REGISTRY_USER_DOCKERHUB" -p "$CI_REGISTRY_PASSWORD_DOCKERHUB" $CI_REGISTRY_DOCKERHUB
+
+build-master:
   stage: build
   script:
     - docker build --pull -t "$CI_REGISTRY_IMAGE_DOCKERHUB" .
-
-deliver:
-  image: docker:latest
-  services:
-    - docker:dind
-  stage: push
-  before_script:
-    - docker login -u "$CI_REGISTRY_USER_DOCKERHUB" -p "$CI_REGISTRY_PASSWORD_DOCKERHUB" $CI_REGISTRY_DOCKERHUB
-  script:
     - docker push "$CI_REGISTRY_IMAGE_DOCKERHUB"
+  only:
+    - master
+
+build:
+  stage: build
+  script:
+    - docker build --pull -t "$CI_REGISTRY_IMAGE_DOCKERHUB" .
+    - docker push "$CI_REGISTRY_IMAGE_DOCKERHUB"
+  except:
+    - master
+
