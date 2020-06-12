@@ -16,7 +16,7 @@ deliver:
   image: docker:latest
   services:
     - docker:dind
-  stage: push
+  stage: deliver
   before_script:
     - docker login -u "$CI_REGISTRY_USER_DOCKERHUB" -p "$CI_REGISTRY_PASSWORD_DOCKERHUB" $CI_REGISTRY_DOCKERHUB
   script:
