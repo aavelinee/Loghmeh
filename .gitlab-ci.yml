@@ -22,6 +22,8 @@ deliver:
   stage: deliver
   dependencies:
     - build
+  services:
+    - docker:dind
   before_script:
     - docker login -u "$CI_REGISTRY_USER_DOCKERHUB" -p "$CI_REGISTRY_PASSWORD_DOCKERHUB" $CI_REGISTRY_DOCKERHUB
     - docker load --input ${CI_PROJECT_NAME}.tar
