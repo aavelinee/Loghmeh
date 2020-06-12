@@ -1,4 +1,4 @@
-FROM maven:3.6.1-jdk-8 AS build_dir
+    FROM maven:3.6.1-jdk-8 AS build_dir
 WORKDIR /tmp/
 COPY . /tmp
 
