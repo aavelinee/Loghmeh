@@ -36,5 +36,5 @@ deploy:
   dependencies:
     - deliver
   script:
-    - oc process -f back-deployment.yml
+    - oc process -f back-deployment.yml | oc apply -f -
     - oc expose deployment loghmeh-server --type NodePort --port 8080
