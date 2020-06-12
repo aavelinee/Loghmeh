@@ -41,9 +41,11 @@ deploy:
   dependencies:
     - deliver
   script:
-    - export PWD="/home/eileen/Documents/Univ^^/Sem8/IE/CAs/5"
-    - export KUBECONFIG="${KUBECONFIG}:${PWD}/config.yaml"
-    - kubectl config use-context baharan-aylin-ns
+    - cd k8s
+    - export KUBECONFIG=./k8s.conf
+#    - export PWD="/home/baharan/Desktop/IE/React/08-React"
+#    - export KUBECONFIG="${KUBECONFIG}:${PWD}/config.yml"
+#    - kubectl config use-context baharan-aylin-ns
     - kubectl apply -f back-deployment.yml
     - kubectl expose deployment loghmeh-server --type NodePort --port 8080
 
