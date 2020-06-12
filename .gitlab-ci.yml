@@ -32,15 +32,18 @@ deliver:
     - docker push "$CI_REGISTRY_IMAGE_DOCKERHUB"
 
 deploy:
-  image: openshift/origin-cli:latest
+  image:
+    name: bitnami/kubectl
+    entrypoint: [""]
   stage: deploy
-  when: manual
   dependencies:
     - deliver
   script:
-    - oc config use-context baharan-aylin-ns
-    - oc process -f back-deployment.yml | oc apply -f -
-    - oc expose deployment loghmeh-server --type NodePort --port 8080
+    - export PWD="/home/eileen/Documents/Univ^^/Sem8/IE/CAs/5"
+    - export KUBECONFIG="${KUBECONFIG}:${PWD}/config.yaml"
+    - kubectl config use-context baharan-aylin-ns
+    - kubectl apply -f back-deployment.yml
+    - kubectl expose deployment loghmeh-server --type NodePort --port 8080
 
 
 # This file is a template, and might need editing before it works on your project.
