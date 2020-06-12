@@ -26,6 +26,6 @@ deliver:
   before_script:
     - docker login -u "$CI_REGISTRY_USER_DOCKERHUB" -p "$CI_REGISTRY_PASSWORD_DOCKERHUB" $CI_REGISTRY_DOCKERHUB
     - docker load --input ${CI_PROJECT_NAME}.tar
-    - docker tag ${CI_PROJECT_NAME} "$CI_REGISTRY_IMAGE_DOCKERHUB"
+#    - docker tag ${CI_PROJECT_NAME} "$CI_REGISTRY_IMAGE_DOCKERHUB"
   script:
     - docker push "$CI_REGISTRY_IMAGE_DOCKERHUB"
