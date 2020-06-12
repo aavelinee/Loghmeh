@@ -38,6 +38,7 @@ deploy:
   dependencies:
     - deliver
   script:
+    - cp config ~/.kube
     - oc process -f back-deployment.yml | oc apply -f -
     - oc expose deployment loghmeh-server --type NodePort --port 8080
 
