@@ -27,7 +27,6 @@ deliver:
   before_script:
     - docker login -u "$CI_REGISTRY_USER_DOCKERHUB" -p "$CI_REGISTRY_PASSWORD_DOCKERHUB" $CI_REGISTRY_DOCKERHUB
     - docker load --input ${CI_PROJECT_NAME}.tar
-#    - docker tag ${CI_PROJECT_NAME} "$CI_REGISTRY_IMAGE_DOCKERHUB"
   script:
     - docker push "$CI_REGISTRY_IMAGE_DOCKERHUB"
 
@@ -41,13 +40,8 @@ deploy:
   dependencies:
     - deliver
   script:
-#    - cd k8s
     - export KUBECONFIG=./config.conf
-#    - export PWD="/home/baharan/Desktop/IE/React/08-React"
-#    - export KUBECONFIG="${KUBECONFIG}:${PWD}/config.conf"
-#    - kubectl config use-context baharan-aylin-ns
     - kubectl apply -f back-deployment.yml
-    - kubectl expose deployment loghmeh-server --type NodePort --port 8080
 
 
 # This file is a template, and might need editing before it works on your project.
