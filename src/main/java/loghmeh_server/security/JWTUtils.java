@@ -18,6 +18,7 @@ public class JWTUtils {
         return jwtUtils;
     }
 
+
     public String generateJWTToken(Customer customer) {
         System.out.println("key: "+SECRET_KEY);
 
